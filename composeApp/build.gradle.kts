@@ -25,7 +25,6 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -37,8 +36,11 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.androidx.navigation.compose)
+            implementation("io.github.shadmanadman:kmp-webview:1.8.3")
+            api("io.github.kevinnzou:compose-webview-multiplatform:1.9.40")
         }
         desktopMain.dependencies {
+
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
         }

@@ -26,7 +26,11 @@ import androidx.navigation.compose.rememberNavController
 import com.dian.prueba.ui.BrandScreen
 import com.dian.prueba.ui.WelcomeScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import com.dian.prueba.ui.WebViewCustom
 
+//expo react native
+// cpu bench
+// mirar hot reload en Androis Studio
 @Composable
 @Preview
 fun App() {
@@ -43,6 +47,9 @@ fun App() {
                 Column (
                     modifier = Modifier.padding(20.dp)
                 ){
+                    WebViewCustom(
+                        modifier = Modifier.fillMaxWidth().padding(10.dp)
+                    )
                     Text(
                         title,
                         style = TextStyle(fontSize = 20.sp),
