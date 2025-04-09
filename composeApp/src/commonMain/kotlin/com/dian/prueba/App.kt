@@ -2,31 +2,37 @@ package com.dian.prueba
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Button
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material3.NavigationBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.createGraph
+import com.dian.prueba.Navigation.Screen
+import com.dian.prueba.Navigation.navigationItems
+import com.dian.prueba.Screens.*
 import com.dian.prueba.ui.BrandScreen
 import com.dian.prueba.ui.WelcomeScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import com.dian.prueba.ui.WebViewCustom
 
 //expo react native
 // cpu bench
@@ -47,7 +53,7 @@ fun App() {
                 Column (
                     modifier = Modifier.padding(20.dp)
                 ){
-                    WebViewCustom(
+                    /*WebViewCustom(
                         modifier = Modifier.fillMaxWidth().padding(10.dp)
                     )
                     Text(
@@ -55,7 +61,7 @@ fun App() {
                         style = TextStyle(fontSize = 20.sp),
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally)
-                    )
+                    )*/
                     Row(
                         modifier = Modifier.padding(start = 20.dp, top = 10.dp)
                     ){
@@ -89,4 +95,72 @@ fun App() {
 
     }
 }
+
+@Composable
+fun AppNavigation() {
+    val navController = rememberNavController()
+    Scaffold(
+        topBar = {
+            ScrollRowAmazon()
+            //SearchBarAmazon()
+        },
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = {
+            BottomNavigationBar(navController)
+        }
+    ) { innerPadding ->
+        val graph =
+            navController.createGraph(startDestination = Screen.Home.route) {
+                composable(route = Screen.Cart.route) {
+                    CartScreen()
+                }
+                composable(route = Screen.Settings.route) {
+                    SettingsScreen()
+                }
+                composable(route = Screen.Home.route) {
+                    HomeScreen()
+                }
+                composable(route = Screen.Profile.route) {
+                    ProfileScreen()
+                }
+            }
+        NavHost(
+            navController = navController,
+            graph = graph,
+            modifier = Modifier.padding(innerPadding)
+        )
+    }
+}
+
+@Composable
+fun BottomNavigationBar(navController: NavController) {
+    val selectedNavigationIndex = rememberSaveable { mutableStateOf(0) }
+    NavigationBar(
+        containerColor = Color.White
+    ) {
+        navigationItems.forEachIndexed { index, item ->
+            BottomNavigationItem(
+                selected = selectedNavigationIndex.value == index,
+                onClick = {
+                    selectedNavigationIndex.value = index
+                    navController.navigate(item.route)
+                },
+                icon = {
+                    Icon(
+                        imageVector = item.icon,
+                        contentDescription = item.title
+                    )
+                },
+                label = {
+                    Text(text = item.title,
+                        color = if (index == selectedNavigationIndex.value)
+                            Color.Black
+                        else Color.Gray
+                    )
+                }
+            )
+        }
+    }
+}
+
 

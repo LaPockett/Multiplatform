@@ -36,8 +36,15 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.androidx.navigation.compose)
+            // https://mvnrepository.com/artifact/androidx.compose.material3/material3
+            implementation("androidx.compose.material3:material3:1.4.0-alpha11")
+
+            implementation ("androidx.compose.material:material:1.7.8")
             implementation("io.github.shadmanadman:kmp-webview:1.8.3")
             api("io.github.kevinnzou:compose-webview-multiplatform:1.9.40")
+            //implementation("androidx.navigation:navigation-compose:2.8.9")
+            implementation(libs.play.services.appsearch)
+            implementation ("androidx.compose.material:material-icons-extended:1.7.8")
         }
         desktopMain.dependencies {
 
@@ -77,6 +84,9 @@ android {
 dependencies {
     implementation(libs.androidx.navigation.runtime.android)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.material3.android)
+    implementation(libs.play.services.appsearch)
+    //implementation(libs.androidx.material3)
     debugImplementation(compose.uiTooling)
 }
 
