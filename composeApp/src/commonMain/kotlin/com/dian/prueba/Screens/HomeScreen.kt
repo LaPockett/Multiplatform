@@ -18,33 +18,43 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.dian.prueba.NavigationScroll.getAllAmazonCategories
-import com.dian.prueba.ui.WebViewCustom
+import com.dian.prueba.ui.WebViewHome
 
 @Composable
 fun HomeScreen(){
+    var query by remember { mutableStateOf("") }
+    var active by remember { mutableStateOf(false) }
+
     Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize()
     ){
-        WebViewCustom(
+        Column(
             modifier = Modifier.fillMaxWidth()
-        )
-        /*Text(
-            text = "Home Screen",
-            modifier = Modifier.align(Alignment.Center)
-        )*/
+        ){
+            ScrollRowAmazon()
+            SearchBarAmazon(
+                query = query,
+                onQueryChange = {query = it},
+                onSearch = {active = false},
+                active = active,
+                onActiveChange = {active = it}
+            )
+            WebViewHome(
+                query = query,
+            )
+        }
+
     }
 }
 
 @Composable
 fun ScrollRowAmazon(){
-
     Column (
         modifier = Modifier.padding(top = 15.dp)
 
     ){
-        SearchBarAmazon()
         Column(
         ) {
             ScrollableTabRow(
@@ -78,17 +88,25 @@ fun ScrollRowAmazon(){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchBarAmazon(){
-    var query by remember { mutableStateOf("") }
-    var active by remember { mutableStateOf(false) }
-    //Scaffold{
+fun SearchBarAmazon(
+    query: String,
+    onQueryChange: (String) -> Unit,
+    onSearch: (String) -> Unit,
+    active: Boolean,
+    onActiveChange: (Boolean) -> Unit
+){
+    Column(
+    modifier = Modifier.fillMaxWidth()
+     ){
         SearchBar(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth().padding(8.dp),
             query = query,
-            onQueryChange = {query = it},
-            onSearch = {active = false},
+            onQueryChange = {
+                onQueryChange(it) },
+            onSearch = {
+                onSearch(query) },
             active = active,
-            onActiveChange = {active = it},
+            onActiveChange = onActiveChange,
             placeholder = { Text("Buscar o hacer una pregunta") },
             leadingIcon = {
                 Icon(
@@ -100,18 +118,16 @@ fun SearchBarAmazon(){
                 Icon(
                     modifier = Modifier.clickable {
                         if (query.isNotEmpty()){
-                            query = ""
-                        } else {
-                            active = false
+                            onQueryChange("")
                         }
                     },
                     imageVector = Icons.Default.CenterFocusStrong,
-                    contentDescription = "Close Icon"
+                    contentDescription = "Scan Icon"
                 )
             },
 
             ){
-        //}
+        }
     }
 
 }

@@ -45,6 +45,7 @@ kotlin {
             //implementation("androidx.navigation:navigation-compose:2.8.9")
             implementation(libs.play.services.appsearch)
             implementation ("androidx.compose.material:material-icons-extended:1.7.8")
+
         }
         desktopMain.dependencies {
 
@@ -86,6 +87,7 @@ dependencies {
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material3.android)
     implementation(libs.play.services.appsearch)
+    implementation(libs.androidx.room.runtime.android)
     //implementation(libs.androidx.material3)
     debugImplementation(compose.uiTooling)
 }

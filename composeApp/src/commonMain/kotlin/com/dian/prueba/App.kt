@@ -25,6 +25,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
 import com.dian.prueba.Navigation.Screen
@@ -36,7 +37,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 
 //expo react native
 // cpu bench
-// mirar hot reload en Androis Studio
+// mirar hot reload en Android Studio
 @Composable
 @Preview
 fun App() {
@@ -53,15 +54,6 @@ fun App() {
                 Column (
                     modifier = Modifier.padding(20.dp)
                 ){
-                    /*WebViewCustom(
-                        modifier = Modifier.fillMaxWidth().padding(10.dp)
-                    )
-                    Text(
-                        title,
-                        style = TextStyle(fontSize = 20.sp),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally)
-                    )*/
                     Row(
                         modifier = Modifier.padding(start = 20.dp, top = 10.dp)
                     ){
@@ -96,17 +88,24 @@ fun App() {
     }
 }
 
+/**
+ * APP AMAZON
+ */
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = currentBackStackEntry?.destination?.route
+    val showBars = currentRoute != Screen.Profile.route
+
     Scaffold(
-        topBar = {
-            ScrollRowAmazon()
-            //SearchBarAmazon()
-        },
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            BottomNavigationBar(navController)
+            // Para que el bottomBar no salga en la pantalla de Profile (Account), pero
+            // sí en las demás pantallas
+            if (showBars) {
+                BottomNavigationBar(navController)
+            }
         }
     ) { innerPadding ->
         val graph =
@@ -114,15 +113,16 @@ fun AppNavigation() {
                 composable(route = Screen.Cart.route) {
                     CartScreen()
                 }
-                composable(route = Screen.Settings.route) {
-                    SettingsScreen()
+                composable(route = Screen.Explore.route) {
+                    SearchScreen()
                 }
                 composable(route = Screen.Home.route) {
                     HomeScreen()
                 }
                 composable(route = Screen.Profile.route) {
-                    ProfileScreen()
+                    ProfileScreen(navController)
                 }
+
             }
         NavHost(
             navController = navController,

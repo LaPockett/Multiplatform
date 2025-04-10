@@ -11,11 +11,10 @@ data class BottomNavigationItem(
     val title: String,
     val icon: ImageVector,
     val route: String,
-
 )
 val navigationItems = listOf(
     BottomNavigationItem("Home", Icons.Default.Home, "home"),
     BottomNavigationItem("Profile", Icons.Default.Person, "profile"),
     BottomNavigationItem("Cart", Icons.Default.ShoppingCart, "cart"),
-    BottomNavigationItem("Settings", Icons.Default.Menu, "settings")
+    BottomNavigationItem("Explore", Icons.Default.Menu, "explore")
 )
