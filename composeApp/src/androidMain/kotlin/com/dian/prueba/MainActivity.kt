@@ -12,6 +12,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             AppNavigation()
+            //App()
         }
     }
 }
@@ -20,4 +21,5 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppAndroidPreview() {
     AppNavigation()
+    //App()
 }

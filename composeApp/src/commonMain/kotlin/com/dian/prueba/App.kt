@@ -83,6 +83,7 @@ fun App() {
             composable(route = "brand") {
                 BrandScreen()
             }
+
         }
 
     }
