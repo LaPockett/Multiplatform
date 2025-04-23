@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.2.0-Beta1"
 }
 
 kotlin {
@@ -45,6 +46,16 @@ kotlin {
             //implementation("androidx.navigation:navigation-compose:2.8.9")
             implementation(libs.play.services.appsearch)
             implementation ("androidx.compose.material:material-icons-extended:1.7.8")
+            // Ktor
+            // https://mvnrepository.com/artifact/io.ktor/ktor-client-core
+            implementation("io.ktor:ktor-client-core:3.1.2")
+            // https://mvnrepository.com/artifact/io.ktor/ktor-serialization-kotlinx-json
+            implementation("io.ktor:ktor-serialization-kotlinx-json:3.1.2")
+            // https://mvnrepository.com/artifact/io.ktor/ktor-client-content-negotiation
+            implementation("io.ktor:ktor-client-content-negotiation:3.1.2")
+            // https://mvnrepository.com/artifact/io.ktor/ktor-client-okhttp
+            implementation("io.ktor:ktor-client-okhttp:3.1.2")
+
 
         }
         desktopMain.dependencies {

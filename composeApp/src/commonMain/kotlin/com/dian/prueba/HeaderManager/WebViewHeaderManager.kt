@@ -1,4 +1,4 @@
-package com.dian.prueba.Centralization
+package com.dian.prueba.HeaderManager
 
 object WebViewHeaderManager {
 
@@ -8,6 +8,5 @@ object WebViewHeaderManager {
         headers["Cookie"] = "login_cookie=$cookie"
         println("dian log - Cookie guardada: login_cookie=$cookie")
     }
-
     fun getHeaders(): Map<String, String> = headers
 }
