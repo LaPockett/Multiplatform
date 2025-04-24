@@ -1,12 +1,15 @@
 package com.dian.prueba.HeaderManager
 
+import com.dian.prueba.Log.Logger
+
 object WebViewHeaderManager {
 
     private val headers: MutableMap<String, String> = mutableMapOf()
+    private val logger = Logger()
 
     fun updateLoginCookie(cookie: String) {
         headers["Cookie"] = "login_cookie=$cookie"
-        println("dian log - Cookie guardada: login_cookie=$cookie")
+        logger.debug(headers.toString(), "WebViewHeaderManager")
     }
     fun getHeaders(): Map<String, String> = headers
 }

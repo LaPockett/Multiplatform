@@ -1,6 +1,7 @@
 package com.dian.prueba.API
 
 import com.dian.prueba.DataClass.Login
+import com.dian.prueba.Log.Logger
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -9,6 +10,8 @@ import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 
 class APIClient {
+    private val logger = Logger()
+
     private var _loginToken: String? = null
     val loginToken: String? get() {
         return _loginToken
@@ -24,15 +27,16 @@ class APIClient {
     }
 
     suspend fun requestLogin(id: Int): String? {
-        println("DIAN LOG - Iniciando login...")
+        logger.warn("Iniciando login...", "requestLogin")
+
         return try {
             val result: Login = client.get("https://jsonplaceholder.typicode.com/users/$id").body()
-            println("DIAN LOG - Respuesta del login:$result")
+            logger.debug(result.toString(), "JSON Response")
             _loginToken = result.email
-            println("DIAN LOG - Token guardado: $_loginToken")
+            logger.debug(_loginToken.toString(), "Login Token")
             _loginToken
         } catch (e: Exception) {
-            println("DIAN LOG ERROR - Fallo en login: ${e.stackTraceToString()}")
+            logger.error(e, "requestLoginException")
             null
         }
     }
