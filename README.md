@@ -1,3 +1,8 @@
+# Proyecto Compose Multiplatform – App de prueba (Amazon & WebViews)
+
+Este proyecto es una práctica usando **Compose Multiplatform** junto con llamadas a una API de prueba (https://jsonplaceholder.typicode.com/) y navegación web usando la librería de KevinZou (https://github.com/KevinnZou/compose-webview-multiplatform/tree/main).
+
+---
 This is a Kotlin Multiplatform project targeting Android, Desktop.
 
 * `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
