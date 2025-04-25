@@ -39,12 +39,9 @@ kotlin {
             implementation(libs.androidx.lifecycle.runtime.compose)
             implementation(libs.androidx.navigation.compose)
             // https://mvnrepository.com/artifact/androidx.compose.material3/material3
-            implementation("androidx.compose.material3:material3:1.4.0-alpha11")
-
-            implementation ("androidx.compose.material:material:1.7.8")
-            implementation("io.github.shadmanadman:kmp-webview:1.8.3")
+            implementation("androidx.compose.material3:material3:1.4.0-alpha13")
+            implementation ("androidx.compose.material:material:1.8.0")
             api("io.github.kevinnzou:compose-webview-multiplatform:1.9.40")
-            //implementation("androidx.navigation:navigation-compose:2.8.9")
             implementation(libs.play.services.appsearch)
             implementation ("androidx.compose.material:material-icons-extended:1.7.8")
             // Ktor
@@ -56,8 +53,6 @@ kotlin {
             implementation("io.ktor:ktor-client-content-negotiation:3.1.2")
             // https://mvnrepository.com/artifact/io.ktor/ktor-client-okhttp
             implementation("io.ktor:ktor-client-okhttp:3.1.2")
-
-
         }
         desktopMain.dependencies {
 

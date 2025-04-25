@@ -1,4 +1,4 @@
-package com.dian.prueba.NavigationScroll
+package com.dian.prueba.model
 
 enum class AmazonCategory(val categoryName: String){
     SUPERMERCADO("Supermercado"),

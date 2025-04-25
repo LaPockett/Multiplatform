@@ -1,4 +1,4 @@
-package com.dian.prueba.ui
+package com.dian.prueba.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,7 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-
+// SIN USO
 @Composable
 fun WelcomeScreen (name: String, navController: NavHostController) {
     Column (

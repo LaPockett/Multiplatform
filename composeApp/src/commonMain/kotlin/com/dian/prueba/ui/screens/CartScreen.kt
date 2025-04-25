@@ -1,20 +1,19 @@
-package com.dian.prueba.Screens
+package com.dian.prueba.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.*
-import com.dian.prueba.ui.WebViewSearch
+import com.dian.prueba.ui.components.WebViewCart
 
 @Composable
-fun SearchScreen(){
+fun CartScreen(){
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
-
     ){
-        WebViewSearch(
-            modifier = Modifier.fillMaxSize()
+        WebViewCart(
+            modifier = Modifier.fillMaxWidth()
         )
-
     }
 }

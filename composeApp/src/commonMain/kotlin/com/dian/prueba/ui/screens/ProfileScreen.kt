@@ -1,4 +1,4 @@
-package com.dian.prueba.Screens
+package com.dian.prueba.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -9,7 +9,7 @@ import androidx.compose.ui.*
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.dian.prueba.ui.WebViewAccount
+import com.dian.prueba.ui.components.WebViewAccount
 
 @Composable
 fun ProfileScreen(navController: NavController){

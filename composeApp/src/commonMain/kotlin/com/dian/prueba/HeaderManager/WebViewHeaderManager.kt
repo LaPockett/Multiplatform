@@ -1,6 +1,6 @@
 package com.dian.prueba.HeaderManager
 
-import com.dian.prueba.Log.Logger
+import com.dian.prueba.utilities.Logger
 
 object WebViewHeaderManager {
 

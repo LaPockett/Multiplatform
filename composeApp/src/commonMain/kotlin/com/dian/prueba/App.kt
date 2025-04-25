@@ -28,12 +28,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
-import com.dian.prueba.API.APIClient
-import com.dian.prueba.Navigation.Screen
-import com.dian.prueba.Navigation.navigationItems
-import com.dian.prueba.Screens.*
-import com.dian.prueba.ui.BrandScreen
-import com.dian.prueba.ui.WelcomeScreen
+import com.dian.prueba.navigation.Screen
+import com.dian.prueba.navigation.navigationItems
+import com.dian.prueba.ui.screens.BrandScreen
+import com.dian.prueba.ui.screens.WelcomeScreen
+import com.dian.prueba.ui.screens.CartScreen
+import com.dian.prueba.ui.screens.HomeScreen
+import com.dian.prueba.ui.screens.ProfileScreen
+import com.dian.prueba.ui.screens.SearchScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 //expo react native
@@ -93,6 +95,7 @@ fun App() {
 /**
  * APP AMAZON
  */
+
 @Composable
 fun AppNavigation() {
 

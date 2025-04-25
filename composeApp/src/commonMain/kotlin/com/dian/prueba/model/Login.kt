@@ -1,4 +1,4 @@
-package com.dian.prueba.DataClass
+package com.dian.prueba.model
 
 import kotlinx.serialization.Serializable
 

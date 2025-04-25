@@ -1,4 +1,4 @@
-package com.dian.prueba.Log
+package com.dian.prueba.utilities
 
 /**
  * Centralización de logging para no llenar de prints

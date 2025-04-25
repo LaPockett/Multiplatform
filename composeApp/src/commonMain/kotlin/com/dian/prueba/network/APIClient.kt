@@ -1,7 +1,7 @@
-package com.dian.prueba.API
+package com.dian.prueba.network
 
-import com.dian.prueba.DataClass.Login
-import com.dian.prueba.Log.Logger
+import com.dian.prueba.model.Login
+import com.dian.prueba.utilities.Logger
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.contentnegotiation.*

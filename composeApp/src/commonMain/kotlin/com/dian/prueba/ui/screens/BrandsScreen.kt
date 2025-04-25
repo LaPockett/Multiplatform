@@ -1,4 +1,4 @@
-package com.dian.prueba.ui
+package com.dian.prueba.ui.screens
 
 import androidx.compose.material.*
 import androidx.compose.foundation.layout.Box
@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.text.style.*
-
+//SIN USO
 @Composable
 fun BrandScreen(){
     val luxuryBrands = listOf(

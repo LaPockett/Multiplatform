@@ -1,4 +1,4 @@
-package com.dian.prueba.Navigation
+package com.dian.prueba.navigation
 
 sealed class Screen (val route: String){
     object Home: Screen("home")
