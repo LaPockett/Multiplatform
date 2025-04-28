@@ -1,5 +1,6 @@
 package com.dian.prueba
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +19,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -36,13 +38,14 @@ import com.dian.prueba.ui.screens.CartScreen
 import com.dian.prueba.ui.screens.HomeScreen
 import com.dian.prueba.ui.screens.ProfileScreen
 import com.dian.prueba.ui.screens.SearchScreen
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import com.dian.prueba.utilities.Logger
 
 //expo react native
 // cpu bench
 // mirar hot reload en Android Studio
+
+val logger = Logger()
 @Composable
-@Preview
 fun App() {
     MaterialTheme {
         val title by remember { mutableStateOf("Welcome to multiplatform") }
@@ -90,6 +93,42 @@ fun App() {
         }
 
     }
+}
+
+@Composable
+fun AppLogin(){
+    val navController: NavHostController = rememberNavController()
+    var textFieldName by remember { mutableStateOf("Prueba") }
+    NavHost(
+        navController=navController,
+        startDestination = "login"
+    ) {
+        composable(route = "login"){
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ){
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ){
+                    Button(
+                        onClick = {
+                            logger.warn("El usuario ha hecho click en login", "LoginScreen")
+                            navController.navigate("AppNavigation")
+                        }
+
+                    ){
+                        Text("Iniciar sesión")
+                    }
+                }
+
+            }
+        }
+        composable("AppNavigation") {
+            AppNavigation()
+        }
+    }
+
 }
 
 /**

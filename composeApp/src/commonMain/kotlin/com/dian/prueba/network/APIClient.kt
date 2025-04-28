@@ -26,7 +26,7 @@ class APIClient {
         }
     }
 
-    suspend fun requestLogin(id: Int): String? {
+    suspend fun requestLogin(id: String): String? {
         logger.warn("Iniciando login...", "requestLogin")
 
         return try {

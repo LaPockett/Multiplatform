@@ -7,7 +7,7 @@ class LoginRepo (
     private val apiClient: APIClient = APIClient(),
     private val logger: Logger = Logger()
 ){
-    suspend fun login (id: Int): String? {
+    suspend fun login (id: String): String? {
         logger.warn("Haciendo login en LoginRepo...", "LoginRepo")
         return apiClient.requestLogin(id)
     }
