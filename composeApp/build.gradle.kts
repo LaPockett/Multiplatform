@@ -53,6 +53,8 @@ kotlin {
             implementation("io.ktor:ktor-client-content-negotiation:3.1.2")
             // https://mvnrepository.com/artifact/io.ktor/ktor-client-okhttp
             implementation("io.ktor:ktor-client-okhttp:3.1.2")
+            //https://github.com/russhwolf/multiplatform-settings
+            implementation("com.russhwolf:multiplatform-settings-no-arg:1.3.0")
         }
         desktopMain.dependencies {
 

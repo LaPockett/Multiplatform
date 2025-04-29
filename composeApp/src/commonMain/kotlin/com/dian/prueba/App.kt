@@ -14,6 +14,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material3.NavigationBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -23,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -39,6 +41,7 @@ import com.dian.prueba.ui.screens.HomeScreen
 import com.dian.prueba.ui.screens.ProfileScreen
 import com.dian.prueba.ui.screens.SearchScreen
 import com.dian.prueba.utilities.Logger
+import com.dian.prueba.viewModel.LoginVM
 
 //expo react native
 // cpu bench
@@ -96,9 +99,9 @@ fun App() {
 }
 
 @Composable
-fun AppLogin(){
+fun AppLogin(viewModel: LoginVM = LoginVM()){
+    val token by viewModel.tokens.collectAsState()
     val navController: NavHostController = rememberNavController()
-    var textFieldName by remember { mutableStateOf("Prueba") }
     NavHost(
         navController=navController,
         startDestination = "login"
@@ -114,12 +117,17 @@ fun AppLogin(){
                     Button(
                         onClick = {
                             logger.warn("El usuario ha hecho click en login", "LoginScreen")
-                            navController.navigate("AppNavigation")
+                            viewModel.loginUser(5)
+                            if (token != null) {
+                                logger.debug(token.toString(), "LoginScreen")
+                                navController.navigate("AppNavigation")
+                            }
                         }
 
                     ){
                         Text("Iniciar sesión")
                     }
+
                 }
 
             }
