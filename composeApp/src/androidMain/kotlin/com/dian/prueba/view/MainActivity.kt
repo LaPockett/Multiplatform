@@ -25,11 +25,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-
         setContent {
             //App()
             //AppNavigation()
-            AppLogin(loginViewModel)
+            AppLogin()
         }
     }
 }

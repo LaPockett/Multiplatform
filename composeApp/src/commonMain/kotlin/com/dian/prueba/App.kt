@@ -38,6 +38,7 @@ import com.dian.prueba.ui.screens.BrandScreen
 import com.dian.prueba.ui.screens.WelcomeScreen
 import com.dian.prueba.ui.screens.CartScreen
 import com.dian.prueba.ui.screens.HomeScreen
+import com.dian.prueba.ui.screens.LoginScreen
 import com.dian.prueba.ui.screens.ProfileScreen
 import com.dian.prueba.ui.screens.SearchScreen
 import com.dian.prueba.utilities.Logger
@@ -47,7 +48,6 @@ import com.dian.prueba.viewModel.LoginVM
 // cpu bench
 // mirar hot reload en Android Studio
 
-val logger = Logger()
 @Composable
 fun App() {
     MaterialTheme {
@@ -99,44 +99,8 @@ fun App() {
 }
 
 @Composable
-fun AppLogin(viewModel: LoginVM = LoginVM()){
-    val token by viewModel.tokens.collectAsState()
-    val navController: NavHostController = rememberNavController()
-    NavHost(
-        navController=navController,
-        startDestination = "login"
-    ) {
-        composable(route = "login"){
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ){
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ){
-                    Button(
-                        onClick = {
-                            logger.warn("El usuario ha hecho click en login", "LoginScreen")
-                            viewModel.loginUser(5)
-                            if (token != null) {
-                                logger.debug(token.toString(), "LoginScreen")
-                                navController.navigate("AppNavigation")
-                            }
-                        }
-
-                    ){
-                        Text("Iniciar sesión")
-                    }
-
-                }
-
-            }
-        }
-        composable("AppNavigation") {
-            AppNavigation()
-        }
-    }
-
+fun AppLogin(){
+    LoginScreen()
 }
 
 /**

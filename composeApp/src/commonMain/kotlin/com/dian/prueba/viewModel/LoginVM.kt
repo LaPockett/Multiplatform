@@ -22,6 +22,7 @@ class LoginVM(
             access?.let {
                 val t = Tokens(accessToken = it)
                 _tokens.value = t
+                logger.debug(t.toString(), "LoginVM")
                 TokenStorage.saveTokens(t)
                 logger.debug(t.toString(), "LoginVM")
             }
