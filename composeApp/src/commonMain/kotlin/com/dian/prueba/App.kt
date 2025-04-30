@@ -32,6 +32,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
+import com.dian.prueba.navigation.BottomNavigationBar
 import com.dian.prueba.navigation.Screen
 import com.dian.prueba.navigation.navigationItems
 import com.dian.prueba.ui.screens.BrandScreen
@@ -48,6 +49,9 @@ import com.dian.prueba.viewModel.LoginVM
 // cpu bench
 // mirar hot reload en Android Studio
 
+/**
+ * NO SE USA
+ */
 @Composable
 fun App() {
     MaterialTheme {
@@ -149,35 +153,5 @@ fun AppNavigation() {
     }
 }
 
-@Composable
-fun BottomNavigationBar(navController: NavController) {
-    val selectedNavigationIndex = rememberSaveable { mutableStateOf(0) }
-    NavigationBar(
-        containerColor = Color.White
-    ) {
-        navigationItems.forEachIndexed { index, item ->
-            BottomNavigationItem(
-                selected = selectedNavigationIndex.value == index,
-                onClick = {
-                    selectedNavigationIndex.value = index
-                    navController.navigate(item.route)
-                },
-                icon = {
-                    Icon(
-                        imageVector = item.icon,
-                        contentDescription = item.title
-                    )
-                },
-                label = {
-                    Text(text = item.title,
-                        color = if (index == selectedNavigationIndex.value)
-                            Color.Black
-                        else Color.Gray
-                    )
-                }
-            )
-        }
-    }
-}
 
 

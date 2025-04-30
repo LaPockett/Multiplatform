@@ -18,11 +18,9 @@ import com.dian.prueba.AppNavigation
 import com.dian.prueba.utilities.Logger
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.*
-import androidx.lifecycle.lifecycleScope
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
+import com.dian.prueba.ui.components.dialogs.showAlertDialogLogin
 import com.dian.prueba.utilities.TokenStorage
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 
 @Composable
 fun LoginScreen(viewModel: LoginVM = LoginVM()){
@@ -94,7 +92,7 @@ fun LoginScreen(viewModel: LoginVM = LoginVM()){
                 }
             }
             if (showDialog){
-                showAlertDialog(
+                showAlertDialogLogin(
                     texto = "Debes introducir un email y una contraseña",
                     onDismissRequest = {showDialog = false}
                 )
@@ -107,19 +105,3 @@ fun LoginScreen(viewModel: LoginVM = LoginVM()){
     }
 }
 
-@Composable
-fun showAlertDialog(
-    texto: String,
-    onDismissRequest: () -> Unit
-){
-    AlertDialog(
-        onDismissRequest = onDismissRequest,
-        text = { Text(text = texto) },
-        confirmButton = {
-            Button(onClick = onDismissRequest) {
-                Text("Cerrar")
-            }
-        }
-    )
-
-}
