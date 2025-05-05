@@ -16,9 +16,9 @@ class LoginVM(
     private val _tokens = MutableStateFlow<Tokens?>(null)
     val tokens: StateFlow<Tokens?> = _tokens
 
-    private fun getRandomString(length: Int) : String {
+    private fun getRandomString() : String {
         val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
-        return (1..length)
+        return (1..10)
             .map { allowedChars.random() }
             .joinToString("")
 
@@ -30,9 +30,8 @@ class LoginVM(
             access?.let {
                 logger.warn("Haciendo login en LoginViewModel...", "LoginVM")
 
-                val t = Tokens(accessToken = getRandomString(10), refreshToken = it)
+                val t = Tokens(accessToken = getRandomString(), refreshToken = it)
                 _tokens.value = t
-                logger.debug(t.toString(), "LoginVM")
                 TokenStorage.saveTokens(t)
                 logger.debug(t.toString(), "LoginVM")
             }

@@ -1,5 +1,5 @@
 package com.dian.prueba
-
+import com.dian.prueba.utilities.TokenStorage
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,6 +22,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
+import com.dian.prueba.HeaderManager.WebViewHeaderManager
 import com.dian.prueba.navigation.BottomNavigationBar
 import com.dian.prueba.navigation.Screen
 import com.dian.prueba.ui.screens.BrandScreen
@@ -33,6 +34,7 @@ import com.dian.prueba.ui.screens.ProfileScreen
 import com.dian.prueba.ui.screens.SearchScreen
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.viewModel.LoginVM
+import com.russhwolf.settings.Settings
 
 //expo react native
 // cpu bench
@@ -94,7 +96,23 @@ fun App() {
 
 @Composable
 fun AppLogin(){
-    LoginScreen()
+    val settings = Settings()
+    if (settings.getStringOrNull("access_token") == null){
+        //logger.debug(settings.getStringOrNull("refresh_token").toString(), "AppLogin")
+        LoginScreen()
+
+    } else {
+        logger.warn("El token no es nulo", "AppLogin")
+        logger.debug(settings.getStringOrNull("access_token").toString(), "AppLogin ACCESS TOKEN")
+        logger.debug(settings.getStringOrNull("refresh_token").toString(), "AppLogin REfresh token")
+        TokenStorage.loadTokens()
+        logger.debug(TokenStorage.loadTokens().toString(), "AppLogin TokenStorage")
+        WebViewHeaderManager.updateRefreshToken(TokenStorage.loadTokens()!!.refreshToken!!)
+        WebViewHeaderManager.updateAccessToken(TokenStorage.loadTokens()!!.accessToken)
+        logger.debug(WebViewHeaderManager.getHeaders().toString(), "AppLogin WebViewHeaderManager")
+        logger.warn("Ingresando a AppNavigation", "AppLogin")
+        AppNavigation()
+    }
 }
 
 /**

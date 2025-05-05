@@ -12,9 +12,10 @@ object TokenStorage {
 
     fun saveTokens(tokens: Tokens) {
         settings[ACCESS_TOKEN_KEY] = tokens.accessToken
-        tokens.refreshToken?.let {
+        settings[REFRESH_TOKEN_KEY] = tokens.refreshToken  //
+        /*tokens.refreshToken?.let {
             settings[REFRESH_TOKEN_KEY] = it
-        }
+        }*/
     }
 
     fun loadTokens(): Tokens? {
