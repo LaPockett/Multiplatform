@@ -16,22 +16,34 @@ class LoginVM(
     private val _tokens = MutableStateFlow<Tokens?>(null)
     val tokens: StateFlow<Tokens?> = _tokens
 
+    private fun getRandomString(length: Int) : String {
+        val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
+        return (1..length)
+            .map { allowedChars.random() }
+            .joinToString("")
+
+    }
+
     fun loginUser(id: Int) {
         viewModelScope.launch {
             val access = loginRepo.login(id)
             access?.let {
-                val t = Tokens(accessToken = it)
+                logger.warn("Haciendo login en LoginViewModel...", "LoginVM")
+
+                val t = Tokens(accessToken = getRandomString(10), refreshToken = it)
                 _tokens.value = t
                 logger.debug(t.toString(), "LoginVM")
                 TokenStorage.saveTokens(t)
                 logger.debug(t.toString(), "LoginVM")
             }
         }
+
     }
 
     fun loadSavedTokens() {
         _tokens.value = TokenStorage.loadTokens()
     }
+
 }
 
 /**

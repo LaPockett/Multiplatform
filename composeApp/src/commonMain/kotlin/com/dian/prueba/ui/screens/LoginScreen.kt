@@ -23,14 +23,13 @@ import com.dian.prueba.ui.components.dialogs.showAlertDialogLogin
 import com.dian.prueba.utilities.TokenStorage
 
 @Composable
-fun LoginScreen(viewModel: LoginVM = LoginVM()){
+fun LoginScreen(){
     val loginViewModel = LoginVM()
+    // No se hará nada con el email del usuario
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    val token by viewModel.tokens.collectAsState()
     val logger = Logger()
     val navController: NavHostController = rememberNavController()
-    //var stateButton by remember{ mutableStateOf(false) }
     var showDialog by remember {mutableStateOf(false)}
     NavHost(
         navController = navController,
@@ -63,21 +62,32 @@ fun LoginScreen(viewModel: LoginVM = LoginVM()){
                     Button(
                         onClick = {
 
-                            /** Cuando le daba click el token era nulo por lo que no nos llevaba al AppNavigation
-                            * Cuando le vuelves a dar click por segunda vez sí nos lleva porque el token se carga
-                            * Se ha cambiado lo del token, pero no creo que esté bien, así que lo tengo que revisar
-                             * Le he dado un poco más de formato al Login con un email y password y si el
-                             * usuario no pone algún dato le salta un AlertDialog, pero de momento no se
-                             * hace nada con esos datos.
+                            /**
+                             * Ahora lo que hago es que desde el viewModel se genere el accessToken que son
+                             * 10 caracteres de letras aleatorias y se lo paso al WebViewHeaderManager
+                             * Esto está mal pero la LoginCookie es la contraseña del usuario
+                             * EL refresh_token es el email del usuario
+                             * Cada vez que se haga login (desde el button) se va a generar un nuevo accessToken
                             */
                             if (email.isNotEmpty() && password.isNotEmpty()) {
-                                loginViewModel.loadSavedTokens()
-                                WebViewHeaderManager.updateLoginCookie(password)
-                                logger.debug(WebViewHeaderManager.getHeaders().toString(), "LoginScreen")
-                                logger.warn("El usuario ha hecho click en login", "LoginScreen")
+                                logger.warn("WARN - El usuario ha hecho click en login", "LoginScreen")
+
+                                loginViewModel.loadSavedTokens() //!!
+
+                                loginViewModel.loginUser(5) // Lucio_Hettinger@annie.ca
+                                loginViewModel.tokens.value?.accessToken?.let { tokens ->
+                                    WebViewHeaderManager.updateAccessToken(tokens)
+                                    WebViewHeaderManager.updateLoginCookie(password)
+                                }
+                                loginViewModel.tokens.value?.refreshToken?.let { tokens ->
+                                    WebViewHeaderManager.updateRefreshToken(tokens)
+                                }
                                 TokenStorage.saveTokens(loginViewModel.tokens.value!!)
-                                logger.debug(loginViewModel.tokens.value.toString(), "LoginScreen access Token")
+
+                                logger.debug(loginViewModel.tokens.value.toString(), "LoginScreen tokens values")
+
                                 navController.navigate("AppNavigation")
+
                             } else {
                                 showDialog = true
                             }

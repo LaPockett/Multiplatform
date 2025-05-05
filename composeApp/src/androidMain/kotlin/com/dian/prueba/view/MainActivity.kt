@@ -13,18 +13,22 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
-    private val loginViewModel = LoginVM()
+    //private val loginViewModel = LoginVM()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        loginViewModel.loadSavedTokens()
+        //loginViewModel.loadSavedTokens()
 
-        lifecycleScope.launch {
+        /*lifecycleScope.launch {
             loginViewModel.tokens.collectLatest { token ->
                 token?.accessToken?.let {
-                    WebViewHeaderManager.updateLoginCookie(it)
+                    WebViewHeaderManager.updateAccessToken(it)
+                }
+                token?.refreshToken?.let {
+                    WebViewHeaderManager.updateAccessToken(it)
+                    WebViewHeaderManager.updateRefreshToken(it)
                 }
             }
-        }
+        }*/
         setContent {
             //App()
             //AppNavigation()

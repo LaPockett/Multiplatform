@@ -12,4 +12,16 @@ object WebViewHeaderManager {
         logger.debug(headers.toString(), "WebViewHeaderManager")
     }
     fun getHeaders(): Map<String, String> = headers
+
+    fun updateAccessToken(it: String) {
+        headers["Authorization"] = "BearerAccessToken $it"
+        logger.debug(headers.toString(), "WebViewHeaderManager")
+    }
+
+    fun updateRefreshToken(it : String) {
+        headers["Refresh"] = "Bearer $it"
+        logger.debug(headers.toString(), "WebViewHeaderManager")
+    }
+
+
 }
