@@ -55,6 +55,10 @@ kotlin {
             implementation("io.ktor:ktor-client-okhttp:3.1.2")
             //https://github.com/russhwolf/multiplatform-settings
             implementation("com.russhwolf:multiplatform-settings-no-arg:1.3.0")
+            //Json Web Token
+            api("io.jsonwebtoken:jjwt-api:0.12.6")
+            implementation("io.jsonwebtoken:jjwt-impl:0.12.6")
+            implementation("io.jsonwebtoken:jjwt-orgjson:0.12.6")
         }
         desktopMain.dependencies {
 
