@@ -30,7 +30,7 @@ class LoginVM(
             access?.let {
                 logger.warn("Haciendo login en LoginViewModel...", "LoginVM")
 
-                val t = Tokens(accessToken = getRandomString(), refreshToken = it)
+                val t = Tokens(accessToken = it, refreshToken = getRandomString())
                 _tokens.value = t
                 TokenStorage.saveTokens(t)
                 logger.debug(t.toString(), "LoginVM")

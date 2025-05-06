@@ -97,8 +97,8 @@ fun App() {
 @Composable
 fun AppLogin(){
     val settings = Settings()
-    if (settings.getStringOrNull("access_token") == null){
-        //logger.debug(settings.getStringOrNull("refresh_token").toString(), "AppLogin")
+    if (settings.getStringOrNull("refresh_token") == null){
+        logger.debug(settings.getStringOrNull("refresh_token").toString(), "AppLogin")
         LoginScreen()
 
     } else {

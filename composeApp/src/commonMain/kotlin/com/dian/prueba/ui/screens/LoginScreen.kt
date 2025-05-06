@@ -84,7 +84,7 @@ fun LoginScreen(){
                                 }
                                 TokenStorage.saveTokens(loginViewModel.tokens.value!!)
 
-                                logger.debug(loginViewModel.tokens.value.toString(), "LoginScreen tokens values")
+                                logger.debug(WebViewHeaderManager.getHeaders().toString(), "LoginScreen WebViewHeaderManager")
 
                                 navController.navigate("AppNavigation")
 
