@@ -82,7 +82,7 @@ fun LoginScreen(){
                                 loginViewModel.tokens.value?.refreshToken?.let { tokens ->
                                     WebViewHeaderManager.updateRefreshToken(tokens)
                                 }
-                                TokenStorage.saveTokens(loginViewModel.tokens.value!!)
+                                //TokenStorage.saveTokens(loginViewModel.tokens.value!!)
 
                                 logger.debug(WebViewHeaderManager.getHeaders().toString(), "LoginScreen WebViewHeaderManager")
 
