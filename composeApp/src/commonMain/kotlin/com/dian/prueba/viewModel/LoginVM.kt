@@ -6,7 +6,9 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.*
 import androidx.lifecycle.*
 import com.dian.prueba.model.Tokens
+import com.dian.prueba.network.APIClient
 import com.dian.prueba.utilities.TokenStorage
+import com.dian.prueba.utilities.UpdateStorage
 
 class LoginVM(
     private val loginRepo: LoginRepo = LoginRepo()
@@ -15,6 +17,10 @@ class LoginVM(
     private val logger = Logger()
     private val _tokens = MutableStateFlow<Tokens?>(null)
     val tokens: StateFlow<Tokens?> = _tokens
+    val showUpdateDialog = MutableStateFlow(false)
+    val mustUpdate = MutableStateFlow(false)
+    val apiClient = APIClient()
+
 
     private fun getRandomString() : String {
         val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
@@ -41,6 +47,16 @@ class LoginVM(
 
     fun loadSavedTokens() {
         _tokens.value = TokenStorage.loadTokens()
+    }
+    fun checkForUpdates(){
+        viewModelScope.launch {
+            val update = apiClient.checkUpdateAvailable()
+            val updateDone = UpdateStorage.getUpdateDone()?.updateDone == true
+            if (update.updateAvailable && !updateDone){
+                showUpdateDialog.value = true
+                mustUpdate.value = update.mustUpdate
+            }
+        }
     }
 
 }

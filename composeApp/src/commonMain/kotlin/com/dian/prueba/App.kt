@@ -10,12 +10,15 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -27,6 +30,7 @@ import com.dian.prueba.navigation.BottomNavigationBar
 import com.dian.prueba.navigation.Screen
 import com.dian.prueba.network.generarToken
 import com.dian.prueba.network.prueba2
+import com.dian.prueba.ui.components.dialogs.UpdateAlertDialog
 import com.dian.prueba.ui.screens.BrandScreen
 import com.dian.prueba.ui.screens.WelcomeScreen
 import com.dian.prueba.ui.screens.CartScreen
@@ -117,6 +121,7 @@ fun AppLogin(){
         logger.debug(WebViewHeaderManager.getHeaders().toString(), "AppLogin WebViewHeaderManager")
         logger.warn("Ingresando a AppNavigation", "AppLogin")
         AppNavigation()
+
     }
 }
 
@@ -131,8 +136,11 @@ fun AppNavigation() {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
     val showBars = currentRoute != Screen.Profile.route
-    val loginViewModel = LoginVM()
-
+    val viewModel : LoginVM = viewModel()
+    LaunchedEffect (Unit){
+        logger.warn("Checking for updates...", "AppNavigation")
+        viewModel.checkForUpdates()
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -165,6 +173,10 @@ fun AppNavigation() {
             graph = graph,
             modifier = Modifier.padding(innerPadding)
         )
+    }
+
+    if (viewModel.showUpdateDialog.collectAsState().value){
+        UpdateAlertDialog(viewModel = viewModel)
     }
 }
 

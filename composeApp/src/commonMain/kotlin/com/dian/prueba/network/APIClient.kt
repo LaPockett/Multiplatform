@@ -1,6 +1,7 @@
 package com.dian.prueba.network
 
 import com.dian.prueba.model.Login
+import com.dian.prueba.model.UpdateInfo
 import com.dian.prueba.utilities.Logger
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -39,6 +40,13 @@ class APIClient {
             logger.error(e, "requestLoginException")
             null
         }
+    }
+    fun checkUpdateAvailable(): UpdateInfo {
+        logger.warn("Checking for updates...", "checkUpdateAvailable")
+        return UpdateInfo(
+            updateAvailable = true,
+            mustUpdate = false
+        )
     }
 
 }
