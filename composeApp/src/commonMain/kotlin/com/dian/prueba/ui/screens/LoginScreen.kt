@@ -1,6 +1,5 @@
 package com.dian.prueba.ui.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -9,71 +8,34 @@ import androidx.navigation.compose.rememberNavController
 import com.dian.prueba.viewModel.LoginVM
 import androidx.navigation.compose.composable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Person
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.*
-import androidx.compose.material3.*
+import androidx.compose.material.*
 import androidx.compose.runtime.mutableStateOf
+import com.dian.prueba.AppNavigation
 import com.dian.prueba.utilities.Logger
 import androidx.compose.runtime.*
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.*
-import androidx.navigation.compose.currentBackStackEntryAsState
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
-import com.dian.prueba.navigation.Screen
-import com.dian.prueba.network.APIClient
-import com.dian.prueba.repository.LoginRepositoryImpl
-import com.dian.prueba.ui.components.MenuDrawer
-import com.dian.prueba.ui.components.dialogs.InvalidDataAlertDialogLogin
 import com.dian.prueba.ui.components.dialogs.showAlertDialogLogin
-import com.dian.prueba.utilities.LoginValidator
-import com.dian.prueba.utilities.TokenStorageImpl
-import com.dian.prueba.utilities.UpdateStorageImpl
-import com.dian.prueba.utilities.Resultado
-import com.russhwolf.settings.Settings
-import multiplatform.composeapp.generated.resources.Res
-import multiplatform.composeapp.generated.resources.logo
-import org.jetbrains.compose.resources.painterResource
+import com.dian.prueba.utilities.TokenStorage
 
 @Composable
-fun LoginScreen(navController: NavHostController){
-    val currentBackStackEntry = navController.currentBackStackEntryAsState()
-
-    val loginViewModel = remember {
-        LoginVM(
-            loginRepository = LoginRepositoryImpl(
-                apiService = APIClient(
-                    updateStorage = UpdateStorageImpl(
-                        settings = Settings()
-                    )
-                )
-            ),
-            tokenStorage = TokenStorageImpl(
-                settings = Settings()
-            )
-        )
-    }
+fun LoginScreen(){
+    val loginViewModel = LoginVM()
     // No se hará nada con el email del usuario
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    val logger = Logger("LoginScreen")
+    val logger = Logger()
+    val navController: NavHostController = rememberNavController()
     var showDialog by remember {mutableStateOf(false)}
-    var showDialogInvalidData by remember {mutableStateOf(false)}
-    LaunchedEffect(currentBackStackEntry.value) {
-        email = ""
-        password = ""
-    }
     NavHost(
         navController = navController,
-        startDestination = Screen.Login.route
+        startDestination = "login"
     ){
-        composable(route = Screen.Login.route){
+        composable(route = "login"){
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -81,25 +43,10 @@ fun LoginScreen(navController: NavHostController){
                 Column (
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
-                    // En vez de solo poner 'R', se pone 'Res'
-                    Image(
-                        painter = painterResource(Res.drawable.logo),
-                        contentDescription = "Logo",
-                        modifier = Modifier.size(100.dp).aspectRatio(1f)
-                            .clip(MaterialTheme.shapes.medium).fillMaxWidth()
-                    )
-                    Spacer(
-                        modifier = Modifier.padding(16.dp)
-                    )
                     OutlinedTextField(
                         value = email,
                         onValueChange = {email = it},
-                        label = { Text("Email") },
-                        colors = OutlinedTextFieldDefaults.colors(
-                            // Color crema más claro #f7f4f0
-                            unfocusedBorderColor = Color(0xFFb7af98),
-                            focusedBorderColor = Color(0xFFf7f4f0)
-                        )
+                        label = { Text("Email") }
                     )
                     Spacer(
                         modifier = Modifier.padding(16.dp)
@@ -107,13 +54,7 @@ fun LoginScreen(navController: NavHostController){
                     OutlinedTextField(
                         value = password,
                         onValueChange = {password = it},
-                        label = {Text("Contraseña")},
-                        colors = OutlinedTextFieldDefaults.colors(
-                            // Color crema más claro #f7f4f0
-                            unfocusedBorderColor = Color(0xFFb7af98),
-                            focusedBorderColor = Color(0xFFf7f4f0)
-                        ),
-                        visualTransformation = PasswordVisualTransformation()
+                        label = {Text("Contraseña")}
                     )
                     Spacer(
                         modifier = Modifier.padding(16.dp)
@@ -128,46 +69,31 @@ fun LoginScreen(navController: NavHostController){
                              * EL refresh_token es el email del usuario
                              * Cada vez que se haga login (desde el button) se va a generar un nuevo accessToken
                             */
-                            when (LoginValidator.validateLogin(email, password)) {
-                                Resultado.Valid -> {
-                                    logger.warn("WARN - El usuario ha hecho click en login")
+                            if (email.isNotEmpty() && password.isNotEmpty()) {
+                                logger.warn("WARN - El usuario ha hecho click en login", "LoginScreen")
 
-                                    loginViewModel.loadSavedTokens() //!!
+                                loginViewModel.loadSavedTokens() //!!
 
-                                    loginViewModel.loginUser(5) // Lucio_Hettinger@annie.ca
-                                    loginViewModel.tokens.value?.accessToken?.let { tokens ->
-                                        WebViewHeaderManager.updateAccessToken(tokens)
-                                        WebViewHeaderManager.updateLoginCookie(password)
-                                    }
-                                    loginViewModel.tokens.value?.refreshToken?.let { tokens ->
-                                        WebViewHeaderManager.updateRefreshToken(tokens)
-                                    }
-                                    //TokenStorage.saveTokens(loginViewModel.tokens.value!!)
-
-                                    logger.debug(WebViewHeaderManager.getHeaders().toString())
-                                    logger.warn("El usuario ha hecho click en login")
-                                    navController.navigate("MenuDrawer") {
-                                        popUpTo("login") { inclusive = true }
-                                    }
+                                loginViewModel.loginUser(5) // Lucio_Hettinger@annie.ca
+                                loginViewModel.tokens.value?.accessToken?.let { tokens ->
+                                    WebViewHeaderManager.updateAccessToken(tokens)
+                                    WebViewHeaderManager.updateLoginCookie(password)
                                 }
-                                Resultado.Empty -> showDialog = true
-                                Resultado.Invalid -> showDialogInvalidData = true
+                                loginViewModel.tokens.value?.refreshToken?.let { tokens ->
+                                    WebViewHeaderManager.updateRefreshToken(tokens)
+                                }
+                                //TokenStorage.saveTokens(loginViewModel.tokens.value!!)
+
+                                logger.debug(WebViewHeaderManager.getHeaders().toString(), "LoginScreen WebViewHeaderManager")
+
+                                navController.navigate("AppNavigation")
+
+                            } else {
+                                showDialog = true
                             }
                         },
-                        enabled = true,
-                        colors = ButtonDefaults.buttonColors(
-                            // Color crema #b7af98
-                            backgroundColor = Color(0xFFb7af98),
-                            contentColor = Color.White
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-
+                        enabled = true
                     ){
-                        Icon(
-                            Icons.Default.Person,
-                            contentDescription = "Login",
-                            modifier = Modifier.padding(end=6.dp)
-                        )
                         Text("Iniciar sesión")
                     }
                     Spacer(
@@ -181,19 +107,10 @@ fun LoginScreen(navController: NavHostController){
                     onDismissRequest = {showDialog = false}
                 )
             }
-            if (showDialogInvalidData){
-                InvalidDataAlertDialogLogin(
-                    onDismissRequest = {showDialogInvalidData = false}
-                )
-            }
 
         }
-        composable(route = "MenuDrawer"){
-            MenuDrawer(onLogout = {
-                navController.navigate("login"){
-                    popUpTo(0){inclusive = true}
-                }
-            })
+        composable(route = "AppNavigation"){
+            AppNavigation()
         }
     }
 }

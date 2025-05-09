@@ -1,78 +1,53 @@
 package com.dian.prueba.ui.components.dialogs
 
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.dian.prueba.model.UpdateInfoUser
 import com.dian.prueba.utilities.Logger
-import com.dian.prueba.viewModel.UpdateVM
+import com.dian.prueba.utilities.UpdateStorage
+import com.dian.prueba.viewModel.LoginVM
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Preview
 @Composable
-fun UpdateAlertDialog(viewModel: UpdateVM = viewModel()) {
-    val logger = Logger("UpdateAlertDialog")
+fun UpdateAlertDialog(
+    viewModel: LoginVM = viewModel()
+){
+    val logger  = Logger()
     val uriHandler = LocalUriHandler.current
-    val updateInfo = viewModel.updateInfo.collectAsState().value
-
-    if (updateInfo == null || !viewModel.showUpdateDialog.collectAsState().value) return
     AlertDialog(
         onDismissRequest = {
-            if (!updateInfo.mustUpdate) {
+            if (!viewModel.mustUpdate.value){
                 viewModel.showUpdateDialog.value = false
-                logger.debug(viewModel.showUpdateDialog.value.toString())
             }
         },
-        title = { Text(text = "Nueva actualización disponible", modifier = Modifier.testTag("updateTitle")
-        ) },
-        text = { Text(text = "Versión actual: ${updateInfo.currentVersion} Hay una nueva versión disponible de la aplicación: ${updateInfo.newVersion}. Es obligatorio actualizar") },
+        title = { Text(text = "Nueva actualización disponible") },
+        text = { Text(text = "Hay una nueva versión disponible de la aplicación. ¿Deseas actualizarla?") },
+
         confirmButton = {
             Button(onClick = {
+                UpdateStorage.setUpdateDone(UpdateInfoUser(true))
                 uriHandler.openUri("https://play.google.com/store/apps/details?id=com.amazon.mShop.android.shopping&hl=es&pli=1")
-                viewModel.doUpdate()
-                //viewModel.showUpdateDialog.value = false
-            }, modifier = Modifier.testTag("updateButton"),
-                colors = ButtonDefaults.buttonColors(
-                    // Color crema #b7af98
-                    backgroundColor = Color(0xFFb7af98),
-                    contentColor = Color.White
-                ),
-                shape = RoundedCornerShape(10.dp)) {
+                viewModel.showUpdateDialog.value = false
+            }) {
                 Text("Actualizar")
             }
         },
-
         dismissButton = {
-            // Lo dejo así para que sea visible el button ignore
-            if (!updateInfo.mustUpdate) {
+            logger.debug("El valor de mustUpdate es: ${viewModel.mustUpdate.value}", "UpdateAlertDialog")
+            if (!viewModel.mustUpdate.value){
                 Button(onClick = {
-                    /**
-                     * Aquí solo cerramos el diálogo sin actualizar la versión a 1.3
-                     */
-                    logger.debug("currentVersion: " + updateInfo.currentVersion)
-                    logger.debug("newVersion: " +updateInfo.newVersion)
                     viewModel.showUpdateDialog.value = false
-                },
-                    colors = ButtonDefaults.buttonColors(
-                        // Color crema #b7af98
-                        backgroundColor = Color(0xFFb7af98),
-                        contentColor = Color.White
-                    ),
-                    shape = RoundedCornerShape(10.dp),) {
+                }) {
                     Text("Ignorar")
                 }
             }
+
         }
+
     )
 }

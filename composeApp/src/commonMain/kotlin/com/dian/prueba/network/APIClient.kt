@@ -47,6 +47,13 @@ class APIClient (
             null
         }
     }
+    fun checkUpdateAvailable(): UpdateInfo {
+        logger.warn("Checking for updates...", "checkUpdateAvailable")
+        return UpdateInfo(
+            updateAvailable = true,
+            mustUpdate = false
+        )
+    }
 
     override fun checkUpdateAvailable(): UpdateInfo {
         logger.warn("Checking for updates...")
