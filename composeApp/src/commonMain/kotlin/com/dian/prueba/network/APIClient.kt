@@ -47,12 +47,20 @@ class APIClient (
             null
         }
     }
+
     fun checkUpdateAvailable(): UpdateInfo {
         logger.warn("Checking for updates...", "checkUpdateAvailable")
         return UpdateInfo(
             updateAvailable = true,
-            mustUpdate = false
+            mustUpdate = true,
+            needsUpdate = false,
+            currentVersion = "1.2",
+            newVersion = "1.3",
         )
+    }
+    fun updateApp() : UpdateInfo {
+        logger.warn("Updating app...", "updateApp")
+        return UpdateStorage.updateToNewVersion("1.3")
     }
 
     override fun checkUpdateAvailable(): UpdateInfo {
