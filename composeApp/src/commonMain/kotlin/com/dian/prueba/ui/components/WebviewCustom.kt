@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.*
 import com.dian.prueba.utilities.Logger
-import com.dian.prueba.HeaderManager.WebViewHeaderManager
+import com.dian.prueba.repository.WebViewHeaderManager
 import com.multiplatform.webview.web.WebContent
 import com.multiplatform.webview.web.WebView
 import com.multiplatform.webview.web.rememberWebViewState
