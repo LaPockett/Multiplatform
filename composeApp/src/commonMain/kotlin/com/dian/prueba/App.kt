@@ -28,9 +28,7 @@ import androidx.navigation.createGraph
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
 import com.dian.prueba.navigation.BottomNavigationBar
 import com.dian.prueba.navigation.Screen
-import com.dian.prueba.network.APIClient
 import com.dian.prueba.network.generarToken
-import com.dian.prueba.network.prueba2
 import com.dian.prueba.ui.components.dialogs.UpdateAlertDialog
 import com.dian.prueba.ui.screens.BrandScreen
 import com.dian.prueba.ui.screens.WelcomeScreen
@@ -41,7 +39,7 @@ import com.dian.prueba.ui.screens.ProfileScreen
 import com.dian.prueba.ui.screens.SearchScreen
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.utilities.UpdateStorage
-import com.dian.prueba.viewModel.LoginVM
+import com.dian.prueba.viewModel.UpdateVM
 import com.russhwolf.settings.Settings
 
 //expo react native
@@ -138,16 +136,11 @@ fun AppNavigation() {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
     val showBars = currentRoute != Screen.Profile.route
-    val apiClient = APIClient()
-    val viewModel : LoginVM = viewModel()
+    val updateVM : UpdateVM = viewModel()
 
     LaunchedEffect(Unit) {
         logger.warn("Checking for updates...", "AppNavigation")
-        //viewModel.loadSavedUpdateInfo()
-        //viewModel.checkForUpdate(viewModel.currentVersion.value)
-        logger.debug(viewModel.currentVersion.value, "AppNavigation-currentVersion")
-        logger.debug(viewModel.newVersion.value, "AppNavigation-newVersion")
-        logger.debug(viewModel.mustUpdate.value.toString(), "AppNavigation-mustUpdate")
+        updateVM.checkForUpdates()
     }
 
     logger.debug(UpdateStorage.loadUpdateInfo().toString(), "AppNavigation LOAD")
@@ -185,11 +178,14 @@ fun AppNavigation() {
         )
     }
 
-    if (viewModel.showUpdateDialog.collectAsState().value && viewModel.currentVersion.value != viewModel.newVersion.value){
+    /*if (viewModel.showUpdateDialog.collectAsState().value && viewModel.currentVersion.value != viewModel.newVersion.value){
         logger.debug(viewModel.currentVersion.value, "AppNavigation-currentVersion")
         logger.debug(viewModel.newVersion.value, "AppNavigation-newVersion")
         logger.warn("Tiene que salir el update dialog", "AppNavigation")
         UpdateAlertDialog(viewModel = viewModel)
+    }*/
+    if (updateVM.showUpdateDialog.collectAsState().value){
+        UpdateAlertDialog(viewModel = updateVM)
     }
 }
 
