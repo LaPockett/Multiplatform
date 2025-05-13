@@ -22,11 +22,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
-import com.dian.prueba.HeaderManager.WebViewHeaderManager
+import com.dian.prueba.repository.WebViewHeaderManager
 import com.dian.prueba.navigation.BottomNavigationBar
 import com.dian.prueba.navigation.Screen
 import com.dian.prueba.network.generarToken
-import com.dian.prueba.network.prueba2
 import com.dian.prueba.ui.screens.BrandScreen
 import com.dian.prueba.ui.screens.WelcomeScreen
 import com.dian.prueba.ui.screens.CartScreen
