@@ -10,26 +10,22 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
-import com.dian.prueba.HeaderManager.WebViewHeaderManager
+import com.dian.prueba.repository.WebViewHeaderManager
 import com.dian.prueba.navigation.BottomNavigationBar
 import com.dian.prueba.navigation.Screen
 import com.dian.prueba.network.generarToken
-import com.dian.prueba.ui.components.dialogs.UpdateAlertDialog
 import com.dian.prueba.ui.screens.BrandScreen
 import com.dian.prueba.ui.screens.WelcomeScreen
 import com.dian.prueba.ui.screens.CartScreen
@@ -38,8 +34,7 @@ import com.dian.prueba.ui.screens.LoginScreen
 import com.dian.prueba.ui.screens.ProfileScreen
 import com.dian.prueba.ui.screens.SearchScreen
 import com.dian.prueba.utilities.Logger
-import com.dian.prueba.utilities.UpdateStorage
-import com.dian.prueba.viewModel.UpdateVM
+import com.dian.prueba.viewModel.LoginVM
 import com.russhwolf.settings.Settings
 
 //expo react native
@@ -121,7 +116,6 @@ fun AppLogin(){
         logger.debug(WebViewHeaderManager.getHeaders().toString(), "AppLogin WebViewHeaderManager")
         logger.warn("Ingresando a AppNavigation", "AppLogin")
         AppNavigation()
-
     }
 }
 
@@ -136,14 +130,8 @@ fun AppNavigation() {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
     val showBars = currentRoute != Screen.Profile.route
-    val updateVM : UpdateVM = viewModel()
+    val loginViewModel = LoginVM()
 
-    LaunchedEffect(Unit) {
-        logger.warn("Checking for updates...", "AppNavigation")
-        updateVM.checkForUpdates()
-    }
-
-    logger.debug(UpdateStorage.loadUpdateInfo().toString(), "AppNavigation LOAD")
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -176,16 +164,6 @@ fun AppNavigation() {
             graph = graph,
             modifier = Modifier.padding(innerPadding)
         )
-    }
-
-    /*if (viewModel.showUpdateDialog.collectAsState().value && viewModel.currentVersion.value != viewModel.newVersion.value){
-        logger.debug(viewModel.currentVersion.value, "AppNavigation-currentVersion")
-        logger.debug(viewModel.newVersion.value, "AppNavigation-newVersion")
-        logger.warn("Tiene que salir el update dialog", "AppNavigation")
-        UpdateAlertDialog(viewModel = viewModel)
-    }*/
-    if (updateVM.showUpdateDialog.collectAsState().value){
-        UpdateAlertDialog(viewModel = updateVM)
     }
 }
 
