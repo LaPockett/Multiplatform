@@ -10,15 +10,10 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
-interface ApiService {
-    fun checkUpdateAvailable(): UpdateInfo
-    suspend fun requestLogin(id: String): String?
-}
 
-class APIClient (
-    private val updateStorage: UpdateStorage
-) : ApiService {
-    private val logger = Logger("APIClient")
+class APIClient {
+    private val logger = Logger()
+
     private var _loginToken: String? = null
     val loginToken: String? get() {
         return _loginToken
@@ -33,39 +28,24 @@ class APIClient (
         }
     }
 
-    override suspend fun requestLogin(id: String): String? {
-        logger.warn("Iniciando login...")
+    suspend fun requestLogin(id: String): String? {
+        logger.warn("Iniciando login...", "requestLogin")
 
         return try {
             val result: Login = client.get("https://jsonplaceholder.typicode.com/users/$id").body()
-            logger.debug(result.toString())
+            logger.debug(result.toString(), "JSON Response")
             _loginToken = result.email
-            logger.debug(_loginToken.toString())
+            logger.debug(_loginToken.toString(), "Login Token")
             _loginToken
         } catch (e: Exception) {
-            logger.error(e)
+            logger.error(e, "requestLoginException")
             null
         }
     }
 
     fun checkUpdateAvailable(): UpdateInfo {
         logger.warn("Checking for updates...", "checkUpdateAvailable")
-        return UpdateInfo(
-            updateAvailable = true,
-            mustUpdate = true,
-            needsUpdate = false,
-            currentVersion = "1.2",
-            newVersion = "1.3",
-        )
-    }
-    fun updateApp() : UpdateInfo {
-        logger.warn("Updating app...", "updateApp")
-        return UpdateStorage.updateToNewVersion("1.3")
-    }
-
-    override fun checkUpdateAvailable(): UpdateInfo {
-        logger.warn("Checking for updates...")
-        updateStorage.loadUpdateInfo()?.let { savedInfo ->
+        UpdateStorage.loadUpdateInfo()?.let { savedInfo ->
             if (savedInfo.currentVersion == savedInfo.newVersion){
                 return savedInfo
             }
@@ -76,4 +56,8 @@ class APIClient (
             newVersion = "1.3", // Desde aquí podemos cambiar a otra versión
         )
     }
+    /*fun updateApp() : UpdateInfo {
+        logger.warn("Updating app...", "updateApp")
+        return UpdateStorage.updateToNewVersion("1.3")
+    }*/
 }
