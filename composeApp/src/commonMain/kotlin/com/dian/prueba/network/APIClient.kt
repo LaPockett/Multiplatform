@@ -45,17 +45,19 @@ class APIClient {
 
     fun checkUpdateAvailable(): UpdateInfo {
         logger.warn("Checking for updates...", "checkUpdateAvailable")
+        UpdateStorage.loadUpdateInfo()?.let { savedInfo ->
+            if (savedInfo.currentVersion == savedInfo.newVersion){
+                return savedInfo
+            }
+        }
         return UpdateInfo(
-            updateAvailable = true,
             mustUpdate = true,
-            needsUpdate = false,
             currentVersion = "1.2",
-            newVersion = "1.3",
+            newVersion = "1.3", // Desde aquí podemos cambiar a otra versión
         )
     }
-    fun updateApp() : UpdateInfo {
+    /*fun updateApp() : UpdateInfo {
         logger.warn("Updating app...", "updateApp")
         return UpdateStorage.updateToNewVersion("1.3")
-    }
-
+    }*/
 }

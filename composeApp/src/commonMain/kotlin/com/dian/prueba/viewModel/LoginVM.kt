@@ -6,10 +6,7 @@ import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.*
 import androidx.lifecycle.*
 import com.dian.prueba.model.Tokens
-import com.dian.prueba.model.UpdateInfo
-import com.dian.prueba.network.APIClient
 import com.dian.prueba.utilities.TokenStorage
-import com.dian.prueba.utilities.UpdateStorage
 
 class LoginVM(
     private val loginRepo: LoginRepo = LoginRepo()
@@ -18,13 +15,6 @@ class LoginVM(
     private val logger = Logger()
     private val _tokens = MutableStateFlow<Tokens?>(null)
     val tokens: StateFlow<Tokens?> = _tokens
-    val showUpdateDialog = MutableStateFlow(true)
-    val updateAvailable = MutableStateFlow(true)
-    val mustUpdate = MutableStateFlow(true)
-    val currentVersion = MutableStateFlow("1.2")
-    val newVersion = MutableStateFlow("1.3")
-    val apiClient = APIClient()
-
 
     private fun getRandomString(): String {
         val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
@@ -53,28 +43,4 @@ class LoginVM(
         _tokens.value = TokenStorage.loadTokens()
     }
 
-    init {
-        loadSavedUpdateInfo()
-    }
-
-    fun loadSavedUpdateInfo() {
-        UpdateStorage.loadUpdateInfo()?.let { updateInfo ->
-            currentVersion.value = updateInfo.currentVersion
-            newVersion.value = updateInfo.newVersion
-            updateAvailable.value = updateInfo.updateAvailable
-            showUpdateDialog.value = updateInfo.updateAvailable && updateInfo.mustUpdate
-        }
-        apiClient.checkUpdateAvailable()
-        logger.debug(apiClient.checkUpdateAvailable().toString(), "checkUpdateAvailable")
-    }
-
-    fun updateApp(){
-        logger.warn("Updating app...", "updateApp")
-        val updateInfo = apiClient.updateApp()
-        showUpdateDialog.value = updateInfo.updateAvailable
-        mustUpdate.value = updateInfo.mustUpdate
-        newVersion.value = updateInfo.newVersion
-        currentVersion.value = updateInfo.currentVersion
-        logger.debug(updateInfo.toString(), "updateApp")
-    }
 }
