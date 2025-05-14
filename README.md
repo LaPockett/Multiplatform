@@ -10,6 +10,9 @@ Se implementa el patrón **MVVM (Model - View - ViewModel)**.
 
 ## Directory tree
 ![Esquema](directory_tree.png)
-=======
+
+
 Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+
+Hacemos una prueba
 ESta es una prueba en master
