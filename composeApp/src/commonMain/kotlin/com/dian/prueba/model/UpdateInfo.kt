@@ -8,5 +8,5 @@ data class UpdateInfo(
     val newVersion: String
 ){
     val updateAvailable : Boolean
-        get () = currentVersion != newVersion
+    get () = currentVersion != newVersion
 }
