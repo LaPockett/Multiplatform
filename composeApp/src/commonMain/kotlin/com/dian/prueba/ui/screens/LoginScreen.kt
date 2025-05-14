@@ -9,6 +9,7 @@ import com.dian.prueba.viewModel.LoginVM
 import androidx.navigation.compose.composable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.*
 import androidx.compose.material.*
@@ -17,7 +18,7 @@ import com.dian.prueba.AppNavigation
 import com.dian.prueba.utilities.Logger
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.*
-import com.dian.prueba.repository.WebViewHeaderManager
+import com.dian.prueba.HeaderManager.WebViewHeaderManager
 import com.dian.prueba.ui.components.dialogs.showAlertDialogLogin
 import com.dian.prueba.utilities.TokenStorage
 
