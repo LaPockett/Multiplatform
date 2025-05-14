@@ -28,6 +28,9 @@ import com.dian.prueba.HeaderManager.WebViewHeaderManager
 import com.dian.prueba.navigation.BottomNavigationBar
 import com.dian.prueba.navigation.Screen
 import com.dian.prueba.network.generarToken
+import com.dian.prueba.ui.components.TopAppBarScreen
+import com.dian.prueba.ui.components.TopAppBarScreen2
+import com.dian.prueba.ui.components.TopAppBarScreen3
 import com.dian.prueba.ui.screens.BrandScreen
 import com.dian.prueba.ui.screens.WelcomeScreen
 import com.dian.prueba.ui.screens.CartScreen
@@ -142,6 +145,9 @@ fun AppNavigation() {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        topBar = {
+                TopAppBarScreen()
+        },
         bottomBar = {
             // Para que el bottomBar no salga en la pantalla de Profile (Account), pero
             // sí en las demás pantallas
