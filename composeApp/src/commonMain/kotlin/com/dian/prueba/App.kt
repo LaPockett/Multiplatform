@@ -10,6 +10,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,7 +36,8 @@ import com.dian.prueba.ui.screens.LoginScreen
 import com.dian.prueba.ui.screens.ProfileScreen
 import com.dian.prueba.ui.screens.SearchScreen
 import com.dian.prueba.utilities.Logger
-import com.dian.prueba.viewModel.LoginVM
+import com.dian.prueba.ui.components.dialogs.UpdateAlertDialog
+import com.dian.prueba.viewModel.UpdateVM
 import com.russhwolf.settings.Settings
 
 //expo react native
@@ -130,8 +133,12 @@ fun AppNavigation() {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
     val showBars = currentRoute != Screen.Profile.route
-    val loginViewModel = LoginVM()
+    val updateVM = UpdateVM()
 
+    LaunchedEffect(Unit){
+        logger.warn("Checking for updates...", "AppNavigation")
+        updateVM.checkForUpdates()
+    }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -164,6 +171,9 @@ fun AppNavigation() {
             graph = graph,
             modifier = Modifier.padding(innerPadding)
         )
+    }
+    if (updateVM.showUpdateDialog.collectAsState().value){
+        UpdateAlertDialog(viewModel = updateVM)
     }
 }
 
