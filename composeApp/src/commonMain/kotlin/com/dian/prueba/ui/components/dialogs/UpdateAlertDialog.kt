@@ -27,7 +27,7 @@ fun UpdateAlertDialog(viewModel: UpdateVM = viewModel()) {
             }
         },
         title = { Text(text = "Nueva actualización disponible") },
-        text = { Text(text = "Versión actual: ${updateInfo.currentVersion} Hay una nueva versión disponible de la aplicación: ${updateInfo.newVersion}. ¿Deseas actualizarla?") },
+        text = { Text(text = "Versión actual: ${updateInfo.currentVersion} Hay una nueva versión disponible de la aplicación: ${updateInfo.newVersion}. Es obligatorio actualizar") },
         confirmButton = {
             Button(onClick = {
                 uriHandler.openUri("https://play.google.com/store/apps/details?id=com.amazon.mShop.android.shopping&hl=es&pli=1")
@@ -40,7 +40,7 @@ fun UpdateAlertDialog(viewModel: UpdateVM = viewModel()) {
 
         dismissButton = {
             // Lo dejo así para que sea visible el button ignore
-            if (updateInfo.mustUpdate) {
+            if (!updateInfo.mustUpdate) {
                 Button(onClick = {
                     /**
                      * Aquí solo cerramos el diálogo sin actualizar la versión a 1.3
