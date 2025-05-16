@@ -27,7 +27,26 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
         }
+        commonTest.dependencies {
+            // Test
+            implementation(libs.kotlin.test)
+            // https://mvnrepository.com/artifact/org.jetbrains.compose.ui/ui-test-junit4
+            implementation("org.jetbrains.compose.ui:ui-test-junit4:1.5.11")
+            // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-test-junit5
+            //implementation("org.jetbrains.kotlin:kotlin-test-junit5:2.2.0-Beta2")
+            //implementation("io.mockk:mockk:1.14.2")//El mock es lo que causaba error
+
+        }
         commonMain.dependencies {
+            //Junit test
+            // https://mvnrepository.com/artifact/io.mockk/mockk
+            //implementation("io.mockk:mockk:1.14.2")
+            implementation(libs.kotlin.test)
+            implementation(libs.ui.test.junit4)
+            //implementation(libs.junit.jupiter)
+            //implementation(libs.junit.vintage.engine)
+            // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-test-junit5
+            //implementation("org.jetbrains.kotlin:kotlin-test-junit5:2.2.0-Beta2")
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -59,6 +78,7 @@ kotlin {
             api("io.jsonwebtoken:jjwt-api:0.12.6")
             implementation("io.jsonwebtoken:jjwt-impl:0.12.6")
             implementation("io.jsonwebtoken:jjwt-orgjson:0.12.6")
+
         }
         desktopMain.dependencies {
 
@@ -78,6 +98,7 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     packaging {
         resources {
@@ -101,7 +122,7 @@ dependencies {
     implementation(libs.androidx.material3.android)
     implementation(libs.play.services.appsearch)
     implementation(libs.androidx.room.runtime.android)
-    implementation(libs.androidx.lifecycle.livedata.core.ktx)
+    //implementation(libs.androidx.lifecycle.livedata.core.ktx)
     //implementation(libs.androidx.material3)
     debugImplementation(compose.uiTooling)
 }
