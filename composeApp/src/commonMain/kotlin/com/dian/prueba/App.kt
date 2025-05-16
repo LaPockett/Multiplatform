@@ -5,10 +5,15 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Mic
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -29,8 +34,6 @@ import com.dian.prueba.navigation.BottomNavigationBar
 import com.dian.prueba.navigation.Screen
 import com.dian.prueba.network.generarToken
 import com.dian.prueba.ui.components.TopAppBarScreen
-import com.dian.prueba.ui.components.TopAppBarScreen2
-import com.dian.prueba.ui.components.TopAppBarScreen3
 import com.dian.prueba.ui.screens.BrandScreen
 import com.dian.prueba.ui.screens.WelcomeScreen
 import com.dian.prueba.ui.screens.CartScreen
@@ -146,7 +149,7 @@ fun AppNavigation() {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-                TopAppBarScreen()
+                TopAppBarScreen() // He agregado un topBAr aquí para poder habilitar luego el drawer
         },
         bottomBar = {
             // Para que el bottomBar no salga en la pantalla de Profile (Account), pero
