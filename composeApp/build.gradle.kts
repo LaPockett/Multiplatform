@@ -1,8 +1,6 @@
-import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -15,36 +13,19 @@ plugins {
 kotlin {
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        instrumentedTestVariant{
-            sourceSetTree.set(KotlinSourceSetTree.test)
-            dependencies{
-                androidTestImplementation(libs.androidx.ui.test.junit4.android)
-                debugImplementation(libs.androidx.ui.test.manifest)
-            }
-        }
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
-
     }
     
     jvm("desktop")
-    /*repositories {
-        mavenLocal()
-    }*/
     
     sourceSets {
         val desktopMain by getting
+        
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            // https://mvnrepository.com/artifact/androidx.preference/preference-ktx
-            //implementation("androidx.preference:preference-ktx:1.2.1")
-            // Test de android
-            implementation("androidx.compose.ui:ui-test-manifest:1.8.2")
-            // https://mvnrepository.com/artifact/androidx.compose.ui/ui-test-junit4
-            implementation("androidx.compose.ui:ui-test-junit4:1.9.0-alpha03")
-
         }
         commonTest.dependencies {
             // Test
@@ -54,20 +35,10 @@ kotlin {
             // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-test-junit5
             //implementation("org.jetbrains.kotlin:kotlin-test-junit5:2.2.0-Beta2")
             //implementation("io.mockk:mockk:1.14.2")//El mock es lo que causaba error
-            implementation("com.russhwolf:multiplatform-settings-test:1.3.0")
-            // https://mvnrepository.com/artifact/androidx.preference/preference-ktx
-            //implementation("androidx.preference:preference-ktx:1.2.1")
-            @OptIn(ExperimentalComposeLibrary::class)
-            implementation(compose.uiTest)
-            // https://mvnrepository.com/artifact/junit/junit
-            //implementation("junit:junit:4.13.2")
+
         }
         commonMain.dependencies {
             //Junit test
-            implementation("com.russhwolf:multiplatform-settings-test:1.3.0")
-            implementation("com.russhwolf:multiplatform-settings-no-arg:1.3.0")
-            // https://mvnrepository.com/artifact/androidx.preference/preference-ktx
-            //implementation("androidx.preference:preference-ktx:1.2.1")
             // https://mvnrepository.com/artifact/io.mockk/mockk
             //implementation("io.mockk:mockk:1.14.2")
             implementation(libs.kotlin.test)
@@ -102,15 +73,12 @@ kotlin {
             // https://mvnrepository.com/artifact/io.ktor/ktor-client-okhttp
             implementation("io.ktor:ktor-client-okhttp:3.1.2")
             //https://github.com/russhwolf/multiplatform-settings
-            implementation("com.russhwolf:multiplatform-settings:1.3.0")
-            //implementation("com.russhwolf:multiplatform-settings-no-arg:1.3.0")
-
+            implementation("com.russhwolf:multiplatform-settings-no-arg:1.3.0")
             //Json Web Token
             api("io.jsonwebtoken:jjwt-api:0.12.6")
             implementation("io.jsonwebtoken:jjwt-impl:0.12.6")
             implementation("io.jsonwebtoken:jjwt-orgjson:0.12.6")
-            implementation(libs.coil.compose)
-            implementation(libs.coil.network.ktor)
+
         }
         desktopMain.dependencies {
 
@@ -118,22 +86,11 @@ kotlin {
             implementation(libs.kotlinx.coroutines.swing)
         }
     }
-    sourceSets.commonMain{
-        kotlin.srcDir("build/generated/ksp/metadata")
-    }
 }
 
 android {
     namespace = "com.dian.prueba"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
-    signingConfigs {
-        create("release") {
-            storeFile = file("keydian.jks")
-            storePassword = System.getenv("ORG_GRADLE_PROJECT_storePassword") ?: ""
-            keyAlias = System.getenv("ORG_GRADLE_PROJECT_keyAlias") ?: ""
-            keyPassword = System.getenv("ORG_GRADLE_PROJECT_keyPassword")?: ""
-        }
-    }
 
     defaultConfig {
         applicationId = "com.dian.prueba"
@@ -151,15 +108,6 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
-            isDebuggable = false
-            signingConfig = signingConfigs.getByName("release")
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-        getByName("debug"){
-            isDebuggable = true
         }
     }
     compileOptions {
@@ -174,11 +122,9 @@ dependencies {
     implementation(libs.androidx.material3.android)
     implementation(libs.play.services.appsearch)
     implementation(libs.androidx.room.runtime.android)
-    implementation(libs.androidx.lifecycle.livedata.core.ktx)
-    implementation(libs.androidx.junit.ktx)
+    //implementation(libs.androidx.lifecycle.livedata.core.ktx)
     //implementation(libs.androidx.material3)
     debugImplementation(compose.uiTooling)
-
 }
 
 compose.desktop {
@@ -192,4 +138,3 @@ compose.desktop {
         }
     }
 }
-
