@@ -5,13 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.lifecycleScope
-import com.dian.prueba.AppLogin
-import com.dian.prueba.HeaderManager.WebViewHeaderManager
-import com.dian.prueba.ui.components.MenuDrawer3
-import com.dian.prueba.viewModel.LoginVM
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import com.dian.prueba.ui.components.MenuDrawer
 
 class MainActivity : ComponentActivity() {
     //private val loginViewModel = LoginVM()
@@ -33,8 +27,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             //App()
             //AppNavigation()
-            AppLogin()
-            //MenuDrawer3()
+            //->AppLogin()
+            MenuDrawer()
         }
     }
 }
@@ -43,7 +37,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AppAndroidPreview() {
     //AppNavigation()
-    AppLogin()
-    //MenuDrawer3()
+    //->AppLogin()
+    MenuDrawer()
     //App()
 }
