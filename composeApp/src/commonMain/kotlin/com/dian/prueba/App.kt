@@ -148,9 +148,9 @@ fun AppNavigation() {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = {
+        /*topBar = {
                 TopAppBarScreen() // He agregado un topBAr aquí para poder habilitar luego el drawer
-        },
+        },*/
         bottomBar = {
             // Para que el bottomBar no salga en la pantalla de Profile (Account), pero
             // sí en las demás pantallas
