@@ -3,7 +3,6 @@ package com.dian.prueba.ui.components
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.Scaffold
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -19,7 +18,10 @@ import com.dian.prueba.ui.screens.CartScreen
 import com.dian.prueba.utilities.Logger
 
 // Comando para formatear el código en Android Studio (Linux): Ctrl + Shift + Alt + L
-
+/**
+ * NINGUNO DE ESTOS COMPOSABLES SE USA EN LA APP, pero los dejo aquí por si los llego
+ * a necesitar en el futuro
+ */
 @Composable
 fun TopAppBarScreen() {
     var showMenuDrawer by remember { mutableStateOf(false) }
@@ -39,7 +41,7 @@ fun TopAppBarScreen() {
         }
     )
     if (showMenuDrawer) {
-        MenuDrawer3()
+        MenuDrawer()
     }
 }
 
