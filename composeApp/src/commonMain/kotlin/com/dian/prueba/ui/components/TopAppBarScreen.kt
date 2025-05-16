@@ -7,6 +7,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,27 +19,7 @@ import com.dian.prueba.ui.screens.CartScreen
 import com.dian.prueba.utilities.Logger
 
 // Comando para formatear el código en Android Studio (Linux): Ctrl + Shift + Alt + L
-@Composable
-fun TopAppBarScreen1(
-    onClickDrawer:() -> Unit
-) {
-    var showMenuDrawer by remember { mutableStateOf(false) }
-    val logger = Logger()
 
-    TopAppBar(
-        title = {
-            Text(text = "Top App Bar 1 - Amazon")
-        },
-        navigationIcon = {
-            IconButton(onClick = {
-                onClickDrawer()
-            }) {
-                Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
-            }
-        }
-    )
-
-}
 @Composable
 fun TopAppBarScreen() {
     var showMenuDrawer by remember { mutableStateOf(false) }
@@ -57,76 +38,16 @@ fun TopAppBarScreen() {
             }
         }
     )
-
-    /*Box(Modifier.fillMaxSize()){
-        CartScreen()
-    }*/
     if (showMenuDrawer) {
-        MenuDrawer2()
+        MenuDrawer3()
     }
 }
 
-@Composable
-fun TopAppBarScreen2() {
-    val scaffoldState = rememberScaffoldState()
-    var showMenuDrawer = scaffoldState.drawerState.isClosed
-    val logger = Logger()
-    logger.debug("Enseñando el TopAppBar...", "TopAppBarScreen2")
-    Scaffold(
-        scaffoldState = scaffoldState,
-        topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = "Top App Bar 2 - Amazon")
-                },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        showMenuDrawer = scaffoldState.drawerState.isOpen
-                    }) {
-                        Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
-                    }
-                }
-            )
-        }
-
-    ) {
-        Box(Modifier.fillMaxSize()) {
-            CartScreen()
-        }
-    }
-    if (showMenuDrawer) {
-        MenuDrawer()
-    }
-}
-
-@Composable
-fun TopAppBarScreen3() {
-    // scaffoldState = rememberScaffoldState()
-    var showMenuDrawer by remember { mutableStateOf(false) }
-    val logger = Logger()
-    logger.debug("Enseñando el TopAppBar...", "TopAppBarScreen2")
-
-    TopAppBar(
-        title = {
-            Text(text = "Top App Bar 3 - Amazon")
-        },
-        navigationIcon = {
-            IconButton(onClick = {
-                showMenuDrawer = true
-            }) {
-                Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
-            }
-        }
-    )
-    if (showMenuDrawer) {
-        MenuDrawer()
-    }
-}
-
+/**
+ * EN USO
+ */
 @Composable
 fun TopAppBarScreen4() {
-    // scaffoldState = rememberScaffoldState()
-    var showMenuDrawer by remember { mutableStateOf(false) }
     val logger = Logger()
     logger.debug("Enseñando el TopAppBar...", "TopAppBarScreen2")
 
@@ -139,19 +60,15 @@ fun TopAppBarScreen4() {
         ) {
             TopAppBar(
                 title = {
-                    Text(text = "Top App Bar 4 - Amazon")
+                    Text(text = "Shopping Cart- Amazon")
                 },
                 navigationIcon = {
                     IconButton(onClick = {
-                        showMenuDrawer = true
                     }) {
-                        Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
+                        Icon(imageVector = Icons.Default.ShoppingCart, contentDescription = "Cart")
                     }
                 }
             )
-            if (showMenuDrawer) {
-                MenuDrawer()
-            }
             CartScreen()
         }
 
