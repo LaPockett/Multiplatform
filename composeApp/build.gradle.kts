@@ -122,7 +122,7 @@ dependencies {
     implementation(libs.androidx.material3.android)
     implementation(libs.play.services.appsearch)
     implementation(libs.androidx.room.runtime.android)
-    //implementation(libs.androidx.lifecycle.livedata.core.ktx)
+    implementation(libs.androidx.lifecycle.livedata.core.ktx)
     //implementation(libs.androidx.material3)
     debugImplementation(compose.uiTooling)
 }
