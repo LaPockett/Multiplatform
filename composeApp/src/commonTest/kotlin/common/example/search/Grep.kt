@@ -1,9 +1,11 @@
 package common.example.search
 
-import org.junit.Test
+import test.getInitials
+import test.getStringLength
 import kotlin.test.assertEquals
 import test.grep
 import test.suma
+import kotlin.test.Test
 import kotlin.test.assertContains
 
 class GrepTest {
@@ -48,4 +50,15 @@ class SumaTest {
         assertEquals(8, suma(4,5))
     }
 
+}
+class PruebaTest{
+    @Test
+    fun prueba1(){
+        assertEquals(4, getStringLength("abcd"))
+
+    }
+    @Test
+    fun prueba2(){
+        val fullName = "Juan Perez"
+    }
 }
