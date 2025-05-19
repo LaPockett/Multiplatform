@@ -16,7 +16,7 @@ class LoginVM(
     private val _tokens = MutableStateFlow<Tokens?>(null)
     val tokens: StateFlow<Tokens?> = _tokens
 
-    private fun getRandomString(): String {
+    fun getRandomString(): String {
         val allowedChars = ('A'..'Z') + ('a'..'z') + ('0'..'9')
         return (1..10)
             .map { allowedChars.random() }
