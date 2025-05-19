@@ -28,6 +28,7 @@ fun getInitials(fullname:String):String{
             val lastName = names.last().uppercase()
             "${firstName.first()}${lastName[1].uppercase()}"
         }
+
     }
 
 }
