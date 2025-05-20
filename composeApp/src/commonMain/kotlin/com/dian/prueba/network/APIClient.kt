@@ -11,7 +11,7 @@ import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
 
-class APIClient {
+open class APIClient {
     private val logger = Logger()
 
     private var _loginToken: String? = null
@@ -43,7 +43,7 @@ class APIClient {
         }
     }
 
-    fun checkUpdateAvailable(): UpdateInfo {
+    open fun checkUpdateAvailable(): UpdateInfo {
         logger.warn("Checking for updates...", "checkUpdateAvailable")
         UpdateStorage.loadUpdateInfo()?.let { savedInfo ->
             if (savedInfo.currentVersion == savedInfo.newVersion){
