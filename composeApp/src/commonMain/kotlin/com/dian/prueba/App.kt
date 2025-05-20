@@ -124,7 +124,7 @@ fun AppLogin(){
         WebViewHeaderManager.updateRefreshToken(TokenStorage.loadTokens()!!.refreshToken!!)
         WebViewHeaderManager.updateAccessToken(TokenStorage.loadTokens()!!.accessToken)
         logger.debug(WebViewHeaderManager.getHeaders().toString(), "AppLogin WebViewHeaderManager")
-        logger.warn("Ingresando a AppNavigation", "AppLogin")
+        logger.warn("Ingresando a MenuDrawer", "MenuDrawer")
         MenuDrawer()
     }
 }
