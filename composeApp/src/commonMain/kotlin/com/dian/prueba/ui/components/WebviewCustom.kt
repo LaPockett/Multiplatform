@@ -80,6 +80,22 @@ fun WebViewCart (
         state = webViewState
     )
 }
+@Composable
+fun WebViewSettings(
+    modifier: Modifier =  Modifier
+){
+    val url = "https://www.amazon.es/gp/help/customer/display.html?nodeId=G3JHAKLM2QKM6NXS"
+    val webViewState = rememberWebViewState(
+        url = url
+    )
+    LaunchedEffect(url){
+        webViewState.content= WebContent.Url(url)
+    }
+    WebView(
+        state = webViewState
+    )
+
+}
 
 @Composable
 fun WebViewSearch (

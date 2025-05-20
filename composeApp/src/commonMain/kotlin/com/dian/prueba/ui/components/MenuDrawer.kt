@@ -35,7 +35,7 @@ fun MenuDrawer() {
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                CartScreen()
+                WebViewSettings()
             }
         },
         gesturesEnabled = drawerState.isOpen
