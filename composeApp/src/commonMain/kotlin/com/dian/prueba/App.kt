@@ -33,6 +33,7 @@ import com.dian.prueba.HeaderManager.WebViewHeaderManager
 import com.dian.prueba.navigation.BottomNavigationBar
 import com.dian.prueba.navigation.Screen
 import com.dian.prueba.network.generarToken
+import com.dian.prueba.ui.components.MenuDrawer
 import com.dian.prueba.ui.components.TopAppBarScreen
 import com.dian.prueba.ui.screens.BrandScreen
 import com.dian.prueba.ui.screens.WelcomeScreen
@@ -124,7 +125,7 @@ fun AppLogin(){
         WebViewHeaderManager.updateAccessToken(TokenStorage.loadTokens()!!.accessToken)
         logger.debug(WebViewHeaderManager.getHeaders().toString(), "AppLogin WebViewHeaderManager")
         logger.warn("Ingresando a AppNavigation", "AppLogin")
-        AppNavigation()
+        MenuDrawer()
     }
 }
 
