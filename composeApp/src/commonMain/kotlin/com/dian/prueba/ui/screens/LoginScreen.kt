@@ -19,6 +19,7 @@ import com.dian.prueba.utilities.Logger
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.*
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
+import com.dian.prueba.ui.components.MenuDrawer
 import com.dian.prueba.ui.components.dialogs.showAlertDialogLogin
 import com.dian.prueba.utilities.TokenStorage
 
@@ -86,7 +87,7 @@ fun LoginScreen(){
 
                                 logger.debug(WebViewHeaderManager.getHeaders().toString(), "LoginScreen WebViewHeaderManager")
 
-                                navController.navigate("AppNavigation")
+                                navController.navigate("MenuDrawer")
 
                             } else {
                                 showDialog = true
@@ -109,8 +110,8 @@ fun LoginScreen(){
             }
 
         }
-        composable(route = "AppNavigation"){
-            AppNavigation()
+        composable(route = "MenuDrawer"){
+            MenuDrawer()
         }
     }
 }
