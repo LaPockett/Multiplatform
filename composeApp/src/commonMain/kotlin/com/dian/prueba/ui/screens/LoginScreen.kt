@@ -19,13 +19,20 @@ import com.dian.prueba.utilities.Logger
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.*
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
+import com.dian.prueba.network.APIClient
+import com.dian.prueba.repository.LoginRepositoryImpl
 import com.dian.prueba.ui.components.MenuDrawer
 import com.dian.prueba.ui.components.dialogs.showAlertDialogLogin
 import com.dian.prueba.utilities.TokenStorage
 
 @Composable
 fun LoginScreen(){
-    val loginViewModel = LoginVM()
+    val loginViewModel = LoginVM(
+        loginRepository = LoginRepositoryImpl(
+            apiClient = APIClient(),
+            logger = Logger()
+        )
+    )
     // No se hará nada con el email del usuario
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }

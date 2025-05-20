@@ -1,15 +1,16 @@
 package com.dian.prueba.viewModel
 
-import com.dian.prueba.repository.LoginRepo
+import com.dian.prueba.repository.LoginRepositoryImpl
 import com.dian.prueba.utilities.Logger
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.*
 import androidx.lifecycle.*
 import com.dian.prueba.model.Tokens
+import com.dian.prueba.repository.LoginRepository
 import com.dian.prueba.utilities.TokenStorage
 
 class LoginVM(
-    private val loginRepo: LoginRepo = LoginRepo()
+    private val loginRepository:LoginRepository
 ) : ViewModel() {
 
     private val logger = Logger()
@@ -23,10 +24,9 @@ class LoginVM(
             .joinToString("")
 
     }
-
     fun loginUser(id: Int) {
         viewModelScope.launch {
-            val access = loginRepo.login(id)
+            val access = loginRepository.login(id)
             access?.let {
                 logger.warn("Haciendo login en LoginViewModel...", "LoginVM")
 
