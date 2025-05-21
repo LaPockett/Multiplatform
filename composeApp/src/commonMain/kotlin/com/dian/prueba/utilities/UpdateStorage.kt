@@ -9,7 +9,13 @@ object UpdateStorage {
     private const val MUST_UPDATE_KEY = "must_update"
     private const val NEW_VERSION_KEY = "new_version"
     private const val CURRENT_VERSION_KEY = "current_version"
-    val settings = Settings()
+
+    private lateinit var _settings: Settings
+    val settings: Settings get() = _settings
+
+    fun init(settings: Settings) {
+        _settings = settings
+    }
 
     fun updateToNewVersion(newVersion: String): UpdateInfo {
         val updateInfo = UpdateInfo(
