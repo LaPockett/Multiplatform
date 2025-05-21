@@ -35,10 +35,13 @@ kotlin {
             // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-test-junit5
             //implementation("org.jetbrains.kotlin:kotlin-test-junit5:2.2.0-Beta2")
             //implementation("io.mockk:mockk:1.14.2")//El mock es lo que causaba error
+            implementation("com.russhwolf:multiplatform-settings-test:1.3.0")
 
         }
         commonMain.dependencies {
             //Junit test
+            implementation("com.russhwolf:multiplatform-settings-test:1.3.0")
+
             // https://mvnrepository.com/artifact/io.mockk/mockk
             //implementation("io.mockk:mockk:1.14.2")
             implementation(libs.kotlin.test)
