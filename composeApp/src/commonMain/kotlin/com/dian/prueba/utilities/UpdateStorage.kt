@@ -1,6 +1,7 @@
 package com.dian.prueba.utilities
 
 import com.dian.prueba.model.UpdateInfo
+import com.russhwolf.settings.MapSettings
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.set
 
@@ -11,7 +12,7 @@ object UpdateStorage {
     private const val CURRENT_VERSION_KEY = "current_version"
 
     private lateinit var _settings: Settings
-    val settings: Settings get() = _settings
+    val settings: Settings = MapSettings()
 
     fun init(settings: Settings) {
         _settings = settings
