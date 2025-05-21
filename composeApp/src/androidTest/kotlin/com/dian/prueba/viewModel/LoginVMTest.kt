@@ -1,5 +1,9 @@
 package com.dian.prueba.viewModel
 
+import com.dian.prueba.network.APIClient
+import com.dian.prueba.repository.LoginRepository
+import com.dian.prueba.repository.LoginRepositoryImpl
+import com.dian.prueba.utilities.Logger
 import org.junit.Test
 import kotlin.test.assertNull
 
@@ -8,7 +12,6 @@ import kotlin.test.assertNull
  */
 class LoginVMTest {
     private val viewModel = LoginVM()
-    //private val loginRepo = LoginRepo()
 
     @Test
     fun getRandomString() {
