@@ -1,6 +1,7 @@
 package com.dian.prueba.utilities
 
 import com.dian.prueba.model.Tokens
+import com.russhwolf.settings.MapSettings
 import com.russhwolf.settings.set
 import com.russhwolf.settings.Settings
 
@@ -8,7 +9,12 @@ object TokenStorage {
     private const val ACCESS_TOKEN_KEY = "access_token"
     private const val REFRESH_TOKEN_KEY = "refresh_token"
 
-    private val settings = Settings()
+    private lateinit var _settings: Settings
+    val settings: Settings = MapSettings()
+
+    fun init(settings: Settings) {
+        _settings = settings
+    }
 
     fun saveTokens(tokens: Tokens) {
         settings[ACCESS_TOKEN_KEY] = tokens.accessToken
