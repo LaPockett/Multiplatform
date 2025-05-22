@@ -45,7 +45,8 @@ import com.dian.prueba.ui.screens.SearchScreen
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.ui.components.dialogs.UpdateAlertDialog
 import com.dian.prueba.viewModel.UpdateVM
-import com.russhwolf.settings.Settings
+import com.russhwolf.settings.*
+import java.util.prefs.Preferences
 
 //expo react native
 // cpu bench
@@ -104,13 +105,13 @@ fun App() {
 
     }
 }
-
 @Composable
 fun AppLogin(){
     // Para ver en el Logcat que se están generando los tokens
     generarToken("access")
     generarToken("refresh")
-    val settings = Settings()
+    val delegate = Preferences.userRoot()
+    val settings : Settings = PreferencesSettings(delegate) //No funciona esto
     if (settings.getStringOrNull("refresh_token") == null){
         logger.debug(settings.getStringOrNull("refresh_token").toString(), "AppLogin")
         LoginScreen()

@@ -21,9 +21,9 @@ class LoginVMTest {
 
     @Before
     fun setUp() {
-        TokenStorage.init(MapSettings())
+        //TokenStorage.init(MapSettings())
         logger.debug(loginViewModel.tokens.value.toString(), "LoginVMTest - setup")
-        //TokenStorage.settings.clear()
+        TokenStorage.settings.clear()
     }
 
     @Test

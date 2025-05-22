@@ -5,7 +5,11 @@ import com.dian.prueba.model.UpdateInfo
 import com.dian.prueba.network.APIClient
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.utilities.UpdateStorage
+import com.dian.prueba.utilities.UpdateStorage.CURRENT_VERSION_KEY
+import com.dian.prueba.utilities.UpdateStorage.MUST_UPDATE_KEY
+import com.dian.prueba.utilities.UpdateStorage.NEW_VERSION_KEY
 import com.russhwolf.settings.MapSettings
+import com.russhwolf.settings.Settings
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -18,7 +22,7 @@ class UpdateVMTest {
     private lateinit var viewModel: UpdateVM
     private lateinit var mockAPIClient: MockAPIClient
     private val logger = Logger()
-
+    //private val settings : Settings = Settings()
     private val testUpdateInfo = UpdateInfo(
         mustUpdate = true,
         currentVersion = "1.2",
@@ -44,7 +48,7 @@ class UpdateVMTest {
      */
     @Before
     fun setup() {
-        UpdateStorage.init(MapSettings())
+        UpdateStorage.init()
         mockAPIClient = MockAPIClient()
         viewModel = UpdateVM(mockAPIClient)
         UpdateStorage.settings.clear()
