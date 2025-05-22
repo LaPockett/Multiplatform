@@ -8,6 +8,7 @@ pluginManagement {
                 includeGroupAndSubgroups("androidx")
                 includeGroupAndSubgroups("com.android")
                 includeGroupAndSubgroups("com.google")
+                includeGroupAndSubgroups("com.russhwolf")
             }
         }
         mavenCentral()
@@ -22,6 +23,7 @@ dependencyResolutionManagement {
                 includeGroupAndSubgroups("androidx")
                 includeGroupAndSubgroups("com.android")
                 includeGroupAndSubgroups("com.google")
+                includeGroupAndSubgroups("com.russhwolf")
             }
         }
         mavenCentral()
