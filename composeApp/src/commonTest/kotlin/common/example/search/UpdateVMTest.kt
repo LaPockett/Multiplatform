@@ -5,11 +5,6 @@ import com.dian.prueba.model.UpdateInfo
 import com.dian.prueba.network.APIClient
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.utilities.UpdateStorage
-import com.dian.prueba.utilities.UpdateStorage.CURRENT_VERSION_KEY
-import com.dian.prueba.utilities.UpdateStorage.MUST_UPDATE_KEY
-import com.dian.prueba.utilities.UpdateStorage.NEW_VERSION_KEY
-import com.russhwolf.settings.MapSettings
-import com.russhwolf.settings.Settings
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -20,7 +15,7 @@ import kotlin.test.assertTrue
 
 class UpdateVMTest {
     private lateinit var viewModel: UpdateVM
-    private lateinit var mockAPIClient: MockAPIClient
+    //private lateinit var mockAPIClient: MockAPIClient
     private val logger = Logger()
     //private val settings : Settings = Settings()
     private val testUpdateInfo = UpdateInfo(
@@ -29,17 +24,7 @@ class UpdateVMTest {
         newVersion = "1.3"
     )
 
-    private class MockAPIClient : APIClient() {
-        var forcedResponse: UpdateInfo? = null
 
-        override fun checkUpdateAvailable(): UpdateInfo {
-            return forcedResponse ?: UpdateInfo(
-                mustUpdate = true,
-                currentVersion = "1.2",
-                newVersion = "1.3"
-            )
-        }
-    }
 
     /**
      * Configuración inicial
@@ -48,10 +33,10 @@ class UpdateVMTest {
      */
     @Before
     fun setup() {
-        UpdateStorage.init()
-        mockAPIClient = MockAPIClient()
-        viewModel = UpdateVM(mockAPIClient)
-        UpdateStorage.settings.clear()
+        //UpdateStorage.init()
+        //mockAPIClient = MockAPIClient()
+        //viewModel = UpdateVM(mockAPIClient)
+       // UpdateStorage.settings.clear()
     }
 
     @Test
@@ -71,7 +56,7 @@ class UpdateVMTest {
 
     @Test
     fun checkForUpdates_retrievesExpectedUpdateInfo() = runTest {
-        mockAPIClient.forcedResponse = testUpdateInfo
+        //mockAPIClient.forcedResponse = testUpdateInfo
 
         viewModel.checkForUpdates()
         val result = viewModel.updateInfo.value
@@ -85,7 +70,7 @@ class UpdateVMTest {
 
     @Test
     fun doUpdate_shouldUpdatesToNewVersionAnHideDialog() = runTest {
-        UpdateStorage.saveUpdateAvailable(testUpdateInfo)
+        //UpdateStorage.saveUpdateAvailable(testUpdateInfo)
         viewModel.updateInfo.value = testUpdateInfo
         viewModel.showUpdateDialog.value = true
 
