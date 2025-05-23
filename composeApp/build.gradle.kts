@@ -7,8 +7,6 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.androidxRoom)
     id("org.jetbrains.kotlin.plugin.serialization") version "2.2.0-Beta1"
 }
 
@@ -97,11 +95,6 @@ kotlin {
             api("io.jsonwebtoken:jjwt-api:0.12.6")
             implementation("io.jsonwebtoken:jjwt-impl:0.12.6")
             implementation("io.jsonwebtoken:jjwt-orgjson:0.12.6")
-            //Room database
-            implementation(libs.androidx.room.runtime)
-            implementation(libs.androidx.sqlite.bundled)
-
-
         }
         desktopMain.dependencies {
 
@@ -165,14 +158,3 @@ compose.desktop {
     }
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.dsl.KotlinCompile<*>>().configureEach {
-    if (name != "kspCommonMainKotlinMetadata") {
-        dependsOn("kspCommonMainKotlinMetadata")
-    }
-}
-room{
-    schemaDirectory("$projectDir/schemas")
-}
-dependencies{
-    add("kspCommonMainMetadata", libs.androidx.room.compiler)
-}
