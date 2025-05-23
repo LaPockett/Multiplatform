@@ -22,9 +22,6 @@ playServicesAppsearch = "16.0.1"
 roomRuntimeAndroid = "2.7.1"
 lifecycleLivedataCoreKtx = "2.9.0"
 uiTestJunit4 = "1.5.11"
-ksp = "2.0.0-1.0.21"
-androidx-room ="2.7.1"
-androidx-sqliteBundled = "2.5.0-alpha03"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -47,9 +44,6 @@ play-services-appsearch = { group = "com.google.android.gms", name = "play-servi
 androidx-room-runtime-android = { group = "androidx.room", name = "room-runtime-android", version.ref = "roomRuntimeAndroid" }
 androidx-lifecycle-livedata-core-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-core-ktx", version.ref = "lifecycleLivedataCoreKtx" }
 ui-test-junit4 = { module = "org.jetbrains.compose.ui:ui-test-junit4", version.ref = "uiTestJunit4" }
-androidx-room-runtime = {group = "androidx.room", name = "room-runtime", version.ref = "androidx-room"}
-androidx-room-compiler = {group = "androidx.room", name = "room-compiler", version.ref = "androidx-room"}
-androidx-sqlite-bundled = {group = "androidx.sqlite", name = "sqlite-bundled", version.ref="androidx-sqliteBundled"}
 
 
 [plugins]
@@ -58,5 +52,3 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
-ksp = {id = "com.google.devtools.ksp", version.ref = "ksp"}
-androidxRoom = {id = "androidx.room", version.ref = "androidx-room"}
