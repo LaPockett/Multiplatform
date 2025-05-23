@@ -1,6 +1,5 @@
 package com.dian.prueba.viewModel
 
-import com.dian.prueba.repository.LoginRepositoryImpl
 import com.dian.prueba.utilities.Logger
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.*
@@ -10,9 +9,9 @@ import com.dian.prueba.repository.LoginRepository
 import com.dian.prueba.utilities.TokenStorage
 
 class LoginVM(
-    private val loginRepository:LoginRepository
+    private val loginRepository:LoginRepository,
+    private val tokenStorage: TokenStorage
 ) : ViewModel() {
-
     private val logger = Logger()
     private val _tokens = MutableStateFlow<Tokens?>(null)
     val tokens: StateFlow<Tokens?> = _tokens
@@ -32,7 +31,7 @@ class LoginVM(
 
                 val t = Tokens(accessToken = it, refreshToken = getRandomString())
                 _tokens.value = t
-                TokenStorage.saveTokens(t)
+                tokenStorage.saveTokens(t)
                 logger.debug(t.toString(), "LoginVM")
             }
         }
@@ -40,7 +39,7 @@ class LoginVM(
     }
 
     fun loadSavedTokens() {
-        _tokens.value = TokenStorage.loadTokens()
+        _tokens.value = tokenStorage.loadTokens()
     }
 
 }

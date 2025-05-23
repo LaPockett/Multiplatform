@@ -5,15 +5,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.Mic
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -32,9 +27,9 @@ import androidx.navigation.createGraph
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
 import com.dian.prueba.navigation.BottomNavigationBar
 import com.dian.prueba.navigation.Screen
+import com.dian.prueba.network.APIClient
 import com.dian.prueba.network.generarToken
 import com.dian.prueba.ui.components.MenuDrawer
-import com.dian.prueba.ui.components.TopAppBarScreen
 import com.dian.prueba.ui.screens.BrandScreen
 import com.dian.prueba.ui.screens.WelcomeScreen
 import com.dian.prueba.ui.screens.CartScreen
@@ -44,9 +39,10 @@ import com.dian.prueba.ui.screens.ProfileScreen
 import com.dian.prueba.ui.screens.SearchScreen
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.ui.components.dialogs.UpdateAlertDialog
+import com.dian.prueba.utilities.TokenStorageImpl
+import com.dian.prueba.utilities.UpdateStorageImpl
 import com.dian.prueba.viewModel.UpdateVM
 import com.russhwolf.settings.*
-import java.util.prefs.Preferences
 
 //expo react native
 // cpu bench
@@ -110,8 +106,8 @@ fun AppLogin(){
     // Para ver en el Logcat que se están generando los tokens
     generarToken("access")
     generarToken("refresh")
-    val delegate = Preferences.userRoot()
-    val settings : Settings = PreferencesSettings(delegate) //No funciona esto
+    val settings  = Settings()
+    val tokenStorage : TokenStorage = TokenStorageImpl(settings)
     if (settings.getStringOrNull("refresh_token") == null){
         logger.debug(settings.getStringOrNull("refresh_token").toString(), "AppLogin")
         LoginScreen()
@@ -120,10 +116,10 @@ fun AppLogin(){
         logger.warn("El token no es nulo", "AppLogin")
         logger.debug(settings.getStringOrNull("access_token").toString(), "AppLogin ACCESS TOKEN")
         logger.debug(settings.getStringOrNull("refresh_token").toString(), "AppLogin REfresh token")
-        TokenStorage.loadTokens()
-        logger.debug(TokenStorage.loadTokens().toString(), "AppLogin TokenStorage")
-        WebViewHeaderManager.updateRefreshToken(TokenStorage.loadTokens()!!.refreshToken!!)
-        WebViewHeaderManager.updateAccessToken(TokenStorage.loadTokens()!!.accessToken)
+        tokenStorage.loadTokens()
+        logger.debug(tokenStorage.loadTokens().toString(), "AppLogin TokenStorage")
+        WebViewHeaderManager.updateRefreshToken(tokenStorage.loadTokens()!!.refreshToken!!)
+        WebViewHeaderManager.updateAccessToken(tokenStorage.loadTokens()!!.accessToken)
         logger.debug(WebViewHeaderManager.getHeaders().toString(), "AppLogin WebViewHeaderManager")
         logger.warn("Ingresando a MenuDrawer", "MenuDrawer")
         MenuDrawer()
@@ -141,7 +137,18 @@ fun AppNavigation() {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
     val showBars = currentRoute != Screen.Profile.route
-    val updateVM = UpdateVM()
+    val updateVM = remember {
+        UpdateVM(
+            updateStorage = UpdateStorageImpl(
+                settings = Settings()
+            ),
+            apiService = APIClient(
+                updateStorage = UpdateStorageImpl(
+                    settings = Settings()
+                )
+            )
+        )
+    }
 
     LaunchedEffect(Unit){
         logger.warn("Checking for updates...", "AppNavigation")
