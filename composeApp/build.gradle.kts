@@ -31,8 +31,6 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             // https://mvnrepository.com/artifact/androidx.preference/preference-ktx
             //implementation("androidx.preference:preference-ktx:1.2.1")
-            implementation("com.russhwolf:multiplatform-settings-android:1.3.0")
-
 
         }
         commonTest.dependencies {
@@ -46,12 +44,12 @@ kotlin {
             implementation("com.russhwolf:multiplatform-settings-test:1.3.0")
             // https://mvnrepository.com/artifact/androidx.preference/preference-ktx
             //implementation("androidx.preference:preference-ktx:1.2.1")
-            implementation("com.russhwolf:multiplatform-settings:1.3.0")
 
         }
         commonMain.dependencies {
             //Junit test
             implementation("com.russhwolf:multiplatform-settings-test:1.3.0")
+            implementation("com.russhwolf:multiplatform-settings-no-arg:1.3.0")
             // https://mvnrepository.com/artifact/androidx.preference/preference-ktx
             //implementation("androidx.preference:preference-ktx:1.2.1")
             // https://mvnrepository.com/artifact/io.mockk/mockk
