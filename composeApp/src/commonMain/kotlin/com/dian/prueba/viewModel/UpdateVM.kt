@@ -20,7 +20,7 @@ class UpdateVM (
     init {
         loadSavedUpdateInfo()
     }
-    private fun loadSavedUpdateInfo() {
+    fun loadSavedUpdateInfo() {
         val savedInfo = updateStorage.loadUpdateInfo()
         logger.debug(savedInfo.toString(), "loadSavedUpdateInfo - UpdateVM")
         updateStorage.loadUpdateInfo()?.let {
