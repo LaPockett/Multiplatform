@@ -18,6 +18,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.*
@@ -39,7 +40,6 @@ class FakeTokenStorage : TokenStorage {
 }
 
 class FakeApiService : ApiService {
-    var firstLogin = false
 
     private val client = HttpClient {
         install(ContentNegotiation) {
@@ -51,11 +51,7 @@ class FakeApiService : ApiService {
     }
 
     override fun checkUpdateAvailable(): UpdateInfo {
-        return UpdateInfo(
-            mustUpdate = true,
-            currentVersion = "1.2",
-            newVersion = "1.3"
-        )
+        TODO("ESTO NO SE VA A USAR EN ESTE CASO")
     }
 
     override suspend fun requestLogin(id: String): String? {
@@ -81,6 +77,10 @@ class LoginVMTest {
         fakeTokenStorage = FakeTokenStorage()
         val loginRepository = LoginRepositoryImpl(fakeApiService)
         loginViewModel = LoginVM(loginRepository, fakeTokenStorage)
+    }
+    @After
+    fun tearDown() {
+        fakeTokenStorage.clear()
     }
 
     @Test
