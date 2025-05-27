@@ -25,7 +25,7 @@ import com.dian.prueba.utilities.Logger
 @Composable
 fun TopAppBarScreen() {
     var showMenuDrawer by remember { mutableStateOf(false) }
-    val logger = Logger()
+    val logger = Logger("TopAppBarScreen")
 
     TopAppBar(
         title = {
@@ -33,7 +33,7 @@ fun TopAppBarScreen() {
         },
         navigationIcon = {
             IconButton(onClick = {
-                logger.debug("Enseñando el Drawer...", "TopAppBarScreen")
+                logger.debug("Enseñando el Drawer...")
                 showMenuDrawer = true
             }) {
                 Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
@@ -50,8 +50,8 @@ fun TopAppBarScreen() {
  */
 @Composable
 fun TopAppBarScreen4() {
-    val logger = Logger()
-    logger.debug("Enseñando el TopAppBar...", "TopAppBarScreen2")
+    val logger = Logger("TopAppBarScreen2")
+    logger.debug("Enseñando el TopAppBar...")
 
     Box(
         modifier = Modifier.fillMaxSize(),

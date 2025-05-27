@@ -43,7 +43,7 @@ class UpdateVMTest {
     private lateinit var updateViewModel: UpdateVM
     private lateinit var fakeUpdateStorage: FakeUpdateStorage
     private lateinit var fakeApiService: FakeApiService
-    private val logger = Logger()
+    private val logger = Logger("UpdateVMTest")
 
     @Before
     fun setup() {
@@ -60,7 +60,7 @@ class UpdateVMTest {
     @Test
     fun `get expected values in fakeApiService when the app isn't updated` () = runTest {
         val result = fakeApiService.checkUpdateAvailable()
-        logger.debug(result.toString(), "getExpectedValuesInFakeApiService - UpdateVMTest")
+        logger.debug("getExpectedValuesInFakeApiService $result")
         assertEquals("1.3", result.newVersion)
         assertEquals("1.2", result.currentVersion)
         assertTrue(result.mustUpdate)
@@ -69,21 +69,21 @@ class UpdateVMTest {
     fun `get updateInfo and returns expected value if fakeUpdateStorage is not null, updateInfo of VM is not null too`() {
         val updateInfoStorage = fakeUpdateStorage.loadUpdateInfo()
         val updateInfoVM = updateViewModel.updateInfo.value
-        logger.debug(updateInfoStorage.toString(), "UpdateInfo del Storage - UpdateVMTest")
-        logger.debug(updateInfoVM.toString(), "UpdateInfo del VM - UpdateVMTest")
+        logger.debug("updateInfoStorage: $updateInfoStorage")
+        logger.debug("updateInfoVM: $updateInfoVM")
         assertEquals(updateInfoStorage, updateInfoVM)
     }
 
     @Test
     fun `get ShowUpdateDialog is TRUE when update is required`() {
-        logger.debug(updateViewModel.showUpdateDialog.value.toString(), "getShowUpdateDialog_isTrue_WhenUpdateIsRequired - UpdateVMTest")
+        logger.debug("ShowUpdateDialog true: ${updateViewModel.showUpdateDialog.value}")
         assertTrue(updateViewModel.showUpdateDialog.value)
     }
 
     @Test
     fun `check for updates with viewModel and retrieves expected UpdateInfo`() = runTest {
         val result = updateViewModel.updateInfo.value
-        logger.debug(result.toString(), "checkForUpdates_with viewmodel - UpdateVMTest")
+        logger.debug("Check for updates with viewModel: $result")
         assertNotNull(result)
         assertTrue(result.updateAvailable)
         assertEquals("1.2", result.currentVersion)
@@ -104,7 +104,7 @@ class UpdateVMTest {
     @Test
     fun `do Update and should updates to new version 1'3 and showUpdateDialog should be FALSE`() = runTest {
         updateViewModel.showUpdateDialog.value = true
-        logger.debug(updateViewModel.showUpdateDialog.value.toString(), "doUpdate_shouldUpdatesToNewVersionAnHideDialog - UpdateVMTest")
+        logger.debug("ShowUpdateDialog true: ${updateViewModel.showUpdateDialog.value}")
         updateViewModel.doUpdate()
         val updateInfo = fakeUpdateStorage.loadUpdateInfo()
 
