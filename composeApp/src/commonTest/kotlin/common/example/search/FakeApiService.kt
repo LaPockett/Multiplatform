@@ -1,9 +1,9 @@
 package common.example.search
 
-import com.dian.prueba.logger
 import com.dian.prueba.model.Login
 import com.dian.prueba.model.UpdateInfo
 import com.dian.prueba.network.ApiService
+import com.dian.prueba.utilities.Logger
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -15,6 +15,7 @@ import kotlinx.serialization.json.Json
  * FakeApiService para uso de LoginVMTest y UpdateVMTest
  */
 class FakeApiService : ApiService {
+    val logger = Logger("FakeApiService")
 
     private val client = HttpClient {
         install(ContentNegotiation) {
@@ -36,7 +37,7 @@ class FakeApiService : ApiService {
     override suspend fun requestLogin(id: String): String? {
         if (id.toInt() in 1..10) {
             val result: Login = client.get("https://jsonplaceholder.typicode.com/users/$id").body()
-            logger.debug(result.toString(), "JSON Response")
+            logger.debug("Json response: $result")
             return result.email
         } else {
             return null

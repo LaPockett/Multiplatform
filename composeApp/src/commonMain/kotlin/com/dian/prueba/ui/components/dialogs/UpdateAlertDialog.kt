@@ -14,7 +14,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 @Composable
 fun UpdateAlertDialog(viewModel: UpdateVM = viewModel()) {
-    val logger = Logger()
+    val logger = Logger("UpdateAlertDialog")
     val uriHandler = LocalUriHandler.current
     val updateInfo = viewModel.updateInfo.collectAsState().value
 
@@ -23,7 +23,7 @@ fun UpdateAlertDialog(viewModel: UpdateVM = viewModel()) {
         onDismissRequest = {
             if (!updateInfo.mustUpdate) {
                 viewModel.showUpdateDialog.value = false
-                logger.debug(viewModel.showUpdateDialog.value.toString(), "UpdateAlertDialog-showUpdateDialog")
+                logger.debug(viewModel.showUpdateDialog.value.toString())
             }
         },
         title = { Text(text = "Nueva actualización disponible") },
@@ -45,8 +45,8 @@ fun UpdateAlertDialog(viewModel: UpdateVM = viewModel()) {
                     /**
                      * Aquí solo cerramos el diálogo sin actualizar la versión a 1.3
                      */
-                    logger.debug(updateInfo.currentVersion, "UpdateAlertDialog-currentVersion")
-                    logger.debug(updateInfo.newVersion, "UpdateAlertDialog-newVersion")
+                    logger.debug("currentVersion: " + updateInfo.currentVersion)
+                    logger.debug("newVersion: " +updateInfo.newVersion)
                     viewModel.showUpdateDialog.value = false
                 }) {
                     Text("Ignorar")

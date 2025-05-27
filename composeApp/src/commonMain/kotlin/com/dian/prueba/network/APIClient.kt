@@ -4,8 +4,6 @@ import com.dian.prueba.model.Login
 import com.dian.prueba.model.UpdateInfo
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.utilities.UpdateStorage
-import com.dian.prueba.utilities.UpdateStorageImpl
-import com.russhwolf.settings.Settings
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.contentnegotiation.*
@@ -20,7 +18,7 @@ interface ApiService {
 class APIClient (
     private val updateStorage: UpdateStorage
 ) : ApiService {
-    private val logger = Logger()
+    private val logger = Logger("APIClient")
     private var _loginToken: String? = null
     val loginToken: String? get() {
         return _loginToken
@@ -36,22 +34,22 @@ class APIClient (
     }
 
     override suspend fun requestLogin(id: String): String? {
-        logger.warn("Iniciando login...", "requestLogin")
+        logger.warn("Iniciando login...")
 
         return try {
             val result: Login = client.get("https://jsonplaceholder.typicode.com/users/$id").body()
-            logger.debug(result.toString(), "JSON Response")
+            logger.debug(result.toString())
             _loginToken = result.email
-            logger.debug(_loginToken.toString(), "Login Token")
+            logger.debug(_loginToken.toString())
             _loginToken
         } catch (e: Exception) {
-            logger.error(e, "requestLoginException")
+            logger.error(e)
             null
         }
     }
 
     override fun checkUpdateAvailable(): UpdateInfo {
-        logger.warn("Checking for updates...", "checkUpdateAvailable")
+        logger.warn("Checking for updates...")
         updateStorage.loadUpdateInfo()?.let { savedInfo ->
             if (savedInfo.currentVersion == savedInfo.newVersion){
                 return savedInfo
