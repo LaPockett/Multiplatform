@@ -11,10 +11,10 @@ interface LoginRepository{
 }
 class LoginRepositoryImpl (
     private val apiService: ApiService,
-    private val logger: Logger = Logger()
+    private val logger: Logger = Logger("LoginRepo")
 ): LoginRepository{
     override suspend fun login (id: Int): String? {
-        logger.warn("Haciendo login en LoginRepo...", "LoginRepo")
+        logger.warn("Haciendo login en LoginRepo...")
         return apiService.requestLogin(id.toString())
     }
 }
