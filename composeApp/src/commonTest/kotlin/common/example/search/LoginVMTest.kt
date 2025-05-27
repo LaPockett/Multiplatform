@@ -1,23 +1,11 @@
 package common.example.search
 
 import com.dian.prueba.logger
-import com.dian.prueba.model.Login
 import com.dian.prueba.model.Tokens
-import com.dian.prueba.model.UpdateInfo
-import com.dian.prueba.network.ApiService
 import com.dian.prueba.repository.LoginRepositoryImpl
-import com.dian.prueba.utilities.Logger
 import com.dian.prueba.utilities.TokenStorage
 import com.dian.prueba.viewModel.LoginVM
-import io.ktor.client.HttpClient
-import io.ktor.client.call.body
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.client.request.get
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import kotlinx.serialization.json.Json
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -39,32 +27,6 @@ class FakeTokenStorage : TokenStorage {
     }
 }
 
-class FakeApiService : ApiService {
-
-    private val client = HttpClient {
-        install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-                isLenient = true
-            })
-        }
-    }
-
-    override fun checkUpdateAvailable(): UpdateInfo {
-        TODO("ESTO NO SE VA A USAR EN ESTE CASO")
-    }
-
-    override suspend fun requestLogin(id: String): String? {
-        if (id.toInt() in 1..10) {
-            val result: Login = client.get("https://jsonplaceholder.typicode.com/users/$id").body()
-            logger.debug(result.toString(), "JSON Response")
-            return result.email
-        } else {
-            return null
-        }
-    }
-
-}
 class LoginVMTest {
 
     private lateinit var fakeApiService: FakeApiService
@@ -86,10 +48,7 @@ class LoginVMTest {
     @Test
     fun `write valid ID and check the tokens is NOT NULL`() = runTest {
         loginViewModel.loginUser(1)
-        /*fakeApiService.requestLogin("1")?.let {
-            Tokens(it, loginViewModel.getRandomString())
-            logger.debug(Tokens(it, loginViewModel.getRandomString()).toString(), "LoginVMTest - tokens")
-        }*/
+
         if (fakeApiService.requestLogin("1") != null) {
             fakeTokenStorage.saveTokens(
                 Tokens(
@@ -105,6 +64,8 @@ class LoginVMTest {
             "LoginVMTest - write valid ID and check the TOKENS is not null"
         )
         assertNotNull(tokens)
+        assertEquals("Sincere@april.biz", tokens.accessToken)
+        assertNotNull(tokens.refreshToken)
     }
     @Test
     fun `write invalid ID and check the tokens is NULL`() = runTest {
@@ -144,21 +105,4 @@ class LoginVMTest {
         )
         assert(result == null)
     }
-
-
-    /*@Test
-fun `prueba return false` ()= runTest {
-    fakeApiService.firstLogin = false
-    val checkLogin = fakeApiService.checkLogin()
-    logger.debug(fakeApiService.firstLogin.toString(), "LoginVMTest - prueba1")
-    logger.debug(checkLogin.toString(), "LoginVMTest - prueba1")
-}
-@Test
-fun `prueba return true` ()= runTest {
-    fakeApiService.firstLogin = true
-    val checkLogin = fakeApiService.checkLogin()
-    logger.debug(fakeApiService.firstLogin.toString(), "LoginVMTest - prueba2")
-    logger.debug(checkLogin.toString(), "LoginVMTest - prueba2")
-}*/
-
 }
