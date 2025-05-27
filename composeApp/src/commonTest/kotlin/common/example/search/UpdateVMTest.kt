@@ -2,7 +2,6 @@ package common.example.search
 
 import com.dian.prueba.viewModel.UpdateVM
 import com.dian.prueba.model.UpdateInfo
-import com.dian.prueba.network.ApiService
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.utilities.UpdateStorage
 import kotlinx.coroutines.test.runTest
@@ -38,33 +37,18 @@ class FakeUpdateStorage : UpdateStorage {
     override fun clear() {
         updateInfo = null
     }
-
-}
-
-class FakeAPIService : ApiService {
-    override fun checkUpdateAvailable(): UpdateInfo {
-        return UpdateInfo(
-            mustUpdate = true,
-            currentVersion = "1.2",
-            newVersion = "1.3"
-        )
-    }
-
-    override suspend fun requestLogin(id: String): String? {
-        TODO("ESTO NO SE VA A USAR EN ESTE CASO")
-    }
 }
 
 class UpdateVMTest {
     private lateinit var updateViewModel: UpdateVM
     private lateinit var fakeUpdateStorage: FakeUpdateStorage
-    private lateinit var fakeApiService: FakeAPIService
+    private lateinit var fakeApiService: FakeApiService
     private val logger = Logger()
 
     @Before
     fun setup() {
         fakeUpdateStorage = FakeUpdateStorage()
-        fakeApiService = FakeAPIService()
+        fakeApiService = FakeApiService()
         updateViewModel = UpdateVM(fakeUpdateStorage, fakeApiService)
         updateViewModel.checkForUpdates()
     }
@@ -129,5 +113,4 @@ class UpdateVMTest {
         assertFalse(updateInfo.mustUpdate)
         assertFalse(updateViewModel.showUpdateDialog.value)
     }
-
 }
