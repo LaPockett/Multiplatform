@@ -19,6 +19,9 @@ kotlin {
     }
     
     jvm("desktop")
+    /*repositories {
+        mavenLocal()
+    }*/
     
     sourceSets {
         val desktopMain by getting
@@ -26,6 +29,9 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            // https://mvnrepository.com/artifact/androidx.preference/preference-ktx
+            //implementation("androidx.preference:preference-ktx:1.2.1")
+
         }
         commonTest.dependencies {
             // Test
@@ -35,10 +41,17 @@ kotlin {
             // https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-test-junit5
             //implementation("org.jetbrains.kotlin:kotlin-test-junit5:2.2.0-Beta2")
             //implementation("io.mockk:mockk:1.14.2")//El mock es lo que causaba error
+            implementation("com.russhwolf:multiplatform-settings-test:1.3.0")
+            // https://mvnrepository.com/artifact/androidx.preference/preference-ktx
+            //implementation("androidx.preference:preference-ktx:1.2.1")
 
         }
         commonMain.dependencies {
             //Junit test
+            implementation("com.russhwolf:multiplatform-settings-test:1.3.0")
+            implementation("com.russhwolf:multiplatform-settings-no-arg:1.3.0")
+            // https://mvnrepository.com/artifact/androidx.preference/preference-ktx
+            //implementation("androidx.preference:preference-ktx:1.2.1")
             // https://mvnrepository.com/artifact/io.mockk/mockk
             //implementation("io.mockk:mockk:1.14.2")
             implementation(libs.kotlin.test)
@@ -73,18 +86,22 @@ kotlin {
             // https://mvnrepository.com/artifact/io.ktor/ktor-client-okhttp
             implementation("io.ktor:ktor-client-okhttp:3.1.2")
             //https://github.com/russhwolf/multiplatform-settings
-            implementation("com.russhwolf:multiplatform-settings-no-arg:1.3.0")
+            implementation("com.russhwolf:multiplatform-settings:1.3.0")
+            //implementation("com.russhwolf:multiplatform-settings-no-arg:1.3.0")
+
             //Json Web Token
             api("io.jsonwebtoken:jjwt-api:0.12.6")
             implementation("io.jsonwebtoken:jjwt-impl:0.12.6")
             implementation("io.jsonwebtoken:jjwt-orgjson:0.12.6")
-
         }
         desktopMain.dependencies {
 
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
         }
+    }
+    sourceSets.commonMain{
+        kotlin.srcDir("build/generated/ksp/metadata")
     }
 }
 
@@ -138,3 +155,4 @@ compose.desktop {
         }
     }
 }
+

@@ -24,15 +24,26 @@ import com.dian.prueba.repository.LoginRepositoryImpl
 import com.dian.prueba.ui.components.MenuDrawer
 import com.dian.prueba.ui.components.dialogs.showAlertDialogLogin
 import com.dian.prueba.utilities.TokenStorage
+import com.dian.prueba.utilities.TokenStorageImpl
+import com.dian.prueba.utilities.UpdateStorageImpl
+import com.russhwolf.settings.Settings
 
 @Composable
 fun LoginScreen(){
-    val loginViewModel = LoginVM(
-        loginRepository = LoginRepositoryImpl(
-            apiClient = APIClient(),
-            logger = Logger()
+    val loginViewModel = remember {
+        LoginVM(
+            loginRepository = LoginRepositoryImpl(
+                apiService = APIClient(
+                    updateStorage = UpdateStorageImpl(
+                        settings = Settings()
+                    )
+                )
+            ),
+            tokenStorage = TokenStorageImpl(
+                settings = Settings()
+            )
         )
-    )
+    }
     // No se hará nada con el email del usuario
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }

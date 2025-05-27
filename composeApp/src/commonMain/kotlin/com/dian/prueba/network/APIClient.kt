@@ -4,16 +4,23 @@ import com.dian.prueba.model.Login
 import com.dian.prueba.model.UpdateInfo
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.utilities.UpdateStorage
+import com.dian.prueba.utilities.UpdateStorageImpl
+import com.russhwolf.settings.Settings
 import io.ktor.client.*
 import io.ktor.client.call.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
+interface ApiService {
+    fun checkUpdateAvailable(): UpdateInfo
+    suspend fun requestLogin(id: String): String?
+}
 
-class APIClient {
+class APIClient (
+    private val updateStorage: UpdateStorage
+) : ApiService {
     private val logger = Logger()
-
     private var _loginToken: String? = null
     val loginToken: String? get() {
         return _loginToken
@@ -28,7 +35,7 @@ class APIClient {
         }
     }
 
-    suspend fun requestLogin(id: String): String? {
+    override suspend fun requestLogin(id: String): String? {
         logger.warn("Iniciando login...", "requestLogin")
 
         return try {
@@ -43,9 +50,9 @@ class APIClient {
         }
     }
 
-    fun checkUpdateAvailable(): UpdateInfo {
+    override fun checkUpdateAvailable(): UpdateInfo {
         logger.warn("Checking for updates...", "checkUpdateAvailable")
-        UpdateStorage.loadUpdateInfo()?.let { savedInfo ->
+        updateStorage.loadUpdateInfo()?.let { savedInfo ->
             if (savedInfo.currentVersion == savedInfo.newVersion){
                 return savedInfo
             }
@@ -56,8 +63,4 @@ class APIClient {
             newVersion = "1.3", // Desde aquí podemos cambiar a otra versión
         )
     }
-    /*fun updateApp() : UpdateInfo {
-        logger.warn("Updating app...", "updateApp")
-        return UpdateStorage.updateToNewVersion("1.3")
-    }*/
 }

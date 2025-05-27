@@ -1,12 +1,12 @@
 [versions]
-agp = "8.9.1"
+agp = "8.9.3"
 android-compileSdk = "35"
 android-minSdk = "24"
 android-targetSdk = "35"
 androidx-activityCompose = "1.10.1"
 androidx-appcompat = "1.7.0"
 androidx-constraintlayout = "2.2.1"
-androidx-core-ktx = "1.15.0"
+androidx-core-ktx = "1.16.0"
 androidx-espresso-core = "3.6.1"
 androidx-lifecycle = "2.8.4"
 androidx-material = "1.12.0"
@@ -44,6 +44,7 @@ play-services-appsearch = { group = "com.google.android.gms", name = "play-servi
 androidx-room-runtime-android = { group = "androidx.room", name = "room-runtime-android", version.ref = "roomRuntimeAndroid" }
 androidx-lifecycle-livedata-core-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-core-ktx", version.ref = "lifecycleLivedataCoreKtx" }
 ui-test-junit4 = { module = "org.jetbrains.compose.ui:ui-test-junit4", version.ref = "uiTestJunit4" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

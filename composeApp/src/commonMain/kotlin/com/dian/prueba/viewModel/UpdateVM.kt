@@ -2,13 +2,14 @@ package com.dian.prueba.viewModel
 
 import androidx.lifecycle.ViewModel
 import com.dian.prueba.model.UpdateInfo
-import com.dian.prueba.network.APIClient
+import com.dian.prueba.network.ApiService
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.utilities.UpdateStorage
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class UpdateVM (
-    private val apiClient : APIClient = APIClient()
+    private val updateStorage: UpdateStorage,
+    private val apiService: ApiService
 ) : ViewModel() {
 
     private val _updateInfo = MutableStateFlow<UpdateInfo?>(null)
@@ -19,11 +20,10 @@ class UpdateVM (
     init {
         loadSavedUpdateInfo()
     }
-
-    private fun loadSavedUpdateInfo() {
-        val savedInfo = UpdateStorage.loadUpdateInfo()
+    fun loadSavedUpdateInfo() {
+        val savedInfo = updateStorage.loadUpdateInfo()
         logger.debug(savedInfo.toString(), "loadSavedUpdateInfo - UpdateVM")
-        UpdateStorage.loadUpdateInfo()?.let {
+        updateStorage.loadUpdateInfo()?.let {
             _updateInfo.value = it
             showUpdateDialog.value = it.updateAvailable && it.mustUpdate
         }
@@ -31,16 +31,16 @@ class UpdateVM (
     }
 
     fun checkForUpdates(){
-        val updateInfo = apiClient.checkUpdateAvailable()
+        val updateInfo = apiService.checkUpdateAvailable()
         _updateInfo.value = updateInfo
-        UpdateStorage.saveUpdateAvailable(updateInfo)
+        updateStorage.saveUpdateAvailable(updateInfo)
         showUpdateDialog.value = updateInfo.updateAvailable && updateInfo.mustUpdate
         logger.debug(updateInfo.toString(), "checkForUpdates - UpdateVM")
     }
 
     fun doUpdate(){
         _updateInfo.value?.let { currentInfo ->
-            val updatedInfo = UpdateStorage.updateToNewVersion(currentInfo.newVersion)
+            val updatedInfo = updateStorage.updateToNewVersion(currentInfo.newVersion)
             _updateInfo.value = updatedInfo
             showUpdateDialog.value = false
         }

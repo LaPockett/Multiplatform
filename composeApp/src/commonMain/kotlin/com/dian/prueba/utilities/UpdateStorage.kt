@@ -2,45 +2,61 @@ package com.dian.prueba.utilities
 
 import com.dian.prueba.model.UpdateInfo
 import com.russhwolf.settings.Settings
-import com.russhwolf.settings.set
+import com.russhwolf.settings.*
 
-object UpdateStorage {
-    //private const val UPDATE_AVAILABLE_KEY = "update_available"
-    private const val MUST_UPDATE_KEY = "must_update"
-    private const val NEW_VERSION_KEY = "new_version"
-    private const val CURRENT_VERSION_KEY = "current_version"
-    val settings = Settings()
+interface UpdateStorage {
+    fun saveUpdateAvailable(updateInfo: UpdateInfo)
+    fun loadUpdateInfo(): UpdateInfo?
+    fun updateToNewVersion(newVersion: String): UpdateInfo
+    fun clear()
+}
 
-    fun updateToNewVersion(newVersion: String): UpdateInfo {
-        val updateInfo = UpdateInfo(
-            mustUpdate = false,
-            currentVersion = newVersion,
-            newVersion = newVersion,
-        )
-        saveUpdateAvailable(updateInfo)
-        return updateInfo
+class UpdateStorageImpl(private val settings: Settings) : UpdateStorage {
+    private companion object {
+        const val MUST_UPDATE_KEY = "must_update"
+        const val NEW_VERSION_KEY = "new_version"
+        const val CURRENT_VERSION_KEY = "current_version"
     }
-    fun saveUpdateAvailable(updateInfo: UpdateInfo) {
-        //settings[UPDATE_AVAILABLE_KEY] = updateInfo.updateAvailable
+
+    init {
+        if (settings.getStringOrNull(CURRENT_VERSION_KEY) == null) {
+            settings[CURRENT_VERSION_KEY] = "1.2"
+        }
+    }
+    override fun saveUpdateAvailable(updateInfo: UpdateInfo) {
         settings[MUST_UPDATE_KEY] = updateInfo.mustUpdate
         settings[NEW_VERSION_KEY] = updateInfo.newVersion
         settings[CURRENT_VERSION_KEY] = updateInfo.currentVersion
     }
 
-
-    fun loadUpdateInfo(): UpdateInfo? {
-        //val updateAvailable = settings.getBooleanOrNull(UPDATE_AVAILABLE_KEY)
+    override fun loadUpdateInfo(): UpdateInfo? {
         val mustUpdate = settings.getBooleanOrNull(MUST_UPDATE_KEY)
         val newVersion = settings.getStringOrNull(NEW_VERSION_KEY)
         val currentVersion = settings.getStringOrNull(CURRENT_VERSION_KEY)
-        if (currentVersion != null && newVersion != null) {
-            return UpdateInfo(
+
+        return if (currentVersion != null && newVersion != null) {
+            UpdateInfo(
                 mustUpdate = mustUpdate ?: false,
                 newVersion = newVersion,
                 currentVersion = currentVersion
             )
+        } else {
+            null
         }
-        return null
+    }
+    override fun updateToNewVersion(newVersion: String): UpdateInfo {
+        val updateInfo = UpdateInfo(
+            mustUpdate = false,
+            currentVersion = newVersion,
+            newVersion = newVersion
+        )
+        saveUpdateAvailable(updateInfo)
+        return updateInfo
     }
 
+    override fun clear() {
+        settings.remove(MUST_UPDATE_KEY)
+        settings.remove(NEW_VERSION_KEY)
+        settings.remove(CURRENT_VERSION_KEY)
+    }
 }
