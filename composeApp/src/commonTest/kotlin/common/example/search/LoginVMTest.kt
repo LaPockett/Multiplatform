@@ -1,8 +1,8 @@
 package common.example.search
 
-import com.dian.prueba.logger
 import com.dian.prueba.model.Tokens
 import com.dian.prueba.repository.LoginRepositoryImpl
+import com.dian.prueba.utilities.Logger
 import com.dian.prueba.utilities.TokenStorage
 import com.dian.prueba.viewModel.LoginVM
 import kotlinx.coroutines.test.runTest
@@ -28,7 +28,7 @@ class FakeTokenStorage : TokenStorage {
 }
 
 class LoginVMTest {
-
+    val logger = Logger("LoginVMTest")
     private lateinit var fakeApiService: FakeApiService
     private lateinit var fakeTokenStorage: FakeTokenStorage
     private lateinit var loginViewModel: LoginVM
@@ -59,10 +59,7 @@ class LoginVMTest {
         }
 
         val tokens = fakeTokenStorage.loadTokens()
-        logger.debug(
-            tokens.toString(),
-            "LoginVMTest - write valid ID and check the TOKENS is not null"
-        )
+        logger.debug(tokens.toString())
         assertNotNull(tokens)
         assertEquals("Sincere@april.biz", tokens.accessToken)
         assertNotNull(tokens.refreshToken)
@@ -79,30 +76,21 @@ class LoginVMTest {
             )
         }
         val tokens = fakeTokenStorage.loadTokens()
-        logger.debug(
-            tokens.toString(),
-            "LoginVMTest - write invalid ID and check the tokens is NULL"
-        )
+        logger.debug(tokens.toString(),)
         assertNull(tokens)
     }
 
     @Test
     fun `check the request login return not_null if we write a valid ID`() = runTest {
         val result = fakeApiService.requestLogin("1")
-        logger.debug(
-            result.toString(),
-            "LoginVMTest - write valid ID and check the result is not null"
-        )
+        logger.debug(result.toString())
         assertNotNull(result)
     }
 
     @Test
     fun `check the request login return null if we write a invalid ID`() = runTest {
         val result = fakeApiService.requestLogin("12")
-        logger.debug(
-            result.toString(),
-            "LoginVMTest - check the request login return null if we write a invalid ID"
-        )
+        logger.debug(result.toString(),)
         assert(result == null)
     }
 }

@@ -47,7 +47,7 @@ fun LoginScreen(){
     // No se hará nada con el email del usuario
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    val logger = Logger()
+    val logger = Logger("LoginScreen")
     val navController: NavHostController = rememberNavController()
     var showDialog by remember {mutableStateOf(false)}
     NavHost(
@@ -89,7 +89,7 @@ fun LoginScreen(){
                              * Cada vez que se haga login (desde el button) se va a generar un nuevo accessToken
                             */
                             if (email.isNotEmpty() && password.isNotEmpty()) {
-                                logger.warn("WARN - El usuario ha hecho click en login", "LoginScreen")
+                                logger.warn("WARN - El usuario ha hecho click en login")
 
                                 loginViewModel.loadSavedTokens() //!!
 
@@ -103,7 +103,7 @@ fun LoginScreen(){
                                 }
                                 //TokenStorage.saveTokens(loginViewModel.tokens.value!!)
 
-                                logger.debug(WebViewHeaderManager.getHeaders().toString(), "LoginScreen WebViewHeaderManager")
+                                logger.debug(WebViewHeaderManager.getHeaders().toString())
 
                                 navController.navigate("MenuDrawer")
 

@@ -12,7 +12,7 @@ class LoginVM(
     private val loginRepository:LoginRepository,
     private val tokenStorage: TokenStorage
 ) : ViewModel() {
-    private val logger = Logger()
+    private val logger = Logger("LoginVM")
     private val _tokens = MutableStateFlow<Tokens?>(null)
     val tokens: StateFlow<Tokens?> = _tokens
 
@@ -27,12 +27,12 @@ class LoginVM(
         viewModelScope.launch {
             val access = loginRepository.login(id)
             access?.let {
-                logger.warn("Haciendo login en LoginViewModel...", "LoginVM")
+                logger.warn("Haciendo login en LoginViewModel...")
 
                 val t = Tokens(accessToken = it, refreshToken = getRandomString())
                 _tokens.value = t
                 tokenStorage.saveTokens(t)
-                logger.debug(t.toString(), "LoginVM")
+                logger.debug(t.toString())
             }
         }
 

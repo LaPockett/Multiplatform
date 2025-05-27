@@ -51,7 +51,7 @@ import com.russhwolf.settings.*
 /**
  * NO SE USA
  */
-val logger = Logger()
+
 @Composable
 fun App() {
     MaterialTheme {
@@ -103,25 +103,26 @@ fun App() {
 }
 @Composable
 fun AppLogin(){
+    val logger = Logger("AppLogin")
     // Para ver en el Logcat que se están generando los tokens
     generarToken("access")
     generarToken("refresh")
     val settings  = Settings()
     val tokenStorage : TokenStorage = TokenStorageImpl(settings)
     if (settings.getStringOrNull("refresh_token") == null){
-        logger.debug(settings.getStringOrNull("refresh_token").toString(), "AppLogin")
+        logger.debug(settings.getStringOrNull("refresh_token").toString())
         LoginScreen()
 
     } else {
-        logger.warn("El token no es nulo", "AppLogin")
-        logger.debug(settings.getStringOrNull("access_token").toString(), "AppLogin ACCESS TOKEN")
-        logger.debug(settings.getStringOrNull("refresh_token").toString(), "AppLogin REfresh token")
+        logger.warn("El token no es nulo")
+        logger.debug(settings.getStringOrNull("access_token").toString())
+        logger.debug(settings.getStringOrNull("refresh_token").toString())
         tokenStorage.loadTokens()
-        logger.debug(tokenStorage.loadTokens().toString(), "AppLogin TokenStorage")
+        logger.debug(tokenStorage.loadTokens().toString())
         WebViewHeaderManager.updateRefreshToken(tokenStorage.loadTokens()!!.refreshToken!!)
         WebViewHeaderManager.updateAccessToken(tokenStorage.loadTokens()!!.accessToken)
-        logger.debug(WebViewHeaderManager.getHeaders().toString(), "AppLogin WebViewHeaderManager")
-        logger.warn("Ingresando a MenuDrawer", "MenuDrawer")
+        logger.debug(WebViewHeaderManager.getHeaders().toString())
+        logger.warn("Ingresando a MenuDrawer")
         MenuDrawer()
     }
 }
@@ -132,6 +133,7 @@ fun AppLogin(){
 
 @Composable
 fun AppNavigation() {
+    val logger = Logger("AppNavigation")
 
     val navController = rememberNavController()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
@@ -151,7 +153,7 @@ fun AppNavigation() {
     }
 
     LaunchedEffect(Unit){
-        logger.warn("Checking for updates...", "AppNavigation")
+        logger.warn("Checking for updates...")
         updateVM.checkForUpdates()
     }
 

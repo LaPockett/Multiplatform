@@ -16,7 +16,7 @@ import java.util.*
  * Esta no sirve, pero igualmente la dejo aquí para saber que se puede hacer
  */
 fun prueba() {
-    val logger = Logger()
+    val logger = Logger("prueba")
     val currentTime = System.currentTimeMillis()
     val expirationTime = Date(currentTime + 864000000L)
     val claims = mapOf("sub" to "public_key", "exp" to expirationTime.time / 1000)
@@ -27,14 +27,14 @@ fun prueba() {
         .claims(claims)
         .signWith(SignatureAlgorithm.HS512, base64Key)
         .compact()
-    logger.debug(jwtToken, "Prueba JWT")
+    logger.debug(jwtToken)
 }
 
 /**
  * Sirve
  */
 fun prueba2(){
-    val logger = Logger()
+    val logger = Logger("prueba2")
     val accessKey = "auzNN7V0aB30poSilNi15HCiE"
     val key = Keys.hmacShaKeyFor(Encoders.BASE64.encode(accessKey.toByteArray()).toByteArray())
     val now = Date()
@@ -45,14 +45,14 @@ fun prueba2(){
         .setExpiration(Date(now.time + 2 * 1000 * 60 * 60))
         .signWith(key)
         .compact()
-    logger.debug(jwt, "Prueba JWT")
+    logger.debug(jwt)
 }
 
 /**
  * Sirve
  */
 fun generarToken(tipo: String) {
-    val logger = Logger()
+    val logger = Logger("prueba3")
     val accessKey = "auzNN7V0aB30poSilNi15HCiE"
     val key = Keys.hmacShaKeyFor(Encoders.BASE64.encode(accessKey.toByteArray()).toByteArray())
     val now = Date()
@@ -60,7 +60,7 @@ fun generarToken(tipo: String) {
         "access" -> 5 * 60 * 1000 // 5 minutos
         "refresh" -> 7 * 24 * 60 * 60 * 1000 // 7 días
         else -> {
-            logger.debug(tipo, "Tipo de token no válido")
+            logger.debug(tipo)
             throw IllegalArgumentException("Tipo de token no válido")
         }
     }
@@ -74,7 +74,7 @@ fun generarToken(tipo: String) {
         .signWith(key)
         .compact()
 
-    logger.debug(jwt, "Prueba JWT")
+    logger.debug(jwt)
 }
 
 

@@ -10,15 +10,15 @@ package com.dian.prueba.utilities
  *
  * Básicamente atomizar todo lo que se pueda repetir en el código.
  */
-class Logger {
+class Logger(val tag: String) {
 
-    fun debug(variable:String , tag: String)  {
+    fun debug(variable:String)  {
         println("DIAN DEBUG - [$tag]: $variable")
     }
-    fun warn(result: String, tag: String) {
+    fun warn(result: String) {
         println("DIAN WARN - [$tag]: $result")
     }
-    fun error(e: Exception, tag: String) {
+    fun error(e: Exception) {
         println("DIAN ERROR - [$tag] : ${e.stackTraceToString()}")
     }
 }

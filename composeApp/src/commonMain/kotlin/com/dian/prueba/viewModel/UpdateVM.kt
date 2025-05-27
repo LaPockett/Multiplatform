@@ -14,7 +14,7 @@ class UpdateVM (
 
     private val _updateInfo = MutableStateFlow<UpdateInfo?>(null)
     val updateInfo: MutableStateFlow<UpdateInfo?> = _updateInfo
-    private val logger = Logger()
+    private val logger = Logger("UpdateVM")
     val showUpdateDialog = MutableStateFlow(false)
 
     init {
@@ -22,7 +22,7 @@ class UpdateVM (
     }
     fun loadSavedUpdateInfo() {
         val savedInfo = updateStorage.loadUpdateInfo()
-        logger.debug(savedInfo.toString(), "loadSavedUpdateInfo - UpdateVM")
+        logger.debug("loadSavedUpdateInfo: $savedInfo")
         updateStorage.loadUpdateInfo()?.let {
             _updateInfo.value = it
             showUpdateDialog.value = it.updateAvailable && it.mustUpdate
@@ -35,7 +35,7 @@ class UpdateVM (
         _updateInfo.value = updateInfo
         updateStorage.saveUpdateAvailable(updateInfo)
         showUpdateDialog.value = updateInfo.updateAvailable && updateInfo.mustUpdate
-        logger.debug(updateInfo.toString(), "checkForUpdates - UpdateVM")
+        logger.debug("checkForUpdates: $updateInfo")
     }
 
     fun doUpdate(){
