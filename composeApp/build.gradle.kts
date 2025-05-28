@@ -1,6 +1,8 @@
+import org.jetbrains.compose.ExperimentalComposeLibrary
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -13,6 +15,7 @@ plugins {
 kotlin {
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        instrumentedTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
@@ -31,6 +34,8 @@ kotlin {
             implementation(libs.androidx.activity.compose)
             // https://mvnrepository.com/artifact/androidx.preference/preference-ktx
             //implementation("androidx.preference:preference-ktx:1.2.1")
+            // Test de android
+            implementation("androidx.compose.ui:ui-test-manifest:1.5.4")
 
         }
         commonTest.dependencies {
@@ -44,6 +49,8 @@ kotlin {
             implementation("com.russhwolf:multiplatform-settings-test:1.3.0")
             // https://mvnrepository.com/artifact/androidx.preference/preference-ktx
             //implementation("androidx.preference:preference-ktx:1.2.1")
+            @OptIn(ExperimentalComposeLibrary::class)
+            implementation(compose.uiTest)
 
         }
         commonMain.dependencies {
