@@ -1,10 +1,10 @@
-package common.example.search
+package com.dian.prueba.viewModel
+
 
 import com.dian.prueba.model.Tokens
 import com.dian.prueba.repository.LoginRepositoryImpl
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.utilities.TokenStorage
-import com.dian.prueba.viewModel.LoginVM
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -40,6 +40,7 @@ class LoginVMTest {
         val loginRepository = LoginRepositoryImpl(fakeApiService)
         loginViewModel = LoginVM(loginRepository, fakeTokenStorage)
     }
+
     @After
     fun tearDown() {
         fakeTokenStorage.clear()
@@ -64,10 +65,11 @@ class LoginVMTest {
         assertEquals("Sincere@april.biz", tokens.accessToken)
         assertNotNull(tokens.refreshToken)
     }
+
     @Test
     fun `write invalid ID and check the tokens is NULL`() = runTest {
         loginViewModel.loginUser(12)
-        if (fakeApiService.requestLogin("12")!=null) {
+        if (fakeApiService.requestLogin("12") != null) {
             fakeTokenStorage.saveTokens(
                 Tokens(
                     fakeApiService.requestLogin("12")!!,
@@ -76,7 +78,7 @@ class LoginVMTest {
             )
         }
         val tokens = fakeTokenStorage.loadTokens()
-        logger.debug(tokens.toString(),)
+        logger.debug(tokens.toString())
         assertNull(tokens)
     }
 
@@ -90,7 +92,7 @@ class LoginVMTest {
     @Test
     fun `check the request login return null if we write a invalid ID`() = runTest {
         val result = fakeApiService.requestLogin("12")
-        logger.debug(result.toString(),)
+        logger.debug(result.toString())
         assert(result == null)
     }
 }
