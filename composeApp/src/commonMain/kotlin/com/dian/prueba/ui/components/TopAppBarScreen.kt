@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import com.dian.prueba.ui.screens.CartScreen
 import com.dian.prueba.utilities.Logger
 
@@ -23,7 +24,7 @@ import com.dian.prueba.utilities.Logger
  * a necesitar en el futuro
  */
 @Composable
-fun TopAppBarScreen() {
+fun TopAppBarScreen() { // SE ESTÁ USANDO ESTE EN UI TEST
     var showMenuDrawer by remember { mutableStateOf(false) }
     val logger = Logger("TopAppBarScreen")
 
@@ -31,6 +32,7 @@ fun TopAppBarScreen() {
         title = {
             Text(text = "Top App Bar 1 - Amazon")
         },
+        modifier = Modifier.testTag("TopAppBar"),
         navigationIcon = {
             IconButton(onClick = {
                 logger.debug("Enseñando el Drawer...")
