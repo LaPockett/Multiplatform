@@ -15,10 +15,17 @@ plugins {
 kotlin {
     androidTarget {
         @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        instrumentedTestVariant.sourceSetTree.set(KotlinSourceSetTree.test)
+        instrumentedTestVariant{
+            sourceSetTree.set(KotlinSourceSetTree.test)
+            dependencies{
+                androidTestImplementation(libs.androidx.ui.test.junit4.android)
+                debugImplementation(libs.androidx.ui.test.manifest)
+            }
+        }
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
+
     }
     
     jvm("desktop")
@@ -28,14 +35,15 @@ kotlin {
     
     sourceSets {
         val desktopMain by getting
-        
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             // https://mvnrepository.com/artifact/androidx.preference/preference-ktx
             //implementation("androidx.preference:preference-ktx:1.2.1")
             // Test de android
-            implementation("androidx.compose.ui:ui-test-manifest:1.5.4")
+            implementation("androidx.compose.ui:ui-test-manifest:1.8.2")
+            // https://mvnrepository.com/artifact/androidx.compose.ui/ui-test-junit4
+            implementation("androidx.compose.ui:ui-test-junit4:1.9.0-alpha03")
 
         }
         commonTest.dependencies {
@@ -51,7 +59,8 @@ kotlin {
             //implementation("androidx.preference:preference-ktx:1.2.1")
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)
-
+            // https://mvnrepository.com/artifact/junit/junit
+            //implementation("junit:junit:4.13.2")
         }
         commonMain.dependencies {
             //Junit test
@@ -147,8 +156,10 @@ dependencies {
     implementation(libs.play.services.appsearch)
     implementation(libs.androidx.room.runtime.android)
     implementation(libs.androidx.lifecycle.livedata.core.ktx)
+    implementation(libs.androidx.junit.ktx)
     //implementation(libs.androidx.material3)
     debugImplementation(compose.uiTooling)
+
 }
 
 compose.desktop {
