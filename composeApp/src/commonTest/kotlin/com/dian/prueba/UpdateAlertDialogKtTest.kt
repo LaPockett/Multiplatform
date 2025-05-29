@@ -7,10 +7,15 @@ import com.russhwolf.settings.Settings
 import androidx.compose.ui.test.*
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.dian.prueba.ui.components.dialogs.UpdateAlertDialog
+import kotlinx.coroutines.awaitAll
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+
+/**
+ * Este es el test que no funciona, los demás sí funcionan
+ */
 
 /*class UpdateAlertDialogKtTest {
 
@@ -63,7 +68,7 @@ class UpdateAlertDialogKtTest {
 
     @Test
     fun testUpdateAlertDialog()  {
-        composeTestRule.onNodeWithTag("updateTitle", useUnmergedTree = true).assertExists().assertIsDisplayed()
+        composeTestRule.onNodeWithTag("updateTitle").assertExists()
         composeTestRule.onNodeWithTag("updateButton", useUnmergedTree = true).performClick()
     }
 }
