@@ -22,8 +22,12 @@ playServicesAppsearch = "16.0.1"
 roomRuntimeAndroid = "2.7.1"
 lifecycleLivedataCoreKtx = "2.9.0"
 uiTestJunit4 = "1.5.11"
+uiTestManifest = "1.8.2"
+junitKtx = "1.2.1"
 
 [libraries]
+androidx-ui-test-junit4-android = { module = "androidx.compose.ui:ui-test-junit4-android", version.ref = "uiTestManifest" }
+androidx-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "uiTestManifest" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -44,6 +48,7 @@ play-services-appsearch = { group = "com.google.android.gms", name = "play-servi
 androidx-room-runtime-android = { group = "androidx.room", name = "room-runtime-android", version.ref = "roomRuntimeAndroid" }
 androidx-lifecycle-livedata-core-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-core-ktx", version.ref = "lifecycleLivedataCoreKtx" }
 ui-test-junit4 = { module = "org.jetbrains.compose.ui:ui-test-junit4", version.ref = "uiTestJunit4" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitKtx" }
 
 
 [plugins]

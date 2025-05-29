@@ -5,7 +5,11 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalUriHandler
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.viewModel.UpdateVM
@@ -26,14 +30,15 @@ fun UpdateAlertDialog(viewModel: UpdateVM = viewModel()) {
                 logger.debug(viewModel.showUpdateDialog.value.toString())
             }
         },
-        title = { Text(text = "Nueva actualización disponible") },
+        title = { Text(text = "Nueva actualización disponible", modifier = Modifier.testTag("updateTitle")
+        ) },
         text = { Text(text = "Versión actual: ${updateInfo.currentVersion} Hay una nueva versión disponible de la aplicación: ${updateInfo.newVersion}. Es obligatorio actualizar") },
         confirmButton = {
             Button(onClick = {
                 uriHandler.openUri("https://play.google.com/store/apps/details?id=com.amazon.mShop.android.shopping&hl=es&pli=1")
                 viewModel.doUpdate()
                 //viewModel.showUpdateDialog.value = false
-            }) {
+            }, modifier = Modifier.testTag("updateButton")) {
                 Text("Actualizar")
             }
         },
