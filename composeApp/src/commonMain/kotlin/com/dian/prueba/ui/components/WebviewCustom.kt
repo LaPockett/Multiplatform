@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.*
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
@@ -58,7 +59,8 @@ fun WebViewAccount (
     }
 
     WebView(
-        state = webViewState
+        state = webViewState,
+        modifier = Modifier.testTag("WebViewAccount")
     )
 }
 
