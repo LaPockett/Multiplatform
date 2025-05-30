@@ -104,7 +104,7 @@ fun LoginScreen(){
                                 //TokenStorage.saveTokens(loginViewModel.tokens.value!!)
 
                                 logger.debug(WebViewHeaderManager.getHeaders().toString())
-
+                                logger.warn("El usuario ha hecho click en login")
                                 navController.navigate("MenuDrawer")
 
                             } else {
