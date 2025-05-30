@@ -27,7 +27,6 @@ class UpdateVM (
             _updateInfo.value = it
             showUpdateDialog.value = it.updateAvailable && it.mustUpdate
         }
-
     }
 
     fun checkForUpdates(){
