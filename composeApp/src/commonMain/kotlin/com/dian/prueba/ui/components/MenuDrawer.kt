@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.dian.prueba.AppNavigation
 import com.dian.prueba.ui.screens.CartScreen
+import com.dian.prueba.ui.screens.SettingsScreen
 import kotlinx.coroutines.launch
 
 /**
@@ -36,7 +37,7 @@ fun MenuDrawer() {
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet {
-                WebViewSettings()
+                SettingsScreen()
             }
         },
         gesturesEnabled = drawerState.isOpen,
