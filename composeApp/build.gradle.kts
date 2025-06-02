@@ -109,6 +109,8 @@ kotlin {
             api("io.jsonwebtoken:jjwt-api:0.12.6")
             implementation("io.jsonwebtoken:jjwt-impl:0.12.6")
             implementation("io.jsonwebtoken:jjwt-orgjson:0.12.6")
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
         }
         desktopMain.dependencies {
 
