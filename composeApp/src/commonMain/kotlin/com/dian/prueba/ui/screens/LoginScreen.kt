@@ -22,14 +22,8 @@ import com.dian.prueba.utilities.Logger
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.key.Key.Companion.R
-import com.dian.prueba.*
-//import androidx.compose.ui.input.key.Key.Companion.R
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.*
-import coil3.Image
-import coil3.compose.AsyncImage
-import coil3.decode.ImageSource
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
 import com.dian.prueba.network.APIClient
 import com.dian.prueba.repository.LoginRepositoryImpl

@@ -41,5 +41,8 @@ class LoginVM(
     fun loadSavedTokens() {
         _tokens.value = tokenStorage.loadTokens()
     }
+    fun clearSavedTokens() {
+        tokenStorage.clear()
+    }
 
 }
