@@ -22,11 +22,14 @@ import com.dian.prueba.utilities.Logger
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.key.Key.Companion.R
 import com.dian.prueba.*
 //import androidx.compose.ui.input.key.Key.Companion.R
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.*
+import coil3.Image
 import coil3.compose.AsyncImage
+import coil3.decode.ImageSource
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
 import com.dian.prueba.network.APIClient
 import com.dian.prueba.repository.LoginRepositoryImpl
@@ -36,6 +39,8 @@ import com.dian.prueba.ui.components.dialogs.showAlertDialogLogin
 import com.dian.prueba.utilities.TokenStorageImpl
 import com.dian.prueba.utilities.UpdateStorageImpl
 import com.russhwolf.settings.Settings
+import multiplatform.composeapp.generated.resources.Res
+import multiplatform.composeapp.generated.resources.logo
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
@@ -73,12 +78,15 @@ fun LoginScreen(){
                 Column (
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
-                    // Por arreglar, porque no se visualiza la imagen
-                    AsyncImage(
-                        model = ("https://logo.cl/assets/twitterImage.png"),
+                    // En vez de solo poner 'R', se pone 'Res'
+                    Image(
+                        painter = painterResource(Res.drawable.logo),
                         contentDescription = "Logo",
-                        modifier = Modifier.size(80.dp).aspectRatio(1f)
-                            .clip(MaterialTheme.shapes.small).fillMaxWidth()
+                        modifier = Modifier.size(100.dp).aspectRatio(1f)
+                            .clip(MaterialTheme.shapes.medium).fillMaxWidth()
+                    )
+                    Spacer(
+                        modifier = Modifier.padding(16.dp)
                     )
                     OutlinedTextField(
                         value = email,
@@ -157,6 +165,7 @@ fun LoginScreen(){
                         Icon(
                             Icons.Default.Person,
                             contentDescription = "Login",
+                            modifier = Modifier.padding(end=6.dp)
                         )
                         Text("Iniciar sesión")
                     }
