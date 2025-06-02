@@ -1,5 +1,6 @@
 package com.dian.prueba.ui.screens
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -8,25 +9,34 @@ import androidx.navigation.compose.rememberNavController
 import com.dian.prueba.viewModel.LoginVM
 import androidx.navigation.compose.composable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.runtime.collectAsState
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.*
-import androidx.compose.material.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.mutableStateOf
-import com.dian.prueba.AppNavigation
 import com.dian.prueba.utilities.Logger
 import androidx.compose.runtime.*
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import com.dian.prueba.*
+//import androidx.compose.ui.input.key.Key.Companion.R
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.*
+import coil3.compose.AsyncImage
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
 import com.dian.prueba.network.APIClient
 import com.dian.prueba.repository.LoginRepositoryImpl
 import com.dian.prueba.ui.components.MenuDrawer
+import com.dian.prueba.ui.components.dialogs.InvalidDataAlertDialogLogin
 import com.dian.prueba.ui.components.dialogs.showAlertDialogLogin
-import com.dian.prueba.utilities.TokenStorage
 import com.dian.prueba.utilities.TokenStorageImpl
 import com.dian.prueba.utilities.UpdateStorageImpl
 import com.russhwolf.settings.Settings
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun LoginScreen(){
@@ -50,6 +60,7 @@ fun LoginScreen(){
     val logger = Logger("LoginScreen")
     val navController: NavHostController = rememberNavController()
     var showDialog by remember {mutableStateOf(false)}
+    var showDialogInvalidData by remember {mutableStateOf(false)}
     NavHost(
         navController = navController,
         startDestination = "login"
@@ -62,10 +73,22 @@ fun LoginScreen(){
                 Column (
                     horizontalAlignment = Alignment.CenterHorizontally
                 ){
+                    // Por arreglar, porque no se visualiza la imagen
+                    AsyncImage(
+                        model = ("https://logo.cl/assets/twitterImage.png"),
+                        contentDescription = "Logo",
+                        modifier = Modifier.size(80.dp).aspectRatio(1f)
+                            .clip(MaterialTheme.shapes.small).fillMaxWidth()
+                    )
                     OutlinedTextField(
                         value = email,
                         onValueChange = {email = it},
-                        label = { Text("Email") }
+                        label = { Text("Email") },
+                        colors = OutlinedTextFieldDefaults.colors(
+                            // Color crema más claro #f7f4f0
+                            unfocusedBorderColor = Color(0xFFb7af98),
+                            focusedBorderColor = Color(0xFFf7f4f0)
+                        )
                     )
                     Spacer(
                         modifier = Modifier.padding(16.dp)
@@ -73,7 +96,13 @@ fun LoginScreen(){
                     OutlinedTextField(
                         value = password,
                         onValueChange = {password = it},
-                        label = {Text("Contraseña")}
+                        label = {Text("Contraseña")},
+                        colors = OutlinedTextFieldDefaults.colors(
+                            // Color crema más claro #f7f4f0
+                            unfocusedBorderColor = Color(0xFFb7af98),
+                            focusedBorderColor = Color(0xFFf7f4f0)
+                        ),
+                        visualTransformation = PasswordVisualTransformation()
                     )
                     Spacer(
                         modifier = Modifier.padding(16.dp)
@@ -89,30 +118,46 @@ fun LoginScreen(){
                              * Cada vez que se haga login (desde el button) se va a generar un nuevo accessToken
                             */
                             if (email.isNotEmpty() && password.isNotEmpty()) {
-                                logger.warn("WARN - El usuario ha hecho click en login")
+                                if (password.length in 6..20 && email.contains("@") && email.contains(".")){
+                                    logger.warn("WARN - El usuario ha hecho click en login")
 
-                                loginViewModel.loadSavedTokens() //!!
+                                    loginViewModel.loadSavedTokens() //!!
 
-                                loginViewModel.loginUser(5) // Lucio_Hettinger@annie.ca
-                                loginViewModel.tokens.value?.accessToken?.let { tokens ->
-                                    WebViewHeaderManager.updateAccessToken(tokens)
-                                    WebViewHeaderManager.updateLoginCookie(password)
+                                    loginViewModel.loginUser(5) // Lucio_Hettinger@annie.ca
+                                    loginViewModel.tokens.value?.accessToken?.let { tokens ->
+                                        WebViewHeaderManager.updateAccessToken(tokens)
+                                        WebViewHeaderManager.updateLoginCookie(password)
+                                    }
+                                    loginViewModel.tokens.value?.refreshToken?.let { tokens ->
+                                        WebViewHeaderManager.updateRefreshToken(tokens)
+                                    }
+                                    //TokenStorage.saveTokens(loginViewModel.tokens.value!!)
+
+                                    logger.debug(WebViewHeaderManager.getHeaders().toString())
+                                    logger.warn("El usuario ha hecho click en login")
+                                    navController.navigate("MenuDrawer")
+
+                                } else {
+                                    showDialogInvalidData = true
                                 }
-                                loginViewModel.tokens.value?.refreshToken?.let { tokens ->
-                                    WebViewHeaderManager.updateRefreshToken(tokens)
-                                }
-                                //TokenStorage.saveTokens(loginViewModel.tokens.value!!)
-
-                                logger.debug(WebViewHeaderManager.getHeaders().toString())
-                                logger.warn("El usuario ha hecho click en login")
-                                navController.navigate("MenuDrawer")
 
                             } else {
                                 showDialog = true
                             }
                         },
-                        enabled = true
+                        enabled = true,
+                        colors = ButtonDefaults.buttonColors(
+                            // Color crema #b7af98
+                            backgroundColor = Color(0xFFb7af98),
+                            contentColor = Color.White
+                        ),
+                        shape = RoundedCornerShape(10.dp),
+
                     ){
+                        Icon(
+                            Icons.Default.Person,
+                            contentDescription = "Login",
+                        )
                         Text("Iniciar sesión")
                     }
                     Spacer(
@@ -124,6 +169,11 @@ fun LoginScreen(){
                 showAlertDialogLogin(
                     texto = "Debes introducir un email y una contraseña",
                     onDismissRequest = {showDialog = false}
+                )
+            }
+            if (showDialogInvalidData){
+                InvalidDataAlertDialogLogin(
+                    onDismissRequest = {showDialogInvalidData = false}
                 )
             }
 

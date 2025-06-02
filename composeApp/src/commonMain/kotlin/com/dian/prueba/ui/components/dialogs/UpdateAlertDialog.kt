@@ -1,15 +1,19 @@
 package com.dian.prueba.ui.components.dialogs
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.viewModel.UpdateVM
@@ -38,7 +42,13 @@ fun UpdateAlertDialog(viewModel: UpdateVM = viewModel()) {
                 uriHandler.openUri("https://play.google.com/store/apps/details?id=com.amazon.mShop.android.shopping&hl=es&pli=1")
                 viewModel.doUpdate()
                 //viewModel.showUpdateDialog.value = false
-            }, modifier = Modifier.testTag("updateButton")) {
+            }, modifier = Modifier.testTag("updateButton"),
+                colors = ButtonDefaults.buttonColors(
+                    // Color crema #b7af98
+                    backgroundColor = Color(0xFFb7af98),
+                    contentColor = Color.White
+                ),
+                shape = RoundedCornerShape(10.dp)) {
                 Text("Actualizar")
             }
         },
@@ -53,7 +63,13 @@ fun UpdateAlertDialog(viewModel: UpdateVM = viewModel()) {
                     logger.debug("currentVersion: " + updateInfo.currentVersion)
                     logger.debug("newVersion: " +updateInfo.newVersion)
                     viewModel.showUpdateDialog.value = false
-                }) {
+                },
+                    colors = ButtonDefaults.buttonColors(
+                        // Color crema #b7af98
+                        backgroundColor = Color(0xFFb7af98),
+                        contentColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(10.dp),) {
                     Text("Ignorar")
                 }
             }

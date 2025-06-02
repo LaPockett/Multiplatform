@@ -2,27 +2,24 @@ package com.dian.prueba.ui.components.dialogs
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.*
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.*
 
 @Composable
-fun showAlertDialogLogin(
-    texto: String,
+fun InvalidDataAlertDialogLogin(
     onDismissRequest: () -> Unit
-){
+) {
     AlertDialog(
         onDismissRequest = onDismissRequest,
-        text = { Text(text = texto) },
+        title = { Text("Datos inválidos") },
+        text = { Text("Por favor, ingresa un email válido y/o una contraseña válida. " +
+                "El email debe de ser un correo válido y la contraseña debe de tener entre 6 y 20 caracteres") },
         confirmButton = {
             Button(
                 onClick = onDismissRequest,
-                modifier = Modifier.testTag("loginDialogButton"),
                 colors = ButtonDefaults.buttonColors(
                     // Color crema #b7af98
                     backgroundColor = Color(0xFFb7af98),
@@ -30,10 +27,8 @@ fun showAlertDialogLogin(
                 ),
                 shape = RoundedCornerShape(10.dp),
             ) {
-                Text("Cerrar")
+                Text("OK")
             }
-        },
-        modifier = Modifier.testTag("AlertDialog")
+        }
     )
-
 }
