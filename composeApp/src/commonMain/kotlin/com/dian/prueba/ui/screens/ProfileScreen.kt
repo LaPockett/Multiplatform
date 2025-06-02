@@ -13,11 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.dian.prueba.AppLogin
-import com.dian.prueba.navigation.Screen
 import com.dian.prueba.network.APIClient
 import com.dian.prueba.repository.LoginRepositoryImpl
 import com.dian.prueba.ui.components.WebViewAccount
@@ -27,7 +23,7 @@ import com.dian.prueba.viewModel.LoginVM
 import com.russhwolf.settings.Settings
 
 @Composable
-fun ProfileScreen(navController: NavController, onLogout: () -> Unit) {
+fun ProfileScreen(navController: NavController){
     val loginViewModel = remember {
         LoginVM(
             loginRepository = LoginRepositoryImpl(
@@ -45,31 +41,28 @@ fun ProfileScreen(navController: NavController, onLogout: () -> Unit) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
-    ) {
-        FloatingActionButton(
-            onClick = {
-                navController.navigate(Screen.Home.route)
-            },
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(top = 110.dp, start = 20.dp)
-                .zIndex(1f),
-            backgroundColor = Color(0xFF080e45),
-
-            ) {
-            Icon(
-                imageVector = Icons.Default.ArrowBack,
-                contentDescription = "Back",
-                tint = Color.White
-            )
-        }
+    ){
         WebViewAccount(
             modifier = Modifier.fillMaxSize(),
         )
+        FloatingActionButton(
+            onClick = {
+                navController.navigate("home")
+            },
+            modifier = Modifier
+                .align(Alignment.TopStart)
+                .padding(16.dp),
+            backgroundColor = Color(0xFF080e45),
+
+            ) {
+            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+        }
         Button(
             onClick = {
                 loginViewModel.clearSavedTokens()
-                onLogout()
+                // Arreglar esto para que el usuario no pueda salir del Login y para que
+                // no salgan los elementos del bottomNavigation
+                navController.navigate(route= "login")
             },
             colors = ButtonDefaults.buttonColors(
                 // Color crema #b7af98
@@ -77,13 +70,10 @@ fun ProfileScreen(navController: NavController, onLogout: () -> Unit) {
                 contentColor = Color.White
             ),
             shape = RoundedCornerShape(10.dp),
-            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 60.dp)
+            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom =5.dp)
         ) {
             Text("Cerrar sesión")
         }
     }
 }
-
-
-
 
