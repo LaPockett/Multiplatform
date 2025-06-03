@@ -1,6 +1,23 @@
 const { remote } = require('webdriverio');
 
-async function runTestLogin(driver) {
+const capabilities = {
+    platformName: 'Android',
+    'appium:automationName': 'UiAutomator2',
+    'appium:deviceName': 'Android',
+    'appium:udid': '1e27529b',
+    'appium:appPackage': 'com.dian.prueba',
+    'appium:appActivity': 'com.dian.prueba.view.MainActivity',
+    'appium:autoGrantPermissions': true
+};
+const wdOpts = {
+    hostname: process.env.APPIUM_HOST || 'localhost',
+    port: parseInt(process.env.APPIUM_PORT, 10) || 4723,
+    logLevel: 'info',
+    capabilities,
+};
+
+async function runTestLogin() {
+    const driver = await remote(wdOpts);
     try {
         await driver.pause(1000);
 
@@ -19,12 +36,16 @@ async function runTestLogin(driver) {
         } else {
             throw new Error('El mensaje de error no es visible');
         }
-        console.log("Test completado con éxito. EMPTYLOGIN");
 
     } catch (error) {
+        console.error('Error en el test:', error);
+        const screenshot = await driver.takeScreenshot();
+        require('fs').writeFileSync('screenshot_error.png', screenshot, 'base64');
         throw error;
 
+    } finally {
+        await driver.deleteSession();
     }
 }
 
-module.exports = { runTestLogin };
+runTestLogin().catch(console.error);
