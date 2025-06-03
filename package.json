@@ -1,0 +1,23 @@
+{
+  "name": "multiplatformlogo",
+  "version": "1.0.0",
+  "description": "appiumjs",
+  "main": "index.js",
+  "scripts": {
+    "test-login": "node appium/testEmptyLogin.js",
+    "test-all": "node appium/testEmptyLogin.js && node appium/testUnsuccessfulLogin.js&& node appium/testSuccessfulLogin.js "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LaPockett/Multiplatform.git"
+  },
+  "author": "Dian",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LaPockett/Multiplatform/issues"
+  },
+  "homepage": "https://github.com/LaPockett/Multiplatform#readme",
+  "devDependencies": {
+    "webdriverio": "^9.15.0"
+  }
+}
