@@ -40,6 +40,8 @@ class MainActivity : ComponentActivity() {
                 val window = (view.context as ComponentActivity).window
                 window.statusBarColor = Color.Transparent.toArgb()
                 WindowCompat.getInsetsController(window,view).isAppearanceLightStatusBars = !isDarkTheme
+                window.navigationBarColor = Color.Transparent.toArgb()
+                WindowCompat.getInsetsController(window,view).isAppearanceLightNavigationBars = !isDarkTheme
             }
             //App()
             //AppNavigation()
