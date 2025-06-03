@@ -42,21 +42,22 @@ fun ProfileScreen(navController: NavController){
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ){
-        WebViewAccount(
-            modifier = Modifier.fillMaxSize(),
-        )
         FloatingActionButton(
             onClick = {
                 navController.navigate("home")
             },
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .padding(16.dp),
+                .padding(top = 110.dp, start = 20.dp)
+                .zIndex(1f),
             backgroundColor = Color(0xFF080e45),
 
             ) {
             Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
         }
+        WebViewAccount(
+            modifier = Modifier.fillMaxSize(),
+        )
         Button(
             onClick = {
                 loginViewModel.clearSavedTokens()
@@ -70,7 +71,7 @@ fun ProfileScreen(navController: NavController){
                 contentColor = Color.White
             ),
             shape = RoundedCornerShape(10.dp),
-            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom =5.dp)
+            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom =60.dp)
         ) {
             Text("Cerrar sesión")
         }

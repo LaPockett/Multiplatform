@@ -2,8 +2,11 @@ package com.dian.prueba
 import com.dian.prueba.utilities.TokenStorage
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -103,27 +106,29 @@ fun App() {
 }
 @Composable
 fun AppLogin(){
-    val logger = Logger("AppLogin")
-    // Para ver en el Logcat que se están generando los tokens
-    generarToken("access")
-    generarToken("refresh")
-    val settings  = Settings()
-    val tokenStorage : TokenStorage = TokenStorageImpl(settings)
-    if (settings.getStringOrNull("refresh_token") == null){
-        logger.debug(settings.getStringOrNull("refresh_token").toString())
-        LoginScreen()
+    MaterialTheme{
+        val logger = Logger("AppLogin")
+        // Para ver en el Logcat que se están generando los tokens
+        generarToken("access")
+        generarToken("refresh")
+        val settings  = Settings()
+        val tokenStorage : TokenStorage = TokenStorageImpl(settings)
+        if (settings.getStringOrNull("refresh_token") == null){
+            logger.debug(settings.getStringOrNull("refresh_token").toString())
+            LoginScreen()
 
-    } else {
-        logger.warn("El token no es nulo")
-        logger.debug(settings.getStringOrNull("access_token").toString())
-        logger.debug(settings.getStringOrNull("refresh_token").toString())
-        tokenStorage.loadTokens()
-        logger.debug(tokenStorage.loadTokens().toString())
-        WebViewHeaderManager.updateRefreshToken(tokenStorage.loadTokens()!!.refreshToken!!)
-        WebViewHeaderManager.updateAccessToken(tokenStorage.loadTokens()!!.accessToken)
-        logger.debug(WebViewHeaderManager.getHeaders().toString())
-        logger.warn("Ingresando a MenuDrawer")
-        MenuDrawer()
+        } else {
+            logger.warn("El token no es nulo")
+            logger.debug(settings.getStringOrNull("access_token").toString())
+            logger.debug(settings.getStringOrNull("refresh_token").toString())
+            tokenStorage.loadTokens()
+            logger.debug(tokenStorage.loadTokens().toString())
+            WebViewHeaderManager.updateRefreshToken(tokenStorage.loadTokens()!!.refreshToken!!)
+            WebViewHeaderManager.updateAccessToken(tokenStorage.loadTokens()!!.accessToken)
+            logger.debug(WebViewHeaderManager.getHeaders().toString())
+            logger.warn("Ingresando a MenuDrawer")
+            MenuDrawer()
+        }
     }
 }
 
