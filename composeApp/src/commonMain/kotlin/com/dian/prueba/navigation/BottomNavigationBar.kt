@@ -1,9 +1,10 @@
 package com.dian.prueba.navigation
 
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -14,10 +15,11 @@ import androidx.navigation.NavController
 fun BottomNavigationBar(navController: NavController) {
     val selectedNavigationIndex = rememberSaveable { mutableStateOf(0) }
     NavigationBar(
-        containerColor = Color.White
+        containerColor = Color.White,
+        contentColor = Color(0xFF080e45)
     ) {
         navigationItems.forEachIndexed { index, item ->
-            BottomNavigationItem(
+            NavigationBarItem(
                 selected = selectedNavigationIndex.value == index,
                 onClick = {
                     selectedNavigationIndex.value = index
@@ -30,12 +32,15 @@ fun BottomNavigationBar(navController: NavController) {
                     )
                 },
                 label = {
-                    Text(text = item.title,
-                        color = if (index == selectedNavigationIndex.value)
-                            Color.Black
-                        else Color.Gray
-                    )
-                }
+                    Text(text = item.title)
+                },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = Color(0xFF2E3B97),
+                    unselectedIconColor = Color(0xFF080E45),
+                    selectedTextColor = Color(0xFF2E3B97),
+                    unselectedTextColor = Color(0xFF080E45),
+                    indicatorColor = Color.White
+                )
             )
         }
     }
