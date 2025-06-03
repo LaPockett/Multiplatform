@@ -30,8 +30,10 @@ import com.dian.prueba.repository.LoginRepositoryImpl
 import com.dian.prueba.ui.components.MenuDrawer
 import com.dian.prueba.ui.components.dialogs.InvalidDataAlertDialogLogin
 import com.dian.prueba.ui.components.dialogs.showAlertDialogLogin
+import com.dian.prueba.utilities.LoginValidator
 import com.dian.prueba.utilities.TokenStorageImpl
 import com.dian.prueba.utilities.UpdateStorageImpl
+import com.dian.prueba.utilities.Resultado
 import com.russhwolf.settings.Settings
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.logo
@@ -119,8 +121,8 @@ fun LoginScreen(){
                              * EL refresh_token es el email del usuario
                              * Cada vez que se haga login (desde el button) se va a generar un nuevo accessToken
                             */
-                            if (email.isNotEmpty() && password.isNotEmpty()) {
-                                if (password.length in 6..20 && email.contains("@") && email.contains(".")){
+                            when (LoginValidator.validateLogin(email, password)) {
+                                Resultado.Valid -> {
                                     logger.warn("WARN - El usuario ha hecho click en login")
 
                                     loginViewModel.loadSavedTokens() //!!
@@ -138,13 +140,9 @@ fun LoginScreen(){
                                     logger.debug(WebViewHeaderManager.getHeaders().toString())
                                     logger.warn("El usuario ha hecho click en login")
                                     navController.navigate("MenuDrawer")
-
-                                } else {
-                                    showDialogInvalidData = true
                                 }
-
-                            } else {
-                                showDialog = true
+                                Resultado.Empty -> showDialog = true
+                                Resultado.Invalid -> showDialogInvalidData = true
                             }
                         },
                         enabled = true,
