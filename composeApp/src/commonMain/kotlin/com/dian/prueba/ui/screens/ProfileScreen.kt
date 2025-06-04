@@ -13,7 +13,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.dian.prueba.AppLogin
+import com.dian.prueba.navigation.Screen
 import com.dian.prueba.network.APIClient
 import com.dian.prueba.repository.LoginRepositoryImpl
 import com.dian.prueba.ui.components.WebViewAccount
@@ -23,7 +27,7 @@ import com.dian.prueba.viewModel.LoginVM
 import com.russhwolf.settings.Settings
 
 @Composable
-fun ProfileScreen(navController: NavController){
+fun ProfileScreen(navController: NavController) {
     val loginViewModel = remember {
         LoginVM(
             loginRepository = LoginRepositoryImpl(
@@ -41,7 +45,7 @@ fun ProfileScreen(navController: NavController){
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
-    ){
+    ) {
         FloatingActionButton(
             onClick = {
                 navController.navigate("home")
@@ -53,7 +57,11 @@ fun ProfileScreen(navController: NavController){
             backgroundColor = Color(0xFF080e45),
 
             ) {
-            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+            Icon(
+                imageVector = Icons.Default.ArrowBack,
+                contentDescription = "Back",
+                tint = Color.White
+            )
         }
         WebViewAccount(
             modifier = Modifier.fillMaxSize(),
@@ -63,7 +71,7 @@ fun ProfileScreen(navController: NavController){
                 loginViewModel.clearSavedTokens()
                 // Arreglar esto para que el usuario no pueda salir del Login y para que
                 // no salgan los elementos del bottomNavigation
-                navController.navigate(route= "login")
+                navController.navigate(route = "LoginScreen")
             },
             colors = ButtonDefaults.buttonColors(
                 // Color crema #b7af98
@@ -71,10 +79,13 @@ fun ProfileScreen(navController: NavController){
                 contentColor = Color.White
             ),
             shape = RoundedCornerShape(10.dp),
-            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom =60.dp)
+            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 60.dp)
         ) {
             Text("Cerrar sesión")
         }
     }
 }
+
+
+
 
