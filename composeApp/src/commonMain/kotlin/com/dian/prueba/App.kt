@@ -1,4 +1,5 @@
 package com.dian.prueba
+import androidx.compose.foundation.layout.Box
 import com.dian.prueba.utilities.TokenStorage
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -105,33 +106,57 @@ fun App() {
     }
 }
 @Composable
-fun AppLogin(){
-    MaterialTheme{
+fun AppLogin() {
+    MaterialTheme {
+        val navController: NavHostController = rememberNavController()
         val logger = Logger("AppLogin")
         // Para ver en el Logcat que se están generando los tokens
         generarToken("access")
         generarToken("refresh")
-        val settings  = Settings()
-        val tokenStorage : TokenStorage = TokenStorageImpl(settings)
-        if (settings.getStringOrNull("refresh_token") == null){
-            logger.debug(settings.getStringOrNull("refresh_token").toString())
-            LoginScreen()
+        val settings = Settings()
+        val tokenStorage: TokenStorage = TokenStorageImpl(settings)
 
-        } else {
-            logger.warn("El token no es nulo")
-            logger.debug(settings.getStringOrNull("access_token").toString())
-            logger.debug(settings.getStringOrNull("refresh_token").toString())
-            tokenStorage.loadTokens()
-            logger.debug(tokenStorage.loadTokens().toString())
-            WebViewHeaderManager.updateRefreshToken(tokenStorage.loadTokens()!!.refreshToken!!)
-            WebViewHeaderManager.updateAccessToken(tokenStorage.loadTokens()!!.accessToken)
-            logger.debug(WebViewHeaderManager.getHeaders().toString())
-            logger.warn("Ingresando a MenuDrawer")
-            MenuDrawer()
+        NavHost(
+            navController = navController,
+            startDestination = "AppLogin"
+        ) {
+            composable(route = "LoginScreen") {
+                LoginScreen()
+            }
+            composable(route = "menuDrawer") {
+                MenuDrawer()
+            }
+            composable(route = "AppLogin") {
+                if (settings.getStringOrNull("refresh_token") == null) {
+                    logger.debug(settings.getStringOrNull("refresh_token").toString())
+                    //navController.navigate("AppLogin")
+                    Box(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        navController.navigate("LoginScreen")
+                    }
+
+                } else {
+                    logger.warn("El token no es nulo")
+                    logger.debug(settings.getStringOrNull("access_token").toString())
+                    logger.debug(settings.getStringOrNull("refresh_token").toString())
+                    tokenStorage.loadTokens()
+                    logger.debug(tokenStorage.loadTokens().toString())
+                    WebViewHeaderManager.updateRefreshToken(tokenStorage.loadTokens()!!.refreshToken!!)
+                    WebViewHeaderManager.updateAccessToken(tokenStorage.loadTokens()!!.accessToken)
+                    logger.debug(WebViewHeaderManager.getHeaders().toString())
+                    logger.warn("Ingresando a MenuDrawer")
+                    //navController.navigate("menuDrawer")
+                    Box(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        navController.navigate("menuDrawer")
+                    }
+                }
+            }
         }
     }
 }
-
 /**
  * APP AMAZON
  */
@@ -143,7 +168,7 @@ fun AppNavigation() {
     val navController = rememberNavController()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
-    val showBars = currentRoute != Screen.Profile.route
+    val showBars = currentRoute != Screen.Profile.route && currentRoute != "LoginScreen"
     val updateVM = remember {
         UpdateVM(
             updateStorage = UpdateStorageImpl(
@@ -164,12 +189,9 @@ fun AppNavigation() {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        /*topBar = {
-                TopAppBarScreen() // He agregado un topBAr aquí para poder habilitar luego el drawer
-        },*/
         bottomBar = {
-            // Para que el bottomBar no salga en la pantalla de Profile (Account), pero
-            // sí en las demás pantallas
+            // Para que el bottomBar no salga en la pantalla de Profile (Account) y en LoginScreen,
+            // pero sí en las demás pantallas
             if (showBars) {
                 BottomNavigationBar(navController)
             }
@@ -189,10 +211,9 @@ fun AppNavigation() {
                 composable(route = Screen.Profile.route) {
                     ProfileScreen(navController)
                 }
-                composable(route = Screen.Login.route) {
+                composable("LoginScreen") {
                     LoginScreen()
                 }
-
             }
         NavHost(
             navController = navController,
