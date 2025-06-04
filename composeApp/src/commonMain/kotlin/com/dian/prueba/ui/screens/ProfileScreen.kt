@@ -69,9 +69,13 @@ fun ProfileScreen(navController: NavController) {
         Button(
             onClick = {
                 loginViewModel.clearSavedTokens()
-                // Arreglar esto para que el usuario no pueda salir del Login y para que
-                // no salgan los elementos del bottomNavigation
-                navController.navigate(route = "LoginScreen")
+                // Si presiona el gesto de back sigue en la pantalla de Login
+                // Si le da una segunda vez se sale de la app
+                navController.navigate(route = "LoginScreen"){
+                popUpTo(Screen.Home.route){
+                        inclusive = true
+                    }
+                }
             },
             colors = ButtonDefaults.buttonColors(
                 // Color crema #b7af98
