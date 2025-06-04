@@ -1,4 +1,5 @@
 package com.dian.prueba
+
 import androidx.compose.foundation.layout.Box
 import com.dian.prueba.utilities.TokenStorage
 import androidx.compose.foundation.layout.Column
@@ -64,16 +65,16 @@ fun App() {
         val navController: NavHostController = rememberNavController()
 
         NavHost(
-            navController=navController,
+            navController = navController,
             startDestination = "main"
         ) {
             composable(route = "main") {
-                Column (
+                Column(
                     modifier = Modifier.padding(20.dp)
-                ){
+                ) {
                     Row(
                         modifier = Modifier.padding(start = 20.dp, top = 10.dp)
-                    ){
+                    ) {
                         TextField(
                             textFieldName,
                             onValueChange = { textFieldName = it },
@@ -88,7 +89,7 @@ fun App() {
                                 navController.navigate("welcome/$textFieldName")
                             }
                         }
-                    ){
+                    ) {
                         Text("Next activity")
                     }
                 }
@@ -105,10 +106,10 @@ fun App() {
 
     }
 }
+
 @Composable
 fun AppLogin() {
     MaterialTheme {
-        val navController: NavHostController = rememberNavController()
         val logger = Logger("AppLogin")
         // Para ver en el Logcat que se están generando los tokens
         generarToken("access")
@@ -116,47 +117,25 @@ fun AppLogin() {
         val settings = Settings()
         val tokenStorage: TokenStorage = TokenStorageImpl(settings)
 
-        NavHost(
-            navController = navController,
-            startDestination = "AppLogin"
-        ) {
-            composable(route = "LoginScreen") {
-                LoginScreen()
-            }
-            composable(route = "menuDrawer") {
-                MenuDrawer()
-            }
-            composable(route = "AppLogin") {
-                if (settings.getStringOrNull("refresh_token") == null) {
-                    logger.debug(settings.getStringOrNull("refresh_token").toString())
-                    //navController.navigate("AppLogin")
-                    Box(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        navController.navigate("LoginScreen")
-                    }
+        if (settings.getStringOrNull("refresh_token") == null) {
+            logger.debug(settings.getStringOrNull("refresh_token").toString())
+            LoginScreen()
 
-                } else {
-                    logger.warn("El token no es nulo")
-                    logger.debug(settings.getStringOrNull("access_token").toString())
-                    logger.debug(settings.getStringOrNull("refresh_token").toString())
-                    tokenStorage.loadTokens()
-                    logger.debug(tokenStorage.loadTokens().toString())
-                    WebViewHeaderManager.updateRefreshToken(tokenStorage.loadTokens()!!.refreshToken!!)
-                    WebViewHeaderManager.updateAccessToken(tokenStorage.loadTokens()!!.accessToken)
-                    logger.debug(WebViewHeaderManager.getHeaders().toString())
-                    logger.warn("Ingresando a MenuDrawer")
-                    //navController.navigate("menuDrawer")
-                    Box(
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        navController.navigate("menuDrawer")
-                    }
-                }
-            }
+        } else {
+            logger.warn("El token no es nulo")
+            logger.debug(settings.getStringOrNull("access_token").toString())
+            logger.debug(settings.getStringOrNull("refresh_token").toString())
+            tokenStorage.loadTokens()
+            logger.debug(tokenStorage.loadTokens().toString())
+            WebViewHeaderManager.updateRefreshToken(tokenStorage.loadTokens()!!.refreshToken!!)
+            WebViewHeaderManager.updateAccessToken(tokenStorage.loadTokens()!!.accessToken)
+            logger.debug(WebViewHeaderManager.getHeaders().toString())
+            logger.warn("Ingresando a MenuDrawer")
+            MenuDrawer()
         }
     }
 }
+
 /**
  * APP AMAZON
  */
@@ -182,7 +161,7 @@ fun AppNavigation() {
         )
     }
 
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         logger.warn("Checking for updates...")
         updateVM.checkForUpdates()
     }
@@ -221,7 +200,7 @@ fun AppNavigation() {
             modifier = Modifier.padding(innerPadding)
         )
     }
-    if (updateVM.showUpdateDialog.collectAsState().value){
+    if (updateVM.showUpdateDialog.collectAsState().value) {
         UpdateAlertDialog(viewModel = updateVM)
     }
 }
