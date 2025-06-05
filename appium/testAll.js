@@ -8,6 +8,7 @@ const capabilities = {
     platformName: 'Android',
     'appium:automationName': 'UiAutomator2',
     'appium:deviceName': 'Android',
+    'appium:udid': '1e27529b',
     'appium:appPackage': 'com.dian.prueba',
     'appium:appActivity': 'com.dian.prueba.view.MainActivity',
     'appium:autoGrantPermissions': true,
@@ -29,25 +30,23 @@ async function runAllTests() {
 
         // 1. Test login vacío
         await emptyLogin.runTestLogin(driver);
-        await driver.pause(1000);
+        await driver.pause(2000);
         await driver.terminateApp('com.dian.prueba');
         await driver.activateApp('com.dian.prueba');
+
         //2. Test login no válido
         await unsuccessfulLogin.runTestLogin(driver);
-        await driver.pause(1000);
+        await driver.pause(2000);
         await driver.terminateApp('com.dian.prueba');
         await driver.activateApp('com.dian.prueba');
-        //Los comento porque si no da error en los actions porque
-        //se usa un emulador y ciertos elementos no son lo mismo que mi
-        // dispositivo real
+
         // 3. Test login válido
-        //await driver.pause(1000);
-        //await successfulLogin.runTestLogin(driver);
+        await driver.pause(2000);
+        await successfulLogin.runTestLogin(driver);
 
         // 4. Test menú drawer (swipe)
-        //await driver.pause(2000);
-        //await menuDrawer.runTestLogin(driver);
-        //await driver.pause(1500);
+        await driver.pause(3000);
+        await menuDrawer.runTestLogin(driver);
 
     } catch (error) {
         console.error('Error en un test :', error);
