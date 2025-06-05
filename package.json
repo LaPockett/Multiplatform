@@ -4,8 +4,7 @@
   "description": "appiumjs",
   "main": "index.js",
   "scripts": {
-    "test-login": "node appium/testEmptyLogin.js",
-    "test-all": "node appium/testEmptyLogin.js && node appium/testUnsuccessfulLogin.js&& node appium/testSuccessfulLogin.js "
+    "test-all": "node appium/testAll.js"
   },
   "repository": {
     "type": "git",

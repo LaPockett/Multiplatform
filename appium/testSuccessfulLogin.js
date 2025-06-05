@@ -1,29 +1,9 @@
 const { remote } = require('webdriverio')
 
-const capabilities = {
-    platformName: 'Android',
-    'appium:automationName': 'UiAutomator2',
-    'appium:deviceName': 'Android',
-    'appium:udid': '1e27529b',
-    'appium:appPackage': 'com.dian.prueba',
-    'appium:appActivity': 'com.dian.prueba.view.MainActivity',
-    'appium:autoGrantPermissions': true
-};
-const wdOpts = {
-    hostname: process.env.APPIUM_HOST || 'localhost',
-    port: parseInt(process.env.APPIUM_PORT, 10) || 4723,
-    connectionRetryTimeout: 120000,
-    connectionRetryCount: 3,
-    logLevel: 'info',
-    capabilities,
-};
-
-async function runTestLogin() {
+async function runTestLogin(driver) {
     const KEYCODE_MULTITAREA = 187;
-    let driver;
 
     try {
-        driver = await remote(wdOpts);
         await driver.pause(1000);
 
         const emailField = await driver.$('//androidx.compose.ui.platform.ComposeView/android.view.View/android.widget.EditText[1]');
@@ -56,6 +36,7 @@ async function runTestLogin() {
             app.click();
             await driver.pause(1500);
             const mainScreen = await driver.$('//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]')
+
             if (await mainScreen.isDisplayed()) {
                 console.log('Test: Pantalla principal visible OK');
                 const profileScreen = await driver.$('//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View[2]/android.view.View/android.view.View[2]')
@@ -73,39 +54,18 @@ async function runTestLogin() {
                 exploreScreen.click();
                 await driver.pause(2000);
 
-                console.log("Test completado con éxito.");
+                console.log("Test completado con éxito. LOGIN VÁLIDO");
             } else {
                 throw new Error('La pantalla principal no es visible');
             }
-            testCompleted = true;
         } else {
             throw new Error('La alerta de actualización no es visible');
         }
         
     } catch (error) {
-        console.error('Error en el test:', error);
-        if (driver) {
-            try {
-                const screenshot = await driver.takeScreenshot();
-                require('fs').writeFileSync('screenshot_error.png', screenshot, 'base64');
-                console.log('Captura de pantalla guardada en screenshot_error.png');
-            } catch (screenshotError) {
-                console.error('Error al guardar la captura de pantalla:', screenshotError);
-            }
-        }
-
         throw error;
 
-    } finally {
-        if (driver){
-            try {
-                await driver.deleteSession();
-                console.log('Sesión eliminada con éxito');
-            } catch (error) {
-                console.error('Error al eliminar la sesión:', error);
-            }
-        }
     }
 }
 
-runTestLogin().catch(console.error);
+module.exports = { runTestLogin };
