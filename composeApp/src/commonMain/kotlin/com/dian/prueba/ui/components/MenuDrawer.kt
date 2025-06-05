@@ -31,7 +31,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MenuDrawer() {
+fun MenuDrawer(onLogout: () -> Unit) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
@@ -64,7 +64,7 @@ fun MenuDrawer() {
             },
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
-                AppNavigation()
+                AppNavigation(onLogout = onLogout)
             }
         }
     }
