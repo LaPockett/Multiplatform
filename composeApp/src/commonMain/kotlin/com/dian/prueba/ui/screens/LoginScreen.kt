@@ -24,7 +24,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.*
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
+import com.dian.prueba.navigation.Screen
 import com.dian.prueba.network.APIClient
 import com.dian.prueba.repository.LoginRepositoryImpl
 import com.dian.prueba.ui.components.MenuDrawer
@@ -40,7 +42,9 @@ import multiplatform.composeapp.generated.resources.logo
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
-fun LoginScreen(){
+fun LoginScreen(navController: NavHostController){
+    val currentBackStackEntry = navController.currentBackStackEntryAsState()
+
     val loginViewModel = remember {
         LoginVM(
             loginRepository = LoginRepositoryImpl(
@@ -59,14 +63,17 @@ fun LoginScreen(){
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     val logger = Logger("LoginScreen")
-    val navController: NavHostController = rememberNavController()
     var showDialog by remember {mutableStateOf(false)}
     var showDialogInvalidData by remember {mutableStateOf(false)}
+    LaunchedEffect(currentBackStackEntry.value) {
+        email = ""
+        password = ""
+    }
     NavHost(
         navController = navController,
-        startDestination = "login"
+        startDestination = Screen.Login.route
     ){
-        composable(route = "login"){
+        composable(route = Screen.Login.route){
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
@@ -139,7 +146,9 @@ fun LoginScreen(){
 
                                     logger.debug(WebViewHeaderManager.getHeaders().toString())
                                     logger.warn("El usuario ha hecho click en login")
-                                    navController.navigate("MenuDrawer")
+                                    navController.navigate("MenuDrawer") {
+                                        popUpTo("login") { inclusive = true }
+                                    }
                                 }
                                 Resultado.Empty -> showDialog = true
                                 Resultado.Invalid -> showDialogInvalidData = true
@@ -180,7 +189,11 @@ fun LoginScreen(){
 
         }
         composable(route = "MenuDrawer"){
-            MenuDrawer()
+            MenuDrawer(onLogout = {
+                navController.navigate("login"){
+                    popUpTo(0){inclusive = true}
+                }
+            })
         }
     }
 }
