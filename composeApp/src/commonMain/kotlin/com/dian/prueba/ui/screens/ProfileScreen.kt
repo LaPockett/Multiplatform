@@ -27,7 +27,7 @@ import com.dian.prueba.viewModel.LoginVM
 import com.russhwolf.settings.Settings
 
 @Composable
-fun ProfileScreen(navController: NavController) {
+fun ProfileScreen(navController: NavController, onLogout: () -> Unit) {
     val loginViewModel = remember {
         LoginVM(
             loginRepository = LoginRepositoryImpl(
@@ -48,7 +48,7 @@ fun ProfileScreen(navController: NavController) {
     ) {
         FloatingActionButton(
             onClick = {
-                navController.navigate("home")
+                navController.navigate(Screen.Home.route)
             },
             modifier = Modifier
                 .align(Alignment.TopStart)
@@ -69,13 +69,7 @@ fun ProfileScreen(navController: NavController) {
         Button(
             onClick = {
                 loginViewModel.clearSavedTokens()
-                // Si presiona el gesto de back sigue en la pantalla de Login
-                // Si le da una segunda vez se sale de la app
-                navController.navigate(route = "LoginScreen"){
-                popUpTo(Screen.Home.route){
-                        inclusive = true
-                    }
-                }
+                onLogout()
             },
             colors = ButtonDefaults.buttonColors(
                 // Color crema #b7af98
