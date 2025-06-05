@@ -116,10 +116,11 @@ fun AppLogin() {
         generarToken("refresh")
         val settings = Settings()
         val tokenStorage: TokenStorage = TokenStorageImpl(settings)
+        val navController = rememberNavController()
 
         if (settings.getStringOrNull("refresh_token") == null) {
             logger.debug(settings.getStringOrNull("refresh_token").toString())
-            LoginScreen()
+            LoginScreen(navController)
 
         } else {
             logger.warn("El token no es nulo")
@@ -131,7 +132,11 @@ fun AppLogin() {
             WebViewHeaderManager.updateAccessToken(tokenStorage.loadTokens()!!.accessToken)
             logger.debug(WebViewHeaderManager.getHeaders().toString())
             logger.warn("Ingresando a MenuDrawer")
-            MenuDrawer()
+            MenuDrawer(onLogout = {
+                navController.navigate(Screen.Login.route) {
+                    popUpTo(0) { inclusive = true }
+                }
+            })
         }
     }
 }
@@ -141,13 +146,15 @@ fun AppLogin() {
  */
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(onLogout: () -> Unit) {
     val logger = Logger("AppNavigation")
 
     val navController = rememberNavController()
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
-    val showBars = currentRoute != Screen.Profile.route && currentRoute != "LoginScreen"
+    val noBarsRoutes = listOf(Screen.Login.route, Screen.Profile.route)
+    val showBars = !noBarsRoutes.contains(currentRoute)
+
     val updateVM = remember {
         UpdateVM(
             updateStorage = UpdateStorageImpl(
@@ -188,10 +195,10 @@ fun AppNavigation() {
                     HomeScreen()
                 }
                 composable(route = Screen.Profile.route) {
-                    ProfileScreen(navController)
+                    ProfileScreen(navController, onLogout = onLogout)
                 }
-                composable("LoginScreen") {
-                    LoginScreen()
+                composable(route = Screen.Login.route) {
+                    LoginScreen(navController)
                 }
             }
         NavHost(

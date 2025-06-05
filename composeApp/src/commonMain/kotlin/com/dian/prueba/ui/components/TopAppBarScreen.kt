@@ -23,29 +23,6 @@ import com.dian.prueba.utilities.Logger
  * NINGUNO DE ESTOS COMPOSABLES SE USA EN LA APP, pero los dejo aquí por si los llego
  * a necesitar en el futuro
  */
-@Composable
-fun TopAppBarScreen() { // SE ESTÁ USANDO ESTE EN UI TEST
-    var showMenuDrawer by remember { mutableStateOf(false) }
-    val logger = Logger("TopAppBarScreen")
-
-    TopAppBar(
-        title = {
-            Text(text = "Top App Bar 1 - Amazon")
-        },
-        modifier = Modifier.testTag("TopAppBar"),
-        navigationIcon = {
-            IconButton(onClick = {
-                logger.debug("Enseñando el Drawer...")
-                showMenuDrawer = true
-            }) {
-                Icon(imageVector = Icons.Default.Menu, contentDescription = "Menu")
-            }
-        }
-    )
-    if (showMenuDrawer) {
-        MenuDrawer()
-    }
-}
 
 /**
  * EN USO
