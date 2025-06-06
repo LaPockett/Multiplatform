@@ -1,0 +1,24 @@
+name: GitHub Actions - Unit Tests
+run-name: ${{ github.actor }} Unit Tests
+on:
+  push:
+    branches: ["master"]
+env:
+  JAVA_VERSION: '17'
+  JAVA_DISTRIBUTION: 'temurin'
+  MAVEN_CACHE: 'gradle'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: ${{ env.MAVEN_CACHE }}
+      - name: Start Unit Tests
+        run: ./gradlew testDebugUnitTest --warning-mode summary
+      - run: echo "This job's status is ${{job.status}}."

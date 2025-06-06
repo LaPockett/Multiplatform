@@ -1,5 +1,5 @@
-name: Setup, lint, test and build apk
-run-name: ${{github.actor}} Setup - Lint - Unit Test - Build apk release/debug
+name: Main
+run-name: ${{github.actor}} Main - setup - Lint - Build apk
 on:
   push:
     branches: [master]
@@ -14,25 +14,32 @@ env:
   PLAYSTORE_NAME: 'App Mock'
 
 jobs:
-  call-workflow:
-    uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: ${{ env.MAVEN_CACHE }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
 
   lint:
-    needs: call-workflow
-    runs-on: self-hosted
+    needs: setup
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - run: ./gradlew lint
-  unit-test:
-    needs: call-workflow
-    runs-on: self-hosted
-    steps:
-      - uses: actions/checkout@v4
-      - run: ./gradlew testdebugUnitTest
 
   build-apk:
-    needs: [lint, unit-test]
-    runs-on: self-hosted
+    needs: [lint]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
