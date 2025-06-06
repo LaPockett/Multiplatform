@@ -2,7 +2,7 @@ name: GitHub Actions - Appium Tests :D
 run-name: ${{ github.actor }} Appium Tests
 on:
   pull_request:
-    branches: [master]
+    branches: [test-app]
 env:
   JAVA_VERSION: '17'
   JAVA_DISTRIBUTION: 'temurin'
