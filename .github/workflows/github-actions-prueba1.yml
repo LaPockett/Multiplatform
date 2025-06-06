@@ -2,9 +2,9 @@ name: GitHub Actions Prueba 1
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
   push:
-    branches: [ "test-app" ]
+    branches: [ "LaPockett-patch-1" ]
   pull_request:
-    branches: [ "test-app" ]
+    branches: [ "LaPockett-patch-1" ]
 jobs:
   build:
     runs-on: ubuntu-latest
