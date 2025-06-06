@@ -30,23 +30,23 @@ async function runAllTests() {
 
         // 1. Test login vacío
         await emptyLogin.runTestLogin(driver);
-        await driver.pause(2000);
+        await driver.pause(1000);
         await driver.terminateApp('com.dian.prueba');
         await driver.activateApp('com.dian.prueba');
-
         //2. Test login no válido
         await unsuccessfulLogin.runTestLogin(driver);
-        await driver.pause(2000);
+        await driver.pause(1000);
         await driver.terminateApp('com.dian.prueba');
         await driver.activateApp('com.dian.prueba');
 
         // 3. Test login válido
-        await driver.pause(2000);
+        await driver.pause(1000);
         await successfulLogin.runTestLogin(driver);
 
         // 4. Test menú drawer (swipe)
-        await driver.pause(3000);
+        await driver.pause(2000);
         await menuDrawer.runTestLogin(driver);
+        await driver.pause(1500);
 
     } catch (error) {
         console.error('Error en un test :', error);
