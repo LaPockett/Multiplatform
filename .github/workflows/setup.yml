@@ -1,0 +1,25 @@
+name: GitHub Actions - Set up project
+run-name: ${{ github.actor }} Set up project
+on:
+  workflow_call:
+env:
+  JAVA_VERSION: '17'
+  JAVA_DISTRIBUTION: 'temurin'
+  MAVEN_CACHE: 'gradle'
+  NODE_VERSION: '20'
+jobs:
+  setup:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: ${{ env.MAVEN_CACHE }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
