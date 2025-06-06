@@ -1,5 +1,5 @@
 name: GitHub Actions Prueba 1
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: ${{ github.actor }} is testing :D
 on:
   push:
     branches: [ "LaPockett-patch-1" ]
