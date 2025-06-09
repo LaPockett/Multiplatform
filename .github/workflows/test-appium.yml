@@ -20,4 +20,4 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           cache: ${{ env.MAVEN_CACHE }}
       - name: Init Appium
-        run: appium
+        run: npx appium
