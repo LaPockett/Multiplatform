@@ -19,7 +19,5 @@ jobs:
           distribution: ${{ env.JAVA_DISTRIBUTION }}
           java-version: ${{ env.JAVA_VERSION }}
           cache: ${{ env.MAVEN_CACHE }}
-      - name: Init Appium
-        run: npm appium
-      - name: Start Appium Tests
-        run: npm run test-all
+      - name: Init and Start Appium Tests
+        run: npx appium | npm run test-all
