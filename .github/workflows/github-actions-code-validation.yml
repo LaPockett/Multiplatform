@@ -1,0 +1,27 @@
+name: GitHub Actions - Code Validation PRUEBA 2
+run-name: ${{ github.actor }} Code Validation PRUEBA 2
+on:
+  push:
+    branches: ["LaPockett-patch-1"]
+env:
+  JAVA_VERSION: '17'
+  JAVA_DISTRIBUTION: 'temurin'
+  MAVEN_CACHE: 'gradle'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@4
+      - name: Set up JDK
+        uses: actions/setup-java@4
+        with:
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: ${{ env.MAVEN_CACHE }}
+      - name: Starta prueba
+        run: chmod +x ./home/usuario/AndroidStudioProjects/Multiplatform/composeApp/src/test/java/com/dian/prueba/tdd/FizzBuzzTest.kt
+      - run: echo "Running prueba"
+
+
+
