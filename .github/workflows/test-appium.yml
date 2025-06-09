@@ -19,5 +19,9 @@ jobs:
           distribution: ${{ env.JAVA_DISTRIBUTION }}
           java-version: ${{ env.JAVA_VERSION }}
           cache: ${{ env.MAVEN_CACHE }}
-      - name: Init and Start Appium Tests
-        run: npx appium | npm run test-all
+      - name: Install Plugins
+        run: appium driver install uiautomator2
+      - name: Init Appium
+        run: npx appium
+      - name: Start Appium Tests
+        run: npm run test-all
