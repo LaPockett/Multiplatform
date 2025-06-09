@@ -1,5 +1,5 @@
-name: GitHub Actions - Code Validation and unit tests PRUEBA 2
-run-name: ${{ github.actor }} Code Validation and unit tests PRUEBA 2
+name: GitHub Actions - Appium Tests Prueba
+run-name: ${{ github.actor }} Appium Tests Prueba
 on:
   push:
     branches: ["LaPockett-patch-1"]
@@ -19,15 +19,5 @@ jobs:
           distribution: ${{ env.JAVA_DISTRIBUTION }}
           java-version: ${{ env.JAVA_VERSION }}
           cache: ${{ env.MAVEN_CACHE }}
-      - name: Start Code Validation
-        run: ./gradlew lint
-      - name: Start Unit Tests
-        run: ./gradlew testDebugUnitTest
-      - run: echo "This job's status is ${{job.status}}."
-
-
-
-
-
-
-
+      - name: Init Appium
+        run: appium
