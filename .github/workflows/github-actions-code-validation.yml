@@ -19,9 +19,8 @@ jobs:
           distribution: ${{ env.JAVA_DISTRIBUTION }}
           java-version: ${{ env.JAVA_VERSION }}
           cache: ${{ env.MAVEN_CACHE }}
-      - name: Starta prueba
-        run: chmod +x ./home/usuario/AndroidStudioProjects/Multiplatform/composeApp/src/test/java/com/dian/prueba/tdd/FizzBuzzTest.kt
-      - run: echo "Running prueba"
+      - name: Start prueba
+        run: ./gradlew lint
 
 
 
