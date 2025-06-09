@@ -21,3 +21,5 @@ jobs:
           cache: ${{ env.MAVEN_CACHE }}
       - name: Init Appium
         run: npx appium
+      - name: Start Appium Tests
+        run: npm run test-all
