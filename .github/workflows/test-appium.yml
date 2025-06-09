@@ -7,21 +7,33 @@ env:
   JAVA_VERSION: '17'
   JAVA_DISTRIBUTION: 'temurin'
   MAVEN_CACHE: 'gradle'
+  NODE_VERSION: '18'
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Project
         uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: ${{ env.JAVA_DISTRIBUTION }}
           java-version: ${{ env.JAVA_VERSION }}
           cache: ${{ env.MAVEN_CACHE }}
-      - name: Install Plugins
-        run: appium driver install uiautomator2
-      - name: Init Appium
-        run: npx appium
+      - name: Install dependenies
+        run: npm install
+      - name: Start Appium Server
+        run: |
+          npm install -g appium
+          appium & sleep 10
       - name: Start Appium Tests
         run: npm run test-all
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results
+          path: ./test-results
