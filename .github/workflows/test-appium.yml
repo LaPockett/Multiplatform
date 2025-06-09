@@ -30,6 +30,8 @@ jobs:
         run: |
           npm install -g appium
           appium & sleep 10
+      - name: Install Plugin uiautomator2
+        run: appium driver install uiautomator2
       - name: Start Appium Tests
         run: npm run test-all
       - name: Upload Test Results
