@@ -1,5 +1,5 @@
-name: GitHub Actions - Code Validation PRUEBA 2
-run-name: ${{ github.actor }} Code Validation PRUEBA 2
+name: GitHub Actions - Code Validation and unit tests PRUEBA 2
+run-name: ${{ github.actor }} Code Validation and unit tests PRUEBA 2
 on:
   push:
     branches: ["LaPockett-patch-1"]
@@ -19,8 +19,14 @@ jobs:
           distribution: ${{ env.JAVA_DISTRIBUTION }}
           java-version: ${{ env.JAVA_VERSION }}
           cache: ${{ env.MAVEN_CACHE }}
-      - name: Start prueba
+      - name: Start Code Validation
         run: ./gradlew lint
+      - name: Start Unit Tests
+        run: ./gradlew testDebugUnitTest
+      - run: echo "This job's status is ${{ job.status }}."
+
+
+
 
 
 
