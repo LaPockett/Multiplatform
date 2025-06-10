@@ -2,9 +2,7 @@ name: GitHub Actions - Build app
 run-name: ${{ github.actor }} Build app
 on:
   push:
-    branches: [ "master" ]
-  pull-request:
-    branches: [ "master" ]
+    branches: ["master"]
 jobs:
   build:
     runs-on: ubuntu-latest
