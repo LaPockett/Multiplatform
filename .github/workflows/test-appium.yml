@@ -14,7 +14,7 @@ jobs:
           node-version: '18'
 
       - name: Start Appium Server
-        uses: moatazeldebsy/appium-server-action@v1.3
+        uses: moatazeldebsy/appium-server-action@v1.0.8
         with:
           appium-version: '2.18.0'
 
