@@ -7,7 +7,7 @@ env:
   JAVA_VERSION: '17'
   JAVA_DISTRIBUTION: 'temurin'
   MAVEN_CACHE: 'gradle'
-  NODE_VERSION: '18'
+  NODE_VERSION: '18.19.1'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,7 +25,10 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           cache: ${{ env.MAVEN_CACHE }}
       - name: Install dependencies
-        run: npm install
+        run: | 
+          npm cache clean --force
+          npm cache verify
+          npm install -g npm
       - name: Start Appium Server
         uses: FinbertMDS/setup-appium@latest
         with:
