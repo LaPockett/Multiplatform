@@ -2,7 +2,7 @@ name: GitHub Actions - Build app
 run-name: ${{ github.actor }} Build app
 on:
   push:
-    branches: ["master"]
+    branches: ["master", "LaPockett-patch-1"]
   workflow_dispatch:
 env:
   JAVA_VERSION: '17'
