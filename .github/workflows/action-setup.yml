@@ -1,7 +1,7 @@
 name: GitHub Actions - Set up principal
 run-name: ${{ github.actor }} Setup principal
 on:
-  workflow_call:
+  workflow_dispatch:
 env:
   JAVA_VERSION: '17'
   JAVA_DISTRIBUTION: 'temurin'
