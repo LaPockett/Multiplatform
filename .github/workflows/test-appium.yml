@@ -1,25 +1,44 @@
-name: Appium Tests
-on: [push]
-
+name: GitHub Actions - Appium Tests Prueba
+run-name: ${{ github.actor }} Appium Tests Prueba
+on:
+  push:
+    branches: ["LaPockett-patch-1"]
+env:
+  JAVA_VERSION: '17'
+  JAVA_DISTRIBUTION: 'temurin'
+  MAVEN_CACHE: 'gradle'
+  NODE_VERSION: '18'
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Project
         uses: actions/checkout@v4
-
-      - name: Set up Node.js (para tus tests)
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
-
-      - name: Start Appium Server
-        uses: moatazeldebsy/appium-server-action@v1.0.8
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Set up JDK
+        uses: actions/setup-java@v4
         with:
-          appium-version: '2.18.0'
-
-      - name: Run Tests
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: ${{ env.MAVEN_CACHE }}
+      - name: Install dependencies
+        run: npm install
+      - name: Start Appium Server
+        uses: FinbertMDS/setup-appium@latest
+        with:
+          appium-version: "2.18.0"
+        run: |
+          appium -v
+          appium &
+      - name: Install Plugin uiautomator2
+        run: appium driver install uiautomator2
+      - name: Start Appium Tests
         run: node appium/testAll.js
-        env:
-          APPIUM_HOST: localhost
-          APPIUM_PORT: 4723
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: ./test-results
