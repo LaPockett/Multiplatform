@@ -10,11 +10,11 @@ env:
   MAVEN_CACHE: 'gradle'
   NODE_VERSION: '18'
 jobs:
+  call-workflow-1-in-local-repo:
+    uses: ./.github/workflows/action-setup.yml
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Set up project
-        uses: ./.github/workflows/action-setup.yml
       - name: Build
         run: ./gradlew bundleRelease
       - name: Upload release APK
