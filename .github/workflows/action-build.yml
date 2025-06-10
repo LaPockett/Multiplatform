@@ -15,8 +15,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - call-workflow-1-in-local-repo:
-        uses: ./.github/workflows/action-setup.yml
       - name: Build
         run: ./gradlew bundleRelease
       - name: Upload release APK
