@@ -29,11 +29,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - name: Install dependencies
-        run: |
-          npm cache clean --force
-          npm cache verify
-          npm install -g npm
       - name: Android Emulators
         uses: ReactiveCircus/android-emulator-runner@v2.34.0
         with:
