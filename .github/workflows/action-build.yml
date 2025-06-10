@@ -15,8 +15,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Change wrapper permissions
-        run: chmod +x ./gradlew
       - name: Build
         run: ./gradlew bundleRelease
       - name: Upload release APK
