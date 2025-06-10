@@ -1,12 +1,22 @@
-name: Appium CI
-on: [push]
-
+name: Appium Prueba
+run-name: Appium Prueba
+on:
+  push:
+    branches: ["LaPockett-patch-1"]
+env:
+  JAVA_VERSION: '17'
+  JAVA_DISTRIBUTION: 'jetbrains'
+  MAVEN_CACHE: 'gradle'
+  NODE_VERSION: '18'
 jobs:
-  Sauce Labs App Automate:
+  build:
     runs-on: ubuntu-latest
-    name: Appium Test
     steps:
-      - name: Checkout
+      - name: Checkout Project
         uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
       - name: Install and Run Appium Server
-        uses: moatazeldebsy/appium-server-github-action@V1.0.4
+        uses: moatazeldebsy/appium-server-github-action@v1.0.8
