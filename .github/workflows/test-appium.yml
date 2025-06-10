@@ -35,9 +35,8 @@ jobs:
           appium-version: "2.18.0"
       - run: |
           npm install -g appium
+          appium driver install uiautomator2
           appium & sleep 10
-      - name: Install Plugin uiautomator2
-        run: appium driver install uiautomator2
       - name: Start Appium Tests
         run: node appium/testAll.js
       - name: Upload Test Results
