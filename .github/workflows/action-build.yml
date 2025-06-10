@@ -10,16 +10,8 @@ env:
   NODE_VERSION: '18'
 jobs:
   build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Project
-        uses: actions/checkout@v4
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: ${{ env.JAVA_DISTRIBUTION }}
-          java-version: ${{ env.JAVA_VERSION }}
-          cache: ${{ env.MAVEN_CACHE }}
+      - name: Set up project
+        uses: ./.github/workflows/action-setup.yml
       - name: Build
         run: ./gradlew bundleRelease
       - name: Upload release APK
