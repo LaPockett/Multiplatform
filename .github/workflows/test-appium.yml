@@ -30,9 +30,9 @@ jobs:
         uses: FinbertMDS/setup-appium@latest
         with:
           appium-version: "2.18.0"
-        run: |
-          appium -v
-          appium &
+      - run: |
+          appium v
+          appium & sleep 10
       - name: Install Plugin uiautomator2
         run: appium driver install uiautomator2
       - name: Start Appium Tests
