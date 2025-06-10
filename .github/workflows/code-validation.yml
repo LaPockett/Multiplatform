@@ -2,7 +2,7 @@ name: GitHub Actions - Code Validation
 run-name: ${{ github.actor }} Code Validation
 on:
   push:
-    branches: ["LaPockett-patch-1"]
+    branches: ["master"]
 env:
   JAVA_VERSION: '17'
   JAVA_DISTRIBUTION: 'jetbrains'

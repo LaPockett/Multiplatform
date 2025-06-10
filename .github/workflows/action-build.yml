@@ -2,7 +2,7 @@ name: GitHub Actions - Build app
 run-name: ${{ github.actor }} Build app
 on:
   push:
-    branches: ["master", "LaPockett-patch-1"]
+    branches: ["master"]
   workflow_dispatch:
 env:
   JAVA_VERSION: '17'
@@ -30,6 +30,7 @@ jobs:
         with:
           name: release-apk
           path: composeApp/build/outputs/apk/release/app-release.apk
+      - run: echo 'Habría que tener las keys de la app para subirlo a Google play, pero no subiremos esta app'
 
 
 

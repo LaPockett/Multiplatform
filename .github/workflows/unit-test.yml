@@ -20,7 +20,7 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           cache: ${{ env.MAVEN_CACHE }}
       - name: Start Unit Tests
-        run: ./gradlew testDebugUnitTest
+        run: ./gradlew testDebugUnitTest --warning-mode summary
       - run: echo "This job's status is ${{job.status}}."
 
 
