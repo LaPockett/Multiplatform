@@ -35,6 +35,7 @@ jobs:
           appium-version: "2.18.0"
       - run: |
           appium driver install uiautomator2
+          npm i --save-dev webdriverio
           appium & sleep 10
           node appium/testAll.js
       - name: Upload Test Results
