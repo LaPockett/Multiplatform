@@ -19,4 +19,4 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Install and Run Appium Server
-        uses: moatazeldebsy/appium-server-github-action@v1.0.4
+        uses: moatazeldebsy/Appium-Server-GitHub-Action@V1.0.8
