@@ -11,15 +11,15 @@ env:
   NODE_VERSION: '18'
 jobs:
   build:
-      - name: Set up project
-        uses: ./.github/workflows/action-setup.yml
-      - name: Build
-        run: ./gradlew bundleRelease
-      - name: Upload release APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: release-apk
-          path: app/build/outputs/apk/release/app-release.apk
+    - name: Set up project
+      uses: ./.github/workflows/action-setup.yml
+    - name: Build
+      run: ./gradlew bundleRelease
+    - name: Upload release APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: release-apk
+        path: app/build/outputs/apk/release/app-release.apk
 
 
 
