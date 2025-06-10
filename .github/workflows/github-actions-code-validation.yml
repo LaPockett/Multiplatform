@@ -1,0 +1,33 @@
+name: GitHub Actions - Code Validation and unit tests PRUEBA 2
+run-name: ${{ github.actor }} Code Validation and unit tests PRUEBA 2
+on:
+  push:
+    branches: ["LaPockett-patch-1"]
+env:
+  JAVA_VERSION: '17'
+  JAVA_DISTRIBUTION: 'temurin'
+  MAVEN_CACHE: 'gradle'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v3
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: ${{ env.JAVA_DISTRIBUTION }}
+          java-version: ${{ env.JAVA_VERSION }}
+          cache: ${{ env.MAVEN_CACHE }}
+      - name: Start Code Validation
+        run: ./gradlew lint
+      - name: Start Unit Tests
+        run: ./gradlew testDebugUnitTest
+      - run: echo "This job's status is ${{job.status}}."
+
+
+
+
+
+
+
