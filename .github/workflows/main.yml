@@ -53,7 +53,7 @@ jobs:
           ORG_GRADLE_PROJECT_storePassword: ${{secrets.ANDROID_STORE_PASSWORD}}
           ORG_GRADLE_PROJECT_keyPassword: ${{secrets.ANDROID_KEY_PASSWORD}}
           ORG_GRADLE_PROJECT_keyAlias: ${{secrets.ANDROID_KEY_ALIAS}}
-          ORG_GRADLE_PROJECT_storeFile: keydemiapp.jks
+          ORG_GRADLE_PROJECT_storeFile: composeApp/keydemiapp.jks
       - name: Find the APK
         id: find_apk
         run: |
