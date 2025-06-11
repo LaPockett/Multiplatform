@@ -34,6 +34,7 @@ jobs:
           npm cache clean --force
           npm cache verify
           npm install -g npm
+          npm ci
       - name: Start Appium Server
         uses: FinbertMDS/setup-appium@latest
         with:
