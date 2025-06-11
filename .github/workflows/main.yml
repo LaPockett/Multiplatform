@@ -44,23 +44,29 @@ jobs:
       - name: Decode key from base 64
         run: |
           echo "${{secrets.ANDROID_STORE_FILE}}" | base64 -d > keydemiapp.jks
+          ls -la | grep keydemiapp.jks
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
       - name: Build
-        run: ./gradlew asembleRelease
+        run: ./gradlew assembleRelease
         env:
           ORG_GRADLE_PROJECT_storePassword: ${{secrets.ANDROID_STORE_PASSWORD}}
           ORG_GRADLE_PROJECT_keyPassword: ${{secrets.ANDROID_KEY_PASSWORD}}
           ORG_GRADLE_PROJECT_keyAlias: ${{secrets.ANDROID_KEY_ALIAS}}
           ORG_GRADLE_PROJECT_storeFile: keydemiapp.jks
+      - name: Find the APK
+        id: find_apk
+        run: |
+          APK_PATH=$(find . -path '*/apk/release/*.apk' -o -path '*/outputs/apk/release/*.apk' -o -path 'composeApp/build/outputs/apk/release/*.apk' | head -1)
+          echo "APK_PATH=${APK_PATH}" >> $GITHUB_OUTPUT
+          echo "Found APK at: ${APK_PATH}"
+          if [ -z "${APK_PATH}" ]; then
+            echo "APK not found!"
+            find . -name "*.apk" 
+            exit 1
+          fi
       - name: Upload release APK
         uses: actions/upload-artifact@v4
         with:
           name: release-apk
-          path: composeApp/build/outputs/apk/release/app-release.apk
-
-
-
-
-
-
+          path: ${{steps.find_apk.outputs.APK_PATH}}
