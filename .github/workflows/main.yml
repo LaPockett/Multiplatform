@@ -43,12 +43,12 @@ jobs:
       - uses: actions/checkout@v4
       - name: Decode key from base 64
         run: |
-          echo "${{secrets.ANDROID_STORE_FILE}}" | base64 -d > keydemiapp.jks
-          ls -la | grep keydemiapp.jks
+          echo "${{ secrets.ANDROID_STORE_FILE }}" | base64 -d > composeApp/keydemiapp.jks
+          ls -la composeApp/ | grep keydemiapp.jks
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
       - name: Build
-        run: ./gradlew assembleRelease
+        run: ./gradlew :composeApp:assembleRelease
         env:
           ORG_GRADLE_PROJECT_storePassword: ${{secrets.ANDROID_STORE_PASSWORD}}
           ORG_GRADLE_PROJECT_keyPassword: ${{secrets.ANDROID_KEY_PASSWORD}}
@@ -57,12 +57,12 @@ jobs:
       - name: Find the APK
         id: find_apk
         run: |
-          APK_PATH=$(find . -path '*/apk/release/*.apk' -o -path '*/outputs/apk/release/*.apk' -o -path 'composeApp/build/outputs/apk/release/*.apk' | head -1)
+          APK_PATH=$(find composeApp/ -path '*/apk/release/*.apk' -o -path '*/outputs/apk/release/*.apk' | head -1)
           echo "APK_PATH=${APK_PATH}" >> $GITHUB_OUTPUT
           echo "Found APK at: ${APK_PATH}"
           if [ -z "${APK_PATH}" ]; then
             echo "APK not found!"
-            find . -name "*.apk" 
+            find . -name "*.apk"
             exit 1
           fi
       - name: Upload release APK
