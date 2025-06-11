@@ -33,8 +33,7 @@ jobs:
         run: | 
           npm cache clean --force
           npm cache verify
-          npm install -g npm
-          npm ci
+          npm install -g npm@latest
       - name: Start Appium Server
         uses: FinbertMDS/setup-appium@latest
         with:
