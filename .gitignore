@@ -1,5 +1,7 @@
 *.iml
 .kotlin
+*.jks
+keydemiapp.jks
 .gradle
 **/build/
 xcuserdata

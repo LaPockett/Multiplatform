@@ -126,6 +126,14 @@ kotlin {
 android {
     namespace = "com.dian.prueba"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
+    signingConfigs {
+        create("release") {
+            storeFile = file("keydemiapp.jks")
+            storePassword = System.getenv("ORG_GRADLE_PROJECT_storePassword")?: ""
+            keyAlias = System.getenv("ORG_GRADLE_PROJECT_keyAlias")?: ""
+            keyPassword = System.getenv("ORG_GRADLE_PROJECT_keyPassword")?: ""
+        }
+    }
 
     defaultConfig {
         applicationId = "com.dian.prueba"
@@ -143,6 +151,11 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            signingConfig = signingConfigs.getByName("release")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {

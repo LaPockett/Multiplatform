@@ -41,10 +41,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Decode key from base 64
+        run: |
+          echo "${{secrets.ANDROID_STORE_FILE}}" | base64 -d > keydemiapp.jks
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
       - name: Build
-        run: ./gradlew bundleRelease
+        run: ./gradlew asembleRelease
+        env:
+          ORG_GRADLE_PROJECT_storePassword: ${{secrets.ANDROID_STORE_PASSWORD}}
+          ORG_GRADLE_PROJECT_keyPassword: ${{secrets.ANDROID_KEY_PASSWORD}}
+          ORG_GRADLE_PROJECT_keyAlias: ${{secrets.ANDROID_KEY_ALIAS}}
+          ORG_GRADLE_PROJECT_storeFile: keydemiapp.jks
       - name: Upload release APK
         uses: actions/upload-artifact@v4
         with:
