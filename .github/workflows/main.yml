@@ -1,5 +1,5 @@
-name: main
-run-name: ${{github.actor}} main
+name: Main
+run-name: ${{github.actor}} Main
 on:
   push:
     branches: [master]
