@@ -41,11 +41,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Decode key from base 64
+      - name: Decode key from base64
         run: |
-          mkdir -p composeApp
           echo "${{ secrets.ANDROID_STORE_FILE }}" | base64 -d > composeApp/keydemiapp.jks
-          ls -la composeApp/ | grep keydemiapp.jks
+          ls -la composeApp/
+      - name: Verify keystore (optional)
+        run: |
+          keytool -list -v -keystore composeApp/keydemiapp.jks -storepass ${{ secrets.ANDROID_STORE_PASSWORD }} -alias ${{ secrets.ANDROID_KEY_ALIAS }}
+        continue-on-error: true
       - run: find . -name "*.jks"
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
