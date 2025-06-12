@@ -37,10 +37,8 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
-      - name: Start Appium Server
-        uses: FinbertMDS/setup-appium@latest
-        with:
-          appium-version: ${{ env.APPIUM_VERSION }}
+      - name: Install and Run Appium Server
+        uses: moatazeldebsy/Appium-Server-GitHub-Action@V1.0.8
 
       - name: Android Emulator Runner
         uses: ReactiveCircus/android-emulator-runner@v2.34.0
