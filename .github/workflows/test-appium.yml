@@ -53,11 +53,7 @@ jobs:
           arch: x86_64
           profile: Nexus 6
           script: ./gradlew connectedCheck
-
       - run: |
-          appium driver install uiautomator2
-          npm i --save-dev webdriverio
-          appium & sleep 10
           node appium/testAll.js
       - name: Upload Test Results
         uses: actions/upload-artifact@v4
