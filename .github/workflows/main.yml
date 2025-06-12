@@ -11,7 +11,7 @@ env:
   JAVA_DISTRIBUTION: 'temurin'
   MAVEN_CACHE: ''
   NODE_VERSION: '20'
-  MAIN_PROJECT_MODULE: 'Multiplatform'
+  MAIN_PROJECT_MODULE: 'composeApp'
   PLAYSTORE_NAME: 'App Mock'
 
 jobs:
@@ -61,13 +61,16 @@ jobs:
       - run: find . -name "*.p12"
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
-      - name: Build apk ${{env.MAIN_PROJECT_MODULE}}
+      - name: Build apk release project ${{env.MAIN_PROJECT_MODULE}}
         run: ./gradlew :composeApp:assembleRelease
+      - name: Build apk debug project ${{env.MAIN_PROJECT_MODULE}}
+        run: ./gradlew :composeApp:assembleDebug
         env:
           ORG_GRADLE_PROJECT_storePassword: ${{secrets.ANDROID_STORE_PASSWORD}}
           ORG_GRADLE_PROJECT_keyPassword: ${{secrets.ANDROID_KEY_PASSWORD}}
           ORG_GRADLE_PROJECT_keyAlias: ${{secrets.ANDROID_KEY_ALIAS}}
           ORG_GRADLE_PROJECT_storeFile: composeApp/keydemiapp.p12
+      # Lo dejo por si acaso
       - name: Find the APK
         id: find_apk
         run: |
@@ -79,8 +82,14 @@ jobs:
             find . -name "*.apk"
             exit 1
           fi
-      - name: Upload release APK
+      - name: Upload APK release
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.repository_name }}  - APK Release generated
-          path: ${{steps.find_apk.outputs.APK_PATH}}
+          path: ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/release/
+
+      - name: Upload APK debug
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.repository_name }}  - APK Debug generated
+          path: ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/debug/
