@@ -37,7 +37,8 @@ jobs:
       - name: Android Emulator Runner
         uses: ReactiveCircus/android-emulator-runner@v2.34.0
         with:
-          api-level: 35
+          api-level: 29
+          emulator-build: 7425822
           script: ./gradlew connectedCheck
       - name: Start Appium Server
         uses: FinbertMDS/setup-appium@latest
