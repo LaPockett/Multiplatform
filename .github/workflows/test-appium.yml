@@ -37,9 +37,13 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
-      - name: Install and Run Appium Server
-        uses: moatazeldebsy/Appium-Server-GitHub-Action@V1.0.8
-
+      - name: Install dependencies
+        run: |
+          npm i --location=global appium
+          appium driver install uiautomator2
+          npm init
+          npm i --save-dev webdriverio
+          appium & sleep 10
       - name: Android Emulator Runner
         uses: ReactiveCircus/android-emulator-runner@v2.34.0
         with:
