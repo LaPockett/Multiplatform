@@ -36,8 +36,6 @@ jobs:
           sudo udevadm trigger --name-match=kvm
       - name: Install dependencies
         run: | 
-          npm cache clean --force
-          npm cache verify
           npm install -g npm@latest
       - name: Android Emulator Runner
         uses: ReactiveCircus/android-emulator-runner@v2.34.0
