@@ -128,7 +128,7 @@ android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     signingConfigs {
         create("release") {
-            storeFile = file("keystore.p12")
+            storeFile = file("keydian.jks")
             storePassword = System.getenv("ORG_GRADLE_PROJECT_storePassword")?: ""
             keyAlias = System.getenv("ORG_GRADLE_PROJECT_keyAlias")?: ""
             keyPassword = System.getenv("ORG_GRADLE_PROJECT_keyPassword")?: ""

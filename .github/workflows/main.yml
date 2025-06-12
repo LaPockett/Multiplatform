@@ -52,13 +52,13 @@ jobs:
 
       - name: Decode key from base64
         run: |
-          echo "${{ secrets.ANDROID_STORE_FILE }}" | base64 -d > composeApp/keystore.p12
+          echo "${{ secrets.ANDROID_STORE_FILE }}" | base64 -d > composeApp/keydian.jks
           ls -la composeApp/
       - name: Verify keystore (optional)
         run: |
-          keytool -list -v -keystore composeApp/keystore.p12 -storepass ${{ secrets.ANDROID_STORE_PASSWORD }} -alias ${{ secrets.ANDROID_KEY_ALIAS }}
+          keytool -list -v -keystore composeApp/keydian.jks -storepass ${{ secrets.ANDROID_STORE_PASSWORD }} -alias ${{ secrets.ANDROID_KEY_ALIAS }}
         continue-on-error: true
-      - run: find . -name "*.p12"
+      - run: find . -name "*.jks"
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
       - name: Build apk release project ${{env.MAIN_PROJECT_MODULE}}
@@ -69,7 +69,7 @@ jobs:
           ORG_GRADLE_PROJECT_storePassword: ${{secrets.ANDROID_STORE_PASSWORD}}
           ORG_GRADLE_PROJECT_keyPassword: ${{secrets.ANDROID_KEY_PASSWORD}}
           ORG_GRADLE_PROJECT_keyAlias: ${{secrets.ANDROID_KEY_ALIAS}}
-          ORG_GRADLE_PROJECT_storeFile: composeApp/keystore.p12
+          ORG_GRADLE_PROJECT_storeFile: composeApp/keydian.jks
       # Lo dejo por si acaso
       - name: Find the APK
         id: find_apk
