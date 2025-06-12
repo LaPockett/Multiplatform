@@ -39,6 +39,9 @@ jobs:
         with:
           api-level: 29
           emulator-build: 7425822
+          target: google_apis
+          arch: x86_64
+          profile: Nexus 6
           script: ./gradlew connectedCheck
       - name: Start Appium Server
         uses: FinbertMDS/setup-appium@latest
