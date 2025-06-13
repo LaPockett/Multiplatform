@@ -5,7 +5,6 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
-  workflow_dispatch:
 env:
   JAVA_VERSION: '17'
   JAVA_DISTRIBUTION: 'temurin'
