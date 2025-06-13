@@ -18,14 +18,12 @@ jobs:
     uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
 
   lint:
-    needs: setup
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
       - run: ./gradlew lint
 
   unit-test:
-    needs: setup
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
