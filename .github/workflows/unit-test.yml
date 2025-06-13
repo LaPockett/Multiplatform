@@ -2,7 +2,7 @@ name: GitHub Actions - Unit Tests
 run-name: ${{ github.actor }} Unit Tests
 on:
   push:
-    branches: ["LaPockett-patch-1"]
+    branches: ["master"]
 env:
   JAVA_VERSION: '17'
   JAVA_DISTRIBUTION: 'temurin'
@@ -22,9 +22,3 @@ jobs:
       - name: Start Unit Tests
         run: ./gradlew testDebugUnitTest --warning-mode summary
       - run: echo "This job's status is ${{job.status}}."
-
-
-
-
-
-
