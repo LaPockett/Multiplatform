@@ -5,8 +5,7 @@ import androidx.compose.ui.test.ExperimentalTestApi
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.runComposeUiTest
 import com.dian.prueba.pruebaUITest.ButtonAdd
-import kotlinx.coroutines.delay
-import kotlin.test.Test
+import org.junit.Test
 
 /**
  * PRUEBA UI TEST
