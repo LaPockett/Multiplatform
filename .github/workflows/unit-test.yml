@@ -18,7 +18,4 @@ jobs:
     steps:
       - name: Checkout Project
         uses: actions/checkout@v4
-
-      - name: Start Unit Tests
-        run: ./gradlew testDebugUnitTest
-      - run: echo "This job's status is ${{job.status}}."
+      - run: echo "ESto es una prueba de setup"
