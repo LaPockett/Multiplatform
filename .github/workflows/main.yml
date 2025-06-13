@@ -58,6 +58,10 @@ jobs:
         run: |
           keytool -list -v -keystore composeApp/keydian.jks -storepass ${{ secrets.ANDROID_STORE_PASSWORD }} -alias ${{ secrets.ANDROID_KEY_ALIAS }}
         continue-on-error: true
+      - name: Debug secrets
+        run: |
+          echo "${{ secrets.ANDROID_KEY_PASSWORD}}"
+          echo "${{ secrets.ANDROID_STORE_PASSWORD }}"
       - run: find . -name "*jks"
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
