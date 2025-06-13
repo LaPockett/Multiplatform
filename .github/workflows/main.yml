@@ -22,9 +22,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
-      - run: |
-          export JAVA_HOME= "/home/usuario/android-studio/jbr"
-          ./gradlew lint
+      - run: ./gradlew lint
   unit-test:
     needs: call-workflow
     runs-on: self-hosted
