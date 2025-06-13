@@ -70,7 +70,6 @@ jobs:
           ORG_GRADLE_PROJECT_keyPassword: ${{secrets.ANDROID_KEY_PASSWORD}}
           ORG_GRADLE_PROJECT_keyAlias: ${{secrets.ANDROID_KEY_ALIAS}}
           ORG_GRADLE_PROJECT_storeFile: composeApp/keydian.jks
-      # Lo dejo por si acaso
       - name: Find the APK
         id: find_apk
         run: |
@@ -86,7 +85,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.repository_name }}  - APK Release generated
-          path: ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/release/
+          path: ${{steps.find_apk.outputs.APK_PATH}}
 
       - name: Upload APK debug
         uses: actions/upload-artifact@v4
