@@ -1,4 +1,4 @@
-package prueba
+package com.dian.prueba
 
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.test.junit4.createComposeRule
