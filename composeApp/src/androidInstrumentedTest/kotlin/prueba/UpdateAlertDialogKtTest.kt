@@ -1,4 +1,5 @@
 package com.dian.prueba
+import android.annotation.SuppressLint
 import androidx.compose.material3.MaterialTheme
 import com.dian.prueba.network.APIClient
 import com.dian.prueba.utilities.UpdateStorageImpl
@@ -47,6 +48,7 @@ class UpdateAlertDialogKtTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    @SuppressLint("ViewModelConstructorInComposable")
     @Before
     fun setUp() {
         composeTestRule.setContent {
