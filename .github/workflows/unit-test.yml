@@ -11,7 +11,7 @@ env:
   MAVEN_CACHE: 'gradle'
 jobs:
   call-workflow:
-    uses: LaPockett/Multiplatform/.github/workflows/setup.yml@main
+    uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
 
   build:
     runs-on: ubuntu-latest
