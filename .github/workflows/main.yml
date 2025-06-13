@@ -62,6 +62,11 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build apk release project ${{ env.MAIN_PROJECT_MODULE }}
         run: ./gradlew :composeApp:assembleRelease
+        env:
+          ORG_GRADLE_PROJECT_storePassword: ${{ secrets.ANDROID_STORE_PASSWORD }}
+          ORG_GRADLE_PROJECT_keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          ORG_GRADLE_PROJECT_keyAlias: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ORG_GRADLE_PROJECT_storeFile: composeApp/keydian.jks
       - name: Build apk debug project ${{ env.MAIN_PROJECT_MODULE }}
         run: ./gradlew :composeApp:assembleDebug
         env:
