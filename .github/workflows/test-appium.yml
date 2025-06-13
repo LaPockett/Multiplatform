@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
   appium:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Enable KVM group perms
         run: |
