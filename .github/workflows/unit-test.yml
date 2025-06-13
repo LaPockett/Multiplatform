@@ -8,17 +8,17 @@ env:
   JAVA_DISTRIBUTION: 'temurin'
   MAVEN_CACHE: 'gradle'
 jobs:
+  llamada-setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call setup
+        uses: /home/usuario/AndroidStudioProjects/Multiplatform/.github/workflows/setup.yml
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Project
         uses: actions/checkout@v4
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: ${{ env.JAVA_DISTRIBUTION }}
-          java-version: ${{ env.JAVA_VERSION }}
-          cache: ${{ env.MAVEN_CACHE }}
+
       - name: Start Unit Tests
         run: ./gradlew testDebugUnitTest --warning-mode summary
       - run: echo "This job's status is ${{job.status}}."
