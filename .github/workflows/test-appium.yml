@@ -52,7 +52,9 @@ jobs:
           target: google_apis
           arch: x86_64
           profile: Nexus 6
-          script: ./gradlew connectedCheck
+          script: |
+            emulator -list-avds
+            emulator -avd Pixel_8_Pro
       - run: |
           node appium/testAll.js
       - name: Upload Test Results
