@@ -1,5 +1,5 @@
 name: Main
-run-name: ${{github.actor}} Setup - Lint - Unit Test - Build apk
+run-name: ${{github.actor}} Setup - Lint - Unit Test - Build apk release/debug
 on:
   push:
     branches: [master]
