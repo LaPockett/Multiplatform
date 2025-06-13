@@ -8,11 +8,11 @@ env:
   JAVA_DISTRIBUTION: 'temurin'
   MAVEN_CACHE: 'gradle'
 jobs:
-  llamada-setup:
+  call-workflow:
     runs-on: ubuntu-latest
     steps:
       - name: Call setup
-        uses: /home/usuario/AndroidStudioProjects/Multiplatform/.github/workflows/setup.yml
+        uses: LaPockett/Multiplatform/tree/master/.github/workflows/setup.yml@master
   build:
     runs-on: ubuntu-latest
     steps:
