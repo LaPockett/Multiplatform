@@ -1,8 +1,6 @@
 name: GitHub Actions - Set up project
 run-name: ${{ github.actor }} Set up project
 on:
-  push:
-    branches: ["master"]
   workflow_call:
 env:
   JAVA_VERSION: '17'
