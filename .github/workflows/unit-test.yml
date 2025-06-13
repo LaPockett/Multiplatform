@@ -1,9 +1,9 @@
 name: GitHub Actions - Unit Tests con setup
 run-name: ${{ github.actor }} Unit Tests con setup
 on:
-  push:
-    branches: ["master"]
-  workflow_dispatch:
+  #push:
+  #branches: ["master"]
+#workflow_dispatch:
 
 jobs:
   call-workflow:
