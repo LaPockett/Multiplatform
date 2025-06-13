@@ -10,7 +10,7 @@ jobs:
     uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
 
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout Project
         uses: actions/checkout@v4

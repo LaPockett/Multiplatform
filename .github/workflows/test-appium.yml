@@ -11,7 +11,7 @@ env:
   APPIUM_VERSION: '2.18.0'
 jobs:
   setup:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: Checkout Project
         uses: actions/checkout@v4
