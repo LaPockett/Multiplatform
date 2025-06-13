@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Call setup
-        uses: LaPockett/Multiplatform/tree/master/.github/workflows/setup.yml@master
+        uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
   build:
     runs-on: ubuntu-latest
     steps:
