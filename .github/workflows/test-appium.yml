@@ -3,8 +3,7 @@ run-name: ${{ github.actor }} Appium Tests Prueba
 on:
   push:
     branches: ["LaPockett-patch-1"]
-env:
-  APPIUM_VERSION: '2.18.0'
+
 jobs:
   call-workflow:
     uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
@@ -39,6 +38,7 @@ jobs:
           script: |
             emulator -list-avds
             emulator -avd Pixel_8_Pro
+            adb install /home/usuario/Descargas/upload/composeApp-release.apk
       - run: |
           node appium/testAll.js
       - name: Upload Test Results
