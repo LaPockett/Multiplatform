@@ -1,7 +1,9 @@
 *.iml
 .kotlin
 *.p12
+*.jks
 composeApp/keystore.p12
+composeApp/keydian.jks
 .gradle
 **/build/
 xcuserdata

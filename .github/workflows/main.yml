@@ -1,46 +1,38 @@
 name: Main
-run-name: ${{github.actor}} Main
+run-name: ${{github.actor}} Setup - Lint - Unit Test - Build apk release/debug
 on:
   push:
     branches: [master]
   pull_request:
     branches: [master]
-  workflow_dispatch:
 env:
   JAVA_VERSION: '17'
   JAVA_DISTRIBUTION: 'temurin'
-  MAVEN_CACHE: ''
+  MAVEN_CACHE: 'gradle'
   NODE_VERSION: '20'
   MAIN_PROJECT_MODULE: 'composeApp'
   PLAYSTORE_NAME: 'App Mock'
 
 jobs:
-  setup:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Project
-        uses: actions/checkout@v4
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: ${{ env.JAVA_DISTRIBUTION }}
-          java-version: ${{ env.JAVA_VERSION }}
-          cache: ${{ env.MAVEN_CACHE }}
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
+  call-workflow:
+    uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
 
   lint:
-    needs: setup
-    runs-on: ubuntu-latest
+    needs: call-workflow
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
       - run: ./gradlew lint
+  unit-test:
+    needs: call-workflow
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - run: ./gradlew testdebugUnitTest
 
   build-apk:
-    needs: [lint]
-    runs-on: ubuntu-latest
+    needs: [lint, unit-test]
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
 
@@ -52,25 +44,29 @@ jobs:
 
       - name: Decode key from base64
         run: |
-          echo "${{ secrets.ANDROID_STORE_FILE }}" | base64 -d > composeApp/keystore.p12
+          echo "${{ secrets.ANDROID_STORE_FILE }}" | base64 -d > composeApp/keydian.jks
           ls -la composeApp/
       - name: Verify keystore (optional)
         run: |
-          keytool -list -v -keystore composeApp/keystore.p12 -storepass ${{ secrets.ANDROID_STORE_PASSWORD }} -alias ${{ secrets.ANDROID_KEY_ALIAS }}
+          keytool -list -v -keystore composeApp/keydian.jks -storepass ${{ secrets.ANDROID_STORE_PASSWORD }} -alias ${{ secrets.ANDROID_KEY_ALIAS }}
         continue-on-error: true
-      - run: find . -name "*.p12"
+      - run: find . -name "*jks"
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
-      - name: Build apk release project ${{env.MAIN_PROJECT_MODULE}}
+      - name: Build apk release project ${{ env.MAIN_PROJECT_MODULE }}
         run: ./gradlew :composeApp:assembleRelease
-      - name: Build apk debug project ${{env.MAIN_PROJECT_MODULE}}
+        env:
+          ORG_GRADLE_PROJECT_storePassword: ${{ secrets.ANDROID_STORE_PASSWORD }}
+          ORG_GRADLE_PROJECT_keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          ORG_GRADLE_PROJECT_keyAlias: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ORG_GRADLE_PROJECT_storeFile: composeApp/keydian.jks
+      - name: Build apk debug project ${{ env.MAIN_PROJECT_MODULE }}
         run: ./gradlew :composeApp:assembleDebug
         env:
-          ORG_GRADLE_PROJECT_storePassword: ${{secrets.ANDROID_STORE_PASSWORD}}
-          ORG_GRADLE_PROJECT_keyPassword: ${{secrets.ANDROID_KEY_PASSWORD}}
-          ORG_GRADLE_PROJECT_keyAlias: ${{secrets.ANDROID_KEY_ALIAS}}
-          ORG_GRADLE_PROJECT_storeFile: composeApp/keystore.p12
-      # Lo dejo por si acaso
+          ORG_GRADLE_PROJECT_storePassword: ${{ secrets.ANDROID_STORE_PASSWORD }}
+          ORG_GRADLE_PROJECT_keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          ORG_GRADLE_PROJECT_keyAlias: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ORG_GRADLE_PROJECT_storeFile: composeApp/keydian.jks
       - name: Find the APK
         id: find_apk
         run: |
@@ -86,7 +82,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.repository_name }}  - APK Release generated
-          path: ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/release/
+          path: ${{steps.find_apk.outputs.APK_PATH}}
 
       - name: Upload APK debug
         uses: actions/upload-artifact@v4

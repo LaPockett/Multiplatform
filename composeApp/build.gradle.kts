@@ -128,9 +128,9 @@ android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     signingConfigs {
         create("release") {
-            storeFile = file("keystore.p12")
-            storePassword = System.getenv("ORG_GRADLE_PROJECT_storePassword")?: ""
-            keyAlias = System.getenv("ORG_GRADLE_PROJECT_keyAlias")?: ""
+            storeFile = file("keydian.jks")
+            storePassword = System.getenv("ORG_GRADLE_PROJECT_storePassword") ?: ""
+            keyAlias = System.getenv("ORG_GRADLE_PROJECT_keyAlias") ?: ""
             keyPassword = System.getenv("ORG_GRADLE_PROJECT_keyPassword")?: ""
         }
     }
@@ -151,11 +151,15 @@ android {
     buildTypes {
         getByName("release") {
             isMinifyEnabled = false
+            isDebuggable = false
             signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        getByName("debug"){
+            isDebuggable = true
         }
     }
     compileOptions {
