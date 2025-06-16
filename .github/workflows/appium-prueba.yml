@@ -18,7 +18,7 @@ jobs:
       - name: Install Appium
         uses: FinbertMDS/setup-appium@v1.0.0
         with:
-          appium_version: ${{ env.APPIUM_VERSION }}
+          appium-version: ${{ env.APPIUM_VERSION }}
       - run: |
           appium --version
           appium & sleep 5
