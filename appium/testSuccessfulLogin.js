@@ -61,6 +61,7 @@ async function runTestLogin(driver) {
         } else {
             throw new Error('La alerta de actualización no es visible');
         }
+        console.log("Test completado con éxito. LOGIN VÁLIDO");
         
     } catch (error) {
         throw error;

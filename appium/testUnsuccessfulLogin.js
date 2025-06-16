@@ -27,6 +27,7 @@ async function runTestLogin(driver) {
         } else {
             throw new Error('El mensaje de error no es visible');
         }
+        console.log("Test completado con éxito. UNSUCCESSFULLOGIN");
 
     } catch (error) {
         throw error;
