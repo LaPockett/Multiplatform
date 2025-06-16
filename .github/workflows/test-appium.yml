@@ -31,8 +31,8 @@ jobs:
       - run: |
           mkdir ~/.npm-global
           npm config set prefix '~/.npm-global'
-          echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.profile
-          source ~/.profile
+          echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.usuario
+          source ~/.usuario
           npm install -g bats
           bats -v
 
@@ -46,11 +46,11 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
-      #- name: Enable KVM group perms
-        #run: |
-          #echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-          #sudo udevadm control --reload-rules
-          #sudo udevadm trigger --name-match=kvm
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
       - run: |
           sudo chown -R usuario: /usr/local/lib/node_modules
 
@@ -67,10 +67,10 @@ jobs:
         uses: ReactiveCircus/android-emulator-runner@v2.34.0
         with:
           api-level: 29
-          emulator-build: 7425822
-          target: google_apis
-          arch: x86_64
-          profile: Nexus 6
+          #emulator-build: 7425822
+          #target: google_apis
+          #arch: x86_64
+          #profile: Nexus 6
           script: |
             emulator -list-avds
             emulator -avd Pixel_8_Pro
