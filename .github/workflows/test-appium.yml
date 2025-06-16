@@ -45,20 +45,14 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
-      - name: Install dependencies 1
-        run: |
-          sudo chown -R usuario: /usr/local/lib/node_modules
-          sudo npm install -g npm@latest
+      - name: Install and run Appium
+        uses: FinbertMDS/setup-appium@v1.0.0
+        with:
+          appium_version: ${{ env.APPIUM_VERSION }}
 
-      - name: Install dependencias 2
-        run: |
-          sudo npm i --location=global appium
-          appium driver install uiautomator2
-      - name: Install dependencias 3
-        run: |
-          npm init
-          npm i --save-dev webdriverio
-          appium & sleep 10
+      - run: |
+          appium --version
+          appium & sleep 5
 
       - name: Android Emulator Runner
         uses: ReactiveCircus/android-emulator-runner@v2.34.0
@@ -72,6 +66,7 @@ jobs:
             emulator -list-avds
             emulator -avd Pixel_8_Pro
             adb install /home/usuario/Descargas/upload/composeApp-release.apk
+
       - run: |
           npm run test-all
 
