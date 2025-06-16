@@ -4,29 +4,13 @@ on:
   push:
     branches: ["LaPockett-patch-1"]
 env:
-  JAVA_VERSION: '17'
-  JAVA_DISTRIBUTION: 'temurin'
-  MAVEN_CACHE: 'gradle'
-  NODE_VERSION: '22.14.0'
   APPIUM_VERSION: '2.18.0'
 jobs:
-  setup:
-    runs-on: self-hosted
-    steps:
-      - name: Checkout Project
-        uses: actions/checkout@v4
-      - name: Set up JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: ${{ env.JAVA_DISTRIBUTION }}
-          java-version: ${{ env.JAVA_VERSION }}
-          cache: ${{ env.MAVEN_CACHE }}
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
+  call-workflow:
+    uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
+
   appium:
-    needs: setup
+    needs: call-workflow
     runs-on: self-hosted
     steps:
       - name: Checkout Project
