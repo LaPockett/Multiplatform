@@ -1,5 +1,5 @@
-name: Prueba de Appium moatazeldebsy
-run-name: ${{ github.actor }} prueba de appium moatazeldebsy
+name: Prueba de Appium FinbertMDS
+run-name: ${{ github.actor }} prueba de appium FinbertMDS
 on: [push]
 env:
   APPIUM_VERSION: '2.18.0'
