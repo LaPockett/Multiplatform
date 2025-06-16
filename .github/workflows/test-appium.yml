@@ -9,6 +9,7 @@ env:
   JAVA_DISTRIBUTION: 'temurin'
   MAVEN_CACHE: 'gradle'
   NODE_VERSION: '22.14.0'
+  APPIUM_VERSION: '2.18.0'
 jobs:
   setup:
     runs-on: self-hosted
