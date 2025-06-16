@@ -45,14 +45,19 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
-      - name: Install dependencies
+      - name: Install dependencies 1
         run: |
           sudo chown -R usuario: /usr/local/lib/node_modules
           sudo npm install -g npm@latest
+
+      - name: Install dependencias 2
+        run: |
           npm ci
           npm audit fix
           npm i --location=global appium
           appium driver install uiautomator2
+      - name: Install dependencias 3
+        run: |
           npm init
           npm i --save-dev webdriverio
           appium & sleep 10
