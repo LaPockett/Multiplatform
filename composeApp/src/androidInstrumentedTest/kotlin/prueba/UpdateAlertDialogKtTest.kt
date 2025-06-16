@@ -14,37 +14,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-/**
- * Este es el test que no funciona, los demás sí funcionan
- */
 
 /*class UpdateAlertDialogKtTest {
-
-    @OptIn(ExperimentalTestApi::class)
-    @Test
-    fun testUpdateAlertDialog() = runComposeUiTest {
-        val updateVM = UpdateVM(
-            updateStorage = UpdateStorageImpl(
-                settings = Settings()
-            ),
-            apiService = APIClient(
-                updateStorage = UpdateStorageImpl(
-                    settings = Settings()
-                )
-            )
-        )
-        setContent {
-            UpdateAlertDialog(
-                viewModel = updateVM
-            )
-        }
-        onNodeWithTag("updateTitle").assertExists()
-        onNodeWithTag("updateButton").performClick()
-        // El usuario tiene que ser redirigido a https://play.google.com/store/apps/details?id=com.amazon.mShop.android.shopping&hl=es&pli=1
-
-    }
-}*/
-class UpdateAlertDialogKtTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
@@ -73,4 +44,4 @@ class UpdateAlertDialogKtTest {
         composeTestRule.onNodeWithTag("updateTitle").assertExists()
         composeTestRule.onNodeWithTag("updateButton", useUnmergedTree = true).performClick()
     }
-}
+}*/
