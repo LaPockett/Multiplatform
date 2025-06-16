@@ -1,4 +1,4 @@
-name: Main
+name: Setup, lint, test and build apk
 run-name: ${{github.actor}} Setup - Lint - Unit Test - Build apk release/debug
 on:
   push:
