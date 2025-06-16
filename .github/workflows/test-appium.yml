@@ -47,6 +47,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          sudo chown -R usuario: /usr/local/lib/node_modules
           npm install -g npm@latest
           npm audit fix
           npm i --location=global appium
