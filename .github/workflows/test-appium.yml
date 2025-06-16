@@ -47,6 +47,7 @@ jobs:
 
       - name: Install dependencies
         run: |
+          npm audit fix
           npm install
           npm i --location=global appium
           appium driver install uiautomator2
