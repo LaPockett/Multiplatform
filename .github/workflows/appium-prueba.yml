@@ -1,0 +1,13 @@
+name: Prueba de Appium moatazeldebsy
+run-name: ${{ github.actor }} prueba de appium moatazeldebsy
+on: [push]
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    name: Appium Test
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install and Run Appium Server
+        uses: moatazeldebsy/Appium-Server-GitHub-Action@V1.0.8
