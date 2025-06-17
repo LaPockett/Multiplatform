@@ -80,17 +80,9 @@ jobs:
           profile: Nexus 6
           script: |
             pwd
-            echo "Download app"
-            adb install /home/usuario/Descargas/upload/composeApp-release.apk
-            echo "Start Appium Tests"
-            echo "Emulator's list"
-            emulator -list-avds
-            echo "Start second emulator"
-            emulator -avd Pixel_8_Pro
-            echo "Install app in second emulator"
-            adb install /home/usuario/Descargas/upload/composeApp-release.apk
-            echo "Start Appium Tests"
-            npm run test-all
+            cd /home/usuario/Escritorio/self-hosted_dian/actions-runner/_work/Multiplatform/Multiplatform/scripts/
+            chmod second_emulator.sh
+            ./second_emulator.sh
             
             echo "Closing connection with emulator-5554"
             adb -s emulator-5554 emu kill || true
