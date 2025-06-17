@@ -73,8 +73,6 @@ jobs:
         uses: ReactiveCircus/android-emulator-runner@v2.34.0
         with:
           api-level: 29
-          disable-animations: true
-          emulator-options: -no-snapshot -no-window -no-boot-anim -camera-back none -camera-front none
           #emulator-build: 7425822
           #target: google_apis
           profile: Nexus 6
