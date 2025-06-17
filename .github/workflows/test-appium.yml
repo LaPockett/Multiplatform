@@ -80,9 +80,7 @@ jobs:
           profile: Nexus 6
           script: |
             pwd
-            cd /home/usuario/Escritorio/self-hosted_dian/actions-runner/_work/Multiplatform/Multiplatform/scripts/
-            pwd
-            chmod +x second_emulator.sh
+            chmod +x ./home/usuario/Escritorio/self-hosted_dian/actions-runner/_work/Multiplatform/Multiplatform/scripts/second_emulator.sh
             ./second_emulator.sh
             
             echo "Closing connection with emulator-5554"
