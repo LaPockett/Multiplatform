@@ -3,7 +3,6 @@ run-name: ${{ github.actor }} Appium Tests
 on:
   push:
     branches: ["LaPockett-patch-1"]
-
 env:
   JAVA_VERSION: '17'
   JAVA_DISTRIBUTION: 'temurin'
@@ -53,12 +52,13 @@ jobs:
       - run: |
           sudo chown -R usuario: /usr/local/lib/node_modules
 
-      - name: Install and run Appium
+      - name: Install Appium
         uses: FinbertMDS/setup-appium@v1.0.0
         with:
           appium-version: ${{ env.APPIUM_VERSION }}
 
-      - run: |
+      - name: Run Appium
+        run: |
           npm --version
           echo "NPM AUDIT"
           npm audit
@@ -90,4 +90,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: /composeApp/
+          path: composeApp/
