@@ -53,15 +53,6 @@ jobs:
       - run: |
           sudo chown -R usuario: /usr/local/lib/node_modules
 
-      - name: AVD cache
-        uses: actions/cache@v4
-        id: avd-cache
-        with:
-          path: |
-            ~/.android/avd/*
-            ~/.android/adb*
-          key: avd-29
-
       - name: Install and run Appium
         uses: FinbertMDS/setup-appium@v1.0.0
         with:
@@ -74,7 +65,7 @@ jobs:
       - name: Android Emulator Runner
         uses: ReactiveCircus/android-emulator-runner@v2.34.0
         with:
-          api-level: 36
+          api-level: 29
           #emulator-build: 7425822
           #target: google_apis
           #arch: x86_64
@@ -84,13 +75,10 @@ jobs:
             echo "Start emulator"
             emulator -list-avds
             emulator -avd Pixel_3a_XL
-            sleep 10
             echo "Download app"
             adb install /home/usuario/Descargas/upload/composeApp-release.apk
-            sleep 10
             echo "Start Appium Tests"
             npm run test-all
-            sleep 10
             echo "Closing connection with emulator-5554"
             adb -s emulator-5554 emu kill || true
             echo "Closing connection with emulator-5556"
