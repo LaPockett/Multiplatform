@@ -59,6 +59,9 @@ jobs:
           appium-version: ${{ env.APPIUM_VERSION }}
 
       - run: |
+          npm --version
+          npm i --save-dev webdriverio
+          npm ci
           appium --version
           appium & sleep 5
 
@@ -71,11 +74,11 @@ jobs:
           #emulator-build: 7425822
           #target: google_apis
           arch: x86_64
-          #profile: Nexus 6
+          profile: Nexus 6
           script: |
             pwd
             echo "Download app"
-            adb install /home/usuario/Descargas/upload/composeApp-release.apk
+            adb install /home/usuario/Descargas/upload/composeApp-release.apk && mvn package
             echo "Start Appium Tests"
             npm run test-all
             echo "Closing connection with emulator-5554"
