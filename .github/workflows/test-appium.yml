@@ -1,5 +1,5 @@
-name: GitHub Actions - Appium Tests Prueba
-run-name: ${{ github.actor }} Appium Tests Prueba
+name: GitHub Actions - Appium Tests
+run-name: ${{ github.actor }} Appium Tests
 on:
   push:
     branches: ["LaPockett-patch-1"]
