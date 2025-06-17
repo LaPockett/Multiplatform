@@ -47,11 +47,6 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
-      - name: Gradle cache
-        uses: gradle/actions/setup-gradle@v4
-      - run: |
-          sudo chown -R usuario: /usr/local/lib/node_modules
-
       - name: Install Appium
         uses: FinbertMDS/setup-appium@v1.0.0
         with:
