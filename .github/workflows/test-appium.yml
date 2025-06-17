@@ -82,10 +82,11 @@ jobs:
             pwd
             emulator -list-avds
             emulator -avd Pixel_3a_XL
-            adb install /home/usuario/Descargas/upload/composeApp-release.apk
+            
+            adb -s emulator-5556 install /home/usuario/Descargas/upload/composeApp-release.apk
             npm run test-all
             
-            echo "Closing connection with emulator-5554"
+            echo "Closing connection with emulator-5554 Test"
             adb -s emulator-5554 emu kill || true
             echo "Closing connection with emulator-5556"
             adb -s emulator-5556 emu kill || true
