@@ -81,6 +81,7 @@ jobs:
           script: |
             pwd
             cd /home/usuario/Escritorio/self-hosted_dian/actions-runner/_work/Multiplatform/Multiplatform/scripts/
+            pwd
             chmod +x second_emulator.sh
             ./second_emulator.sh
             
