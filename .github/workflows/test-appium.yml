@@ -66,15 +66,14 @@ jobs:
         uses: ReactiveCircus/android-emulator-runner@v2.34.0
         with:
           api-level: 29
+          disable-animations: true
+          emulator-options: -no-snapshot -no-window -no-boot-anim -camera-back none -camera-front none -gpu swiftshader_indirect
           #emulator-build: 7425822
           #target: google_apis
-          #arch: x86_64
+          arch: x86_64
           #profile: Nexus 6
           script: |
             pwd
-            echo "Start emulator"
-            emulator -list-avds
-            emulator -avd Pixel_3a_XL
             echo "Download app"
             adb install /home/usuario/Descargas/upload/composeApp-release.apk
             echo "Start Appium Tests"
