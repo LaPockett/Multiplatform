@@ -91,6 +91,7 @@ jobs:
             adb wait-for-device
             emulator -list-avds
             emulator -avd Pixel_8_Pro
+            adb wait-for-device
             echo "Install apk in emulator-5556"
             adb -s emulator-5556 install /home/usuario/Descargas/upload/composeApp-release.apk
             npm run test-all
