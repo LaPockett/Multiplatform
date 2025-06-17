@@ -73,6 +73,7 @@ jobs:
           script: |
             emulator -list-avds
             emulator -avd Pixel_8_Pro
+            sleep 10
             adb install /home/usuario/Descargas/upload/composeApp-release.apk
             npm run test-all
             echo "Closing connection with emulator-5554"
