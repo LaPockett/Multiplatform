@@ -80,8 +80,10 @@ jobs:
           profile: Nexus 6
           script: |
             pwd
-            chmod +x ./home/usuario/Escritorio/self-hosted_dian/actions-runner/_work/Multiplatform/Multiplatform/scripts/second_emulator.sh
-            ./second_emulator.sh
+            emulator -list-avds
+            emulator -avd Pixel_3a_XL
+            adb install /home/usuario/Descargas/upload/composeApp-release.apk
+            npm run test-all
             
             echo "Closing connection with emulator-5554"
             adb -s emulator-5554 emu kill || true
