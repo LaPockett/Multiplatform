@@ -84,6 +84,8 @@ jobs:
             adb install /home/usuario/Descargas/upload/composeApp-release.apk
             echo "Start Appium Tests"
             npm run test-all
+            chmod +x second_emulator.sh
+            ./second_emulator.sh
             echo "Closing connection with emulator-5554"
             adb -s emulator-5554 emu kill || true
             echo "Closing connection with emulator-5556"
