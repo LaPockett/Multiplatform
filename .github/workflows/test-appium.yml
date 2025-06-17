@@ -60,6 +60,10 @@ jobs:
 
       - run: |
           npm --version
+          echo "NPM AUDIT"
+          npm audit
+          echo "NPM AUDIT FIX"
+          npm audit fix
           npm i --save-dev webdriverio
           npm ci
           appium --version
