@@ -1,4 +1,4 @@
-name: GitHub Actions - Appium Tests
+name: GitHub Actions - Appium Tests :D
 run-name: ${{ github.actor }} Appium Tests
 on:
   push:
