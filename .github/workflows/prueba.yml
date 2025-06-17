@@ -69,6 +69,9 @@ jobs:
           appium --version
           appium & sleep 5
 
+      - name: Set Emulator
+        uses: ReactiveCircus/android-emulator-runner@v2.34.0
+
       - name: Android Emulator Runner with Tests
         run: |
           emulator -list-avds
