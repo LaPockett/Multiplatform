@@ -74,7 +74,7 @@ jobs:
       - name: Android Emulator Runner
         uses: ReactiveCircus/android-emulator-runner@v2.34.0
         with:
-          api-level: 29
+          api-level: 36
           #emulator-build: 7425822
           #target: google_apis
           #arch: x86_64
@@ -101,4 +101,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: Multiplatform/composeApp/
+          path: composeApp/
