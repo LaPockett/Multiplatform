@@ -78,7 +78,7 @@ jobs:
           emulator-options: -no-snapshot -no-window -no-boot-anim -camera-back none -camera-front none
           #emulator-build: 7425822
           #target: google_apis
-          profile: Pixel_8_Pro
+          profile: pixel_3a_xl
           script: |
             adb wait-for-device
             emulator -list-avds
