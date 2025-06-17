@@ -83,12 +83,12 @@ jobs:
         with:
           api-level: 29
           disable-animations: true
-          emulator-options: -no-snapshot -no-window -no-boot-anim -camera-back none -camera-front none -gpu swiftshader_indirect
+          emulator-options: -no-snapshot -no-window -no-boot-anim -camera-back none -camera-front none
           #emulator-build: 7425822
           #target: google_apis
           profile: Nexus 6
           script: |
-            pwd
+            adb wait-for-device
             emulator -list-avds
             emulator -avd Pixel_8_Pro
             echo "Install apk in emulator-5556"
