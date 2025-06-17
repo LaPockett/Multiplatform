@@ -78,7 +78,19 @@ jobs:
           #emulator-build: 7425822
           #target: google_apis
           profile: Nexus 6
-          script: ./gradlew connectedCheck
+          script: |
+            pwd
+            emulator -list-avds
+            emulator -avd Pixel_8_Pro
+            echo "Install apk in emulator-5556"
+            adb -s emulator-5556 install /home/usuario/Descargas/upload/composeApp-release.apk
+            npm run test-all
+            
+            echo "Closing connection with emulator-5554 Test"
+            adb -s emulator-5554 emu kill || true
+            echo "Closing connection with emulator-5556"
+            adb -s emulator-5556 emu kill || true
+
       - name: Upload Test Results
         if: always()
         uses: actions/upload-artifact@v4
