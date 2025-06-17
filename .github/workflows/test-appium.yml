@@ -42,9 +42,6 @@ jobs:
       - name: Checkout Project
         uses: actions/checkout@v4
 
-      - name: Change wrapper permissions
-        run: chmod +x ./gradlew
-
       - name: Enable KVM group perms
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -75,7 +72,10 @@ jobs:
             emulator -list-avds
             emulator -avd Pixel_8_Pro
             sleep 10
+            echo "Download app"
             adb install /home/usuario/Descargas/upload/composeApp-release.apk
+            sleep 10
+            echo "Start Appium Tests"
             npm run test-all
             sleep 10
             echo "Closing connection with emulator-5554"
@@ -88,4 +88,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: Multiplatform/composeApp/build/reports
+          path: Multiplatform/composeApp/reports
