@@ -81,8 +81,9 @@ jobs:
           #profile: Nexus 6
           script: |
             pwd
+            echo "Start emulator"
             emulator -list-avds
-            emulator -avd Pixel_8_Pro
+            emulator -avd Pixel_3a_XL
             sleep 10
             echo "Download app"
             adb install /home/usuario/Descargas/upload/composeApp-release.apk
@@ -100,4 +101,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: Multiplatform/composeApp/reports
+          path: Multiplatform/composeApp/
