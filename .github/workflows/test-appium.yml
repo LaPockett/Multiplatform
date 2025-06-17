@@ -81,7 +81,7 @@ jobs:
           script: |
             pwd
             emulator -list-avds
-            emulator -avd Pixel_3a_XL
+            emulator -avd Pixel_8_Pro
             
             adb -s emulator-5556 install /home/usuario/Descargas/upload/composeApp-release.apk
             npm run test-all
