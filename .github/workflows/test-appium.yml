@@ -73,12 +73,11 @@ jobs:
           emulator-options: -no-snapshot -no-window -no-boot-anim -camera-back none -camera-front none -gpu swiftshader_indirect
           #emulator-build: 7425822
           #target: google_apis
-          arch: x86_64
           profile: Nexus 6
           script: |
             pwd
             echo "Download app"
-            adb install /home/usuario/Descargas/upload/composeApp-release.apk && mvn package
+            adb install /home/usuario/Descargas/upload/composeApp-release.apk
             echo "Start Appium Tests"
             npm run test-all
             echo "Closing connection with emulator-5554"
@@ -91,4 +90,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: composeApp/
+          path: composeApp/no
