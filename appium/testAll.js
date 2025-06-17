@@ -8,7 +8,6 @@ const capabilities = {
     platformName: 'Android',
     'appium:automationName': 'UiAutomator2',
     'appium:deviceName': 'Android',
-    'appium:udid': '1e27529b',
     'appium:appPackage': 'com.dian.prueba',
     'appium:appActivity': 'com.dian.prueba.view.MainActivity',
     'appium:autoGrantPermissions': true,

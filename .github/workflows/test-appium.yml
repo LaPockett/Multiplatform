@@ -71,11 +71,13 @@ jobs:
           #arch: x86_64
           #profile: Nexus 6
           script: |
+            pwd
             emulator -list-avds
             emulator -avd Pixel_8_Pro
             sleep 10
             adb install /home/usuario/Descargas/upload/composeApp-release.apk
             npm run test-all
+            sleep 10
             echo "Closing connection with emulator-5554"
             adb -s emulator-5554 emu kill || true
             echo "Closing connection with emulator-5556"
@@ -86,4 +88,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: composeApp/build/reports
+          path: Multiplatform/composeApp/build/reports
