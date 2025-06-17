@@ -74,22 +74,18 @@ jobs:
         with:
           api-level: 29
           disable-animations: true
-          arch: x86_64
           emulator-options: -no-snapshot -no-window -no-boot-anim -camera-back none -camera-front none
           #emulator-build: 7425822
           #target: google_apis
-          profile: pixel_3a_xl
+          profile: Nexus 6
           script: |
             adb wait-for-device
             emulator -list-avds
-          
-            emulator -avd install /home/usuario/Descargas/upload/composeApp-release.apk
+            adb install /home/usuario/Descargas/upload/composeApp-release.apk
             npm run test-all
             
             echo "Closing connection with emulator-5554 Test"
             adb -s emulator-5554 emu kill || true
-            echo "Closing connection with emulator-5556"
-            adb -s emulator-5556 emu kill || true
 
       - name: Upload Test Results
         if: always()
