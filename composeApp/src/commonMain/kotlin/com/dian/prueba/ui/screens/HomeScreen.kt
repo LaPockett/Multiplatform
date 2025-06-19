@@ -30,7 +30,6 @@ fun HomeScreen() {
         modifier = Modifier.fillMaxSize()
     ) {
         Column() {
-            ScrollRowAmazon()
             SearchBarAmazon(
                 query = query,
                 onQueryChange = { query = it },
@@ -38,6 +37,7 @@ fun HomeScreen() {
                 active = active,
                 onActiveChange = { active = it }
             )
+            ScrollRowAmazon()
             WebViewHome(
                 query = query,
             )
@@ -50,7 +50,7 @@ fun HomeScreen() {
 fun ScrollRowAmazon() {
 
     Column(
-        modifier = Modifier.padding(top = 100.dp)
+        modifier = Modifier.padding(top = 12.dp)
     ) {
         ScrollableTabRow(
             selectedTabIndex = 0,
@@ -97,6 +97,7 @@ fun SearchBarAmazon(
             onQueryChange = {
                 onQueryChange(it)
             },
+            modifier = Modifier.padding(top = 80.dp),
             onSearch = {
                 onSearch(query)
             },
