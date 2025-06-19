@@ -15,7 +15,7 @@ Este tipo de problemas solo los ves cuando te enfrentas a ellos de verdad. Si er
 ## Algunas imágenes de la aplicación
 <img src= "images/captura1.jpg" width="300" height="700"/> <img src= "images/captura2.jpg" width="300" height="700"/>
 
-## Librerías principales 
+## Librerías principales
 - API de prueba -> https://jsonplaceholder.typicode.com/
 - Navegación web para Multiplatform -> https://github.com/KevinnZou/compose-webview-multiplatform/tree/main
 - JUnit test -> https://mvnrepository.com/artifact/org.jetbrains.compose.ui/ui-test-junit4
@@ -40,13 +40,13 @@ Este tipo de problemas solo los ves cuando te enfrentas a ellos de verdad. Si er
 ## Funcionalidades/
 
 - **Simulador de Login con validación básica:** El usuario solo puede poner un email que contenga ‘@’ y un ‘.’ Mientras que la contraseña tiene que tener entre 6 y 20 caracteres. Cuando el usuario ingresa a la aplicación por primera vez ingresa un email y una contraseña, si no es válida le saldrá una alerta explicándole la validación, si el usuario no ingresa ningún dato le saldrá una alerta de que no se permiten campos vacíos. Finalmente, si el usuario ingresa credenciales válidas podrá ingresar a la aplicación (No se hacen nada con estas credenciales). Son 3 tipos de login: Valid, Invalid y Empty.
-  
+
 - **Simulador de Tokens (con persistencia):** El accessToken es el email que obtenemos de la API de JSONPlaceHolder y el refreshToken es un número random de 10 dígitos, solo se generan si el Login ha sido exitoso, por eso cada vez que se entra a la aplicación se verifica eso. Además estos tokens se inyectan en cada pantalla.
-  
+
 - **Simulador de actualización de aplicación (persistente):** Si la versión del usuario es distinta de la nueva versión, se entenderá que el usuario tiene que actualizar la aplicación para poder usarla normalmente. Por eso, le saldrá una alerta de actualización, a la que tendrá que seguir si quiere navegar por la aplicación. Si decide actualizar se le redirigirá a la Play Store (en Android), luego podrá volver a la aplicación y navegar con normalidad, no le saldrá más la actualización. Cada vez que el usuario ingresa a la app se verifican los datos de actualización para saber si mostrar la alerta o no.
-  
+
 - **Simulador de Logout:** El usuario podrá “cerrar sesión” desde la pantalla de Profile y eso significará que se limpiarán los tokens que estaban y se redirigirá al usuario a la pantalla del Login, no pudiendo hacer back.
-  
+
 - **Uso de WebView en BottomNavigation y en MenuDrawer:** Se usan como webViews páginas de la web de Amazon, la aplicación consta de 4 pantallas principales: Home, Profile, Cart y Explore. Además hay un MenuDrawer (contiene un webView) que solo se activa pulsando el icono hamburguesa, para cerrarlo el usuario hace swipe hacia la izquierda.
 
 - **Status bar y Navigation bar transparente con sus iconos visibles dependiendo del tema:** Si el tema es claro por default los iconos son blancos, pero al tener el fondo de color claro no se verían, por eso ahora son de color oscuro para que el usuario pueda visualizar mejor esos elementos (de momento no hay un Theme de la app establecido por nosotros).
@@ -55,8 +55,3 @@ Este tipo de problemas solo los ves cuando te enfrentas a ellos de verdad. Si er
 
 ## Arquitectura
 Se implementa el patrón **MVVM (Model - View - ViewModel)**.
-
-## Directory tree
-![Esquema](directory_tree.png)
-
-> Árbol generado con: https://tree.nathanfriend.com/
