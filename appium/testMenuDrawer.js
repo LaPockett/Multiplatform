@@ -3,12 +3,6 @@ const { remote } = require('webdriverio')
 async function runTestLogin(driver) {
     try {
         await driver.pause(1500);
-<<<<<<< HEAD
-        const cartScreen = await driver.$('//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[3]')
-        await cartScreen.waitForDisplayed({timeout: 10000, interval: 1000});
-        cartScreen.click();
-        await driver.pause(2000);
-=======
         const profileScreen = await driver.$('//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View[2]/android.view.View/android.view.View[2]')
         const cartScreen = await driver.$('//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View[2]/android.view.View/android.view.View[3]')
         const exploreScreen = await driver.$('//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[4]')
@@ -25,7 +19,6 @@ async function runTestLogin(driver) {
         exploreScreen.click();
         await driver.pause(2000);
 
->>>>>>> master
         const buttonMenuDrawer = await driver.$('//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[2]/android.view.View');
         await buttonMenuDrawer.waitForDisplayed({timeout: 10000, interval: 1000});
         buttonMenuDrawer.click();
