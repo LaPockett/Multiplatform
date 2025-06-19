@@ -16,7 +16,11 @@ async function runTestLogin(driver) {
 
         const loginButton = await driver.$('//android.widget.Button');
         await loginButton.click();
+<<<<<<< HEAD
         await driver.pause(3000);
+=======
+        await driver.pause(2000);
+>>>>>>> master
 
         // Verificar que se ha iniciado sesión correctamente
 
@@ -26,6 +30,7 @@ async function runTestLogin(driver) {
             console.log('Test: Alerta de actualización visible OK');
             const updateButton = await driver.$('//android.widget.Button')
             updateButton.click();
+<<<<<<< HEAD
             await driver.pause(3000);
 
             await driver.pressKeyCode(KEYCODE_MULTITAREA);
@@ -58,6 +63,10 @@ async function runTestLogin(driver) {
             } else {
                 throw new Error('La pantalla principal no es visible');
             }
+=======
+            await driver.pause(2000);
+
+>>>>>>> master
         } else {
             throw new Error('La alerta de actualización no es visible');
         }

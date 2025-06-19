@@ -22,24 +22,22 @@ import com.dian.prueba.model.getAllAmazonCategories
 import com.dian.prueba.ui.components.WebViewHome
 
 @Composable
-fun HomeScreen(){
+fun HomeScreen() {
     var query by remember { mutableStateOf("") }
     var active by remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier.fillMaxSize()
-    ){
-        Column(
-            modifier = Modifier.fillMaxWidth()
-        ){
-            ScrollRowAmazon()
+    ) {
+        Column() {
             SearchBarAmazon(
                 query = query,
-                onQueryChange = {query = it},
-                onSearch = {active = false},
+                onQueryChange = { query = it },
+                onSearch = { active = false },
                 active = active,
-                onActiveChange = {active = it}
+                onActiveChange = { active = it }
             )
+            ScrollRowAmazon()
             WebViewHome(
                 query = query,
             )
@@ -49,41 +47,38 @@ fun HomeScreen(){
 }
 
 @Composable
-fun ScrollRowAmazon(){
-    Column (
-        modifier = Modifier.padding(top = 15.dp)
+fun ScrollRowAmazon() {
 
-    ){
-        Column(
-        ) {
-            ScrollableTabRow(
-                selectedTabIndex = 0,
-                modifier = Modifier.padding(10.dp),
-                backgroundColor = Color.White,
-                contentColor = Color.Black,
-                edgePadding = 0.dp,
+    Column(
+        modifier = Modifier.padding(top = 12.dp)
+    ) {
+        ScrollableTabRow(
+            selectedTabIndex = 0,
+            backgroundColor = Color.White,
+            contentColor = Color.Black,
+            edgePadding = 0.dp,
 
-                ){
-                getAllAmazonCategories().forEach { category ->
-                    Tab(
-                        selected = false,
-                        onClick = { /*TODO*/ },
-                        text = {
-                            Text(
-                                text = category.categoryName,
-                                color = Color.Black,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 15.sp
-                            )
-                        }
-                    )
-                }
-
+            ) {
+            getAllAmazonCategories().forEach { category ->
+                Tab(
+                    selected = false,
+                    onClick = { /*TODO*/ },
+                    text = {
+                        Text(
+                            text = category.categoryName,
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 15.sp
+                        )
+                    }
+                )
             }
-        }
 
+        }
     }
+
 }
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -93,17 +88,19 @@ fun SearchBarAmazon(
     onSearch: (String) -> Unit,
     active: Boolean,
     onActiveChange: (Boolean) -> Unit
-){
+) {
     Column(
-    modifier = Modifier.fillMaxWidth()
-     ){
+        modifier = Modifier.fillMaxWidth()
+    ) {
         SearchBar(
-            modifier = Modifier.fillMaxWidth().padding(8.dp),
             query = query,
             onQueryChange = {
-                onQueryChange(it) },
+                onQueryChange(it)
+            },
+            modifier = Modifier.padding(top = 80.dp),
             onSearch = {
-                onSearch(query) },
+                onSearch(query)
+            },
             active = active,
             onActiveChange = onActiveChange,
             placeholder = { Text("Buscar o hacer una pregunta") },
@@ -116,7 +113,7 @@ fun SearchBarAmazon(
             trailingIcon = {
                 Icon(
                     modifier = Modifier.clickable {
-                        if (query.isNotEmpty()){
+                        if (query.isNotEmpty()) {
                             onQueryChange("")
                         }
                     },
@@ -125,7 +122,7 @@ fun SearchBarAmazon(
                 )
             },
 
-            ){
+            ) {
         }
     }
 
