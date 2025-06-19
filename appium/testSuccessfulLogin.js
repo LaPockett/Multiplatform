@@ -16,7 +16,7 @@ async function runTestLogin(driver) {
 
         const loginButton = await driver.$('//android.widget.Button');
         await loginButton.click();
-        await driver.pause(3000);
+        await driver.pause(2000);
 
         // Verificar que se ha iniciado sesión correctamente
 
@@ -26,7 +26,7 @@ async function runTestLogin(driver) {
             console.log('Test: Alerta de actualización visible OK');
             const updateButton = await driver.$('//android.widget.Button')
             updateButton.click();
-            await driver.pause(3000);
+            await driver.pause(2000);
 
         } else {
             throw new Error('La alerta de actualización no es visible');

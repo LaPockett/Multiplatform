@@ -3,15 +3,16 @@ const { remote } = require('webdriverio')
 async function runTestLogout(driver) {
     try {
         await driver.pause(1500);
-        const profileScreen = await driver.$('//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View[2]/android.view.View/android.view.View[2]')
-        const buttonLogout = await driver.$('//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View[2]/android.widget.Button')
+        const profileScreen = await driver.$('//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]/android.view.View/android.view.View/android.view.View[2]/android.view.View[2]')
+        const buttonLogout = await driver.$('//android.widget.TextView[@text="Cerrar sesión"]')
         await profileScreen.waitForDisplayed({timeout: 5000});
         profileScreen.click();
         await buttonLogout.waitForDisplayed({timeout: 5000});
         buttonLogout.click();
-        const loginScreen = await driver.$('//androidx.compose.ui.platform.ComposeView/android.view.View')
+        await driver.pause(2000);
+        const buttonLoginScreen = await driver.$('//android.widget.Button')
 
-        if (await loginScreen.isDisplayed()) {
+        if (await buttonLoginScreen.isDisplayed()) {
             console.log('Test: Pantalla de login visible OK');
         } else {
             throw new Error('La pantalla de login no es visible');

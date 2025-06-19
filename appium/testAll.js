@@ -3,6 +3,7 @@ const emptyLogin = require('./testEmptyLogin');
 const unsuccessfulLogin = require('./testUnsuccessfulLogin');
 const successfulLogin = require('./testSuccessfulLogin');
 const menuDrawer = require('./testMenuDrawer');
+const logout = require('./testLogout');
 
 const capabilities = {
     platformName: 'Android',
@@ -25,8 +26,7 @@ async function runAllTests() {
     });
 
     try {
-        await driver.pause(2000);
-
+        await driver.pause(1000);
         // 1. Test login vacío
         await emptyLogin.runTestLogin(driver);
         await driver.pause(1000);
@@ -44,12 +44,11 @@ async function runAllTests() {
 
         // 4. Test menú drawer (swipe)
         await driver.activateApp('com.dian.prueba');
-        await driver.pause(2000);
+        await driver.pause(1500);
         await menuDrawer.runTestLogin(driver);
         await driver.pause(1500);
 
         // 5. Test logout
-        await driver.activateApp('com.dian.prueba');
         await logout.runTestLogout(driver);
         await driver.pause(1500);
         await driver.terminateApp('com.dian.prueba');
