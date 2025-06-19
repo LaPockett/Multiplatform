@@ -12,6 +12,9 @@ Este tipo de problemas solo los ves cuando te enfrentas a ellos de verdad. Si er
 
 📝 *PD: Verás unos 300 (o cientos más) commits relacionados con workflows. ¡Fue parte del aprendizaje!*
 
+## Algunas imágenes de la aplicación
+<img src= "images/captura1.jpg" width="300" height="600"/> <img src= "images/captura2.jpg" width="300" height="600"/>
+
 ## Librerías principales 
 - API de prueba -> https://jsonplaceholder.typicode.com/
 - Navegación web para Multiplatform -> https://github.com/KevinnZou/compose-webview-multiplatform/tree/main
