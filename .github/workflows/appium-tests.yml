@@ -1,8 +1,8 @@
 name: GitHub Actions - Appium Tests :D
 run-name: ${{ github.actor }} Appium Tests
 on:
-  push:
-    branches: ["LaPockett-patch-1"]
+  pull-request:
+    branches: ["test-app"]
 env:
   JAVA_VERSION: '17'
   JAVA_DISTRIBUTION: 'temurin'
