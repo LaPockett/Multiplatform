@@ -1,7 +1,7 @@
 
 <h1 align="center"><img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3E4N3RzcjRxc3VvOWlzeG5qOHlqNHlqMXBkeGIwcjB4YnZmdzZiOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/fxTDiduVAhCgnNLaG2/giphy.gif" width="60"/>Proyecto Mock Multiplatform<img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3E4N3RzcjRxc3VvOWlzeG5qOHlqNHlqMXBkeGIwcjB4YnZmdzZiOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/fxTDiduVAhCgnNLaG2/giphy.gif" width="60"></h1>
 
-Este proyecto es una aplicación mock desarrollada con **Compose Multiplatform**. Fue creada con el objetivo de simular el comportamiento de una app real, incorporando pruebas automatizadas, flujos de trabajo, firma de la aplicación, principios de arquitectura, entre otros aspectos clave.
+Este proyecto es una aplicación mock desarrollada con **Compose Multiplatform**. Fue creada con el objetivo de simular el comportamiento de una app real, incorporando pruebas automatizadas, flujos de trabajo, firma de la aplicación, principios de arquitectura, entre otros aspectos clave. No se ha tenido muy en cuenta el diseño de la interfaz de usuario y se ha basado en la aplicación móvil de **Amazon**.
 
 ## Reflexiones
 Este proyecto lo desarrollé durante mis 3 meses de prácticas en una empresa a la que le tengo mucho cariño. Me permitió descubrir muchos conceptos y herramientas que desconocía y que considero esenciales en el desarrollo de software, pero que no suelen enseñarse ni en institutos ni en cursos básicos.
@@ -10,7 +10,7 @@ Gran parte del tiempo lo dediqué a investigar, resolver errores y comprender he
 
 Este tipo de problemas solo los ves cuando te enfrentas a ellos de verdad. Si eres junior o estás empezando, te animo a crear tu propio proyecto desde cero, pensando como si lo fueras a publicar: incluyendo testing, arquitectura limpia y flujos de trabajo. Aprenderás muchísimo, te lo aseguro :D
 
-📝 *PD: Verás unos 300 commits relacionados con workflows. ¡Fue parte del aprendizaje!*
+📝 *PD: Verás unos 300 (o cientos más) commits relacionados con workflows. ¡Fue parte del aprendizaje!*
 
 ## Librerías principales 
 - API de prueba -> https://jsonplaceholder.typicode.com/
