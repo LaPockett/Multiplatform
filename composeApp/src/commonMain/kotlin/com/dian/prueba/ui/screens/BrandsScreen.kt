@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.font.*
 import androidx.compose.ui.text.style.*
-//SIN USO
+// SIN USO
 @Composable
 fun BrandScreen(){
     val luxuryBrands = listOf(

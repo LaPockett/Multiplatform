@@ -10,6 +10,7 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.serialization.json.Json
+
 interface ApiService {
     fun checkUpdateAvailable(): UpdateInfo
     suspend fun requestLogin(id: String): String?
