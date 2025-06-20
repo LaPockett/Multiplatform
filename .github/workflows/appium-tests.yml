@@ -1,14 +1,21 @@
 name: GitHub Actions - Appium Tests :D
 run-name: ${{ github.actor }} Appium Tests
 on:
+  push:
+    branches: [master]
   pull_request:
-    branches: [test-app]
+    branches: [master]
 env:
   JAVA_VERSION: '17'
   JAVA_DISTRIBUTION: 'temurin'
   MAVEN_CACHE: 'gradle'
   NODE_VERSION: '22.14.0'
   APPIUM_VERSION: '2.18.0'
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   setup:
     runs-on: self-hosted

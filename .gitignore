@@ -5,6 +5,7 @@
 node_modules
 composeApp/keystore.p12
 composeApp/keydian.jks
+screenshot_error.png
 .gradle
 **/build/
 xcuserdata
