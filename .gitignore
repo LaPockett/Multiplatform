@@ -3,6 +3,8 @@
 *.p12
 *.jks
 node_modules
+composeApp/src/commonMain/kotlin/com/dian/prueba/utilities/TopAppBarScreen.kt
+composeApp/src/commonMain/kotlin/com/dian/prueba/utilities/prueba.kt
 screenshot_error.png
 .gradle
 **/build/

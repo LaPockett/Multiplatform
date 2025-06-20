@@ -1,14 +1,10 @@
 package com.dian.prueba
 
-import androidx.compose.foundation.layout.Box
 import com.dian.prueba.utilities.TokenStorage
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
@@ -33,7 +29,7 @@ import com.dian.prueba.HeaderManager.WebViewHeaderManager
 import com.dian.prueba.navigation.BottomNavigationBar
 import com.dian.prueba.navigation.Screen
 import com.dian.prueba.network.APIClient
-import com.dian.prueba.network.generarToken
+import com.dian.prueba.utilities.generarToken
 import com.dian.prueba.ui.components.MenuDrawer
 import com.dian.prueba.ui.screens.BrandScreen
 import com.dian.prueba.ui.screens.WelcomeScreen

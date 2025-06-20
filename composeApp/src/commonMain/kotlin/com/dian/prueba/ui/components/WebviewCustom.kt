@@ -13,8 +13,6 @@ import com.multiplatform.webview.web.WebContent
 import com.multiplatform.webview.web.WebView
 import com.multiplatform.webview.web.rememberWebViewState
 
-
-
 @Composable
 fun WebViewHome (
     query: String,

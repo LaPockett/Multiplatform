@@ -22,10 +22,6 @@ import com.dian.prueba.AppNavigation
 import com.dian.prueba.ui.screens.SettingsScreen
 import kotlinx.coroutines.launch
 
-/**
- * EN USO
- */
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MenuDrawer(onLogout: () -> Unit) {
