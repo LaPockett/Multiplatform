@@ -10,7 +10,7 @@ Gran parte del tiempo lo dediqué a **investigar, resolver errores y comprender 
 
 Este tipo de problemas solo los ves cuando te enfrentas a ellos de verdad. Si eres junior o estás empezando, te animo a crear tu propio proyecto desde cero, pensando como si lo fueras a publicar: incluyendo testing, arquitectura limpia y flujos de trabajo. Aprenderás muchísimo, te lo aseguro :D
 
-📝 *PD: Verás unos 300 (o cientos más) commits relacionados con workflows. ¡Fue parte del aprendizaje!*
+📝 *PD: Verás unos 300 (o cientos más) commits relacionados con workflows. ¡Fue parte del aprendizaje! (Se han solucionado con un **squash**)*
 
 ## Algunas imágenes de la aplicación
 <img src= "images/captura1.jpg" width="300" height="700"/> <img src= "images/captura2.jpg" width="300" height="700"/>
