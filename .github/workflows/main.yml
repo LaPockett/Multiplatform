@@ -2,9 +2,6 @@ name: Setup, lint, test and build apk
 run-name: ${{github.actor}} Setup - Lint - Unit Test - Build apk release/debug
 on:
   push:
-    branches: [master]
-  pull_request:
-    branches: [master]
 env:
   JAVA_VERSION: '17'
   JAVA_DISTRIBUTION: 'temurin'
@@ -12,6 +9,10 @@ env:
   NODE_VERSION: '20'
   MAIN_PROJECT_MODULE: 'composeApp'
   PLAYSTORE_NAME: 'App Mock'
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   call-workflow:
@@ -23,12 +24,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: ./gradlew lint
+
   unit-test:
     needs: call-workflow
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
       - run: ./gradlew testdebugUnitTest
+
+  ui-test:
+    needs: call-workflow
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Android Emulator Runner with Tests
+        uses: ReactiveCircus/android-emulator-runner@v2.34.0
+        with:
+          api-level: 29
+          profile: Nexus 6
+          script: |
+            adb install /home/usuario/Descargas/upload/composeApp-release.apk
+            ./gradlew connectedAndroidTest
 
   build-apk:
     needs: [lint, unit-test]
