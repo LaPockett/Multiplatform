@@ -2,7 +2,6 @@ name: Setup - Lint, Unit Test and UI test
 run-name: ${{github.actor}} Setup - Lint, Unit Test and UI test
 on:
   push:
-  workflow_call:
 env:
   JAVA_VERSION: '17'
   JAVA_DISTRIBUTION: 'temurin'

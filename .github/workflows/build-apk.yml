@@ -3,7 +3,6 @@ run-name: ${{github.actor}} Build apk release/debug
 on:
   push:
     branches: [master]
-
 env:
   MAIN_PROJECT_MODULE: 'composeApp'
   PLAYSTORE_NAME: 'App Mock'
@@ -14,7 +13,7 @@ concurrency:
 
 jobs:
   call-workflow:
-    uses: LaPockett/Multiplatform/.github/workflows/main.yml@master
+    uses: LaPockett/Multiplatform/.github/workflows/reusable.yml@master
 
   build-apk:
     needs: call-workflow

@@ -1,0 +1,14 @@
+name: Reusable Setup - Lint, Unit Test and UI test
+on:
+  workflow_call:
+env:
+  JAVA_VERSION: '17'
+  JAVA_DISTRIBUTION: 'temurin'
+  MAVEN_CACHE: 'gradle'
+  NODE_VERSION: '20'
+  MAIN_PROJECT_MODULE: 'composeApp'
+  PLAYSTORE_NAME: 'App Mock'
+
+jobs:
+  call-workflow:
+    uses: LaPockett/Multiplatform/.github/workflows/main.yml@master
