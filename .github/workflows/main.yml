@@ -50,3 +50,10 @@ jobs:
           profile: Nexus 6
           script: |
             ./gradlew connectedAndroidTest --stacktrace
+
+  call-build-apk:
+    needs: export-results
+    if: github.ref == 'refs/heads/master' && needs.export-results.outputs.all_tests_passed == 'true'
+    uses: ./.github/workflows/build-apk.yml
+    with:
+      all_tests_passed: ${{ needs.export-results.outputs.all_tests_passed }}
