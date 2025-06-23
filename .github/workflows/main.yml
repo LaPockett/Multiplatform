@@ -52,7 +52,7 @@ jobs:
             ./gradlew connectedAndroidTest --stacktrace
 
   build-apk:
-    needs: [lint, unit-test]
+    needs: [lint, unit-test, ui-test]
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
