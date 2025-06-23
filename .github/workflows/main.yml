@@ -51,6 +51,16 @@ jobs:
           script: |
             ./gradlew connectedAndroidTest --stacktrace
 
+  export-results:
+    needs: [lint, unit-test, ui-test]
+    runs-on: ubuntu-latest
+    outputs:
+      all_tests_passed: ${{ !contains(needs.*.result, 'failure') }}
+    steps:
+      - name: Check if all tests passed
+        run: |
+          echo ${{ !contains(needs.*.result, 'failure') }}"
+
   call-build-apk:
     needs: export-results
     if: github.ref == 'refs/heads/master' && needs.export-results.outputs.all_tests_passed == 'true'
