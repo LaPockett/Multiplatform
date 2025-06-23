@@ -1,4 +1,4 @@
-name: GitHub Actions - Appium Tests :D
+name: GitHub Actions - Appium Tests
 run-name: ${{ github.actor }} Appium Tests
 on:
   push:
@@ -13,7 +13,7 @@ env:
   APPIUM_VERSION: '2.18.0'
 
 concurrency:
-  group: ${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:

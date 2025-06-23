@@ -29,7 +29,6 @@ import com.dian.prueba.HeaderManager.WebViewHeaderManager
 import com.dian.prueba.navigation.BottomNavigationBar
 import com.dian.prueba.navigation.Screen
 import com.dian.prueba.network.APIClient
-import com.dian.prueba.utilities.generarToken
 import com.dian.prueba.ui.components.MenuDrawer
 import com.dian.prueba.ui.screens.BrandScreen
 import com.dian.prueba.ui.screens.WelcomeScreen
@@ -107,9 +106,6 @@ fun App() {
 fun AppLogin() {
     MaterialTheme {
         val logger = Logger("AppLogin")
-        // Para ver en el Logcat que se están generando los tokens
-        generarToken("access")
-        generarToken("refresh")
         val settings = Settings()
         val tokenStorage: TokenStorage = TokenStorageImpl(settings)
         val navController = rememberNavController()
