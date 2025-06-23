@@ -1,7 +1,8 @@
-name: Setup, lint, test and build apk
-run-name: ${{github.actor}} Setup - Lint - Unit Test - Build apk release/debug
+name: Setup - Lint, Unit Test and UI test
+run-name: ${{github.actor}} Setup - Lint, Unit Test and UI test
 on:
   push:
+  workflow_call:
 env:
   JAVA_VERSION: '17'
   JAVA_DISTRIBUTION: 'temurin'
@@ -50,63 +51,3 @@ jobs:
           profile: Nexus 6
           script: |
             ./gradlew connectedAndroidTest --stacktrace
-
-  build-apk:
-    needs: [lint, unit-test, ui-test]
-    runs-on: self-hosted
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Set current date as env variable
-        run: echo "date_today=$(date +'%d-%m-%Y')" >> $GITHUB_ENV
-
-      - name: Set repository name as env variable
-        run: echo "repository_name=$(echo '${{ github.repository }}' | awk -F '/' '{print $2}')" >> $GITHUB_ENV
-
-      - name: Decode key from base64
-        run: |
-          echo "${{ secrets.ANDROID_STORE_BASE64}}" | base64 -d > composeApp/key.jks
-          ls -la composeApp/
-      - name: Verify keystore (optional)
-        run: |
-          keytool -list -v -keystore composeApp/key.jks -storepass ${{ secrets.ANDROID_STORE_PASSWORD }} -alias ${{ secrets.ANDROID_KEY_ALIAS }}
-        continue-on-error: true
-      - run: find . -name "*jks"
-      - name: Change wrapper permissions
-        run: chmod +x ./gradlew
-      - name: Build apk release project ${{ env.MAIN_PROJECT_MODULE }}
-        run: ./gradlew :composeApp:assembleRelease --stacktrace
-        env:
-          ORG_GRADLE_PROJECT_storePassword: ${{ secrets.ANDROID_STORE_PASSWORD }}
-          ORG_GRADLE_PROJECT_keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          ORG_GRADLE_PROJECT_keyAlias: ${{ secrets.ANDROID_KEY_ALIAS }}
-          ORG_GRADLE_PROJECT_storeFile: composeApp/key.jks
-      - name: Build apk debug project ${{ env.MAIN_PROJECT_MODULE }}
-        run: ./gradlew :composeApp:assembleDebug --stacktrace
-        env:
-          ORG_GRADLE_PROJECT_storePassword: ${{ secrets.ANDROID_STORE_PASSWORD }}
-          ORG_GRADLE_PROJECT_keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          ORG_GRADLE_PROJECT_keyAlias: ${{ secrets.ANDROID_KEY_ALIAS }}
-          ORG_GRADLE_PROJECT_storeFile: composeApp/key.jks
-      - name: Find the APK
-        id: find_apk
-        run: |
-          APK_PATH=$(find composeApp/ -path '*/apk/release/*.apk' -o -path '*/outputs/apk/release/*.apk' | head -1)
-          echo "APK_PATH=${APK_PATH}" >> $GITHUB_OUTPUT
-          echo "Found APK at: ${APK_PATH}"
-          if [ -z "${APK_PATH}" ]; then
-            echo "APK not found!"
-            find . -name "*.apk"
-            exit 1
-          fi
-      - name: Upload APK release
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.repository_name }}  - APK Release generated
-          path: ${{steps.find_apk.outputs.APK_PATH}}
-
-      - name: Upload APK debug
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.repository_name }}  - APK Debug generated
-          path: ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/debug/
