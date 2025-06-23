@@ -42,8 +42,7 @@ fun UpdateAlertDialog(viewModel: UpdateVM = viewModel()) {
                 //viewModel.showUpdateDialog.value = false
             }, modifier = Modifier.testTag("updateButton"),
                 colors = ButtonDefaults.buttonColors(
-                    // Color crema #b7af98
-                    backgroundColor = Color(0xFFb7af98),
+                    backgroundColor = Color(0xFF626D8B),
                     contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(10.dp)) {
@@ -52,7 +51,6 @@ fun UpdateAlertDialog(viewModel: UpdateVM = viewModel()) {
         },
 
         dismissButton = {
-            // Lo dejo así para que sea visible el button ignore
             if (!updateInfo.mustUpdate) {
                 Button(onClick = {
                     /**
@@ -63,8 +61,7 @@ fun UpdateAlertDialog(viewModel: UpdateVM = viewModel()) {
                     viewModel.showUpdateDialog.value = false
                 },
                     colors = ButtonDefaults.buttonColors(
-                        // Color crema #b7af98
-                        backgroundColor = Color(0xFFb7af98),
+                        backgroundColor = Color(0xFF626D8B),
                         contentColor = Color.White
                     ),
                     shape = RoundedCornerShape(10.dp),) {
