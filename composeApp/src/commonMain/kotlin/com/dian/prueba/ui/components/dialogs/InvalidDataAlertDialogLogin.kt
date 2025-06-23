@@ -22,7 +22,7 @@ fun InvalidDataAlertDialogLogin(
                 onClick = onDismissRequest,
                 colors = ButtonDefaults.buttonColors(
                     // Color crema #b7af98
-                    backgroundColor = Color(0xFFb7af98),
+                    backgroundColor = Color(0xFF626D8B),
                     contentColor = Color.White
                 ),
                 shape = RoundedCornerShape(10.dp),

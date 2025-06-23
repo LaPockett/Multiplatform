@@ -6,9 +6,9 @@
         tools:ignore="ProtectedPermissions" />
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_logo"
+        android:icon="@mipmap/ic_amazon"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_logo_round"
+        android:roundIcon="@mipmap/ic_amazon_round"
         android:supportsRtl="true"
         android:windowSoftInputMode = "adjustResize"
         android:theme="@android:style/Theme.Material.Light.NoActionBar">

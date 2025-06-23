@@ -38,7 +38,7 @@ import com.dian.prueba.utilities.UpdateStorageImpl
 import com.dian.prueba.utilities.Resultado
 import com.russhwolf.settings.Settings
 import multiplatform.composeapp.generated.resources.Res
-import multiplatform.composeapp.generated.resources.logo
+import multiplatform.composeapp.generated.resources.amazon_logo
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
@@ -83,8 +83,8 @@ fun LoginScreen(navController: NavHostController){
                 ){
                     // En vez de solo poner 'R', se pone 'Res'
                     Image(
-                        painter = painterResource(Res.drawable.logo),
-                        contentDescription = "Logo",
+                        painter = painterResource(Res.drawable.amazon_logo),
+                        contentDescription = "Logo de Amazon",
                         modifier = Modifier.size(100.dp).aspectRatio(1f)
                             .clip(MaterialTheme.shapes.medium).fillMaxWidth()
                     )
@@ -96,8 +96,7 @@ fun LoginScreen(navController: NavHostController){
                         onValueChange = {email = it},
                         label = { Text("Email") },
                         colors = OutlinedTextFieldDefaults.colors(
-                            // Color crema más claro #f7f4f0
-                            unfocusedBorderColor = Color(0xFFb7af98),
+                            unfocusedBorderColor = Color(0xFF626D8B),
                             focusedBorderColor = Color(0xFFf7f4f0)
                         )
                     )
@@ -110,7 +109,7 @@ fun LoginScreen(navController: NavHostController){
                         label = {Text("Contraseña")},
                         colors = OutlinedTextFieldDefaults.colors(
                             // Color crema más claro #f7f4f0
-                            unfocusedBorderColor = Color(0xFFb7af98),
+                            unfocusedBorderColor = Color(0xFF626D8B),
                             focusedBorderColor = Color(0xFFf7f4f0)
                         ),
                         visualTransformation = PasswordVisualTransformation()
@@ -142,7 +141,6 @@ fun LoginScreen(navController: NavHostController){
                                     loginViewModel.tokens.value?.refreshToken?.let { tokens ->
                                         WebViewHeaderManager.updateRefreshToken(tokens)
                                     }
-                                    //TokenStorage.saveTokens(loginViewModel.tokens.value!!)
 
                                     logger.debug(WebViewHeaderManager.getHeaders().toString())
                                     logger.warn("El usuario ha hecho click en login")
@@ -156,8 +154,7 @@ fun LoginScreen(navController: NavHostController){
                         },
                         enabled = true,
                         colors = ButtonDefaults.buttonColors(
-                            // Color crema #b7af98
-                            backgroundColor = Color(0xFFb7af98),
+                            backgroundColor = Color(0xFF626D8B),
                             contentColor = Color.White
                         ),
                         shape = RoundedCornerShape(10.dp),
