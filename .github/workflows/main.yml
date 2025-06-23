@@ -23,14 +23,14 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
-      - run: ./gradlew lint
+      - run: ./gradlew lint --stacktrace
 
   unit-test:
     needs: call-workflow
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
-      - run: ./gradlew testdebugUnitTest
+      - run: ./gradlew testdebugUnitTest --stacktrace
 
   ui-test:
     needs: call-workflow
@@ -50,7 +50,7 @@ jobs:
           profile: Nexus 6
           script: |
             adb install /home/usuario/Descargas/upload/composeApp-release.apk
-            ./gradlew connectedAndroidTest
+            ./gradlew connectedAndroidTest --stacktrace
 
   build-apk:
     needs: [lint, unit-test]
@@ -76,14 +76,14 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
       - name: Build apk release project ${{ env.MAIN_PROJECT_MODULE }}
-        run: ./gradlew :composeApp:assembleRelease
+        run: ./gradlew :composeApp:assembleRelease --stacktrace
         env:
           ORG_GRADLE_PROJECT_storePassword: ${{ secrets.ANDROID_STORE_PASSWORD }}
           ORG_GRADLE_PROJECT_keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
           ORG_GRADLE_PROJECT_keyAlias: ${{ secrets.ANDROID_KEY_ALIAS }}
           ORG_GRADLE_PROJECT_storeFile: composeApp/key.jks
       - name: Build apk debug project ${{ env.MAIN_PROJECT_MODULE }}
-        run: ./gradlew :composeApp:assembleDebug
+        run: ./gradlew :composeApp:assembleDebug --stacktrace
         env:
           ORG_GRADLE_PROJECT_storePassword: ${{ secrets.ANDROID_STORE_PASSWORD }}
           ORG_GRADLE_PROJECT_keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
