@@ -1,6 +1,7 @@
 package com.dian.prueba.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -75,7 +76,8 @@ fun LoginScreen(navController: NavHostController){
     ){
         composable(route = Screen.Login.route){
             Box(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.fillMaxSize()
+                    .background(Color(0xffcdcee8)),
                 contentAlignment = Alignment.Center
             ) {
                 Column (
@@ -154,7 +156,7 @@ fun LoginScreen(navController: NavHostController){
                         },
                         enabled = true,
                         colors = ButtonDefaults.buttonColors(
-                            backgroundColor = Color(0xFF626D8B),
+                            backgroundColor = Color(0xff8590ae),
                             contentColor = Color.White
                         ),
                         shape = RoundedCornerShape(10.dp),

@@ -138,7 +138,9 @@ fun AppLogin() {
  */
 
 @Composable
-fun AppNavigation(onLogout: () -> Unit) {
+fun AppNavigation(
+    onLogout: () -> Unit
+) {
     val logger = Logger("AppNavigation")
 
     val navController = rememberNavController()

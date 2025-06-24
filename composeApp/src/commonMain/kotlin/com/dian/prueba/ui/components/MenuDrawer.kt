@@ -1,7 +1,11 @@
 package com.dian.prueba.ui.components
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.*
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.DrawerValue
@@ -13,11 +17,13 @@ import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.dian.prueba.AppNavigation
 import com.dian.prueba.ui.screens.SettingsScreen
 import kotlinx.coroutines.launch
@@ -42,6 +48,19 @@ fun MenuDrawer(onLogout: () -> Unit) {
             topBar = {
                 TopAppBar(
                     title = { Text("Menu Drawer") },
+                    windowInsets =  WindowInsets(
+                        top = 0.dp,
+                        bottom = 0.dp,
+                    ),
+                    modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing),
+                    colors = TopAppBarColors(
+                        containerColor = Color.Transparent,
+                        scrolledContainerColor = Color.White,
+                        navigationIconContentColor = Color.Black,
+                        titleContentColor = Color.Black,
+                        actionIconContentColor = Color.Black,
+                        subtitleContentColor = Color.Black
+                    ),
                     navigationIcon = {
                         IconButton(onClick = {
                             scope.launch {
@@ -55,11 +74,12 @@ fun MenuDrawer(onLogout: () -> Unit) {
                     }
                 )
             },
-        ) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                AppNavigation(onLogout = onLogout)
+            content = {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    AppNavigation(onLogout = onLogout)
+                }
             }
-        }
+        )
     }
 }
 

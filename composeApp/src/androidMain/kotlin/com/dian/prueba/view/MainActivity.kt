@@ -18,9 +18,7 @@ import com.dian.prueba.AppLogin
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            //enableEdgeToEdge()
             val darkColor = Color.Transparent
             val lightColor = Color.Transparent
             val isDarkTheme = isSystemInDarkTheme()
@@ -43,10 +41,7 @@ class MainActivity : ComponentActivity() {
                 window.navigationBarColor = Color.Transparent.toArgb()
                 WindowCompat.getInsetsController(window,view).isAppearanceLightNavigationBars = !isDarkTheme
             }
-            //App()
-            //AppNavigation()
             AppLogin()
-            //MenuDrawer()
         }
     }
 }
@@ -54,8 +49,5 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun AppAndroidPreview() {
-    //AppNavigation()
     AppLogin()
-    //MenuDrawer()
-    //App()
 }
