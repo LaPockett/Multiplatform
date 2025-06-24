@@ -16,8 +16,7 @@ concurrency:
 
 jobs:
   build-apk:
-    if: |
-      inputs.all_tests_passed) && github.ref == 'refs/heads/master'
+    if: inputs.all_tests_passed && github.ref == 'refs/heads/master'
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4.2.2
