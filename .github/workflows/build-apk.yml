@@ -1,11 +1,11 @@
 name: Build APK release/debug
 run-name: ${{github.actor}} Build apk release/debug
 on:
-  push:
-    branches: [master]
-  repository_dispatch:
-    types: [my-tests]
-
+  workflow_call:
+    inputs:
+      all_tests_passed:
+        type: boolean
+        required: true
 env:
   MAIN_PROJECT_MODULE: 'composeApp'
   PLAYSTORE_NAME: 'App Mock'
@@ -17,8 +17,7 @@ concurrency:
 jobs:
   build-apk:
     if: |
-      (github.event_name == 'workflow_call' && inputs.all_tests_passed) ||
-      github.ref == 'refs/heads/master'
+      inputs.all_tests_passed) && github.ref == 'refs/heads/master'
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4.2.2
