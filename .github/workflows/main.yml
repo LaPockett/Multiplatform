@@ -36,6 +36,11 @@ jobs:
     needs: call-workflow
     runs-on: self-hosted
     steps:
+      - name: Clean emulator lock files
+        run: |
+         rm -f /home/usuario/.android/avd/*.avd/*.lock
+         rm -f /home/usuario/.android/avd/*.avd/hardware-qemu.ini.lock
+
       - uses: actions/checkout@v4
       - name: Enable KVM group perms
         run: |
@@ -48,6 +53,8 @@ jobs:
         with:
           api-level: 29
           profile: Nexus 6
+          emulator-options: -no-audio -no-snapshot -no-window -gpu swiftshader_indirect
+          arch: x86_64
           script: |
             ./gradlew connectedAndroidTest --stacktrace
 
