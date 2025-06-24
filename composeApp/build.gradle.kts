@@ -125,7 +125,7 @@ kotlin {
 
 android {
     namespace = "com.dian.prueba"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
+    compileSdk = 35
     signingConfigs {
         create("release") {
             storeFile = file("key.jks")
