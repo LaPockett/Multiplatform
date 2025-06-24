@@ -28,10 +28,37 @@ jobs:
       - uses: actions/checkout@v4.2.2
       - run: ./gradlew testdebugUnitTest --stacktrace
 
-  # ui-test:
+  ui-test:
+    needs: call-workflow
+    runs-on: self-hosted
+    steps:
+      - name: Clean emulator lock files
+        run: |
+          rm -f /home/usuario/.android/avd/*.avd/*.lock
+          rm -f /home/usuario/.android/avd/*.avd/hardware-qemu.ini.lock
+          adb kill-server
+          adb start-server
+
+      - uses: actions/checkout@v4
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Android Emulator Runner with Tests
+        uses: ReactiveCircus/android-emulator-runner@v2.34.0
+        with:
+          api-level: 29
+          target: default
+          profile: Nexus 4
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          script: |
+            adb devices -l
+            ./gradlew connectedAndroidTest --stacktrace
 
   build-apk:
-    needs: [unit-test, lint]
+    needs: [unit-test, lint, ui-test]
     if: success() && github.ref == 'refs/heads/master'
     runs-on: self-hosted
     steps:
@@ -47,13 +74,16 @@ jobs:
         run: |
           echo "${{ secrets.ANDROID_STORE_BASE64}}" | base64 -d > composeApp/key.jks
           ls -la composeApp/
+
       - name: Verify keystore (optional)
         run: |
           keytool -list -v -keystore composeApp/key.jks -storepass ${{ secrets.ANDROID_STORE_PASSWORD }} -alias ${{ secrets.ANDROID_KEY_ALIAS }}
         continue-on-error: true
       - run: find . -name "*jks"
+
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
+
       - name: Build apk release project ${{ env.MAIN_PROJECT_MODULE }}
         run: ./gradlew :composeApp:assembleRelease --stacktrace
         env:
@@ -61,6 +91,7 @@ jobs:
           ORG_GRADLE_PROJECT_keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
           ORG_GRADLE_PROJECT_keyAlias: ${{ secrets.ANDROID_KEY_ALIAS }}
           ORG_GRADLE_PROJECT_storeFile: composeApp/key.jks
+
       - name: Build apk debug project ${{ env.MAIN_PROJECT_MODULE }}
         run: ./gradlew :composeApp:assembleDebug --stacktrace
         env:
@@ -68,6 +99,7 @@ jobs:
           ORG_GRADLE_PROJECT_keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
           ORG_GRADLE_PROJECT_keyAlias: ${{ secrets.ANDROID_KEY_ALIAS }}
           ORG_GRADLE_PROJECT_storeFile: composeApp/key.jks
+
       - name: Find the APK
         id: find_apk
         run: |
@@ -79,6 +111,7 @@ jobs:
             find . -name "*.apk"
             exit 1
           fi
+
       - name: Upload APK release
         uses: actions/upload-artifact@v4
         with:
