@@ -31,7 +31,7 @@ jobs:
   # ui-test:
 
   export-results:
-    needs: [lint, unit-test]
+    needs: [ lint, unit-test ]
     runs-on: self-hosted
     outputs:
       all_tests_passed: ${{ !contains(needs.*.result, 'failure') }}
@@ -42,7 +42,10 @@ jobs:
 
   call-build-apk:
     needs: export-results
-    if: github.ref == 'refs/heads/master' && needs.export-results.outputs.all_tests_passed == 'true'
-    uses: LaPockett/Multiplatform/.github/workflows/build-apk.yml@master
-    with:
-      all_tests_passed: ${{ needs.export-results.outputs.all_tests_passed }}
+    runs-on: self-hosted
+    steps:
+      - name: Repository Dispatch
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          event-type: my-tests
+

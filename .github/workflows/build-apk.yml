@@ -1,11 +1,11 @@
 name: Build APK release/debug
 run-name: ${{github.actor}} Build apk release/debug
 on:
-  workflow_call:
-    inputs:
-      all_tests_passed:
-        type: boolean
-        required: true
+  push:
+    branches: [master]
+  repository_dispatch:
+    types: [my-tests]
+
 env:
   MAIN_PROJECT_MODULE: 'composeApp'
   PLAYSTORE_NAME: 'App Mock'
