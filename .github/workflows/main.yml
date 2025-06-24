@@ -3,10 +3,6 @@ run-name: ${{github.actor}} Setup - Lint, Unit Test and UI test
 on:
   push:
 env:
-  JAVA_VERSION: '17'
-  JAVA_DISTRIBUTION: 'temurin'
-  MAVEN_CACHE: 'gradle'
-  NODE_VERSION: '20'
   MAIN_PROJECT_MODULE: 'composeApp'
   PLAYSTORE_NAME: 'App Mock'
 
@@ -42,7 +38,7 @@ jobs:
     steps:
       - name: Check if all tests passed
         run: |
-          echo ${{ !contains(needs.*.result, 'failure') }}"
+          echo ${{ !contains(needs.*.result, 'failure') }}
 
   call-build-apk:
     needs: export-results

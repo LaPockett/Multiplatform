@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [master]
 env:
-  JAVA_VERSION: '17'
+  JAVA_VERSION: '21'
   JAVA_DISTRIBUTION: 'temurin'
   MAVEN_CACHE: 'gradle'
   NODE_VERSION: '22.14.0'
