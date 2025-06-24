@@ -31,6 +31,7 @@ jobs:
   # ui-test:
 
   build-apk:
+    needs: [unit-test, lint]
     if: success() && github.ref == 'refs/heads/master'
     runs-on: self-hosted
     steps:
