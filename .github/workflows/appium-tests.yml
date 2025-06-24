@@ -52,8 +52,6 @@ jobs:
         run: |
           rm -f /home/usuario/.android/avd/*.avd/*.lock
           rm -f /home/usuario/.android/avd/*.avd/hardware-qemu.ini.lock
-          adb kill-server
-          adb start-server
 
       - name: Enable KVM group perms
         run: |
@@ -82,12 +80,12 @@ jobs:
         uses: ReactiveCircus/android-emulator-runner@v2.34.0
         with:
           api-level: 29
-          emulator-build: 7425822
-          #target: google_apis
-          profile: Nexus 6
-          #arch: x86_64
+          target: default
+          profile: Nexus 4
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: |
+            adb devices -l
+            adb wait-for-device
             adb install /home/usuario/Descargas/upload/composeApp-release.apk
             npm run test-all
             echo "Closing connection with emulator-5554 Test"
