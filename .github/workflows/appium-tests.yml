@@ -82,10 +82,10 @@ jobs:
         uses: ReactiveCircus/android-emulator-runner@v2.34.0
         with:
           api-level: 29
-          #emulator-build: 7425822
+          emulator-build: 7425822
           #target: google_apis
           profile: Nexus 6
-          arch: x86_64
+          #arch: x86_64
           emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: |
             adb install /home/usuario/Descargas/upload/composeApp-release.apk
