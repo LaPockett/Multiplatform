@@ -54,10 +54,14 @@ jobs:
         uses: ReactiveCircus/android-emulator-runner@v2.34.0
         with:
           api-level: 29
+
           profile: Nexus 6
-          emulator-options: -no-audio -no-snapshot -no-window -gpu swiftshader_indirect
+          emulator-build: 7425822
+          emulator-options: -no-snapshot-save -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
+          disable-animations: true
           arch: x86_64
           script: |
+            adb devices
             ./gradlew connectedAndroidTest --stacktrace
 
   export-results:
