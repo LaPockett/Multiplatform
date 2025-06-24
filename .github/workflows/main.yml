@@ -18,14 +18,14 @@ jobs:
     needs: call-workflow
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.2.2
       - run: ./gradlew lint --stacktrace
 
   unit-test:
     needs: call-workflow
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.2.2
       - run: ./gradlew testdebugUnitTest --stacktrace
 
   # ui-test:
