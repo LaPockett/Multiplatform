@@ -8,7 +8,7 @@ on:
 env:
   JAVA_VERSION: '21'
   JAVA_DISTRIBUTION: 'temurin'
-  MAVEN_CACHE: 'gradle'
+  GRADLE_CACHE: ''
   NODE_VERSION: '22.14.0'
   APPIUM_VERSION: '2.18.0'
 
@@ -28,7 +28,7 @@ jobs:
         with:
           distribution: ${{ env.JAVA_DISTRIBUTION }}
           java-version: ${{ env.JAVA_VERSION }}
-          cache: ${{ env.MAVEN_CACHE }}
+          cache: ${{ env.GRADLE_CACHE }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4.4.0
