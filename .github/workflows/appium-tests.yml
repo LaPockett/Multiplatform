@@ -48,6 +48,13 @@ jobs:
       - name: Checkout Project
         uses: actions/checkout@v4
 
+      - name: Clean emulator lock files
+        run: |
+          rm -f /home/usuario/.android/avd/*.avd/*.lock
+          rm -f /home/usuario/.android/avd/*.avd/hardware-qemu.ini.lock
+          adb kill-server
+          adb start-server
+
       - name: Enable KVM group perms
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules

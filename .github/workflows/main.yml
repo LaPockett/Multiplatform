@@ -38,8 +38,10 @@ jobs:
     steps:
       - name: Clean emulator lock files
         run: |
-         rm -f /home/usuario/.android/avd/*.avd/*.lock
-         rm -f /home/usuario/.android/avd/*.avd/hardware-qemu.ini.lock
+          rm -f /home/usuario/.android/avd/*.avd/*.lock
+          rm -f /home/usuario/.android/avd/*.avd/hardware-qemu.ini.lock
+          adb kill-server
+          adb start-server
 
       - uses: actions/checkout@v4
       - name: Enable KVM group perms
