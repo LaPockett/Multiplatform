@@ -5,6 +5,7 @@ on:
 env:
   MAIN_PROJECT_MODULE: 'composeApp'
   PLAYSTORE_NAME: 'App Mock'
+  APPIUM_VERSION: '2.18.0'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -123,3 +124,11 @@ jobs:
         with:
           name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.repository_name }}  - APK Debug generated
           path: ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/debug/
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.repository_name }}  - APK Release generated
+          path:  /home/usuario/releases-apk-for-appium
+      - name: Display structure of downloaded files
+        run: ls -R  /home/usuario/releases-apk-for-appium
