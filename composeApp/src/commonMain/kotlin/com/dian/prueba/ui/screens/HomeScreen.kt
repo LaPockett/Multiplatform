@@ -7,7 +7,6 @@ import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Tab
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CenterFocusStrong
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.SearchBar
@@ -117,7 +116,7 @@ fun SearchBarAmazon(
                             onQueryChange("")
                         }
                     },
-                    imageVector = Icons.Default.CenterFocusStrong,
+                    imageVector = Icons.Default.Search,
                     contentDescription = "Scan Icon"
                 )
             },
