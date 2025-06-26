@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_amazon_round"
         android:supportsRtl="true"
         android:windowSoftInputMode = "adjustResize"
-        android:theme="@android:style/Theme.Material.Light.NoActionBar">
+        android:theme="@style/Theme.App.Splash"
+        >
         <activity
             android:exported="true"
             android:configChanges="orientation|screenSize|screenLayout|keyboardHidden|mnc|colorMode|density|fontScale|fontWeightAdjustment|keyboard|layoutDirection|locale|mcc|navigation|smallestScreenSize|touchscreen|uiMode"

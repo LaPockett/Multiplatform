@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.App.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">
+            #cdcee8
+        </item>
+        <item name="windowSplashScreenAnimatedIcon">
+            @drawable/amazon_color
+        </item>
+        <item name="postSplashScreenTheme">
+            @android:style/Theme.Material.NoActionBar
+        </item>
+        <item name="windowSplashScreenAnimationDuration">
+            100
+        </item>
+    </style>
+</resources>
