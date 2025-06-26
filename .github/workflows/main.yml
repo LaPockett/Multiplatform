@@ -129,9 +129,9 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.repository_name }}  - APK Release generated
-          path:  ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/release/
+          path:  /home/usuario/releases-apk-for-appium
       - name: Display structure of downloaded files
-        run: ls -R  ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/release/
+        run: ls -R  /home/usuario/releases-apk-for-appium
 
   appium:
     needs: [build-apk]
