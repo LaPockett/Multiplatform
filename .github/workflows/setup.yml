@@ -30,4 +30,3 @@ jobs:
           source ~/.usuario
           npm install -g bats
           bats -v
- }}
