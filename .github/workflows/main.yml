@@ -125,6 +125,14 @@ jobs:
           name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.repository_name }}  - APK Debug generated
           path: ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/debug/
 
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: my-artifact
+          path:  ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/release/composeApp-release.apk
+      - name: Display structure of downloaded files
+        run: ls -R  ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/release/composeApp-release.apk
+
   appium:
     needs: [build-apk]
     runs-on: self-hosted
