@@ -11,6 +11,7 @@ env:
   GRADLE_CACHE: ''
   NODE_VERSION: '22.14.0'
   APPIUM_VERSION: '2.18.0'
+  MAIN_PROJECT_MODULE: 'composeApp'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -86,7 +87,7 @@ jobs:
           script: |
             adb devices -l
             adb wait-for-device
-            adb install /home/usuario/Descargas/upload/composeApp-release.apk
+            adb install ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/release/composeApp-release.apk
             npm run test-all
             echo "Closing connection with emulator-5554 Test"
             adb -s emulator-5554 emu kill || true
