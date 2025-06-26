@@ -77,18 +77,6 @@ jobs:
           appium --version
           appium & sleep 5
 
-      - name: Find the APK
-        id: find_apk
-        run: |
-          APK_PATH=$(find composeApp/ -path '*/apk/release/*.apk' -o -path '*/outputs/apk/release/*.apk' | head -1)
-          echo "APK_PATH=${APK_PATH}" >> $GITHUB_OUTPUT
-          echo "Found APK at: ${APK_PATH}"
-          if [ -z "${APK_PATH}" ]; then
-            echo "APK not found!"
-            find . -name "*.apk"
-            exit 1
-          fi
-
       - name: Android Emulator Runner with Tests
         uses: ReactiveCircus/android-emulator-runner@v2.34.0
         with:
@@ -99,7 +87,7 @@ jobs:
           script: |
             adb devices -l
             adb wait-for-device
-            adb install ${{steps.find_apk.outputs.APK_PATH}}
+            adb install ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/release/composeApp-release.apk
             npm run test-all
             echo "Closing connection with emulator-5554 Test"
             adb -s emulator-5554 emu kill || true
