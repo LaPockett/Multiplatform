@@ -91,7 +91,7 @@ kotlin {
             implementation ("androidx.compose.material:material:1.8.0")
             api("io.github.kevinnzou:compose-webview-multiplatform:1.9.40")
             implementation(libs.play.services.appsearch)
-            implementation ("androidx.compose.material:material-icons-extended:1.7.8")
+            //implementation ("androidx.compose.material:material-icons-extended:1.7.8")
             // Ktor
             // https://mvnrepository.com/artifact/io.ktor/ktor-client-core
             implementation("io.ktor:ktor-client-core:3.1.2")
@@ -111,6 +111,8 @@ kotlin {
             implementation("io.jsonwebtoken:jjwt-orgjson:0.12.6")
             implementation(libs.coil.compose)
             implementation(libs.coil.network.ktor)
+            implementation("org.jetbrains.compose.material:material-icons-core:1.7.3") // Icons.Default.Menu
+
         }
         desktopMain.dependencies {
 
