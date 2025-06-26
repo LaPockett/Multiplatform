@@ -178,7 +178,7 @@ jobs:
           script: |
             adb devices -l
             adb wait-for-device
-            adb install /home/usuario/releases-apk-for-appium/composeApp/build/outputs/apk/release/composeApp-release.apk
+            adb install /home/usuario/releases-apk-for-appium/composeApp-release.apk
             npm run test-all
             echo "Closing connection with emulator-5554 Test"
             adb -s emulator-5554 emu kill || true
