@@ -6,44 +6,18 @@ on:
   pull_request:
     branches: [master]
 env:
-  JAVA_VERSION: '21'
-  JAVA_DISTRIBUTION: 'temurin'
-  GRADLE_CACHE: ''
-  NODE_VERSION: '22.14.0'
   APPIUM_VERSION: '2.18.0'
-  MAIN_PROJECT_MODULE: 'composeApp'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  setup:
-    runs-on: self-hosted
-    steps:
-      - name: Checkout Project
-        uses: actions/checkout@v4.2.2
-
-      - name: Set up JDK
-        uses: actions/setup-java@v4.7.1
-        with:
-          distribution: ${{ env.JAVA_DISTRIBUTION }}
-          java-version: ${{ env.JAVA_VERSION }}
-          cache: ${{ env.GRADLE_CACHE }}
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.4.0
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - run: |
-          npm config set prefix '~/.npm-global'
-          echo 'export PATH=~/.npm-global/bin:$PATH' >> ~/.usuario
-          source ~/.usuario
-          npm install -g bats
-          bats -v
+  call-workflow:
+    uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
 
   appium:
-    needs: setup
+    needs: call-workflow
     runs-on: self-hosted
     steps:
       - name: Checkout Project
@@ -87,14 +61,7 @@ jobs:
           script: |
             adb devices -l
             adb wait-for-device
-            adb install ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/release/composeApp-release.apk
+            adb install /home/usuario/releases-apk-for-appium/composeApp-release.apk
             npm run test-all
             echo "Closing connection with emulator-5554 Test"
             adb -s emulator-5554 emu kill || true
-
-      - name: Upload Test Results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: composeApp/
