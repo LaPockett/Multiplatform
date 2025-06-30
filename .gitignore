@@ -3,7 +3,6 @@
 *.p12
 *.jks
 node_modules
-.husky
 .releaserc
 composeApp/src/commonMain/kotlin/com/dian/prueba/utilities/TopAppBarScreen.kt
 screenshot_error.png
