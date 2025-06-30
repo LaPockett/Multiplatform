@@ -1,10 +1,11 @@
 {
   "name": "multiplatformlogo",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "appiumjs",
   "main": "index.js",
   "scripts": {
-    "test-all": "node appium/testAll.js"
+    "test-all": "node appium/testAll.js",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,12 @@
   },
   "homepage": "https://github.com/LaPockett/Multiplatform#readme",
   "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "husky": "^9.1.7",
+    "semantic-release": "^24.2.6",
     "webdriverio": "^9.15.0"
   },
   "dependencies": {
