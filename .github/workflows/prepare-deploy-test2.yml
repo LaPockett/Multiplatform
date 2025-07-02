@@ -26,6 +26,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          rm -rf node_modules
           npm ci
           npm audit
           npm audit fix
