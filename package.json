@@ -7,17 +7,7 @@
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
       "@semantic-release/changelog",
-      [
-        "@semantic-release/github",
-        {
-          "assets": [
-            {
-              "path": "dian.zip",
-              "label": "Distribution"
-            }
-          ]
-        }
-      ]
+      "@semantic-release/github"
     ]
   },
   "name": "multiplatformlogo",
