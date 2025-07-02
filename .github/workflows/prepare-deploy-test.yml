@@ -1,3 +1,4 @@
+# Lo dejo para futuros proyectos personales míos donde sí me interese publicar los paquetes en npm
 name: Prepare deploy test
 run-name: ${{ github.actor }} Prepare deploy test
 on:

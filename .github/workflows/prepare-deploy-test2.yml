@@ -4,8 +4,7 @@ on:
   pull_request:
     types: [closed]
     branches: [master]
-  push:
-    branches: [master]
+
 jobs:
   call-workflow:
     uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
