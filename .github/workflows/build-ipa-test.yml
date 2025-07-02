@@ -1,0 +1,41 @@
+name: Build IPA test
+run-name: ${{github.actor}} Build IPA test
+on:
+  push:
+env:
+  MAIN_PROJECT_MODULE: 'composeApp'
+  PLAYSTORE_NAME: 'App Mock'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  call-workflow:
+    uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
+
+  build-ipa-ios:
+    needs: call-workflow
+
+    if: success() && github.ref == 'refs/heads/master'
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - name: Build iOS App
+        uses: yukiarrr/ios-build-action@v1.9.1
+        with:
+          project-path: iosApp/iosApp.xcodeproj
+          #p12-base64: ${{ secrets.IOS_P12_BASE64 }}
+          #mobileprovision-base64: ${{ secrets.PROD_IOS_BUILD_PROVISION_PROFILE_BASE64 }}
+          code-signing-identity: iPhone Distribution
+          #team-id: ${{ secrets.IOS_TEAM_ID }}
+          #certificate-password: ${{ secrets.IOS_CERTIFICATE_PASSWORD }}
+          export-options: iosApp/exportOptionsRelease.plist
+          workspace-path: iosApp/iosApp.xcworkspace
+          export-method: app-store
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: IOS IPA
+          path: output.ipa
