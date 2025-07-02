@@ -1,5 +1,5 @@
-name: Prepare deploy test 2
-run-name: ${{ github.actor }} Prepare deploy test 2
+name: Debug Semantic Versioning
+run-name: ${{ github.actor }} Debug Semantic Versioning
 on:
   pull_request:
     types: [closed]
@@ -26,7 +26,6 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          rm -rf node_modules
           npm ci
           npm audit
           npm audit fix
