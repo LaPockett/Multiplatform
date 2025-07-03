@@ -33,8 +33,6 @@ jobs:
 
       - name: Install ruby gems
         run: bundle install
-      - name: Build iOS App
-        run: bundle exec fastlane ios build_ios
 
       - name: Build iOS App
         uses: HekmatullahAmin/mifos-x-actionhub-build-ios-app@enhance-ios-build-action
