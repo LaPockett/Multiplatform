@@ -1,22 +1,23 @@
 name: Build DEBUG IPA
 run-name: ${{github.actor}} Build DEBUG IPA
 on:
-  push:
-    branches: [master]
+  workflow_dispatch:
+    inputs:
+      build_type:
+        type: choice
+        options:
+          - Release
+          - Debug
+        default: Debug
+        description: Release Type
+
 env:
   MAIN_PROJECT_MODULE: 'composeApp'
   PLAYSTORE_NAME: 'App Mock'
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
-  call-workflow-setup:
-    uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
 
   build_debug_ios_app:
-    needs: call-workflow-setup
     name: Build iOS App
     if: ${{ inputs.build_type == 'Debug' }}
     runs-on: macos-latest
