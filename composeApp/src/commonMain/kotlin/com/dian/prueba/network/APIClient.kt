@@ -1,14 +1,18 @@
 package com.dian.prueba.network
 
+import com.dian.prueba.createHttpClient
 import com.dian.prueba.model.Login
 import com.dian.prueba.model.UpdateInfo
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.utilities.UpdateStorage
-import io.ktor.client.*
+import io.ktor.client.HttpClient
 import io.ktor.client.call.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
 interface ApiService {
@@ -24,25 +28,19 @@ class APIClient (
     val loginToken: String? get() {
         return _loginToken
     }
-
-    private val client = HttpClient {
-        install(ContentNegotiation) {
-            json(Json {
-                ignoreUnknownKeys = true
-                isLenient = true
-            })
-        }
-    }
+    private val client = createHttpClient()
 
     override suspend fun requestLogin(id: String): String? {
         logger.warn("Iniciando login...")
 
         return try {
-            val result: Login = client.get("https://jsonplaceholder.typicode.com/users/$id").body()
-            logger.debug(result.toString())
-            _loginToken = result.email
-            logger.debug(_loginToken.toString())
-            _loginToken
+            withContext(Dispatchers.IO) {
+                val result: Login = client.get("https://jsonplaceholder.typicode.com/users/$id").body()
+                logger.debug(result.toString())
+                _loginToken = result.email
+                logger.debug(_loginToken.toString())
+                _loginToken
+            }
         } catch (e: Exception) {
             logger.error(e)
             null

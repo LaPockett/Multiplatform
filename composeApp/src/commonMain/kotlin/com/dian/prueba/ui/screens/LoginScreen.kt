@@ -43,154 +43,156 @@ import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun LoginScreen(navController: NavHostController){
-    val currentBackStackEntry = navController.currentBackStackEntryAsState()
+    MaterialTheme{
+        val currentBackStackEntry = navController.currentBackStackEntryAsState()
 
-    val loginViewModel = remember {
-        LoginVM(
-            loginRepository = LoginRepositoryImpl(
-                apiService = APIClient(
-                    updateStorage = UpdateStorageImpl(
-                        settings = Settings()
+        val loginViewModel = remember {
+            LoginVM(
+                loginRepository = LoginRepositoryImpl(
+                    apiService = APIClient(
+                        updateStorage = UpdateStorageImpl(
+                            settings = Settings()
+                        )
                     )
+                ),
+                tokenStorage = TokenStorageImpl(
+                    settings = Settings()
                 )
-            ),
-            tokenStorage = TokenStorageImpl(
-                settings = Settings()
             )
-        )
-    }
-    // No se hará nada con el email del usuario
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    val logger = Logger("LoginScreen")
-    var showDialog by remember {mutableStateOf(false)}
-    var showDialogInvalidData by remember {mutableStateOf(false)}
-    LaunchedEffect(currentBackStackEntry.value) {
-        email = ""
-        password = ""
-    }
-    NavHost(
-        navController = navController,
-        startDestination = Screen.Login.route
-    ){
-        composable(route = Screen.Login.route){
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                Column (
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ){
-                    // En vez de solo poner 'R', se pone 'Res'
-                    Image(
-                        painter = painterResource(Res.drawable.amazon_logo),
-                        contentDescription = "Logo de Amazon",
-                        modifier = Modifier.size(100.dp).aspectRatio(1f)
-                            .clip(MaterialTheme.shapes.medium).fillMaxWidth()
-                    )
-                    Spacer(
-                        modifier = Modifier.padding(16.dp)
-                    )
-                    OutlinedTextField(
-                        value = email,
-                        onValueChange = {email = it},
-                        label = { Text("Email") },
-                        colors = OutlinedTextFieldDefaults.colors(
-                            unfocusedBorderColor = Color(0xFF626D8B),
-                            focusedBorderColor = Color(0xFFf7f4f0)
-                        )
-                    )
-                    Spacer(
-                        modifier = Modifier.padding(16.dp)
-                    )
-                    OutlinedTextField(
-                        value = password,
-                        onValueChange = {password = it},
-                        label = {Text("Contraseña")},
-                        colors = OutlinedTextFieldDefaults.colors(
-                            // Color crema más claro #f7f4f0
-                            unfocusedBorderColor = Color(0xFF626D8B),
-                            focusedBorderColor = Color(0xFFf7f4f0)
-                        ),
-                        visualTransformation = PasswordVisualTransformation()
-                    )
-                    Spacer(
-                        modifier = Modifier.padding(16.dp)
-                    )
-                    Button(
-                        onClick = {
-
-                            /**
-                             * Ahora lo que hago es que desde el viewModel se genere el accessToken que son
-                             * 10 caracteres de letras aleatorias y se lo paso al WebViewHeaderManager
-                             * Esto está mal pero la LoginCookie es la contraseña del usuario
-                             * EL refresh_token es el email del usuario
-                             * Cada vez que se haga login (desde el button) se va a generar un nuevo accessToken
-                            */
-                            when (LoginValidator.validateLogin(email, password)) {
-                                Resultado.Valid -> {
-                                    logger.warn("WARN - El usuario ha hecho click en login")
-
-                                    loginViewModel.loadSavedTokens() //!!
-
-                                    loginViewModel.loginUser(5) // Lucio_Hettinger@annie.ca
-                                    loginViewModel.tokens.value?.accessToken?.let { tokens ->
-                                        WebViewHeaderManager.updateAccessToken(tokens)
-                                        WebViewHeaderManager.updateLoginCookie(password)
-                                    }
-                                    loginViewModel.tokens.value?.refreshToken?.let { tokens ->
-                                        WebViewHeaderManager.updateRefreshToken(tokens)
-                                    }
-
-                                    logger.debug(WebViewHeaderManager.getHeaders().toString())
-                                    logger.warn("El usuario ha hecho click en login")
-                                    navController.navigate("MenuDrawer") {
-                                        popUpTo("login") { inclusive = true }
-                                    }
-                                }
-                                Resultado.Empty -> showDialog = true
-                                Resultado.Invalid -> showDialogInvalidData = true
-                            }
-                        },
-                        enabled = true,
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = Color(0xFF626D8B),
-                            contentColor = Color.White
-                        ),
-                        shape = RoundedCornerShape(10.dp),
-
-                    ){
-                        Icon(
-                            Icons.Default.Person,
-                            contentDescription = "Login",
-                            modifier = Modifier.padding(end=6.dp)
-                        )
-                        Text("Iniciar sesión")
-                    }
-                    Spacer(
-                        modifier = Modifier.padding(16.dp)
-                    )
-                }
-            }
-            if (showDialog){
-                showAlertDialogLogin(
-                    texto = "Debes introducir un email y una contraseña",
-                    onDismissRequest = {showDialog = false}
-                )
-            }
-            if (showDialogInvalidData){
-                InvalidDataAlertDialogLogin(
-                    onDismissRequest = {showDialogInvalidData = false}
-                )
-            }
-
         }
-        composable(route = "MenuDrawer"){
-            MenuDrawer(onLogout = {
-                navController.navigate("login"){
-                    popUpTo(0){inclusive = true}
+        // No se hará nada con el email del usuario
+        var email by remember { mutableStateOf("") }
+        var password by remember { mutableStateOf("") }
+        val logger = Logger("LoginScreen")
+        var showDialog by remember {mutableStateOf(false)}
+        var showDialogInvalidData by remember {mutableStateOf(false)}
+        LaunchedEffect(currentBackStackEntry.value) {
+            email = ""
+            password = ""
+        }
+        NavHost(
+            navController = navController,
+            startDestination = Screen.Login.route
+        ){
+            composable(route = Screen.Login.route){
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Column (
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ){
+                        // En vez de solo poner 'R', se pone 'Res'
+                        Image(
+                            painter = painterResource(Res.drawable.amazon_logo),
+                            contentDescription = "Logo de Amazon",
+                            modifier = Modifier.size(100.dp).aspectRatio(1f)
+                                .clip(MaterialTheme.shapes.medium).fillMaxWidth()
+                        )
+                        Spacer(
+                            modifier = Modifier.padding(16.dp)
+                        )
+                        OutlinedTextField(
+                            value = email,
+                            onValueChange = {email = it},
+                            label = { Text("Email") },
+                            colors = OutlinedTextFieldDefaults.colors(
+                                unfocusedBorderColor = Color(0xFF626D8B),
+                                focusedBorderColor = Color(0xFFf7f4f0)
+                            )
+                        )
+                        Spacer(
+                            modifier = Modifier.padding(16.dp)
+                        )
+                        OutlinedTextField(
+                            value = password,
+                            onValueChange = {password = it},
+                            label = {Text("Contraseña")},
+                            colors = OutlinedTextFieldDefaults.colors(
+                                // Color crema más claro #f7f4f0
+                                unfocusedBorderColor = Color(0xFF626D8B),
+                                focusedBorderColor = Color(0xFFf7f4f0)
+                            ),
+                            visualTransformation = PasswordVisualTransformation()
+                        )
+                        Spacer(
+                            modifier = Modifier.padding(16.dp)
+                        )
+                        Button(
+                            onClick = {
+
+                                /**
+                                 * Ahora lo que hago es que desde el viewModel se genere el accessToken que son
+                                 * 10 caracteres de letras aleatorias y se lo paso al WebViewHeaderManager
+                                 * Esto está mal pero la LoginCookie es la contraseña del usuario
+                                 * EL refresh_token es el email del usuario
+                                 * Cada vez que se haga login (desde el button) se va a generar un nuevo accessToken
+                                 */
+                                when (LoginValidator.validateLogin(email, password)) {
+                                    Resultado.Valid -> {
+                                        logger.warn("WARN - El usuario ha hecho click en login")
+
+                                        loginViewModel.loadSavedTokens() //!!
+
+                                        loginViewModel.loginUser(5) // Lucio_Hettinger@annie.ca
+                                        loginViewModel.tokens.value?.accessToken?.let { tokens ->
+                                            WebViewHeaderManager.updateAccessToken(tokens)
+                                            WebViewHeaderManager.updateLoginCookie(password)
+                                        }
+                                        loginViewModel.tokens.value?.refreshToken?.let { tokens ->
+                                            WebViewHeaderManager.updateRefreshToken(tokens)
+                                        }
+
+                                        logger.debug(WebViewHeaderManager.getHeaders().toString())
+                                        logger.warn("El usuario ha hecho click en login")
+                                        navController.navigate("MenuDrawer") {
+                                            popUpTo("login") { inclusive = true }
+                                        }
+                                    }
+                                    Resultado.Empty -> showDialog = true
+                                    Resultado.Invalid -> showDialogInvalidData = true
+                                }
+                            },
+                            enabled = true,
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = Color(0xFF626D8B),
+                                contentColor = Color.White
+                            ),
+                            shape = RoundedCornerShape(10.dp),
+
+                            ){
+                            Icon(
+                                Icons.Default.Person,
+                                contentDescription = "Login",
+                                modifier = Modifier.padding(end=6.dp)
+                            )
+                            Text("Iniciar sesión")
+                        }
+                        Spacer(
+                            modifier = Modifier.padding(16.dp)
+                        )
+                    }
                 }
-            })
+                if (showDialog){
+                    showAlertDialogLogin(
+                        texto = "Debes introducir un email y una contraseña",
+                        onDismissRequest = {showDialog = false}
+                    )
+                }
+                if (showDialogInvalidData){
+                    InvalidDataAlertDialogLogin(
+                        onDismissRequest = {showDialogInvalidData = false}
+                    )
+                }
+
+            }
+            composable(route = "MenuDrawer"){
+                MenuDrawer(onLogout = {
+                    navController.navigate("login"){
+                        popUpTo(0){inclusive = true}
+                    }
+                })
+            }
         }
     }
 }

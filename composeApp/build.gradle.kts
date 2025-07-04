@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    id("org.jetbrains.kotlin.plugin.serialization") version "2.2.0-Beta1"
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.1.21"
 
 }
 
@@ -62,7 +62,7 @@ kotlin {
             implementation("io.ktor:ktor-client-core:3.1.2")
             //implementation("org.jetbrains.kotlin:kotlin-serialization:2.2.0")
             // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-serialization-json-jvm
-            runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.8.1")
+            //runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.8.1")
             implementation("io.ktor:ktor-client-content-negotiation:3.1.2")
             implementation("io.ktor:ktor-serialization-kotlinx-json:3.1.2")
 
@@ -103,7 +103,7 @@ kotlin {
             implementation(libs.ui.test.junit4)*/
         }
         iosMain.dependencies {
-            runtimeOnly("io.ktor:ktor-client-darwin:3.2.0")
+            implementation("io.ktor:ktor-client-darwin:3.1.2")
         }
 
     }
