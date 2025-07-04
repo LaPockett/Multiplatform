@@ -12,11 +12,16 @@ class IOSPlatform: Platform {
 }
 
 actual fun getPlatform(): Platform = IOSPlatform()
-actual fun createHttpClient(): HttpClient = HttpClient(Darwin) {
+/*actual fun createHttpClient(): HttpClient = HttpClient(Darwin) {
     install(ContentNegotiation) {
         json(Json {
             ignoreUnknownKeys = true
             isLenient = true
         })
     }
-}
+    engine {
+        configureRequest {
+            setTimeoutInterval(15000.0)
+        }
+    }
+}*/

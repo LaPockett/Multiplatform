@@ -1,6 +1,5 @@
 package com.dian.prueba.network
 
-import com.dian.prueba.createHttpClient
 import com.dian.prueba.model.Login
 import com.dian.prueba.model.UpdateInfo
 import com.dian.prueba.utilities.Logger
@@ -28,7 +27,16 @@ class APIClient (
     val loginToken: String? get() {
         return _loginToken
     }
-    private val client = createHttpClient()
+    //private val client = createHttpClient()
+
+    private val client = HttpClient {
+        install(ContentNegotiation) {
+            json(Json {
+                ignoreUnknownKeys = true
+                isLenient = true
+            })
+        }
+    }
 
     override suspend fun requestLogin(id: String): String? {
         logger.warn("Iniciando login...")

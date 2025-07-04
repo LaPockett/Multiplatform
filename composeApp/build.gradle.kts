@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    id("org.jetbrains.kotlin.plugin.serialization") version "2.1.21"
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.2.0-Beta1"
 
 }
 
@@ -37,7 +37,7 @@ kotlin {
             isStatic = true
         }
     }
-
+    val ktorVersion= "3.0.0"
     sourceSets {
 
         androidMain.dependencies {
@@ -47,9 +47,9 @@ kotlin {
             // https://mvnrepository.com/artifact/io.ktor/ktor-serialization-kotlinx-json
             //implementation("io.ktor:ktor-serialization-kotlinx-json:3.1.2")
             // https://mvnrepository.com/artifact/io.ktor/ktor-client-content-negotiation
-            implementation("io.ktor:ktor-client-content-negotiation:3.1.2")
+            implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
             // https://mvnrepository.com/artifact/io.ktor/ktor-client-okhttp
-            implementation("io.ktor:ktor-client-okhttp:3.1.2")
+            implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
 
             implementation(libs.kotlin.test)
             implementation(libs.ui.test.junit4)
@@ -59,12 +59,12 @@ kotlin {
         commonMain.dependencies {
             // Ktor
             // https://mvnrepository.com/artifact/io.ktor/ktor-client-core
-            implementation("io.ktor:ktor-client-core:3.1.2")
+            implementation("io.ktor:ktor-client-core:$ktorVersion")
             //implementation("org.jetbrains.kotlin:kotlin-serialization:2.2.0")
             // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-serialization-json-jvm
             //runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.8.1")
-            implementation("io.ktor:ktor-client-content-negotiation:3.1.2")
-            implementation("io.ktor:ktor-serialization-kotlinx-json:3.1.2")
+            implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+            implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
 
             implementation(compose.material)
             implementation(compose.runtime)
@@ -103,7 +103,7 @@ kotlin {
             implementation(libs.ui.test.junit4)*/
         }
         iosMain.dependencies {
-            implementation("io.ktor:ktor-client-darwin:3.1.2")
+            implementation("io.ktor:ktor-client-darwin:$ktorVersion")
         }
 
     }

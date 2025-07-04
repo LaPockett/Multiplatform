@@ -13,11 +13,11 @@ class AndroidPlatform : Platform {
 
 actual fun getPlatform(): Platform = AndroidPlatform()
 
-actual fun createHttpClient(): HttpClient = HttpClient(OkHttp) {
+/*actual fun createHttpClient(): HttpClient = HttpClient(OkHttp) {
     install(ContentNegotiation) {
         json(Json {
             ignoreUnknownKeys = true
             isLenient = true
         })
     }
-}
+}*/
