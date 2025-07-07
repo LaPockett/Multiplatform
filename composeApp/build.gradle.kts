@@ -93,15 +93,16 @@ kotlin {
             //Russhwolf
             implementation("com.russhwolf:multiplatform-settings-test:1.3.0")
             implementation("com.russhwolf:multiplatform-settings-no-arg:1.3.0")
-
             implementation("org.jetbrains.compose.material:material-icons-core:1.7.3") // Icons.Default.Menu
         }
         commonTest.dependencies {
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
             implementation(libs.kotlin.test)
             /*@OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)
             implementation(libs.ui.test.junit4)*/
+            implementation(libs.ui.test.junit4)
+
         }
         iosMain.dependencies {
             implementation("io.ktor:ktor-client-darwin:$ktorVersion")
