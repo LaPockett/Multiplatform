@@ -97,6 +97,7 @@ kotlin {
             implementation("org.jetbrains.compose.material:material-icons-core:1.7.3") // Icons.Default.Menu
         }
         commonTest.dependencies {
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.10.2")
             implementation(libs.kotlin.test)
             /*@OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)
