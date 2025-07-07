@@ -10,5 +10,7 @@
         <key>NSAllowsArbitraryLoads</key>
         <true/>
     </dict>
+    <key>UILaunchStoryboardName</key>
+    <string>SplashScreen</string>
 </dict>
 </plist>
