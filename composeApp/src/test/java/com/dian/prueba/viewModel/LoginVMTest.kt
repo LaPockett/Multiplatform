@@ -5,10 +5,19 @@ import com.dian.prueba.model.Tokens
 import com.dian.prueba.repository.LoginRepositoryImpl
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.utilities.TokenStorage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.TestDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestWatcher
+import org.junit.runner.Description
 import kotlin.test.*
 
 class FakeTokenStorage : TokenStorage {
@@ -26,8 +35,23 @@ class FakeTokenStorage : TokenStorage {
         tokens = null
     }
 }
+// https://stackoverflow.com/questions/58303961/kotlin-coroutine-unit-test-fails-with-module-with-the-main-dispatcher-had-faile
+class MainDispatcherRule(
+    private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
+) : TestWatcher() {
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun starting(description: Description) {
+        Dispatchers.setMain(testDispatcher)
+    }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
+    override fun finished(description: Description) {
+        Dispatchers.resetMain()
+    }
+}
 class LoginVMTest {
+    @get:Rule
+    val mainDispatcherRule = MainDispatcherRule()
     val logger = Logger("LoginVMTest")
     private lateinit var fakeApiService: FakeApiService
     private lateinit var fakeTokenStorage: FakeTokenStorage
