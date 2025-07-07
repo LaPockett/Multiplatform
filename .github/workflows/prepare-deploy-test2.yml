@@ -1,10 +1,8 @@
 name: Debug Semantic Versioning
 run-name: ${{ github.actor }} Debug Semantic Versioning
 on:
-  pull_request:
-    types: [closed]
+  push:
     branches: [master]
-
 jobs:
   call-workflow:
     uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
