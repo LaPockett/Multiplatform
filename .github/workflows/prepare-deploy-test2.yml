@@ -1,8 +1,12 @@
 name: Debug Semantic Versioning
 run-name: ${{ github.actor }} Debug Semantic Versioning
 on:
+  pull_request:
+    types: [closed]
+    branches: [master]
   push:
     branches: [master]
+
 jobs:
   call-workflow:
     uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
@@ -20,6 +24,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.base.ref }}
 
       - name: Install Dependencies
         run: |
