@@ -1,5 +1,6 @@
 package com.dian.prueba.navigation
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.NavigationBar
@@ -15,8 +16,12 @@ import androidx.navigation.NavController
 fun BottomNavigationBar(navController: NavController) {
     val selectedNavigationIndex = rememberSaveable { mutableStateOf(0) }
     NavigationBar(
-        containerColor = Color.White,
-        contentColor = Color(0xFF080e45)
+        containerColor = Color(0xffd6dbed),
+        contentColor = Color(0xFF080e45),
+        windowInsets = WindowInsets(
+            top = 0,
+            bottom = 0
+        )
     ) {
         navigationItems.forEachIndexed { index, item ->
             NavigationBarItem(

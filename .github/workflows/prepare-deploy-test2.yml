@@ -1,12 +1,14 @@
 name: Debug Semantic Versioning
 run-name: ${{ github.actor }} Debug Semantic Versioning
 on:
+  push:
+    branches: [master]
   pull_request:
     types: [closed]
 
 jobs:
   publish:
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && github.ref == 'refs/heads/master'
 
     runs-on: self-hosted
     permissions:

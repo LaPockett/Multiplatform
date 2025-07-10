@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.*
@@ -43,10 +42,10 @@ fun MenuDrawer(onLogout: () -> Unit) {
             }
         },
         gesturesEnabled = drawerState.isOpen,
-        scrimColor = Color(0xff0e1147)
+        scrimColor = Color(0xff0e1147),
+        modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
     ) {
         Scaffold(
-            //contentWindowInsets = WindowInsets.systemBars,
             topBar = {
                 TopAppBar(
                     title = { Text("Menu Drawer") },
@@ -54,9 +53,8 @@ fun MenuDrawer(onLogout: () -> Unit) {
                         top = 0,
                         bottom = 0
                     ),
-                    modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing),
                     colors = TopAppBarColors(
-                        containerColor = Color(0xffa5a8e5),
+                        containerColor = Color(0xffd6dbed),
                         scrolledContainerColor = Color.White,
                         navigationIconContentColor = Color.Black,
                         titleContentColor = Color.Black,
@@ -79,7 +77,7 @@ fun MenuDrawer(onLogout: () -> Unit) {
             Surface(
                 modifier = Modifier.fillMaxSize().padding(it)
             ){
-                Box {
+                Box{
                     AppNavigation(onLogout = onLogout)
                 }
             }

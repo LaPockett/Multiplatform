@@ -1,7 +1,12 @@
 package com.dian.prueba.ui.screens
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Tab
@@ -28,7 +33,9 @@ fun HomeScreen() {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        Column() {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             SearchBarAmazon(
                 query = query,
                 onQueryChange = { query = it },
@@ -99,6 +106,11 @@ fun SearchBarAmazon(
             onSearch = {
                 onSearch(query)
             },
+            windowInsets = WindowInsets(
+                top = 0,
+                bottom = 0
+            ),
+            modifier = Modifier.fillMaxWidth(),
             active = active,
             onActiveChange = onActiveChange,
             placeholder = { Text("Buscar o hacer una pregunta") },
@@ -118,9 +130,8 @@ fun SearchBarAmazon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "Scan Icon"
                 )
-            },
-
-            ) {
+            },)
+        {
         }
     }
 
