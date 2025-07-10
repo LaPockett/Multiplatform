@@ -14,11 +14,12 @@ concurrency:
 
 jobs:
   call-workflow:
+    if: github.event.pull_request.merged == true
     uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
 
   appium:
-    needs: call-workflow
     if: github.event.pull_request.merged == true
+    needs: call-workflow
     runs-on: self-hosted
     steps:
       - name: Checkout Project
