@@ -49,7 +49,7 @@ fun HomeScreen() {
 fun ScrollRowAmazon() {
 
     Column(
-        modifier = Modifier.padding(top = 12.dp)
+        modifier = Modifier.padding(top = 8.dp)
     ) {
         ScrollableTabRow(
             selectedTabIndex = 0,
@@ -96,7 +96,6 @@ fun SearchBarAmazon(
             onQueryChange = {
                 onQueryChange(it)
             },
-            modifier = Modifier.padding(top = 80.dp),
             onSearch = {
                 onSearch(query)
             },

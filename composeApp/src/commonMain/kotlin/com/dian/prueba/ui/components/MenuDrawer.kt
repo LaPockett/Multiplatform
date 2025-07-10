@@ -3,8 +3,11 @@ package com.dian.prueba.ui.components
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material.Surface
 import androidx.compose.material.icons.*
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.DrawerValue
@@ -43,6 +46,7 @@ fun MenuDrawer(onLogout: () -> Unit) {
         scrimColor = Color(0xff0e1147)
     ) {
         Scaffold(
+            //contentWindowInsets = WindowInsets.systemBars,
             topBar = {
                 TopAppBar(
                     title = { Text("Menu Drawer") },
@@ -52,7 +56,7 @@ fun MenuDrawer(onLogout: () -> Unit) {
                     ),
                     modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing),
                     colors = TopAppBarColors(
-                        containerColor = Color.Transparent,
+                        containerColor = Color(0xffa5a8e5),
                         scrolledContainerColor = Color.White,
                         navigationIconContentColor = Color.Black,
                         titleContentColor = Color.Black,
@@ -72,9 +76,14 @@ fun MenuDrawer(onLogout: () -> Unit) {
                 )
             },
         ) {
-            Box(modifier = Modifier.fillMaxSize()) {
-                AppNavigation(onLogout = onLogout)
+            Surface(
+                modifier = Modifier.fillMaxSize().padding(it)
+            ){
+                Box {
+                    AppNavigation(onLogout = onLogout)
+                }
             }
+
         }
     }
 }

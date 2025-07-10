@@ -9,7 +9,7 @@ import com.dian.prueba.ui.components.WebViewSearch
 @Composable
 fun SearchScreen(){
     Box(
-        modifier = Modifier.fillMaxSize().padding(top = 100.dp),
+        modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
 
     ){

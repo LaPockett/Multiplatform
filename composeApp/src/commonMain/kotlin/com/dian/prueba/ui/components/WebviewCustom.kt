@@ -35,7 +35,7 @@ fun WebViewHome (
     }
     WebView(
         state = webViewState,
-        modifier = modifier.fillMaxSize().padding(top = 10.dp)
+        modifier = modifier.fillMaxSize()
     )
 }
 
@@ -59,6 +59,7 @@ fun WebViewAccount (
     WebView(
         state = webViewState,
         modifier = Modifier.testTag("WebViewAccount")
+            .fillMaxSize()
     )
 }
 
@@ -80,7 +81,8 @@ fun WebViewCart (
     }
 
     WebView(
-        state = webViewState
+        state = webViewState,
+        modifier = modifier.fillMaxSize()
     )
 }
 @Composable
@@ -95,7 +97,8 @@ fun WebViewSettings(
         webViewState.content= WebContent.Url(url)
     }
     WebView(
-        state = webViewState
+        state = webViewState,
+        modifier = Modifier.fillMaxSize()
     )
 
 }
