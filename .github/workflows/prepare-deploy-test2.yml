@@ -8,7 +8,7 @@ on:
 
 jobs:
   publish:
-    if: github.event.pull_request.merged == true && github.ref == 'refs/heads/master'
+    if: github.event.pull_request.merged == true || github.ref == 'refs/heads/master'
 
     runs-on: self-hosted
     permissions:
