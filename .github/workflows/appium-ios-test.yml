@@ -1,8 +1,8 @@
 name: GitHub Actions - Appium iOS Tests
 run-name: ${{ github.actor }} Appium iOS Tests
 on:
-  push:
-    branches: [test-appium-ios]
+  pull_request:
+    types: [closed]
 env:
   APPIUM_VERSION: '2.18.0'
   XCODE_VERSION: '16.4'
@@ -12,8 +12,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-
   appium:
+    if: github.event.pull_request.merged == true
+
     runs-on: macos-self-hosted
     steps:
       - name: Checkout Project
