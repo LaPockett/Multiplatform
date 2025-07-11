@@ -17,22 +17,30 @@ jobs:
 
   lint:
     needs: call-workflow
-    runs-on: self-hosted
+    runs-on: [self-hosted, Linux, X64]
     steps:
       - uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
       - run: ./gradlew lint --stacktrace
 
   unit-test:
     needs: call-workflow
-    runs-on: self-hosted
+    runs-on: [self-hosted, Linux, X64]
     steps:
       - uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
+
       - run: ./gradlew testdebugUnitTest --stacktrace
 
   ui-test:
     needs: call-workflow
-    runs-on: self-hosted
+    runs-on: [self-hosted, Linux, X64]
     steps:
+      - uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
       - name: Clean emulator lock files
         run: |
           rm -f /home/usuario/.android/avd/*.avd/*.lock
@@ -40,7 +48,7 @@ jobs:
           adb kill-server
           adb start-server
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4.2.2
       - name: Enable KVM group perms
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -61,9 +69,11 @@ jobs:
   build-apk:
     needs: [unit-test, lint, ui-test]
     if: success() && github.ref == 'refs/heads/master'
-    runs-on: self-hosted
+    runs-on: [self-hosted, Linux, X64]
     steps:
       - uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
 
       - name: Set current date as env variable
         run: echo "date_today=$(date +'%d-%m-%Y')" >> $GITHUB_ENV
@@ -113,22 +123,32 @@ jobs:
             exit 1
           fi
 
+      - name: Generate version code and version name
+        run: echo "VERSION_NAME=$(git describe --tags | sed 's/\(.*\)-/\1./' | sed 's/\(.*\)-/\1+/')" >> $GITHUB_ENV
+
+      - name: Bump Version
+        uses: chkfung/android-version-actions@v1.2.3
+        with:
+          gradlePath: composeApp/build.gradle.kts
+          versionCode: ${{ github.run_number }}
+          versionName: ${{ env.VERSION_NAME }}
+
       - name: Upload APK release
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.repository_name }}  - APK Release generated
+          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.VERSION_NAME }} - APK Release generated
           path: ${{steps.find_apk.outputs.APK_PATH}}
 
       - name: Upload APK debug
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.repository_name }}  - APK Debug generated
+          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.VERSION_NAME}} - APK Debug generated
           path: ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/debug/
 
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.repository_name }}  - APK Release generated
+          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.VERSION_NAME }} - APK Release generated
           path:  /home/usuario/releases-apk-for-appium
       - name: Display structure of downloaded files
         run: ls -R  /home/usuario/releases-apk-for-appium

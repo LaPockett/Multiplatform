@@ -1,40 +1,33 @@
-name: Build DEBUG IPA
-run-name: ${{github.actor}} Build DEBUG IPA
-on:
-  workflow_dispatch:
-    inputs:
-      build_type:
-        type: choice
-        options:
-          - Release
-          - Debug
-        default: Debug
-        description: Release Type
+name: Build DEBUG iOS App Test
+run-name: ${{github.actor}} Build DEBUG iOS App Test
 
 env:
-  MAIN_PROJECT_MODULE: 'composeApp'
-  PLAYSTORE_NAME: 'App Mock'
+    XCODE_VERSION: '16.4'
+on:
+
+  push:
+    branches: [ci-build-ios]
 
 jobs:
-
   build_debug_ios_app:
-    name: Build iOS App
-    if: ${{ inputs.build_type == 'Debug' }}
-    runs-on: macos-latest
+    runs-on: macos-self-hosted
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+
       - name: Set Xcode version
         uses: maxim-lobanov/setup-xcode@v1.6.0
         with:
-          xcode_version: latest-stable
-
-      - name: Checkout Repository
-        uses: actions/checkout@v4.2.2
-
-      - name: Install ruby gems
-        run: bundle install
+          xcode-version: ${{ env.XCODE_VERSION }}
 
       - name: Build iOS App
-        uses: HekmatullahAmin/mifos-x-actionhub-build-ios-app@enhance-ios-build-action
+        run: |
+          cd iosApp
+          xcodebuild build
+
+      - name: Upload app artifact
+        uses: actions/upload-artifact@v4
         with:
-          build_type: ${{ inputs.build_type }}
+          name: Debug App
+          path: /Users/diandev/actions-runner/_work/Multiplatform/Multiplatform/iosApp/build/Debug-iphoneos/KotlinProjectPrueba.app

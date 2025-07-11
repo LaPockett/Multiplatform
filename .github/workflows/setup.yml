@@ -9,10 +9,12 @@ env:
   NODE_VERSION: '22.14.0'
 jobs:
   setup:
-    runs-on: self-hosted
+    runs-on: [self-hosted, Linux, X64]
     steps:
       - name: Checkout Project
         uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
       - name: Set up JDK
         uses: actions/setup-java@v4.7.1
         with:

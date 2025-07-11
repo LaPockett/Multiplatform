@@ -101,7 +101,7 @@ kotlin {
             /*@OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.uiTest)
             implementation(libs.ui.test.junit4)*/
-            implementation(libs.ui.test.junit4)
+            //implementation(libs.ui.test.junit4)
 
         }
         iosMain.dependencies {

@@ -1,0 +1,28 @@
+#Lo dejo aquí como ejemplo, pero no se usa
+name: Version name and version code
+run-name: ${{github.actor}} Version name and version code
+on:
+  workflow_dispatch:
+
+jobs:
+  call-workflow:
+    uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
+
+  version:
+    needs: call-workflow
+    runs-on: [self-hosted, Linux, X64]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Generate version code and version name
+        run: echo "VERSION_NAME=$(git describe --tags | sed 's/\(.*\)-/\1./' | sed 's/\(.*\)-/\1+/')" >> $GITHUB_ENV
+
+      - name: Bump Version
+        uses: chkfung/android-version-actions@v1.2.3
+        with:
+          gradlePath: composeApp/build.gradle.kts
+          versionCode: ${{ github.run_number }}
+          versionName: ${{ env.VERSION_NAME }}
