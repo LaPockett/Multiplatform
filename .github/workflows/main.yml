@@ -69,6 +69,10 @@ jobs:
   prepare-deploy:
     needs: [lint, unit-test, ui-test]
     runs-on: [self-hosted, Linux, X64]
+    outputs:
+      mobile_version_name: ${{ steps.set-output.outputs.versionName }}
+      mobile_version_code: ${{ steps.set-output.outputs.versionCode}}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.2.2
@@ -157,16 +161,6 @@ jobs:
             exit 1
           fi
 
-      - name: Generate version code and version name
-        run: echo "VERSION_NAME=$(git describe --tags | sed 's/\(.*\)-/\1./' | sed 's/\(.*\)-/\1+/')" >> $GITHUB_ENV
-
-      - name: Bump Version
-        uses: chkfung/android-version-actions@v1.2.3
-        with:
-          gradlePath: composeApp/build.gradle.kts
-          versionCode: ${{ github.run_number }}
-          versionName: ${{ env.VERSION_NAME }}
-
       - name: Upload APK release
         uses: actions/upload-artifact@v4
         with:
@@ -176,7 +170,7 @@ jobs:
       - name: Upload APK debug
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.VERSION_NAME}} - APK Debug generated
+          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.MOCK_APP_VERSION_NAME }} - APK Debug generated
           path: ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/debug/
 
       - name: Download artifact
