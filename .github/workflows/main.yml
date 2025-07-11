@@ -66,8 +66,42 @@ jobs:
             adb devices -l
             ./gradlew connectedAndroidTest --stacktrace
 
+  prepare-deploy:
+    needs: [lint, unit-test, ui-test]
+    runs-on: [self-hosted, Linux, X64]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+        with:
+          fetch-depth: 0
+
+      - name: Generate version code and version name
+        run: echo "VERSION_NAME=$(git describe --tags | sed 's/\(.*\)-/\1./' | sed 's/\(.*\)-/\1+/')" >> $GITHUB_ENV
+
+      - name: Bump Version
+        uses: chkfung/android-version-actions@v1.2.3
+        id: bump_version
+        with:
+          gradlePath: composeApp/build.gradle.kts
+          versionCode: ${{ github.run_number }}
+          versionName: ${{ env.VERSION_NAME }}
+
+      - name: Set output
+        id: set-output
+        run: |
+          echo "mobile_version_name=${{ steps.bump_version.outputs.versionName }}" >> $GITHUB_OUTPUT 
+          echo "mobile_version_code=${{ steps.bump_version.outputs.versionCode }}" >> $GITHUB_OUTPUT
+
+      - name: Print output
+        run: |
+          echo -e "Version name is: \n ${{ steps.set-output.outputs.mobile_version_name }}"
+          echo -e "Version code is: \n ${{ steps.set-output.outputs.mobile_version_code }}"
+
   build-apk:
-    needs: [unit-test, lint, ui-test]
+    needs: [unit-test, lint, ui-test, prepare-deploy]
+    env:
+      MOCK_APP_VERSION_NAME: ${{ needs.prepare-deploy.outputs.mobile_version_name }}
+
     if: success() && github.ref == 'refs/heads/master'
     runs-on: [self-hosted, Linux, X64]
     steps:
@@ -136,7 +170,7 @@ jobs:
       - name: Upload APK release
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.VERSION_NAME }} - APK Release generated
+          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.MOCK_APP_VERSION_NAME }} - APK Release generated
           path: ${{steps.find_apk.outputs.APK_PATH}}
 
       - name: Upload APK debug
@@ -148,7 +182,35 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.VERSION_NAME }} - APK Release generated
+          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.MOCK_APP_VERSION_NAME }} - APK Release generated
           path:  /home/usuario/releases-apk-for-appium
       - name: Display structure of downloaded files
         run: ls -R  /home/usuario/releases-apk-for-appium
+
+  build_debug_ios_app:
+    needs: [unit-test, lint, ui-test, prepare-deploy]
+    env:
+      MOCK_APP_VERSION_NAME: ${{ needs.prepare-deploy.outputs.mobile_version_name }}
+
+    if: success() && github.ref == 'refs/heads/master'
+    runs-on: macos-self-hosted
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4.2.2
+
+      - name: Set Xcode version
+        uses: maxim-lobanov/setup-xcode@v1.6.0
+        with:
+          xcode-version: ${{ env.XCODE_VERSION }}
+
+      - name: Build iOS App
+        run: |
+          cd iosApp
+          xcodebuild build
+
+      - name: Upload app artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.PLAYSTORE_NAME }} - ${{ env.MOCK_APP_VERSION_NAME }} - iOS APP Debug generated
+          path: /Users/diandev/actions-runner/_work/Multiplatform/Multiplatform/iosApp/build/Debug-iphoneos/KotlinProjectPrueba.app
