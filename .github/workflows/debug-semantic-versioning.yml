@@ -13,7 +13,7 @@ jobs:
     needs: call-workflow
     if: github.event.pull_request.merged == true || github.ref == 'refs/heads/master'
 
-    runs-on: self-hosted
+    runs-on: [self-hosted, Linux, X64]
     permissions:
       contents: write
       issues: write
