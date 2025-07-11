@@ -93,8 +93,8 @@ jobs:
       - name: Set output
         id: set-output
         run: |
-          echo "mobile_version_name=${{ steps.bump_version.outputs.versionName }}" >> $GITHUB_OUTPUT 
-          echo "mobile_version_code=${{ steps.bump_version.outputs.versionCode }}" >> $GITHUB_OUTPUT
+          echo "versionName=${{ env.VERSION_NAME }}" >> $GITHUB_OUTPUT
+          echo "versionCode=${{ github.run_number }}" >> $GITHUB_OUTPUT
 
       - name: Print output
         run: |
@@ -164,19 +164,19 @@ jobs:
       - name: Upload APK release
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.VERSION_NAME }} - APK Release generated
+          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.MOCK_APP_VERSION_NAME }} - APK Release generated
           path: ${{steps.find_apk.outputs.APK_PATH}}
 
       - name: Upload APK debug
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.VERSION_NAME }} - APK Debug generated
+          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.MOCK_APP_VERSION_NAME }} - APK Debug generated
           path: ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/debug/
 
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.VERSION_NAME }} - APK Release generated
+          name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.MOCK_APP_VERSION_NAME }} - APK Release generated
           path:  /home/usuario/releases-apk-for-appium
       - name: Display structure of downloaded files
         run: ls -R  /home/usuario/releases-apk-for-appium
@@ -206,5 +206,5 @@ jobs:
       - name: Upload app artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.PLAYSTORE_NAME }} - ${{ env.VERSION_NAME }} - iOS APP Debug generated
+          name: ${{ env.PLAYSTORE_NAME }} - ${{ env.MOCK_APP_VERSION_NAME }} - iOS APP Debug generated
           path: /Users/diandev/actions-runner/_work/Multiplatform/Multiplatform/iosApp/build/Debug-iphoneos/KotlinProjectPrueba.app
