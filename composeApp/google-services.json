@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1079187492989",
+    "project_id": "kmproject-22f56",
+    "storage_bucket": "kmproject-22f56.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1079187492989:android:6f962fc304fc10ab6b6114",
+        "android_client_info": {
+          "package_name": "com.dian.prueba"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBzZ9LUyx9oJtMufs92Kh6GiX-N9E0iOY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
