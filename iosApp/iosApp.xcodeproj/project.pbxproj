@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F95A2BBB2E257166005CDB58 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = F95A2BBA2E257166005CDB58 /* FirebaseAnalytics */; };
+		F95A2BE12E265918005CDB58 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = F95A2BE02E265918005CDB58 /* FirebaseCore */; };
+		F95A2BE32E265927005CDB58 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = F95A2BE22E265927005CDB58 /* FirebaseMessaging */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		B9DA97B12DC1472C00A4DA20 /* KotlinProjectPrueba.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KotlinProjectPrueba.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -41,6 +47,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F95A2BE32E265927005CDB58 /* FirebaseMessaging in Frameworks */,
+				F95A2BE12E265918005CDB58 /* FirebaseCore in Frameworks */,
+				F95A2BBB2E257166005CDB58 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,6 +61,7 @@
 			children = (
 				B9DA98002DC14AA900A4DA20 /* Configuration */,
 				B9DA97B32DC1472C00A4DA20 /* iosApp */,
+				F95A2BB82E257070005CDB58 /* Frameworks */,
 				B9DA97B22DC1472C00A4DA20 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -62,6 +72,13 @@
 				B9DA97B12DC1472C00A4DA20 /* KotlinProjectPrueba.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F95A2BB82E257070005CDB58 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -75,6 +92,7 @@
 				B9DA97AD2DC1472C00A4DA20 /* Sources */,
 				B9DA97AE2DC1472C00A4DA20 /* Frameworks */,
 				B9DA97AF2DC1472C00A4DA20 /* Resources */,
+				F95A2BB72E256736005CDB58 /* Copy GoogleService Plist */,
 			);
 			buildRules = (
 			);
@@ -85,6 +103,9 @@
 			);
 			name = iosApp;
 			packageProductDependencies = (
+				F95A2BBA2E257166005CDB58 /* FirebaseAnalytics */,
+				F95A2BE02E265918005CDB58 /* FirebaseCore */,
+				F95A2BE22E265927005CDB58 /* FirebaseMessaging */,
 			);
 			productName = iosApp;
 			productReference = B9DA97B12DC1472C00A4DA20 /* KotlinProjectPrueba.app */;
@@ -114,6 +135,9 @@
 			);
 			mainGroup = B9DA97A82DC1472C00A4DA20;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				F95A2BB92E257166005CDB58 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B9DA97B22DC1472C00A4DA20 /* Products */;
 			projectDirPath = "";
@@ -153,6 +177,24 @@
 			shellPath = /bin/sh;
 			shellScript = "if [ \"YES\" = \"$OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED\" ]; then\n  echo \"Skipping Gradle build task invocation due to OVERRIDE_KOTLIN_BUILD_IDE_SUPPORTED environment variable set to \\\"YES\\\"\"\n  exit 0\nfi\ncd \"$SRCROOT/..\"\n./gradlew :composeApp:embedAndSignAppleFrameworkForXcode\n";
 		};
+		F95A2BB72E256736005CDB58 /* Copy GoogleService Plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy GoogleService Plist";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\necho \"Copying GoogleService located at ${GOOGLE_SERVICE}\"\nif [-z \"${GOOGLE_SERVICE}\"]; then\n    echo \"GOOGLE_SERVICE is unset to the empty string\"\n    exit 1\nfi\nif [! -f \"${GOOGLE_SERVICE}\"]; then\n    echo \"GOOGLE_SERVICE does not exist\"\n    exit 1\nfi\nPLIST_DESTINATION=${BUILD_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\ncp \"${GOOGLE_SERVICE}\" \"${PLIST_DESTINATION}\"\necho \"Copied ${GOOGLE_SERVICE} to ${PLIST_DESTINATION}\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -168,6 +210,8 @@
 /* Begin XCBuildConfiguration section */
 		B9DA97BD2DC1472D00A4DA20 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = B9DA98002DC14AA900A4DA20 /* Configuration */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -231,6 +275,8 @@
 		};
 		B9DA97BE2DC1472D00A4DA20 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = B9DA98002DC14AA900A4DA20 /* Configuration */;
+			baseConfigurationReferenceRelativePath = Config.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -373,6 +419,35 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F95A2BB92E257166005CDB58 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.15.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F95A2BBA2E257166005CDB58 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F95A2BB92E257166005CDB58 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		F95A2BE02E265918005CDB58 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F95A2BB92E257166005CDB58 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		F95A2BE22E265927005CDB58 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F95A2BB92E257166005CDB58 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B9DA97A92DC1472C00A4DA20 /* Project object */;
 }
