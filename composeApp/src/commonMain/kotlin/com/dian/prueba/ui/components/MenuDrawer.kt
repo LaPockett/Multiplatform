@@ -1,11 +1,15 @@
 package com.dian.prueba.ui.components
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.*
 import androidx.compose.material.icons.filled.*
@@ -37,8 +41,14 @@ fun MenuDrawer(onLogout: () -> Unit) {
     ModalNavigationDrawer(
         drawerState = drawerState,
         drawerContent = {
-            ModalDrawerSheet {
-                SettingsScreen()
+            ModalDrawerSheet(modifier = Modifier.fillMaxHeight()) {
+                Column (
+                    modifier = Modifier.verticalScroll(rememberScrollState())
+                        .fillMaxHeight()
+                )
+                {
+                    SettingsScreen()
+                }
             }
         },
         gesturesEnabled = drawerState.isOpen,
