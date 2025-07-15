@@ -1,6 +1,7 @@
 package com.dian.prueba.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -10,6 +11,7 @@ import com.dian.prueba.viewModel.LoginVM
 import androidx.navigation.compose.composable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.icons.Icons
@@ -21,7 +23,14 @@ import androidx.compose.runtime.mutableStateOf
 import com.dian.prueba.utilities.Logger
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathSegment
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.semantics.SemanticsProperties.ImeAction
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.*
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -43,6 +52,7 @@ import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun LoginScreen(navController: NavHostController){
+    val focusManager = LocalFocusManager.current
     MaterialTheme{
         val currentBackStackEntry = navController.currentBackStackEntryAsState()
 
@@ -76,7 +86,8 @@ fun LoginScreen(navController: NavHostController){
         ){
             composable(route = Screen.Login.route){
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize()
+                        .pointerInput(Unit){detectTapGestures(onTap = {focusManager.clearFocus()})},
                     contentAlignment = Alignment.Center
                 ) {
                     Column (
@@ -92,10 +103,13 @@ fun LoginScreen(navController: NavHostController){
                         Spacer(
                             modifier = Modifier.padding(16.dp)
                         )
+                        val keyboardController = LocalSoftwareKeyboardController.current
                         OutlinedTextField(
                             value = email,
                             onValueChange = {email = it},
                             label = { Text("Email") },
+                            keyboardActions = KeyboardActions(
+                                onDone = {keyboardController?.hide()}),
                             colors = OutlinedTextFieldDefaults.colors(
                                 unfocusedBorderColor = Color(0xFF626D8B),
                                 focusedBorderColor = Color(0xFFf7f4f0)
