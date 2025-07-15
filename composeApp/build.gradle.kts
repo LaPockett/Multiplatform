@@ -33,6 +33,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
+            export("io.github.mirzemehdi:kmpnotifier:1.5.1")
             baseName = "ComposeApp"
             isStatic = true
         }
@@ -100,6 +101,9 @@ kotlin {
             implementation("com.russhwolf:multiplatform-settings-test:1.3.0")
             implementation("com.russhwolf:multiplatform-settings-no-arg:1.3.0")
             implementation("org.jetbrains.compose.material:material-icons-core:1.7.3") // Icons.Default.Menu
+
+            //KMPNotification
+            api("io.github.mirzemehdi:kmpnotifier:1.5.1")
 
         }
         commonTest.dependencies {

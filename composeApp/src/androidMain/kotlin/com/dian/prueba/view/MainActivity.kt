@@ -21,11 +21,35 @@ import com.dian.prueba.AppLogin
 import com.dian.prueba.R
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
+import com.mmk.kmpnotifier.notification.NotifierManager
+import com.mmk.kmpnotifier.notification.PayloadData
+import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
+import com.mmk.kmpnotifier.permission.permissionUtil
 
 class MainActivity : ComponentActivity() {
     @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val permissionUtil by permissionUtil()
+        permissionUtil.askNotificationPermission()
+        NotifierManager.initialize(
+            configuration = NotificationPlatformConfiguration.Android(
+                notificationIconResId = R.drawable.amazonlogo,
+                showPushNotification = true
+            )
+        )
+        /*NotifierManager.addListener(object : NotifierManager.Listener {
+            override fun onNewToken(token: String) {
+                println("onNewToken: $token")
+            }
+        })
+        NotifierManager.addListener(object : NotifierManager.Listener {
+            override fun onPushNotificationWithPayloadData(title: String?, body: String?, data: PayloadData) {
+                println("Push Notification is received: Title: $title and Body: $body and Notification payloadData: $data")            }
+        })*/
+        NotifierManager.setLogger { message ->
+            println("NotifierManager: $message")
+        }
         setContent {
             val darkColor = Color.Transparent
             val lightColor = Color.Transparent

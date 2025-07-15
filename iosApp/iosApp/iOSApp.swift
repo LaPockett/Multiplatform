@@ -6,6 +6,10 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
   func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     FirebaseApp.configure()
+    NotifierManager.initialize(configuration: NotificationPlatformConfigurationIos(
+        showPushNotification: true,
+        notificationSoundName: nil
+    ))
       UNUserNotificationCenter.current().delegate = self
       let authOptions : UNAuthorizationOptions = [.alert, .badge, .sound]
       UNUserNotificationCenter.current().requestAuthorization(options: authOptions){ (_, error) in

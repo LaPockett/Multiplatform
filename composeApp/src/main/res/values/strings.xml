@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="msg_token_fmt">Mensaje de prueba</string>
+    <string name="msg_token_fmt">Mensaje de prueba desde local</string>
 </resources>
