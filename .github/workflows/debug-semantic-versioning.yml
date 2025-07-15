@@ -3,15 +3,12 @@ run-name: ${{ github.actor }} Debug Semantic Versioning
 on:
   push:
     branches: [master]
-  pull_request:
-    types: [closed]
 
 jobs:
   call-workflow:
     uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
   publish:
     needs: call-workflow
-    if: github.event.pull_request.merged == true || github.ref == 'refs/heads/master'
 
     runs-on: [self-hosted, Linux, X64]
     permissions:
