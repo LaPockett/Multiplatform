@@ -12,5 +12,7 @@
     </dict>
     <key>UILaunchStoryboardName</key>
     <string>SplashScreen</string>
+    <key>FirebaseAppDelegateProxyEnabled</key>
+    <false/>
 </dict>
 </plist>

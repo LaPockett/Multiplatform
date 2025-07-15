@@ -9,7 +9,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     id("org.jetbrains.kotlin.plugin.serialization") version "2.2.0-Beta1"
-
+    alias(libs.plugins.googleServices)
 }
 
 kotlin {
@@ -33,6 +33,7 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
+            export("io.github.mirzemehdi:kmpnotifier:1.5.1")
             baseName = "ComposeApp"
             isStatic = true
         }
@@ -55,6 +56,12 @@ kotlin {
             implementation(libs.ui.test.junit4)
             // Splash Screen
             implementation(libs.core.splashscreen)
+            // Firebase
+            implementation("com.google.firebase:firebase-bom:33.16.0")
+            //22.5.0
+            implementation("com.google.firebase:firebase-analytics-ktx:22.5.0")
+            implementation("com.google.firebase:firebase-common:21.0.0")
+            implementation("com.google.firebase:firebase-messaging-ktx:24.1.1")
         }
         commonMain.dependencies {
             // Ktor
@@ -94,6 +101,10 @@ kotlin {
             implementation("com.russhwolf:multiplatform-settings-test:1.3.0")
             implementation("com.russhwolf:multiplatform-settings-no-arg:1.3.0")
             implementation("org.jetbrains.compose.material:material-icons-core:1.7.3") // Icons.Default.Menu
+
+            //KMPNotification
+            api("io.github.mirzemehdi:kmpnotifier:1.5.1")
+
         }
         commonTest.dependencies {
             implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")

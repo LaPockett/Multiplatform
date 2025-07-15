@@ -24,6 +24,7 @@ roomRuntimeAndroid = "2.7.2"
 androidx-material = "1.12.0"
 lifecycleLivedataCoreKtx = "2.9.1"
 core-splashscreen = "1.2.0-beta02"
+google-services-plugin = "4.4.3"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -57,3 +58,5 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+
+googleServices = { id = "com.google.gms.google-services", version.ref = "google-services-plugin" }

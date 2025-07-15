@@ -1,6 +1,10 @@
 package com.dian.prueba.view
 
+import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
@@ -14,10 +18,38 @@ import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import com.dian.prueba.AppLogin
+import com.dian.prueba.R
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
+import com.mmk.kmpnotifier.notification.NotifierManager
+import com.mmk.kmpnotifier.notification.PayloadData
+import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
+import com.mmk.kmpnotifier.permission.permissionUtil
 
 class MainActivity : ComponentActivity() {
+    @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val permissionUtil by permissionUtil()
+        permissionUtil.askNotificationPermission()
+        NotifierManager.initialize(
+            configuration = NotificationPlatformConfiguration.Android(
+                notificationIconResId = R.drawable.amazonlogo,
+                showPushNotification = true
+            )
+        )
+        /*NotifierManager.addListener(object : NotifierManager.Listener {
+            override fun onNewToken(token: String) {
+                println("onNewToken: $token")
+            }
+        })
+        NotifierManager.addListener(object : NotifierManager.Listener {
+            override fun onPushNotificationWithPayloadData(title: String?, body: String?, data: PayloadData) {
+                println("Push Notification is received: Title: $title and Body: $body and Notification payloadData: $data")            }
+        })*/
+        NotifierManager.setLogger { message ->
+            println("NotifierManager: $message")
+        }
         setContent {
             val darkColor = Color.Transparent
             val lightColor = Color.Transparent
@@ -41,6 +73,17 @@ class MainActivity : ComponentActivity() {
                 window.navigationBarColor = Color.Transparent.toArgb()
                 WindowCompat.getInsetsController(window,view).isAppearanceLightNavigationBars = !isDarkTheme
             }
+            FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+                if (!task.isSuccessful) {
+                    Log.w(TAG, "Fetching FCM registration token failed", task.exception)
+                    return@OnCompleteListener
+                }
+                val token = task.result
+                //Log.d(TAG, token)
+                val msg = getString(R.string.msg_token_fmt, token)
+                Log.d(TAG, msg)
+                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+                })
             AppLogin()
         }
     }
