@@ -29,7 +29,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.dian.prueba.AppNavigation
-import com.dian.prueba.Platform
+import com.dian.prueba.PlatformType
+import com.dian.prueba.getPlatformType
 import com.dian.prueba.ui.screens.SettingsScreen
 import kotlinx.coroutines.launch
 
@@ -44,7 +45,7 @@ fun MenuDrawer(onLogout: () -> Unit) {
         drawerContent = {
             ModalDrawerSheet(modifier = Modifier.fillMaxHeight()) {
                 Column (
-                    modifier = if(Platform.isAndroid()){
+                    modifier = if(getPlatformType() === PlatformType.ANDROID){
                         Modifier.verticalScroll(rememberScrollState()).fillMaxHeight()
                     }else{
                         Modifier.fillMaxHeight()

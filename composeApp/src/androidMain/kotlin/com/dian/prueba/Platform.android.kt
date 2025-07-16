@@ -12,7 +12,8 @@ class AndroidPlatform : Platform {
 }
 
 actual fun getPlatform(): Platform = AndroidPlatform()
-actual val isAndroid: Boolean = true
+actual fun getPlatformType(): PlatformType = PlatformType.ANDROID
+
 
 /*actual fun createHttpClient(): HttpClient = HttpClient(OkHttp) {
     install(ContentNegotiation) {

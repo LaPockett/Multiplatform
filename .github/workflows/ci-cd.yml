@@ -197,7 +197,7 @@ jobs:
       - name: Upload Android release to the Play Store
         uses: r0adkll/upload-google-play@v1.1.3
         with:
-          serviceAccountJsonPlainTest: # Se agrega cuando se tenga el json
+          serviceAccountJsonPlainText: # Se agrega cuando se tenga el json
           releaseFiles: composeApp/build/outputs/apk/release
           packageName: com.dian.prueba
           track: production
@@ -227,7 +227,7 @@ jobs:
         run: |
           cd iosApp
           xcodebuild build
-      # Subo el artifacto del .app que se ha generado en el anterior paso
+      # Subo el artefacto del .app que se ha generado en el anterior paso
       - name: Upload app artifact
         uses: actions/upload-artifact@v4
         with:

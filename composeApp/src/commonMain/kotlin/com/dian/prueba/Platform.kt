@@ -2,17 +2,16 @@ package com.dian.prueba
 
 import io.ktor.client.HttpClient
 
+enum class PlatformType {
+    ANDROID,
+    IOS,
+}
+
 interface Platform {
     val name: String
-
-    companion object {
-        fun isAndroid(): Boolean {
-            return isAndroid
-        }
-    }
 }
 
 expect fun getPlatform(): Platform
-expect val isAndroid: Boolean
+expect fun getPlatformType(): PlatformType
 
 //expect fun createHttpClient(): HttpClient
