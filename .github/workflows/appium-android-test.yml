@@ -13,7 +13,7 @@ concurrency:
 jobs:
   call-workflow:
     if: github.event.pull_request.merged == true
-    uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
+    uses: LaPockett/Multiplatform/.github/workflows/setup-project.yml@master
 
   appium:
     if: github.event.pull_request.merged == true

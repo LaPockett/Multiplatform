@@ -33,45 +33,36 @@ kotlin {
         iosSimulatorArm64()
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
-            export("io.github.mirzemehdi:kmpnotifier:1.5.1")
+            export(libs.kmpnotifier)
             baseName = "ComposeApp"
             isStatic = true
         }
     }
-    val ktorVersion= "3.0.0"
     sourceSets {
 
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
 
-            // https://mvnrepository.com/artifact/io.ktor/ktor-serialization-kotlinx-json
-            //implementation("io.ktor:ktor-serialization-kotlinx-json:3.1.2")
-            // https://mvnrepository.com/artifact/io.ktor/ktor-client-content-negotiation
-            implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-            // https://mvnrepository.com/artifact/io.ktor/ktor-client-okhttp
-            implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+            // Ktor
+            implementation(libs.ktor.ktor.client.content.negotiation)
+            implementation(libs.ktor.client.okhttp)
 
             implementation(libs.kotlin.test)
             implementation(libs.ui.test.junit4)
             // Splash Screen
             implementation(libs.core.splashscreen)
             // Firebase
-            implementation("com.google.firebase:firebase-bom:33.16.0")
-            //22.5.0
-            implementation("com.google.firebase:firebase-analytics-ktx:22.5.0")
-            implementation("com.google.firebase:firebase-common:21.0.0")
-            implementation("com.google.firebase:firebase-messaging-ktx:24.1.1")
+            implementation(project.dependencies.platform(libs.firebase.bom))
+            implementation(libs.firebase.analytics.ktx)
+            implementation(libs.firebase.common)
+            implementation(libs.firebase.messaging.ktx)
         }
         commonMain.dependencies {
             // Ktor
-            // https://mvnrepository.com/artifact/io.ktor/ktor-client-core
-            implementation("io.ktor:ktor-client-core:$ktorVersion")
-            //implementation("org.jetbrains.kotlin:kotlin-serialization:2.2.0")
-            // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-serialization-json-jvm
-            //runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.8.1")
-            implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-            implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
 
             implementation(compose.material)
             implementation(compose.runtime)
@@ -83,40 +74,27 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtimeCompose)
             implementation(libs.androidx.navigation.compose)
-            // More dependencies
-            api("io.github.kevinnzou:compose-webview-multiplatform:1.9.40")
+            // Kevinn Zou WebView
+            api(libs.compose.webview.multiplatform)
             implementation(libs.play.services.appsearch)
 
-            //implementation ("androidx.compose.material:material-icons-extended:1.7.8")
+            // Russhwolf Settings
+            implementation(libs.multiplatform.settings)
+            implementation(libs.multiplatform.settings.test)
+            implementation(libs.multiplatform.settings.no.arg)
 
-            //https://github.com/russhwolf/multiplatform-settings
-            implementation("com.russhwolf:multiplatform-settings:1.3.0")
-            //implementation("com.russhwolf:multiplatform-settings-no-arg:1.3.0")
+            implementation(libs.material.icons.core) // Icons.Default.Menu
 
-            //Json Web Token
-            api("io.jsonwebtoken:jjwt-api:0.12.6")
-            implementation("io.jsonwebtoken:jjwt-impl:0.12.6")
-            implementation("io.jsonwebtoken:jjwt-orgjson:0.12.6")
-            //Russhwolf
-            implementation("com.russhwolf:multiplatform-settings-test:1.3.0")
-            implementation("com.russhwolf:multiplatform-settings-no-arg:1.3.0")
-            implementation("org.jetbrains.compose.material:material-icons-core:1.7.3") // Icons.Default.Menu
-
-            //KMPNotification
-            api("io.github.mirzemehdi:kmpnotifier:1.5.1")
+            // KMPNotifier
+            api(libs.kmpnotifier)
 
         }
         commonTest.dependencies {
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
+            implementation(libs.kotlinx.coroutines.test)
             implementation(libs.kotlin.test)
-            /*@OptIn(ExperimentalComposeLibrary::class)
-            implementation(compose.uiTest)
-            implementation(libs.ui.test.junit4)*/
-            //implementation(libs.ui.test.junit4)
-
         }
         iosMain.dependencies {
-            implementation("io.ktor:ktor-client-darwin:$ktorVersion")
+            implementation(libs.ktor.client.darwin)
         }
 
     }
@@ -131,7 +109,7 @@ android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     signingConfigs {
         create("release") {
-            storeFile = file("key.jks")
+            storeFile = file("multiplatform_keystore.jks")
             storePassword = System.getenv("ORG_GRADLE_PROJECT_storePassword") ?: ""
             keyAlias = System.getenv("ORG_GRADLE_PROJECT_keyAlias") ?: ""
             keyPassword = System.getenv("ORG_GRADLE_PROJECT_keyPassword")?: ""

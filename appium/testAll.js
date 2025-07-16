@@ -1,7 +1,7 @@
 const { remote } = require('webdriverio');
-const emptyLogin = require('./testEmptyLogin');
-const unsuccessfulLogin = require('./testUnsuccessfulLogin');
-const successfulLogin = require('./testSuccessfulLogin');
+const emptyLogin = require('./testLoginEmpty');
+const unsuccessfulLogin = require('./testLoginUnsuccessful');
+const successfulLogin = require('./testLoginSuccessful');
 const menuDrawer = require('./testMenuDrawer');
 const logout = require('./testLogout');
 

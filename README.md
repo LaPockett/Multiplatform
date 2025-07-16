@@ -1,5 +1,5 @@
 
-<h1 align="center"><img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3E4N3RzcjRxc3VvOWlzeG5qOHlqNHlqMXBkeGIwcjB4YnZmdzZiOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/fxTDiduVAhCgnNLaG2/giphy.gif" width="60"/>Proyecto Mock Multiplatform<img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3E4N3RzcjRxc3VvOWlzeG5qOHlqNHlqMXBkeGIwcjB4YnZmdzZiOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/fxTDiduVAhCgnNLaG2/giphy.gif" width="60"></h1>
+<h1 align="center"><img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3E4N3RzcjRxc3VvOWlzeG5qOHlqNHlqMXBkeGIwcjB4YnZmdzZiOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/fxTDiduVAhCgnNLaG2/giphy.gif" width="60"/>Proyecto Mock Multiplatform para iOS y Android<img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExN3E4N3RzcjRxc3VvOWlzeG5qOHlqNHlqMXBkeGIwcjB4YnZmdzZiOCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/fxTDiduVAhCgnNLaG2/giphy.gif" width="60"></h1>
 
 Este proyecto es una aplicación mock desarrollada con **Compose Multiplatform**. Fue creada con el objetivo de simular el comportamiento de una app real, incorporando pruebas automatizadas, flujos de trabajo, firma de la aplicación, principios de arquitectura, entre otros aspectos clave. No se ha tenido muy en cuenta el diseño de la interfaz de usuario y se ha basado en la aplicación móvil de **Amazon**.
 
@@ -12,17 +12,20 @@ Este tipo de problemas solo los ves cuando te enfrentas a ellos de verdad. Si er
 
 📝 *PD: Verás unos 300 (o cientos más) commits relacionados con workflows. ¡Fue parte del aprendizaje! (Se han solucionado con un **squash**)*
 
-## Algunas imágenes de la aplicación
-<img src= "images/captura1.jpg" width="300" height="700"/> <img src= "images/captura2.jpg" width="300" height="700"/>
+## Screenshots
+<img src= "docs/captura1.jpg" width="300" height="700"/> <img src= "docs/captura2.jpg" width="300" height="700"/>
 
-## Librerías principales 
-- API de prueba -> https://jsonplaceholder.typicode.com/
-- Navegación web para Multiplatform -> https://github.com/KevinnZou/compose-webview-multiplatform/tree/main
-- JUnit test -> https://mvnrepository.com/artifact/org.jetbrains.compose.ui/ui-test-junit4
-- Persistencia de datos -> https://github.com/russhwolf/multiplatform-settings
-- Ktor -> https://ktor.io/docs/client-serialization.html#register_cbor
-- Navigation Compose -> https://mvnrepository.com/artifact/org.jetbrains.androidx.navigation/navigation-compose
-- Appium para testing -> https://appium.io/docs/en/2.2/quickstart/
+## Tech Stack
+- [JSONPlaceholder](https://jsonplaceholder.typicode.com/) - API de prueba
+- [WebView](https://github.com/KevinnZou/compose-webview-multiplatform/tree/main) - Navegación Web para Multiplatform
+- [JUnit4](https://mvnrepository.com/artifact/org.jetbrains.compose.ui/ui-test-junit4) - JUnit testing
+- [Settings](https://github.com/russhwolf/multiplatform-settings) - Persistencia de datos Multiplatform
+- [Ktor](https://ktor.io/docs/client-serialization.html#register_cbor) - Networking library
+- [Navigation](https://mvnrepository.com/artifact/org.jetbrains.androidx.navigation/navigation-compose) - Multiplatform navigation 
+- [Appium para testing](https://appium.io/docs/en/2.2/quickstart/) - E2E testing 
+- [KMPNotifier](https://github.com/mirzemehdi/KMPNotifier?tab=readme-ov-file) - Multiplatform Push Notifications Library
+- [FCM](https://firebase.google.com/docs/cloud-messaging?hl=es-419) - Firebase Cloud Messaging for Notifications
+- [SplashScreen](https://developer.android.com/jetpack/androidx/releases/core?hl=es-419#core_splashscreen_version_12_2) - Launch Screen
 
 ## Conceptos que se han visto
 - [Git](https://learngitbranching.js.org/?locale=es_ES)
@@ -37,7 +40,9 @@ Este tipo de problemas solo los ves cuando te enfrentas a ellos de verdad. Si er
 - [Github Actions](https://docs.github.com/en/actions/writing-workflows/quickstart)
 - [Estructura MVVM](https://medium.com/@ashfaque-khokhar/android-mvvm-and-repositories-folder-structure-7de1a2dbb825)
 
-## Funcionalidades/
+## Features
+
+- **Multiplatform** (android and iOS)
 
 - **Simulador de Login con validación básica:** El usuario solo puede poner un email que contenga ‘@’ y un ‘.’ Mientras que la contraseña tiene que tener entre 6 y 20 caracteres. Cuando el usuario ingresa a la aplicación por primera vez ingresa un email y una contraseña, si no es válida le saldrá una alerta explicándole la validación, si el usuario no ingresa ningún dato le saldrá una alerta de que no se permiten campos vacíos. Finalmente, si el usuario ingresa credenciales válidas podrá ingresar a la aplicación (No se hacen nada con estas credenciales). Son 3 tipos de login: Valid, Invalid y Empty.
   
@@ -57,6 +62,6 @@ Este tipo de problemas solo los ves cuando te enfrentas a ellos de verdad. Si er
 Se implementa el patrón **MVVM (Model - View - ViewModel)**.
 
 ## Directory tree
-![Esquema](directory_tree.png)
+![Esquema](docs/directory_tree.png)
 
 > Árbol generado con: https://tree.nathanfriend.com/

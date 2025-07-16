@@ -1,3 +1,4 @@
+#No se usa, está deshabilitado en Github
 name: Build DEBUG iOS App Test
 run-name: ${{github.actor}} Build DEBUG iOS App Test
 

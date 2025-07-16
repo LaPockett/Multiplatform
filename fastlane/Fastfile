@@ -1,8 +1,0 @@
-default_platform(:ios)
-
-platform :ios do
-  desc "Build iOS debug"
-  lane :build_ios do
-    build_app(scheme: "iosApp")
-  end
-end

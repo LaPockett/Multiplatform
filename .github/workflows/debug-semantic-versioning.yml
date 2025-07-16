@@ -6,7 +6,7 @@ on:
 
 jobs:
   call-workflow:
-    uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
+    uses: LaPockett/Multiplatform/.github/workflows/setup-project.yml@master
   publish:
     needs: call-workflow
 

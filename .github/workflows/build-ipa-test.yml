@@ -1,3 +1,4 @@
+# No se usa, pero servirá cuando se haga deploy a iOS
 name: Build IPA test
 run-name: ${{github.actor}} Build IPA test
 on:
@@ -12,7 +13,7 @@ concurrency:
 
 jobs:
   call-workflow:
-    uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
+    uses: LaPockett/Multiplatform/.github/workflows/setup-project.yml@master
 
   build-ipa-ios:
     needs: call-workflow

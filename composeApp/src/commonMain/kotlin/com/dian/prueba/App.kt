@@ -44,10 +44,6 @@ import com.dian.prueba.utilities.UpdateStorageImpl
 import com.dian.prueba.viewModel.UpdateVM
 import com.russhwolf.settings.*
 
-//expo react native
-// cpu bench
-// mirar hot reload en Android Studio
-
 /**
  * NO SE USA
  */

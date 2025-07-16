@@ -1,5 +1,5 @@
-name: Setup - Lint, Unit Test and UI test
-run-name: ${{github.actor}} Setup - Lint, Unit Test and UI test
+name: Setup - lint, unit test, ui test, build apk and upload to play store/app store
+run-name: ${{github.actor}} Setup - lint, unit test, ui test, build apk and upload to play store/app store
 on:
   push:
 env:
@@ -12,20 +12,24 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  call-workflow:
-    uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
-
+  call-workflow-setup-project:
+    uses: LaPockett/Multiplatform/.github/workflows/setup-project.yml@master
+  # --------------------------
+  # Lint
+  # --------------------------
   lint:
-    needs: call-workflow
+    needs: call-workflow-setup-project
     runs-on: [self-hosted, Linux, X64]
     steps:
       - uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 0
       - run: ./gradlew lint --stacktrace
-
+  # --------------------------
+  # Unit Tests
+  # --------------------------
   unit-test:
-    needs: call-workflow
+    needs: call-workflow-setup-project
     runs-on: [self-hosted, Linux, X64]
     steps:
       - uses: actions/checkout@v4.2.2
@@ -33,9 +37,11 @@ jobs:
           fetch-depth: 0
 
       - run: ./gradlew testdebugUnitTest --stacktrace
-
+  # --------------------------
+  # User Interface Tests
+  # --------------------------
   ui-test:
-    needs: call-workflow
+    needs: call-workflow-setup-project
     runs-on: [self-hosted, Linux, X64]
     steps:
       - uses: actions/checkout@v4.2.2
@@ -48,6 +54,7 @@ jobs:
           adb kill-server
           adb start-server
 
+      # Permite la acelaración de la KVM para un rendimiento de emulador más rápido
       - uses: actions/checkout@v4.2.2
       - name: Enable KVM group perms
         run: |
@@ -65,7 +72,10 @@ jobs:
           script: |
             adb devices -l
             ./gradlew connectedAndroidTest --stacktrace
-
+            adb -s emulator-5554 emu kill || true
+  # --------------------------
+  # Get new version code and version name
+  # --------------------------
   prepare-deploy:
     needs: [lint, unit-test, ui-test]
     runs-on: [self-hosted, Linux, X64]
@@ -100,8 +110,10 @@ jobs:
         run: |
           echo -e "Version name is: ${{ env.VERSION_NAME }}"
           echo -e "Version code is: ${{ github.run_number }}"
-
-  build-apk:
+  # --------------------------
+  # Build and Android APK
+  # --------------------------
+  build-and-deploy-android-apk:
     needs: [unit-test, lint, ui-test, prepare-deploy]
     env:
       MOCK_APP_VERSION_NAME: ${{ needs.prepare-deploy.outputs.mobile_version_name }}
@@ -121,12 +133,12 @@ jobs:
 
       - name: Decode key from base64
         run: |
-          echo "${{ secrets.ANDROID_STORE_BASE64}}" | base64 -d > composeApp/key.jks
+          echo "${{ secrets.ANDROID_STORE_BASE64}}" | base64 -d > composeApp/multiplatform_keystore.jks
           ls -la composeApp/
 
       - name: Verify keystore (optional)
         run: |
-          keytool -list -v -keystore composeApp/key.jks -storepass ${{ secrets.ANDROID_STORE_PASSWORD }} -alias ${{ secrets.ANDROID_KEY_ALIAS }}
+          keytool -list -v -keystore composeApp/multiplatform_keystore.jks -storepass ${{ secrets.ANDROID_STORE_PASSWORD }} -alias ${{ secrets.ANDROID_KEY_ALIAS }}
         continue-on-error: true
       - run: find . -name "*jks"
 
@@ -139,7 +151,7 @@ jobs:
           ORG_GRADLE_PROJECT_storePassword: ${{ secrets.ANDROID_STORE_PASSWORD }}
           ORG_GRADLE_PROJECT_keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
           ORG_GRADLE_PROJECT_keyAlias: ${{ secrets.ANDROID_KEY_ALIAS }}
-          ORG_GRADLE_PROJECT_storeFile: composeApp/key.jks
+          ORG_GRADLE_PROJECT_storeFile: composeApp/multiplatform_keystore.jks
 
       - name: Build apk debug project ${{ env.MAIN_PROJECT_MODULE }}
         run: ./gradlew :composeApp:assembleDebug --stacktrace
@@ -147,8 +159,9 @@ jobs:
           ORG_GRADLE_PROJECT_storePassword: ${{ secrets.ANDROID_STORE_PASSWORD }}
           ORG_GRADLE_PROJECT_keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
           ORG_GRADLE_PROJECT_keyAlias: ${{ secrets.ANDROID_KEY_ALIAS }}
-          ORG_GRADLE_PROJECT_storeFile: composeApp/key.jks
+          ORG_GRADLE_PROJECT_storeFile: composeApp/multiplatform_keystore.jks
 
+      # Para Debug, se podría eliminar
       - name: Find the APK
         id: find_apk
         run: |
@@ -190,8 +203,10 @@ jobs:
           track: production
         env:
           BUILD_TOOLS_VERSION: "30.0.2"
-
-  build_debug_ios_app:
+  # --------------------------
+  # Build and deploy iOS APP
+  # --------------------------
+  build-and-deploy-ios-app:
     needs: [unit-test, lint, ui-test, prepare-deploy]
     env:
       MOCK_APP_VERSION_NAME: ${{ needs.prepare-deploy.outputs.mobile_version_name }}
@@ -212,13 +227,14 @@ jobs:
         run: |
           cd iosApp
           xcodebuild build
-
+      # Subo el artifacto del .app que se ha generado en el anterior paso
       - name: Upload app artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PLAYSTORE_NAME }} - ${{ env.MOCK_APP_VERSION_NAME }} - iOS APP Debug generated
           path: /Users/diandev/actions-runner/_work/Multiplatform/Multiplatform/iosApp/build/Debug-iphoneos/KotlinProjectPrueba.app
 
+      # Se sube antes a TestFlight para que la app pueda ser probada antes del lanzamiento oficial a la App Store
       - name: Upload App to TestFlight
         uses: Apple-Actions/upload-testflight-build@v3.0.0
         with:

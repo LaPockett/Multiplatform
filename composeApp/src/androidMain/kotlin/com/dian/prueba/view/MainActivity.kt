@@ -22,7 +22,6 @@ import com.dian.prueba.R
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mmk.kmpnotifier.notification.NotifierManager
-import com.mmk.kmpnotifier.notification.PayloadData
 import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
 import com.mmk.kmpnotifier.permission.permissionUtil
 
@@ -30,23 +29,17 @@ class MainActivity : ComponentActivity() {
     @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //Ask for notification permission
         val permissionUtil by permissionUtil()
         permissionUtil.askNotificationPermission()
+        //Initialize NotifierManager from KMPNotifier
         NotifierManager.initialize(
             configuration = NotificationPlatformConfiguration.Android(
                 notificationIconResId = R.drawable.amazonlogo,
                 showPushNotification = true
             )
         )
-        /*NotifierManager.addListener(object : NotifierManager.Listener {
-            override fun onNewToken(token: String) {
-                println("onNewToken: $token")
-            }
-        })
-        NotifierManager.addListener(object : NotifierManager.Listener {
-            override fun onPushNotificationWithPayloadData(title: String?, body: String?, data: PayloadData) {
-                println("Push Notification is received: Title: $title and Body: $body and Notification payloadData: $data")            }
-        })*/
+        //To see internal logs of NotifierManager
         NotifierManager.setLogger { message ->
             println("NotifierManager: $message")
         }
@@ -54,32 +47,37 @@ class MainActivity : ComponentActivity() {
             val darkColor = Color.Transparent
             val lightColor = Color.Transparent
             val isDarkTheme = isSystemInDarkTheme()
+            // Enable edge-to-edge display (content extends behind system bars)
             enableEdgeToEdge(
+                // Status bar style: dark/light based on theme with transparent background
                 statusBarStyle = if (!isDarkTheme){
                     SystemBarStyle.dark(darkColor.hashCode())
                 } else SystemBarStyle.light(lightColor.hashCode(), lightColor.hashCode()),
+                // Navigation bar style: same logic as status bar
                 navigationBarStyle = if (!isDarkTheme){
                     SystemBarStyle.dark(darkColor.hashCode())
                 } else SystemBarStyle.light(lightColor.hashCode(), lightColor.hashCode())
             )
-            /**
-             * Esto es para que los datos del status bar se vean dependiendo del tema
-             */
+
             val view= LocalView.current
             SideEffect {
                 val window = (view.context as ComponentActivity).window
+                //Makes status bar transparent
                 window.statusBarColor = Color.Transparent.toArgb()
+                //Adjusts icons (light/dark) based on theme
                 WindowCompat.getInsetsController(window,view).isAppearanceLightStatusBars = !isDarkTheme
+                //Same configuration for navigation bar
                 window.navigationBarColor = Color.Transparent.toArgb()
                 WindowCompat.getInsetsController(window,view).isAppearanceLightNavigationBars = !isDarkTheme
             }
+            //To get fcm token and send a local test notification
             FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
                     Log.w(TAG, "Fetching FCM registration token failed", task.exception)
                     return@OnCompleteListener
                 }
                 val token = task.result
-                //Log.d(TAG, token)
+                //Log.d(TAG, token) -> FCM token
                 val msg = getString(R.string.msg_token_fmt, token)
                 Log.d(TAG, msg)
                 Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()

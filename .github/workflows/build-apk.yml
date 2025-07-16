@@ -1,3 +1,4 @@
+#No se usa, está deshabilitado en Github
 name: Build APK release/debug
 run-name: ${{github.actor}} Build apk release/debug
 on:

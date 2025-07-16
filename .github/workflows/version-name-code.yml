@@ -1,4 +1,5 @@
 #Lo dejo aquí como ejemplo, pero no se usa
+# Está deshabilitado en GitHub
 name: Version name and version code
 run-name: ${{github.actor}} Version name and version code
 on:
@@ -6,7 +7,7 @@ on:
 
 jobs:
   call-workflow:
-    uses: LaPockett/Multiplatform/.github/workflows/setup.yml@master
+    uses: LaPockett/Multiplatform/.github/workflows/setup-project.yml@master
 
   prepare-deploy:
     needs: call-workflow
