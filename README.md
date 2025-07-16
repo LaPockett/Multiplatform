@@ -13,7 +13,7 @@ Este tipo de problemas solo los ves cuando te enfrentas a ellos de verdad. Si er
 📝 *PD: Verás unos 300 (o cientos más) commits relacionados con workflows. ¡Fue parte del aprendizaje! (Se han solucionado con un **squash**)*
 
 ## Screenshots
-<img src= "docs/captura1.jpg" width="300" height="700"/> <img src= "docs/captura2.jpg" width="300" height="700"/>
+<img src= "docs/screens.png" />
 
 ## Tech Stack
 - [JSONPlaceholder](https://jsonplaceholder.typicode.com/) - API de prueba
