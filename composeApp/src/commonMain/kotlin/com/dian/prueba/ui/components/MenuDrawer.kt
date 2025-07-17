@@ -44,6 +44,11 @@ fun MenuDrawer(onLogout: () -> Unit) {
         drawerState = drawerState,
         drawerContent = {
             ModalDrawerSheet(modifier = Modifier.fillMaxHeight()) {
+                /**
+                 * This is done this way because iOS saves the scroll, while Android doesn´t.
+                 * If the same code were left, it would conflict wit the iOS platform and the
+                 * drawer would appear apparently empty.
+                 */
                 Column (
                     modifier = if(getPlatformType() === PlatformType.ANDROID){
                         Modifier.verticalScroll(rememberScrollState()).fillMaxHeight()

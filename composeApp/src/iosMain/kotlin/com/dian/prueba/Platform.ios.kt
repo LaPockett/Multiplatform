@@ -14,6 +14,7 @@ class IOSPlatform: Platform {
 actual fun getPlatform(): Platform = IOSPlatform()
 
 actual fun getPlatformType(): PlatformType = PlatformType.IOS
+// Code in case you want to separate it by platform
 /*actual fun createHttpClient(): HttpClient = HttpClient(Darwin) {
     install(ContentNegotiation) {
         json(Json {

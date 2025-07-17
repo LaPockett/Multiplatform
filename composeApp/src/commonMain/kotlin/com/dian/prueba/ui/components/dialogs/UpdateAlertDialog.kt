@@ -39,6 +39,9 @@ fun UpdateAlertDialog(viewModel: UpdateVM = viewModel()) {
         text = { Text(text = "Versión actual: ${updateInfo.currentVersion} Hay una nueva versión disponible de la aplicación: ${updateInfo.newVersion}. Es obligatorio actualizar") },
         confirmButton = {
             Button(onClick = {
+                /**
+                 * Redirect to App Store or Google Play Store depending on the platform
+                 */
                 if (getPlatformType() == PlatformType.ANDROID){
                     uriHandler.openUri("https://play.google.com/store/apps/details?id=com.amazon.mShop.android.shopping&hl=es&pli=1")
                 } else {

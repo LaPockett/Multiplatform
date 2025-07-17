@@ -14,7 +14,7 @@ class AndroidPlatform : Platform {
 actual fun getPlatform(): Platform = AndroidPlatform()
 actual fun getPlatformType(): PlatformType = PlatformType.ANDROID
 
-
+// Code in case you want to separate it by platform
 /*actual fun createHttpClient(): HttpClient = HttpClient(OkHttp) {
     install(ContentNegotiation) {
         json(Json {

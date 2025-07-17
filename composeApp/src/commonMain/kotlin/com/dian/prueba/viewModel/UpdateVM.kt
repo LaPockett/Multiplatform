@@ -7,6 +7,10 @@ import com.dian.prueba.utilities.Logger
 import com.dian.prueba.utilities.UpdateStorage
 import kotlinx.coroutines.flow.MutableStateFlow
 
+/**
+ * ViewModel para manejar la lógica del diálogo de actualización de la aplicación,
+ * y que además se comunica con UpdateStorage.
+ */
 class UpdateVM (
     private val updateStorage: UpdateStorage,
     private val apiService: ApiService

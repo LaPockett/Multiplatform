@@ -10,7 +10,6 @@ import com.dian.prueba.viewModel.LoginVM
 import androidx.navigation.compose.composable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
@@ -26,7 +25,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.*
@@ -43,6 +41,10 @@ import com.dian.prueba.utilities.TokenStorageImpl
 import com.dian.prueba.utilities.UpdateStorageImpl
 import com.dian.prueba.utilities.Resultado
 import com.russhwolf.settings.Settings
+/**
+ * THe following two lines appear in red from time to time. It's not a error,
+ * it's just a bug. You just need to clean and build project or forget about it :)
+ */
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.amazon_logo
 import org.jetbrains.compose.resources.painterResource
@@ -67,7 +69,7 @@ fun LoginScreen(navController: NavHostController){
                 )
             )
         }
-        // No se hará nada con el email del usuario
+        // Nothing will be done with the user's credentials
         var email by remember { mutableStateOf("") }
         var password by remember { mutableStateOf("") }
         val logger = Logger("LoginScreen")
@@ -90,7 +92,7 @@ fun LoginScreen(navController: NavHostController){
                     Column (
                         horizontalAlignment = Alignment.CenterHorizontally
                     ){
-                        // En vez de solo poner 'R', se pone 'Res'
+                        // Instead of just typing 'R', you type 'Res'
                         Image(
                             painter = painterResource(Res.drawable.amazon_logo),
                             contentDescription = "Logo de Amazon",
@@ -104,6 +106,10 @@ fun LoginScreen(navController: NavHostController){
                             value = email,
                             onValueChange = {email = it},
                             label = { Text("Email") },
+                            /**
+                             * It's recommended to specify the keyboard type:
+                             * - In this case it shows you the emails that exist on your device (apparently only in Android)
+                             */
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Email
                             ),
@@ -115,16 +121,20 @@ fun LoginScreen(navController: NavHostController){
                         Spacer(
                             modifier = Modifier.padding(16.dp)
                         )
+
                         OutlinedTextField(
                             value = password,
                             onValueChange = {password = it},
                             label = {Text("Contraseña")},
                             colors = OutlinedTextFieldDefaults.colors(
-                                // Color crema más claro #f7f4f0
                                 unfocusedBorderColor = Color(0xFF626D8B),
                                 focusedBorderColor = Color(0xFFf7f4f0)
                             ),
                             visualTransformation = PasswordVisualTransformation(),
+                            /**
+                             * It's recommended to specify the keyboard type:
+                             * - In this case it doesn't show the password that the user writes
+                             */
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Password
                             ),
@@ -202,7 +212,7 @@ fun LoginScreen(navController: NavHostController){
             }
             composable(route = "MenuDrawer"){
                 MenuDrawer(onLogout = {
-                    navController.navigate("login"){
+                    navController.navigate(Screen.Login.route){
                         popUpTo(0){inclusive = true}
                     }
                 })

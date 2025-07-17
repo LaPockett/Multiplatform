@@ -13,5 +13,5 @@ interface Platform {
 
 expect fun getPlatform(): Platform
 expect fun getPlatformType(): PlatformType
-
+// Other way to use Ktor in Android and iOS
 //expect fun createHttpClient(): HttpClient

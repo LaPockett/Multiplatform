@@ -4,7 +4,7 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
-	<!-- Lo que sería equivalente a los permisos en AndroidManifest -->
+	<!-- Which would be equivalent to the permissions in AndroidManifest -->
     <key>NSAppTransportSecurity</key>
     <dict>
         <key>NSAllowsArbitraryLoads</key>

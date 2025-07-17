@@ -2,6 +2,9 @@ package com.dian.prueba.HeaderManager
 
 import com.dian.prueba.utilities.Logger
 
+/**
+ * Handle headers for webview
+ */
 object WebViewHeaderManager {
 
     private val headers: MutableMap<String, String> = mutableMapOf()

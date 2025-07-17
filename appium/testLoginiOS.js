@@ -5,14 +5,16 @@ const capabilities = {
     'appium:automationName': 'XCUITest',
     'appium:deviceName': 'iPhone',
     'appium:platformVersion': '18.5',
+    // Route to find Bundle ID: In Xcode -> target <NAME> -> General -> Identity
     'appium:app': 'org.example.project.KotlinProjectPrueba',
+    // Route to find UDID: Xcode -> Window -> Devices and Simulators
     'appium:udid': 'AEB7BBD1-B10A-484A-95A0-C86EE3D72C3F',
     'appium:autoAcceptAlerts': true,
     'appium:clearSystemFiles': true,
     'appium:autoGrantPermissions': true,
     'appium:showXcodeLog': true,
-    'appium:noReset': false,
-    'appium:fullReset': false
+    'appium:noReset': false, // If true, instruct an Appium driver to avoid its usual reset logic during session start and cleanup (default false)
+    'appium:fullReset': false // If true, instruct an Appium driver to augment its usual reset logic with additional steps to ensure maximum environmental reproducibility (default false)
 };
 const wdOpts = {
     hostname: process.env.APPIUM_HOST || 'localhost',

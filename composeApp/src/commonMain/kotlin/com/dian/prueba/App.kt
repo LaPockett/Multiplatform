@@ -100,6 +100,10 @@ fun App() {
 
 @Composable
 fun AppLogin() {
+    /**
+     * You are first checked to see if you are logged in, using tokens to redirect you
+     * to the login screen or the menu drawer that contains the main application.
+     */
     MaterialTheme {
         val logger = Logger("AppLogin")
         val settings = Settings()
@@ -121,6 +125,11 @@ fun AppLogin() {
             logger.debug(WebViewHeaderManager.getHeaders().toString())
             logger.warn("Ingresando a MenuDrawer")
             MenuDrawer(onLogout = {
+                /**
+                 * It’s used to remove destinations from the back stack when navigating to another destination.
+                 * If the user is logged, the user will be redirected to the MenuDrawer screen and couldn’t go
+                 * back to the login screen.
+                 */
                 navController.navigate(Screen.Login.route) {
                     popUpTo(0) { inclusive = true }
                 }
@@ -164,8 +173,10 @@ fun AppNavigation(onLogout: () -> Unit) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            // Para que el bottomBar no salga en la pantalla de Profile (Account) y en LoginScreen,
-            // pero sí en las demás pantallas
+            /**
+             * Para que el bottomBar no salga en la pantalla de Profile (Account) y en LoginScreen,
+             * pero sí en las demás pantallas
+             */
             if (showBars) {
                 BottomNavigationBar(navController)
             }

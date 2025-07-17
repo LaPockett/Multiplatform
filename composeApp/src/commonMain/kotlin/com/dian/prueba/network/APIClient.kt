@@ -24,9 +24,8 @@ class APIClient (
 ) : ApiService {
     private val logger = Logger("APIClient")
     private var _loginToken: String? = null
-    val loginToken: String? get() {
-        return _loginToken
-    }
+
+    // Essential line in case you want to use expect/actual for Ktor
     //private val client = createHttpClient()
 
     private val client = HttpClient {

@@ -8,6 +8,10 @@ import com.dian.prueba.model.Tokens
 import com.dian.prueba.repository.LoginRepository
 import com.dian.prueba.utilities.TokenStorage
 
+/**
+ * ViewModel para manejar la lógica de la pantalla de inicio de sesión,
+ * y que además se comunica con TokenStorage para cargar y limpiar los tokens.
+ */
 class LoginVM(
     private val loginRepository:LoginRepository,
     private val tokenStorage: TokenStorage
@@ -35,7 +39,6 @@ class LoginVM(
                 logger.debug(t.toString())
             }
         }
-
     }
 
     fun loadSavedTokens() {

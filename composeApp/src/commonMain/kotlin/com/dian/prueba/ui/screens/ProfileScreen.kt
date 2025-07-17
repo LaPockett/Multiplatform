@@ -5,7 +5,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.*
@@ -67,7 +66,6 @@ fun ProfileScreen(navController: NavController, onLogout: () -> Unit) {
                 onLogout()
             },
             colors = ButtonDefaults.buttonColors(
-                // Color crema #b7af98
                 backgroundColor = Color.Red,
                 contentColor = Color.White
             ),

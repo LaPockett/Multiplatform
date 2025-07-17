@@ -8,9 +8,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
-/**
- * Esto
- */
 class AlertDialogLoginKtTest {
     @get:Rule
     val composeTestRule = createComposeRule()

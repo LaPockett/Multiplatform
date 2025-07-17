@@ -36,7 +36,7 @@ class FakeTokenStorage : TokenStorage {
     }
 }
 // https://stackoverflow.com/questions/58303961/kotlin-coroutine-unit-test-fails-with-module-with-the-main-dispatcher-had-faile
-class MainDispatcherRule(
+class MainDispatcherRule @OptIn(ExperimentalCoroutinesApi::class) constructor(
     private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
 ) : TestWatcher() {
     @OptIn(ExperimentalCoroutinesApi::class)

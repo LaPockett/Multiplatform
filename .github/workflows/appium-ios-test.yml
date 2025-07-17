@@ -1,3 +1,6 @@
+# -------
+# In use
+# -------
 name: GitHub Actions - Appium iOS Tests
 run-name: ${{ github.actor }} Appium iOS Tests
 on:
