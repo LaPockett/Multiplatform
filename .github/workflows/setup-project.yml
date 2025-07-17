@@ -10,6 +10,7 @@ env:
 jobs:
   setup:
     runs-on: [self-hosted, Linux, X64]
+    timeout-minutes: 6
     steps:
       - name: Checkout Project
         uses: actions/checkout@v4.2.2

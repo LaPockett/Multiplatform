@@ -19,6 +19,7 @@ jobs:
     if: github.event.pull_request.merged == true
     needs: call-workflow
     runs-on: self-hosted
+    timeout-minutes: 6
     steps:
       - name: Checkout Project
         uses: actions/checkout@v4.2.2

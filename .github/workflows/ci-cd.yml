@@ -20,6 +20,7 @@ jobs:
   lint:
     needs: call-workflow-setup-project
     runs-on: [self-hosted, Linux, X64]
+    timeout-minutes: 6
     steps:
       - uses: actions/checkout@v4.2.2
         with:
@@ -31,6 +32,7 @@ jobs:
   unit-test:
     needs: call-workflow-setup-project
     runs-on: [self-hosted, Linux, X64]
+    timeout-minutes: 6
     steps:
       - uses: actions/checkout@v4.2.2
         with:
@@ -43,6 +45,7 @@ jobs:
   ui-test:
     needs: call-workflow-setup-project
     runs-on: [self-hosted, Linux, X64]
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4.2.2
         with:
@@ -79,6 +82,7 @@ jobs:
   prepare-deploy:
     needs: [lint, unit-test, ui-test]
     runs-on: [self-hosted, Linux, X64]
+    timeout-minutes: 4
     outputs:
       mobile_version_name: ${{ steps.set-output.outputs.versionName }}
       mobile_version_code: ${{ steps.set-output.outputs.versionCode}}
@@ -120,6 +124,7 @@ jobs:
 
     if: success() && github.ref == 'refs/heads/master'
     runs-on: [self-hosted, Linux, X64]
+    timeout-minutes: 6
     steps:
       - uses: actions/checkout@v4.2.2
         with:
@@ -213,6 +218,7 @@ jobs:
 
     if: success() && github.ref == 'refs/heads/master'
     runs-on: macos-self-hosted
+    timeout-minutes: 6
 
     steps:
       - name: Checkout repository

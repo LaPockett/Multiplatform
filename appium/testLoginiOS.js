@@ -11,7 +11,7 @@ const capabilities = {
     'appium:clearSystemFiles': true,
     'appium:autoGrantPermissions': true,
     'appium:showXcodeLog': true,
-    'appium:noReset': true,
+    'appium:noReset': false,
     'appium:fullReset': false
 };
 const wdOpts = {
@@ -28,7 +28,10 @@ async function runTestLogin() {
 
     try {
         driver = await remote(wdOpts);
-
+        await driver.activateApp('org.example.project.KotlinProjectPrueba');
+        await driver.execute('mobile: clearApp', {
+                bundleId: 'org.example.project.KotlinProjectPrueba'
+        });
         await driver.pause(1000);
 
         const emailField = await driver.$('//XCUIElementTypeApplication[@name="KotlinProjectPrueba"]/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeTextView[1]');
@@ -56,10 +59,6 @@ async function runTestLogin() {
             await exploreScreen.waitForDisplayed({timeout: 5000});
             exploreScreen.click();
             await driver.pause(5000)
-
-            await driver.execute('mobile: clearApp', {
-                bundleId: 'org.example.project.KotlinProjectPrueba'
-            });
 
         }
     } catch (error) {
