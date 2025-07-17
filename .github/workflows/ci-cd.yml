@@ -233,7 +233,7 @@ jobs:
         run: |
           cd iosApp
           xcodebuild -list
-          xcodebuild build -scheme iosApp build
+          xcodebuild -scheme iosApp build
       # Subo el artefacto del .app que se ha generado en el anterior paso
       - name: Upload app artifact
         uses: actions/upload-artifact@v4
