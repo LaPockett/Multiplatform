@@ -6,12 +6,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.rememberNavController
 import com.dian.prueba.viewModel.LoginVM
 import androidx.navigation.compose.composable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.icons.Icons
@@ -23,14 +23,11 @@ import androidx.compose.runtime.mutableStateOf
 import com.dian.prueba.utilities.Logger
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PathSegment
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.semantics.SemanticsProperties.ImeAction
-import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.*
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -103,13 +100,13 @@ fun LoginScreen(navController: NavHostController){
                         Spacer(
                             modifier = Modifier.padding(16.dp)
                         )
-                        val keyboardController = LocalSoftwareKeyboardController.current
                         OutlinedTextField(
                             value = email,
                             onValueChange = {email = it},
                             label = { Text("Email") },
-                            keyboardActions = KeyboardActions(
-                                onDone = {keyboardController?.hide()}),
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Email
+                            ),
                             colors = OutlinedTextFieldDefaults.colors(
                                 unfocusedBorderColor = Color(0xFF626D8B),
                                 focusedBorderColor = Color(0xFFf7f4f0)
@@ -127,8 +124,11 @@ fun LoginScreen(navController: NavHostController){
                                 unfocusedBorderColor = Color(0xFF626D8B),
                                 focusedBorderColor = Color(0xFFf7f4f0)
                             ),
-                            visualTransformation = PasswordVisualTransformation()
-                        )
+                            visualTransformation = PasswordVisualTransformation(),
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Password
+                            ),
+                            )
                         Spacer(
                             modifier = Modifier.padding(16.dp)
                         )
