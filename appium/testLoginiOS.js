@@ -28,10 +28,6 @@ async function runTestLogin() {
 
     try {
         driver = await remote(wdOpts);
-        await driver.activateApp('org.example.project.KotlinProjectPrueba');
-        await driver.execute('mobile: clearApp', {
-                bundleId: 'org.example.project.KotlinProjectPrueba'
-        });
         await driver.pause(1000);
 
         const emailField = await driver.$('//XCUIElementTypeApplication[@name="KotlinProjectPrueba"]/XCUIElementTypeWindow[1]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeOther[3]/XCUIElementTypeOther/XCUIElementTypeOther/XCUIElementTypeTextView[1]');
@@ -78,6 +74,9 @@ async function runTestLogin() {
     } finally {
         if (driver){
             try {
+                await driver.execute('mobile: clearApp', {
+                    bundleId: 'org.example.project.KotlinProjectPrueba'
+                });
                 await driver.terminateApp('org.example.project.KotlinProjectPrueba');
                 await driver.deleteSession();
                 console.log('Sesión eliminada con éxito');
