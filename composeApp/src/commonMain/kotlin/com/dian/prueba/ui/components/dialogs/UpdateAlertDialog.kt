@@ -13,6 +13,8 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.dian.prueba.PlatformType
+import com.dian.prueba.getPlatformType
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.viewModel.UpdateVM
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -37,7 +39,11 @@ fun UpdateAlertDialog(viewModel: UpdateVM = viewModel()) {
         text = { Text(text = "Versión actual: ${updateInfo.currentVersion} Hay una nueva versión disponible de la aplicación: ${updateInfo.newVersion}. Es obligatorio actualizar") },
         confirmButton = {
             Button(onClick = {
-                uriHandler.openUri("https://play.google.com/store/apps/details?id=com.amazon.mShop.android.shopping&hl=es&pli=1")
+                if (getPlatformType() == PlatformType.ANDROID){
+                    uriHandler.openUri("https://play.google.com/store/apps/details?id=com.amazon.mShop.android.shopping&hl=es&pli=1")
+                } else {
+                    uriHandler.openUri("https://apps.apple.com/es/app/amazon-compras/id335187483")
+                }
                 viewModel.doUpdate()
                 //viewModel.showUpdateDialog.value = false
             }, modifier = Modifier.testTag("updateButton"),
