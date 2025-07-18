@@ -10,28 +10,23 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
+import com.airbnb.android.showkase.annotation.ShowkaseRoot
+import com.airbnb.android.showkase.annotation.ShowkaseRootModule
+import com.airbnb.android.showkase.models.Showkase
 import com.dian.prueba.AppLogin
 import com.dian.prueba.R
-import com.dian.prueba.ui.screens.ScrollRowAmazon
-import com.dian.prueba.ui.screens.SearchBarAmazon
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mmk.kmpnotifier.notification.NotifierManager
 import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
 import com.mmk.kmpnotifier.permission.permissionUtil
-
+@ShowkaseRoot
+class MyRootModule: ShowkaseRootModule
 class MainActivity : ComponentActivity() {
     @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,6 +46,7 @@ class MainActivity : ComponentActivity() {
             println("NotifierManager: $message")
         }
         setContent {
+            startActivity(Showkase.getBrowserIntent(this))
             val darkColor = Color.Transparent
             val lightColor = Color.Transparent
             val isDarkTheme = isSystemInDarkTheme()
@@ -92,41 +88,4 @@ class MainActivity : ComponentActivity() {
             AppLogin()
         }
     }
-}
-
-@Composable
-fun AppAndroidPreview() {
-    AppLogin()
-}
-
-@Preview(
-    showBackground = true,
-    name = "Text Preview"
-)
-@Composable
-fun TextPreview() {
-    Button(
-        modifier = Modifier.padding(start = 20.dp, top = 10.dp),
-        onClick = {
-        }
-    ) {
-        Text("Next activity")
-    }
-}
-@Preview
-@Composable
-fun CallToPreview() {
-    ScrollRowAmazon()
-}
-
-@Preview
-@Composable
-fun CallToPreview2() {
-    SearchBarAmazon(
-        query = "Mesa",
-        onQueryChange = { newQuery -> },
-        onSearch = { query -> },
-        active = true,
-        onActiveChange = { active -> }
-    )
 }

@@ -11,6 +11,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "2.2.0-Beta1"
     // For Firebase use
     alias(libs.plugins.googleServices)
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -58,6 +59,9 @@ kotlin {
             implementation(libs.firebase.analytics.ktx)
             implementation(libs.firebase.common)
             implementation(libs.firebase.messaging.ktx)
+            // ShowKase Airbnb
+            implementation("com.airbnb.android:showkase:1.0.4")
+            implementation("com.airbnb.android:showkase-annotation:1.0.4")
         }
         commonMain.dependencies {
             // Ktor
@@ -161,5 +165,6 @@ dependencies {
     implementation(libs.play.services.appsearch)
     implementation(libs.androidx.room.runtime.android)
     implementation(libs.androidx.lifecycle.livedata.core.ktx)
+    add("ksp", "com.airbnb.android:showkase-processor:1.0.4")
 }
 
