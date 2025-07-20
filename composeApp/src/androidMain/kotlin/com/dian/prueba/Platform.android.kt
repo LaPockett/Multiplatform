@@ -10,8 +10,6 @@ import kotlinx.serialization.json.Json
 class AndroidPlatform : Platform {
     override val name: String = "Android ${Build.VERSION.SDK_INT}"
 }
-
-actual fun getPlatform(): Platform = AndroidPlatform()
 actual fun getPlatformType(): PlatformType = PlatformType.ANDROID
 
 // Code in case you want to separate it by platform

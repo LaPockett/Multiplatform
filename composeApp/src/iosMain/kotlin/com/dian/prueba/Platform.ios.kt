@@ -11,8 +11,6 @@ class IOSPlatform: Platform {
     override val name: String = UIDevice.currentDevice.systemName() + " " + UIDevice.currentDevice.systemVersion
 }
 
-actual fun getPlatform(): Platform = IOSPlatform()
-
 actual fun getPlatformType(): PlatformType = PlatformType.IOS
 // Code in case you want to separate it by platform
 /*actual fun createHttpClient(): HttpClient = HttpClient(Darwin) {
