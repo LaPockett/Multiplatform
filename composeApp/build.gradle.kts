@@ -1,8 +1,10 @@
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 
 plugins {
+    alias(libs.plugins.composeHotReload)
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
@@ -40,9 +42,19 @@ kotlin {
             isStatic = true
         }
     }
+    jvm("desktop")
     sourceSets {
-
+        val desktopMain by getting
         androidMain.dependencies {
+            implementation(libs.androidx.navigation.runtime.android)
+            implementation(compose.material)
+            implementation(libs.androidx.material3.android)
+            implementation(libs.play.services.appsearch)
+            implementation(libs.androidx.room.runtime.android)
+            implementation(libs.androidx.lifecycle.livedata.core.ktx)
+            implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.androidx.lifecycle.runtimeCompose)
+
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
 
@@ -64,6 +76,8 @@ kotlin {
             implementation("com.airbnb.android:showkase-annotation:1.0.4")
         }
         commonMain.dependencies {
+            implementation(libs.androidx.navigation.compose)
+
             // Ktor
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.ktor.client.content.negotiation)
@@ -76,12 +90,9 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
-            implementation(libs.androidx.navigation.compose)
+
             // Kevinn Zou WebView
             api(libs.compose.webview.multiplatform)
-            implementation(libs.play.services.appsearch)
 
             // Russhwolf Settings
             implementation(libs.multiplatform.settings)
@@ -99,9 +110,13 @@ kotlin {
             implementation(libs.kotlin.test)
         }
         iosMain.dependencies {
+            implementation(libs.play.services.appsearch)
             implementation(libs.ktor.client.darwin)
         }
-
+        desktopMain.dependencies {
+            implementation(compose.desktop.currentOs)
+            implementation(libs.kotlinx.coroutinesSwing)
+        }
     }
 }
 compose.resources{
@@ -158,13 +173,26 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
-    implementation(libs.androidx.navigation.runtime.android)
-    implementation(libs.androidx.navigation.compose)
-    implementation(compose.material)
-    implementation(libs.androidx.material3.android)
-    implementation(libs.play.services.appsearch)
-    implementation(libs.androidx.room.runtime.android)
-    implementation(libs.androidx.lifecycle.livedata.core.ktx)
     add("ksp", "com.airbnb.android:showkase-processor:1.0.4")
 }
 
+compose.desktop {
+    application {
+        mainClass = "com.dian.prueba.MainKt"
+
+        nativeDistributions {
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+            packageName = "com.dian.prueba"
+            packageVersion = "1.0.0"
+            jvmArgs("-Djcef.helper.path=./jcef_helper")
+            jvmArgs("-Djcef.gpu.disable=true")
+        }
+        jvmArgs("--add-opens", "java.desktop/sun.awt=ALL-UNNAMED")
+        jvmArgs("--add-opens", "java.desktop/java.awt.peer=ALL-UNNAMED") // recommended but not necessary
+
+        if (System.getProperty("os.name").contains("Mac")) {
+            jvmArgs("--add-opens", "java.desktop/sun.lwawt=ALL-UNNAMED")
+            jvmArgs("--add-opens", "java.desktop/sun.lwawt.macosx=ALL-UNNAMED")
+        }
+    }
+}
