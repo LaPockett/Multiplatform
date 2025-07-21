@@ -174,6 +174,7 @@ android {
 dependencies {
     debugImplementation(compose.uiTooling)
     add("ksp", "com.airbnb.android:showkase-processor:1.0.4")
+    implementation(libs.kcef)
 }
 
 compose.desktop {

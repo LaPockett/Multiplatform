@@ -20,6 +20,7 @@ junit = "4.13.2"
 kmpnotifier = "1.5.1"
 kotlin = "2.2.0"
 ksp = "2.2.0-2.0.2"
+kcef = "2025.03.23"
 
 kotlinxCoroutinesTest = "1.8.1"
 materialIconsCore = "1.7.3"
@@ -80,6 +81,7 @@ firebase-common = { module = "com.google.firebase:firebase-common", version.ref 
 firebase-messaging-ktx = { module = "com.google.firebase:firebase-messaging-ktx", version.ref = "firebaseMessagingKtx" }
 kmpnotifier = { module = "io.github.mirzemehdi:kmpnotifier", version.ref = "kmpnotifier" }
 kotlinx-coroutinesSwing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
+kcef = { group = "dev.datlag", name = "kcef", version.ref = "kcef" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
