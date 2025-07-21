@@ -3,7 +3,7 @@ package com.dian.prueba
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.*
-import com.dian.prueba.ui.components.dialogs.showAlertDialogLogin
+import com.dian.prueba.ui.components.dialogs.ShowAlertDialogLogin
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -16,7 +16,7 @@ class AlertDialogLoginKtTest {
     fun setUp() {
         composeTestRule.setContent {
             MaterialTheme {
-                showAlertDialogLogin("Esto es un título", onDismissRequest = {})
+                ShowAlertDialogLogin("Esto es un título", onDismissRequest = {})
             }
         }
     }

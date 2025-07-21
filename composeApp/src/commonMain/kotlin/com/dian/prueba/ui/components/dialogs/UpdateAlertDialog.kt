@@ -1,20 +1,15 @@
 package com.dian.prueba.ui.components.dialogs
 
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dian.prueba.PlatformType
 import com.dian.prueba.getPlatformType
+import com.dian.prueba.ui.components.buttons.CustomDialogButton
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.viewModel.UpdateVM
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -38,7 +33,8 @@ fun UpdateAlertDialog(viewModel: UpdateVM = viewModel()) {
         ) },
         text = { Text(text = "Versión actual: ${updateInfo.currentVersion} Hay una nueva versión disponible de la aplicación: ${updateInfo.newVersion}. Es obligatorio actualizar") },
         confirmButton = {
-            Button(onClick = {
+            CustomDialogButton(
+                onClick = {
                 /**
                  * Redirect to App Store or Google Play Store depending on the platform
                  */
@@ -49,19 +45,14 @@ fun UpdateAlertDialog(viewModel: UpdateVM = viewModel()) {
                 }
                 viewModel.doUpdate()
                 //viewModel.showUpdateDialog.value = false
-            }, modifier = Modifier.testTag("updateButton"),
-                colors = ButtonDefaults.buttonColors(
-                    backgroundColor = Color(0xFF626D8B),
-                    contentColor = Color.White
-                ),
-                shape = RoundedCornerShape(10.dp)) {
-                Text("Actualizar")
-            }
+            },
+                text = "Actualizar",
+            )
         },
 
         dismissButton = {
             if (!updateInfo.mustUpdate) {
-                Button(onClick = {
+                CustomDialogButton(onClick = {
                     /**
                      * Aquí solo cerramos el diálogo sin actualizar la versión a 1.3
                      */
@@ -69,13 +60,8 @@ fun UpdateAlertDialog(viewModel: UpdateVM = viewModel()) {
                     logger.debug("newVersion: " +updateInfo.newVersion)
                     viewModel.showUpdateDialog.value = false
                 },
-                    colors = ButtonDefaults.buttonColors(
-                        backgroundColor = Color(0xFF626D8B),
-                        contentColor = Color.White
-                    ),
-                    shape = RoundedCornerShape(10.dp),) {
-                    Text("Ignorar")
-                }
+                    text = "Ignorar"
+                )
             }
         }
     )

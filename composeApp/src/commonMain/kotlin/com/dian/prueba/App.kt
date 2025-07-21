@@ -3,9 +3,11 @@ package com.dian.prueba
 import com.dian.prueba.utilities.TokenStorage
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -17,7 +19,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -61,8 +65,11 @@ fun App() {
         ) {
             composable(route = "main") {
                 Column(
-                    modifier = Modifier.padding(20.dp)
+                    modifier = Modifier.padding(20.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
+                    Text(title)
+                    Spacer(modifier = Modifier.padding(10.dp))
                     Row(
                         modifier = Modifier.padding(start = 20.dp, top = 10.dp)
                     ) {
@@ -73,13 +80,18 @@ fun App() {
                         )
 
                     }
+                    Spacer(modifier = Modifier.padding(10.dp))
                     Button(
                         modifier = Modifier.padding(start = 20.dp, top = 10.dp),
                         onClick = {
                             if (textFieldName.isNotBlank()) {
                                 navController.navigate("welcome/$textFieldName")
                             }
-                        }
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            contentColor = Color(0xffeaf7f8),
+                            backgroundColor = Color(0xff7265da)
+                        )
                     ) {
                         Text("Next activity")
                     }
@@ -97,7 +109,6 @@ fun App() {
 
     }
 }
-
 @Composable
 fun AppLogin() {
     /**

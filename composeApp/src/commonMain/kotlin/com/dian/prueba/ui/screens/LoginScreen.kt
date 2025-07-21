@@ -2,17 +2,12 @@ package com.dian.prueba.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.dian.prueba.viewModel.LoginVM
 import androidx.navigation.compose.composable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.getValue
@@ -22,27 +17,24 @@ import androidx.compose.runtime.mutableStateOf
 import com.dian.prueba.utilities.Logger
 import androidx.compose.runtime.*
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.*
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
 import com.dian.prueba.navigation.Screen
 import com.dian.prueba.network.APIClient
 import com.dian.prueba.repository.LoginRepositoryImpl
+import com.dian.prueba.ui.EmailTextField
+import com.dian.prueba.ui.PasswordTextField
 import com.dian.prueba.ui.components.MenuDrawer
+import com.dian.prueba.ui.components.buttons.CustomButtonWithIcon
 import com.dian.prueba.ui.components.dialogs.InvalidDataAlertDialogLogin
-import com.dian.prueba.ui.components.dialogs.showAlertDialogLogin
-import com.dian.prueba.utilities.LoginValidator
-import com.dian.prueba.utilities.TokenStorageImpl
-import com.dian.prueba.utilities.UpdateStorageImpl
-import com.dian.prueba.utilities.Resultado
+import com.dian.prueba.ui.components.dialogs.ShowAlertDialogLogin
+import com.dian.prueba.utilities.*
 import com.russhwolf.settings.Settings
 /**
- * THe following two lines appear in red from time to time. It's not a error,
+ * The following two lines appear in red from time to time. It's not a error,
  * it's just a bug. You just need to clean and build project or forget about it :)
  */
 import multiplatform.composeapp.generated.resources.Res
@@ -100,49 +92,24 @@ fun LoginScreen(navController: NavHostController){
                                 .clip(MaterialTheme.shapes.medium).fillMaxWidth()
                         )
                         Spacer(
-                            modifier = Modifier.padding(16.dp)
+                            modifier = Modifier.padding(10.dp)
                         )
-                        OutlinedTextField(
+                        EmailTextField(
                             value = email,
-                            onValueChange = {email = it},
-                            label = { Text("Email") },
-                            /**
-                             * It's recommended to specify the keyboard type:
-                             * - In this case it shows you the emails that exist on your device (apparently only in Android)
-                             */
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Email
-                            ),
-                            colors = OutlinedTextFieldDefaults.colors(
-                                unfocusedBorderColor = Color(0xFF626D8B),
-                                focusedBorderColor = Color(0xFFf7f4f0)
-                            )
+                            onValueChange = {email = it}
                         )
                         Spacer(
                             modifier = Modifier.padding(16.dp)
                         )
 
-                        OutlinedTextField(
+                        PasswordTextField(
                             value = password,
-                            onValueChange = {password = it},
-                            label = {Text("Contraseña")},
-                            colors = OutlinedTextFieldDefaults.colors(
-                                unfocusedBorderColor = Color(0xFF626D8B),
-                                focusedBorderColor = Color(0xFFf7f4f0)
-                            ),
-                            visualTransformation = PasswordVisualTransformation(),
-                            /**
-                             * It's recommended to specify the keyboard type:
-                             * - In this case it doesn't show the password that the user writes
-                             */
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Password
-                            ),
-                            )
+                            onValueChange = {password = it}
+                        )
                         Spacer(
                             modifier = Modifier.padding(16.dp)
                         )
-                        Button(
+                        CustomButtonWithIcon(
                             onClick = {
 
                                 /**
@@ -178,27 +145,18 @@ fun LoginScreen(navController: NavHostController){
                                 }
                             },
                             enabled = true,
-                            colors = ButtonDefaults.buttonColors(
-                                backgroundColor = Color(0xFF626D8B),
-                                contentColor = Color.White
-                            ),
-                            shape = RoundedCornerShape(10.dp),
-
-                            ){
-                            Icon(
-                                Icons.Default.Person,
-                                contentDescription = "Login",
-                                modifier = Modifier.padding(end=6.dp)
+                            text = "Iniciar sesión",
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "Login",
                             )
-                            Text("Iniciar sesión")
-                        }
                         Spacer(
                             modifier = Modifier.padding(16.dp)
                         )
                     }
                 }
                 if (showDialog){
-                    showAlertDialogLogin(
+                    ShowAlertDialogLogin(
+                        title = "Credenciales vacías",
                         texto = "Debes introducir un email y una contraseña",
                         onDismissRequest = {showDialog = false}
                     )

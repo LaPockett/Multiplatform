@@ -1,12 +1,8 @@
 package com.dian.prueba.ui.components.dialogs
 
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.AlertDialog
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.*
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.*
+import com.dian.prueba.ui.components.buttons.CustomDialogButton
 
 @Composable
 fun InvalidDataAlertDialogLogin(
@@ -18,17 +14,10 @@ fun InvalidDataAlertDialogLogin(
         text = { Text("Por favor, ingresa un email válido y/o una contraseña válida. " +
                 "El email debe de ser un correo válido y la contraseña debe de tener entre 6 y 20 caracteres") },
         confirmButton = {
-            Button(
+            CustomDialogButton(
                 onClick = onDismissRequest,
-                colors = ButtonDefaults.buttonColors(
-                    // Color crema #b7af98
-                    backgroundColor = Color(0xFF626D8B),
-                    contentColor = Color.White
-                ),
-                shape = RoundedCornerShape(10.dp),
-            ) {
-                Text("OK")
-            }
+                text = "OK",
+            )
         }
     )
 }

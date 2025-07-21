@@ -25,6 +25,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.mmk.kmpnotifier.notification.NotifierManager
 import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
 import com.mmk.kmpnotifier.permission.permissionUtil
+// Define root module for Showkase
 @ShowkaseRoot
 class MyRootModule: ShowkaseRootModule
 class MainActivity : ComponentActivity() {
@@ -46,6 +47,7 @@ class MainActivity : ComponentActivity() {
             println("NotifierManager: $message")
         }
         setContent {
+            // To open Showkase
             startActivity(Showkase.getBrowserIntent(this))
             val darkColor = Color.Transparent
             val lightColor = Color.Transparent
