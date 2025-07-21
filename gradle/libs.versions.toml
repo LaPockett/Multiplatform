@@ -19,6 +19,7 @@ firebaseMessagingKtx = "24.1.1"
 junit = "4.13.2"
 kmpnotifier = "1.5.1"
 kotlin = "2.1.21"
+storytale = "0.0.2+dev6"
 
 kotlinxCoroutinesTest = "1.8.1"
 materialIconsCore = "1.7.3"
@@ -88,3 +89,4 @@ composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "k
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 googleServices = { id = "com.google.gms.google-services", version.ref = "google-services-plugin" }
 composeHotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "composeHotReload" }
+storytale = { id = "org.jetbrains.compose.storytale", version.ref = "storytale" }

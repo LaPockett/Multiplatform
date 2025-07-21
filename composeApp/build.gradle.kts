@@ -13,6 +13,8 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "2.2.0-Beta1"
     // For Firebase use
     alias(libs.plugins.googleServices)
+    //For Storytale use
+    alias(libs.plugins.storytale)
 }
 
 kotlin {
