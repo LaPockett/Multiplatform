@@ -9,6 +9,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import androidx.navigation.compose.rememberNavController
+import com.dian.prueba.ui.screens.LoginScreen
 import dev.datlag.kcef.KCEF
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -49,7 +51,10 @@ fun main() = application {
             Text(text = "Restart required.")
         } else {
             if (initialized) {
-                AppLogin()
+                val navController = rememberNavController()
+                LoginScreen(
+                    navController = navController
+                )
             } else {
                 Text(text = "Downloading $downloading%")
             }

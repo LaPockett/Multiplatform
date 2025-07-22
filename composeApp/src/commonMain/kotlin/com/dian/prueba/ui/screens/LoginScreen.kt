@@ -1,6 +1,7 @@
 package com.dian.prueba.ui.screens
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -16,12 +17,16 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.mutableStateOf
 import com.dian.prueba.utilities.Logger
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.*
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
+import com.dian.prueba.Theme.MultiplatformTheme
 import com.dian.prueba.navigation.Screen
 import com.dian.prueba.network.APIClient
 import com.dian.prueba.repository.LoginRepositoryImpl
@@ -44,7 +49,7 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun LoginScreen(navController: NavHostController){
     val focusManager = LocalFocusManager.current
-    MaterialTheme{
+    MultiplatformTheme{
         val currentBackStackEntry = navController.currentBackStackEntryAsState()
 
         val loginViewModel = remember {
@@ -77,7 +82,12 @@ fun LoginScreen(navController: NavHostController){
         ){
             composable(route = Screen.Login.route){
                 Box(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize().
+                    background(
+                        brush = Brush.verticalGradient(
+                            listOf(
+                                MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.secondary),
+                            startY = 0f, endY = 2620F))
                         .pointerInput(Unit){detectTapGestures(onTap = {focusManager.clearFocus()})},
                     contentAlignment = Alignment.Center
                 ) {

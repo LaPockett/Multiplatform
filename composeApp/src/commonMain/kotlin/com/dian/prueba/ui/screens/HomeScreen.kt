@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.*
+import androidx.compose.material3.DividerDefaults.color
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.*
@@ -53,28 +54,27 @@ fun ScrollRowAmazon() {
     ) {
         ScrollableTabRow(
             selectedTabIndex = 0,
-            containerColor = Color.White,
-            contentColor = Color.Black,
+            containerColor = MaterialTheme.colorScheme.secondaryContainer,
+            contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
             edgePadding = 0.dp,
             divider = {
                 HorizontalDivider(
                     thickness = 0.dp,
-                    color = Color.Black
+                    color = MaterialTheme.colorScheme.tertiary
                 )
             }
             ) {
             getAllAmazonCategories().forEach { category ->
                 Tab(
                     selected = false,
-                    unselectedContentColor = Color(0xFF080e45),
-                    selectedContentColor = Color.Black,
+                    unselectedContentColor = MaterialTheme.colorScheme.secondary,
+                    selectedContentColor = MaterialTheme.colorScheme.primary,
                     onClick = { /*TODO*/ },
                     text = {
                         Text(
                             text = category.categoryName,
-                            color = Color.Black,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 15.sp
+                            color = MaterialTheme.colorScheme.secondary,
+                            style = MaterialTheme.typography.bodyMedium
                         )
                     }
                 )
@@ -120,7 +120,9 @@ fun SearchBarAmazon(
                         contentDescription = "Scan Icon"
                     )
                 },
-                placeholder = {Text("Buscar o hacer una pregunta")},
+                placeholder = {Text(text = "Buscar o hacer una pregunta",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.secondary)},
                 interactionSource = MutableInteractionSource()
             )
         },
@@ -133,8 +135,8 @@ fun SearchBarAmazon(
         expanded = false,
         shape = SearchBarDefaults.inputFieldShape,
         colors = SearchBarDefaults.colors(
-            containerColor = Color(0xffbecaf6),
-            dividerColor = Color(0xFF080e45)
+            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            dividerColor = MaterialTheme.colorScheme.onTertiaryContainer
         ),
         tonalElevation = 0.dp,
         shadowElevation = 0.dp,

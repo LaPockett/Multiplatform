@@ -46,7 +46,7 @@ fun MenuDrawer(onLogout: () -> Unit) {
             }
         },
         gesturesEnabled = drawerState.isOpen,
-        scrimColor = Color(0xff0e1147),
+        scrimColor = MaterialTheme.colorScheme.scrim,
         modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
     ) {
         Scaffold(
@@ -78,13 +78,13 @@ fun TopAppBarMenuDrawer(
     title: String
 ) {
     TopAppBar(
-        title = { Text(title) },
+        title = { Text(text=title, style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onPrimaryContainer) },
         windowInsets = WindowInsets(
             top = 0,
             bottom = 0
         ),
         colors = TopAppBarColors(
-            containerColor = Color(0xffd6dbed),
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
             scrolledContainerColor = Color.White,
             navigationIconContentColor = Color.Black,
             titleContentColor = Color.Black,

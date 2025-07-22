@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.airbnb.android.showkase.annotation.ShowkaseComposable
 import com.dian.prueba.AppLogin
+import com.dian.prueba.Theme.MultiplatformTheme
 import com.dian.prueba.navigation.BottomNavigationBar
 import com.dian.prueba.ui.EmailTextField
 import com.dian.prueba.ui.PasswordTextField
@@ -43,13 +44,15 @@ import kotlin.time.Duration.Companion.seconds
 )
 @Composable
 fun AmazonSearchBarPreview() {
-    SearchBarAmazon(
-        query = "Mesa",
-        onQueryChange = { newQuery -> },
-        onSearch = { query -> },
-        active = true,
-        onActiveChange = { active -> }
-    )
+    MultiplatformTheme {
+        SearchBarAmazon(
+            query = "Mesa",
+            onQueryChange = { newQuery -> },
+            onSearch = { query -> },
+            active = true,
+            onActiveChange = { active -> }
+        )
+    }
 }
 
 @ShowkaseComposable(
@@ -62,7 +65,9 @@ fun AmazonSearchBarPreview() {
 )
 @Composable
 fun AmazonScrollRowPreview() {
-    ScrollRowAmazon()
+    MultiplatformTheme {
+        ScrollRowAmazon()
+    }
 }
 
 @ShowkaseComposable(name = "AppLogin", group = "Amazon components")
@@ -73,7 +78,9 @@ fun AmazonScrollRowPreview() {
 @Composable
 fun AmazonLoginPreview() {
     val navController = rememberNavController()
-    LoginScreen(navController)
+    MultiplatformTheme {
+        LoginScreen(navController)
+    }
 }
 
 /**
@@ -90,7 +97,9 @@ fun AmazonLoginPreview() {
 @Composable
 fun BottomNavigationPreview() {
     val navController = rememberNavController()
-    BottomNavigationBar(navController)
+    MultiplatformTheme {
+        BottomNavigationBar(navController)
+    }
 }
 
 @ShowkaseComposable(
@@ -106,11 +115,13 @@ fun TopAppBarMenuDrawerPreview() {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
     val title = "Menu Drawer Preview"
-    TopAppBarMenuDrawer(
-        drawerState = drawerState,
-        scope = scope,
-        title = title
-    )
+    MultiplatformTheme {
+        TopAppBarMenuDrawer(
+            drawerState = drawerState,
+            scope = scope,
+            title = title
+        )
+    }
 }
 
 /**

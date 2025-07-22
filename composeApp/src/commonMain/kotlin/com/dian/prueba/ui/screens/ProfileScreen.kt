@@ -5,6 +5,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.*
@@ -48,13 +49,13 @@ fun ProfileScreen(navController: NavController, onLogout: () -> Unit) {
                 .align(Alignment.TopStart)
                 .padding(top = 110.dp, start = 20.dp)
                 .zIndex(1f),
-            backgroundColor = Color(0xFF080e45),
+            backgroundColor = MaterialTheme.colorScheme.tertiary,
 
             ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Back",
-                tint = Color.White
+                tint = MaterialTheme.colorScheme.onTertiary
             )
         }
         WebViewAccount(
@@ -66,8 +67,8 @@ fun ProfileScreen(navController: NavController, onLogout: () -> Unit) {
                 onLogout()
             },
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color.Red,
-                contentColor = Color.White
+                backgroundColor = MaterialTheme.colorScheme.error,
+                contentColor = MaterialTheme.colorScheme.onError
             ),
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 60.dp)

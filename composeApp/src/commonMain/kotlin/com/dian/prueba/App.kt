@@ -30,6 +30,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
+import com.dian.prueba.Theme.MultiplatformTheme
 import com.dian.prueba.navigation.BottomNavigationBar
 import com.dian.prueba.navigation.Screen
 import com.dian.prueba.network.APIClient
@@ -115,7 +116,7 @@ fun AppLogin() {
      * You are first checked to see if you are logged in, using tokens to redirect you
      * to the login screen or the menu drawer that contains the main application.
      */
-    MaterialTheme {
+    MultiplatformTheme {
         val logger = Logger("AppLogin")
         val settings = Settings()
         val tokenStorage: TokenStorage = TokenStorageImpl(settings)
