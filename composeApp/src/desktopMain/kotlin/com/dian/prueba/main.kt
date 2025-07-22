@@ -49,7 +49,7 @@ fun main() = application {
             Text(text = "Restart required.")
         } else {
             if (initialized) {
-                App()
+                AppLogin()
             } else {
                 Text(text = "Downloading $downloading%")
             }

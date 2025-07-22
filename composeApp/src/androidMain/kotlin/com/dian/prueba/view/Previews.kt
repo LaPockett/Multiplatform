@@ -3,6 +3,7 @@ package com.dian.prueba.view
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -16,12 +17,14 @@ import com.dian.prueba.ui.PasswordTextField
 import com.dian.prueba.ui.components.TopAppBarMenuDrawer
 import com.dian.prueba.ui.components.buttons.CustomButtonWithIcon
 import com.dian.prueba.ui.components.buttons.CustomDialogButton
+import com.dian.prueba.ui.screens.LoginScreen
 import com.dian.prueba.ui.screens.ScrollRowAmazon
 import com.dian.prueba.ui.screens.SearchBarAmazon
 
 /**
  * AMAZON COMPONENTS
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @ShowkaseComposable(name = "SearchBarAmazon", group = "Amazon components",
     styleName = "Default Style", heightDp = 80)
 @Preview(
@@ -56,7 +59,8 @@ fun AmazonScrollRowPreview() {
 )
 @Composable
 fun AmazonLoginPreview() {
-    AppLogin()
+    val navController = rememberNavController()
+    LoginScreen(navController)
 }
 /**
  * NAVIGATION COMPONENTS
