@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
 val containerColor = Color(0xFF626D8B)
@@ -22,6 +23,7 @@ fun CustomDialogButton(
     enabled: Boolean = true,
 ) {
     Button(
+        modifier= Modifier.testTag("loginDialogButton"),
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = containerColor,

@@ -16,7 +16,7 @@ class AlertDialogLoginKtTest {
     fun setUp() {
         composeTestRule.setContent {
             MaterialTheme {
-                ShowAlertDialogLogin("Esto es un título", onDismissRequest = {})
+                ShowAlertDialogLogin("Esto es un título","Esto es un texto" ,onDismissRequest = {})
             }
         }
     }
