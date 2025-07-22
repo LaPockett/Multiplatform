@@ -56,11 +56,18 @@ fun ScrollRowAmazon() {
             containerColor = Color.White,
             contentColor = Color.Black,
             edgePadding = 0.dp,
-
+            divider = {
+                HorizontalDivider(
+                    thickness = 0.dp,
+                    color = Color.Black
+                )
+            }
             ) {
             getAllAmazonCategories().forEach { category ->
                 Tab(
                     selected = false,
+                    unselectedContentColor = Color(0xFF080e45),
+                    selectedContentColor = Color.Black,
                     onClick = { /*TODO*/ },
                     text = {
                         Text(
