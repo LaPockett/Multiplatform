@@ -83,7 +83,11 @@ fun LoginScreen(navController: NavHostController){
             composable(route = Screen.Login.route){
                 Box(
                     modifier = Modifier.fillMaxSize().
-                    background(Color.Red)
+                    background(
+                        brush = Brush.verticalGradient(
+                            listOf(
+                                MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.secondary),
+                            startY = 0f, endY = 2620F))
                         .pointerInput(Unit){detectTapGestures(onTap = {focusManager.clearFocus()})},
                     contentAlignment = Alignment.Center
                 ) {
