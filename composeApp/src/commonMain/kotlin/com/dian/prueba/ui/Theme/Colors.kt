@@ -1,6 +1,5 @@
-package com.dian.prueba.Theme
+package com.dian.prueba.ui.Theme
 
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 /**

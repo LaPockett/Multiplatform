@@ -1,4 +1,4 @@
-package com.dian.prueba.view
+package com.dian.prueba.ui
 
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight

@@ -10,7 +10,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     // For Ktor use
-    id("org.jetbrains.kotlin.plugin.serialization") version "2.2.0-Beta1"
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.2.0"
     // For Firebase use
     alias(libs.plugins.googleServices)
     alias(libs.plugins.ksp)
@@ -46,14 +46,7 @@ kotlin {
     sourceSets {
         val desktopMain by getting
         androidMain.dependencies {
-            implementation(libs.androidx.navigation.runtime.android)
-            implementation(compose.material)
-            implementation(libs.androidx.material3.android)
             implementation(libs.play.services.appsearch)
-            implementation(libs.androidx.room.runtime.android)
-            implementation(libs.androidx.lifecycle.livedata.core.ktx)
-            implementation(libs.androidx.lifecycle.viewmodel)
-            implementation(libs.androidx.lifecycle.runtimeCompose)
 
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
@@ -83,13 +76,14 @@ kotlin {
             implementation(libs.ktor.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
 
-            implementation(compose.material)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
+            implementation(libs.androidx.lifecycle.viewmodel)
+            implementation(libs.androidx.lifecycle.runtimeCompose)
 
             // Kevinn Zou WebView
             api(libs.compose.webview.multiplatform)

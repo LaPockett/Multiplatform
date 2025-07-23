@@ -1,4 +1,4 @@
-package com.dian.prueba.Theme
+package com.dian.prueba.ui.Theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*

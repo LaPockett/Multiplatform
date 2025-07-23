@@ -20,7 +20,8 @@ import com.airbnb.android.showkase.annotation.ShowkaseRootModule
 import com.airbnb.android.showkase.models.Showkase
 import com.dian.prueba.AppLogin
 import com.dian.prueba.R
-import com.dian.prueba.Theme.MultiplatformTheme
+
+import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mmk.kmpnotifier.notification.NotifierManager

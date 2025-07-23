@@ -1,7 +1,6 @@
 package com.dian.prueba.ui.screens
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -20,13 +19,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.*
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
-import com.dian.prueba.Theme.MultiplatformTheme
+import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.navigation.Screen
 import com.dian.prueba.network.APIClient
 import com.dian.prueba.repository.LoginRepositoryImpl
@@ -34,8 +32,7 @@ import com.dian.prueba.ui.EmailTextField
 import com.dian.prueba.ui.PasswordTextField
 import com.dian.prueba.ui.components.MenuDrawer
 import com.dian.prueba.ui.components.buttons.CustomButtonWithIcon
-import com.dian.prueba.ui.components.dialogs.InvalidDataAlertDialogLogin
-import com.dian.prueba.ui.components.dialogs.ShowAlertDialogLogin
+import com.dian.prueba.ui.components.dialogs.*
 import com.dian.prueba.utilities.*
 import com.russhwolf.settings.Settings
 /**

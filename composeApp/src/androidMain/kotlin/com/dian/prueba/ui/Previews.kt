@@ -1,14 +1,10 @@
-package com.dian.prueba.view
+package com.dian.prueba.ui
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -17,18 +13,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
 import com.airbnb.android.showkase.annotation.ShowkaseComposable
-import com.dian.prueba.AppLogin
-import com.dian.prueba.Theme.MultiplatformTheme
+import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.model.UpdateInfo
 import com.dian.prueba.navigation.BottomNavigationBar
 import com.dian.prueba.network.ApiService
-import com.dian.prueba.ui.EmailTextField
-import com.dian.prueba.ui.PasswordTextField
 import com.dian.prueba.ui.components.TopAppBarMenuDrawer
 import com.dian.prueba.ui.components.buttons.CustomButtonWithIcon
 import com.dian.prueba.ui.components.buttons.CustomDialogButton
@@ -41,7 +32,6 @@ import com.dian.prueba.ui.screens.SearchBarAmazon
 import com.dian.prueba.utilities.UpdateStorage
 import com.dian.prueba.viewModel.UpdateVM
 import kotlinx.coroutines.delay
-import kotlin.time.Duration.Companion.seconds
 
 /**
  * Usa este componente para hacer querys de productos en Amazon
