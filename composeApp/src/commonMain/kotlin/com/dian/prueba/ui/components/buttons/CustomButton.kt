@@ -5,6 +5,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -13,8 +14,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
-val containerColor = Color(0xFF626D8B)
-val contentColor = Color.White
 val shape = RoundedCornerShape(10.dp)
 @Composable
 fun CustomDialogButton(
@@ -26,12 +25,12 @@ fun CustomDialogButton(
         modifier= Modifier.testTag("loginDialogButton"),
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = containerColor,
-            contentColor = contentColor
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary
         ),
         shape = shape
     ){
-        Text(text)
+        Text(text = text, style= MaterialTheme.typography.bodyMedium)
     }
 }
 @Composable
@@ -45,8 +44,8 @@ fun CustomButtonWithIcon(
     Button(
         onClick = onClick,
         colors = ButtonDefaults.buttonColors(
-            containerColor = containerColor,
-            contentColor = contentColor
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary
         ),
         shape = shape,
         enabled = enabled,
@@ -56,6 +55,6 @@ fun CustomButtonWithIcon(
             contentDescription = contentDescription,
             modifier = Modifier.padding(end=6.dp)
         )
-        Text(text)
+        Text(text = text, style= MaterialTheme.typography.bodyMedium)
     }
 }

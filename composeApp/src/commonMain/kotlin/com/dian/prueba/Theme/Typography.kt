@@ -1,13 +1,12 @@
 package com.dian.prueba.Theme
 
 import androidx.compose.material3.Typography
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-val Typography : Typography @Composable get() = Typography(
+val Typography : Typography = Typography(
     bodyLarge = TextStyle(
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Bold,
         fontSize = 18.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.sp
@@ -20,7 +19,7 @@ val Typography : Typography @Composable get() = Typography(
     ),
     bodySmall = TextStyle(
         fontWeight = FontWeight.Normal,
-        fontSize = 8.sp,
+        fontSize = 12.sp,
         lineHeight = 18.sp,
         letterSpacing = 0.30.sp
     )

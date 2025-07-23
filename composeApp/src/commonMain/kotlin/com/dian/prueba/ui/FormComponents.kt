@@ -75,7 +75,7 @@ fun CommonTextField(
             Text(
                 text = label,
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.secondaryContainer
+                color = MaterialTheme.colorScheme.primary
             )
         },
         modifier = modifier
@@ -83,8 +83,8 @@ fun CommonTextField(
             .padding(horizontal = 50.dp),
         shape = textFieldShape,
         colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = focusedBorderColor,
-            unfocusedBorderColor = unfocusedBorderColor
+            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            unfocusedBorderColor = MaterialTheme.colorScheme.secondary
         ),
         visualTransformation = visualTransformation,
         singleLine = true,

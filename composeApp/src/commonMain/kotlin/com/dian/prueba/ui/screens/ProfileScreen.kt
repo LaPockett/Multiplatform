@@ -2,14 +2,13 @@ package com.dian.prueba.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.*
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.dian.prueba.navigation.Screen
@@ -47,9 +46,9 @@ fun ProfileScreen(navController: NavController, onLogout: () -> Unit) {
             },
             modifier = Modifier
                 .align(Alignment.TopStart)
-                .padding(top = 110.dp, start = 20.dp)
+                .padding(top = 20.dp, start = 320.dp)
                 .zIndex(1f),
-            backgroundColor = MaterialTheme.colorScheme.tertiary,
+            containerColor = MaterialTheme.colorScheme.tertiary,
 
             ) {
             Icon(
@@ -67,14 +66,15 @@ fun ProfileScreen(navController: NavController, onLogout: () -> Unit) {
                 onLogout()
             },
             colors = ButtonDefaults.buttonColors(
-                backgroundColor = MaterialTheme.colorScheme.error,
+                containerColor = MaterialTheme.colorScheme.error,
                 contentColor = MaterialTheme.colorScheme.onError
             ),
             shape = RoundedCornerShape(10.dp),
             modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 60.dp)
         ) {
-            Text("Cerrar sesión")
+            Text(text = "Cerrar sesión", style = MaterialTheme.typography.bodyMedium)
         }
+
     }
 }
 
