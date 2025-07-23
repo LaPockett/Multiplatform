@@ -39,6 +39,7 @@ google-services-plugin = "4.4.3"
 ktor-version = "3.0.0"
 composeHotReload = "1.0.0-beta04"
 kotlinx-coroutines = "1.10.2"
+materialKolor = "3.0.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -82,6 +83,7 @@ firebase-messaging-ktx = { module = "com.google.firebase:firebase-messaging-ktx"
 kmpnotifier = { module = "io.github.mirzemehdi:kmpnotifier", version.ref = "kmpnotifier" }
 kotlinx-coroutinesSwing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 kcef = { group = "dev.datlag", name = "kcef", version.ref = "kcef" }
+materialKolor = { module = "com.materialkolor:material-kolor", version.ref = "materialKolor" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

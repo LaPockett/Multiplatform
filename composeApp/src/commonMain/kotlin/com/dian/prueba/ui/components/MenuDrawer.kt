@@ -1,5 +1,6 @@
 package com.dian.prueba.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -24,48 +25,52 @@ fun MenuDrawer(onLogout: () -> Unit) {
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
 
-    ModalNavigationDrawer(
-        drawerState = drawerState,
-        drawerContent = {
-            ModalDrawerSheet(modifier = Modifier.fillMaxHeight()) {
-                /**
-                 * This is done this way because iOS saves the scroll, while Android doesn´t.
-                 * If the same code were left, it would conflict wit the iOS platform and the
-                 * drawer would appear apparently empty.
-                 */
-                Column (
-                    modifier = if(getPlatformType() === PlatformType.ANDROID){
-                        Modifier.verticalScroll(rememberScrollState()).fillMaxHeight()
-                    }else{
-                        Modifier.fillMaxHeight()
-                    }
-                )
-                {
-                    SettingsScreen()
-                }
-            }
-        },
-        gesturesEnabled = drawerState.isOpen,
-        scrimColor = MaterialTheme.colorScheme.scrim,
-        modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
+    Box (
+        modifier = Modifier.background(MaterialTheme.colorScheme.primaryContainer)
     ) {
-        Scaffold(
-            topBar = {
-                TopAppBarMenuDrawer(
-                    drawerState = drawerState,
-                    scope = scope,
-                    title = "Menu Drawer"
-                )
-            },
-        ) {
-            Surface(
-                modifier = Modifier.fillMaxSize().padding(it)
-            ){
-                Box{
-                    AppNavigation(onLogout = onLogout)
+        ModalNavigationDrawer(
+            drawerState = drawerState,
+            drawerContent = {
+                ModalDrawerSheet(modifier = Modifier.fillMaxHeight()) {
+                    /**
+                     * This is done this way because iOS saves the scroll, while Android doesn´t.
+                     * If the same code were left, it would conflict wit the iOS platform and the
+                     * drawer would appear apparently empty.
+                     */
+                    Column (
+                        modifier = if(getPlatformType() === PlatformType.ANDROID){
+                            Modifier.verticalScroll(rememberScrollState()).fillMaxHeight()
+                        }else{
+                            Modifier.fillMaxHeight()
+                        }
+                    )
+                    {
+                        SettingsScreen()
+                    }
                 }
-            }
+            },
+            gesturesEnabled = drawerState.isOpen,
+            scrimColor = MaterialTheme.colorScheme.scrim,
+            modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
+        ) {
+            Scaffold(
+                topBar = {
+                    TopAppBarMenuDrawer(
+                        drawerState = drawerState,
+                        scope = scope,
+                        title = "Menu Drawer"
+                    )
+                },
+            ) {
+                Surface(
+                    modifier = Modifier.fillMaxSize().padding(it)
+                ){
+                    Box{
+                        AppNavigation(onLogout = onLogout)
+                    }
+                }
 
+            }
         }
     }
 }

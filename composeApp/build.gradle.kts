@@ -103,7 +103,8 @@ kotlin {
 
             // KMPNotifier
             api(libs.kmpnotifier)
-
+            // Material Kolor
+            implementation(libs.materialKolor)
         }
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)

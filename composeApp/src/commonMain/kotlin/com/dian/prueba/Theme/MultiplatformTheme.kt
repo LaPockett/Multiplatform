@@ -3,6 +3,8 @@ package com.dian.prueba.Theme
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import com.materialkolor.rememberDynamicColorScheme
 
 private val LightColorTheme = lightColorScheme(
     primary = primaryLight,
@@ -93,5 +95,27 @@ fun MultiplatformTheme(
         colorScheme = theme,
         content = content,
         typography = Typography
+    )
+}
+
+/**
+ * Dynamic colors from a color passed as a parameter using MaterialKolor library
+ * Example usage:
+ *     MaterialTheme(
+ *         seedcolor = Color(0xFF412742)
+ *     ) {
+ *         // Your content
+ *    }
+ */
+@Composable
+fun DynamicMultiplatformTheme(
+    seedColor: Color,
+    isDark: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
+    val colorScheme = rememberDynamicColorScheme(seedColor = seedColor, isDark = isDark)
+    MaterialTheme(
+        colorScheme = colorScheme,
+        content = content
     )
 }

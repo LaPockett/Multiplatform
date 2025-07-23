@@ -6,12 +6,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -55,7 +55,7 @@ import com.russhwolf.settings.*
 
 @Composable
 fun App() {
-    MaterialTheme {
+    MultiplatformTheme(){
         val title by remember { mutableStateOf("Welcome to multiplatform") }
         var textFieldName by remember { mutableStateOf("") }
         val navController: NavHostController = rememberNavController()
@@ -91,7 +91,7 @@ fun App() {
                         },
                         colors = ButtonDefaults.buttonColors(
                             contentColor = Color(0xffeaf7f8),
-                            backgroundColor = Color(0xff7265da)
+                            containerColor = Color(0xff7265da)
                         )
                     ) {
                         Text("Next activity")
