@@ -98,6 +98,9 @@ kotlin {
             // KMPNotifier
             api(libs.kmpnotifier)
 
+            // Librería de un componente de Dian publicado en Maven Local
+            implementation("com.lapockett.testlib:testlib:1.0.0")
+
         }
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)

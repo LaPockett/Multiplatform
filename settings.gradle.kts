@@ -13,6 +13,7 @@ pluginManagement {
         mavenCentral()
         maven("https://jogamp.org/deployment/maven")
         gradlePluginPortal()
+        mavenLocal()
     }
 }
 
@@ -26,6 +27,7 @@ dependencyResolutionManagement {
             }
         }
         mavenCentral()
+        mavenLocal()
         maven("https://jogamp.org/deployment/maven")
     }
 }

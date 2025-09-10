@@ -1,5 +1,8 @@
 package com.dian.prueba.ui.screens
 
+// Componente de la librería de Dian
+import CustomButtonLib
+//
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.runtime.Composable
@@ -108,7 +111,11 @@ fun LoginScreen(navController: NavHostController){
                         Spacer(
                             modifier = Modifier.padding(16.dp)
                         )
-
+                        // Componente de la librería de Dian
+                        CustomButtonLib(
+                            text = "Hello Dian",
+                            onClick = {TODO()}
+                        )
                         PasswordTextField(
                             value = password,
                             onValueChange = {password = it}
