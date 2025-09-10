@@ -99,7 +99,8 @@ kotlin {
             api(libs.kmpnotifier)
 
             // Librería de un componente de Dian publicado en Maven Local
-            implementation("com.lapockett.testlib:testlib:1.0.0")
+            //implementation("com.lapockett.testlib:testlib:1.0.0")
+            implementation("com.lapockett:idamgon-cmp:1.0.0")
 
         }
         commonTest.dependencies {
@@ -116,6 +117,7 @@ kotlin {
         }
     }
 }
+
 compose.resources{
     publicResClass = false
     packageOfResClass = "multiplatform.composeapp.generated.resources"
@@ -124,12 +126,22 @@ compose.resources{
 android {
     namespace = "com.dian.prueba"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
+    /*
+    Para debug
+    val storePass = (findProperty("ORG_GRADLE_PROJECT_storePassword") as? String)
+    val keyAliasValue = providers.gradleProperty("ORG_GRADLE_PROJECT_keyAlias").getOrElse("")
+    val keyPass = providers.gradleProperty("ORG_GRADLE_PROJECT_keyPassword").getOrElse("")
+
+    println("DEBUG - Store password: '$storePass'")
+    println("DEBUG - Key alias: '$keyAliasValue'")
+    println("DEBUG - Key password: '$keyPass'")
+    println("DEBUG - Keystore exists: ${file("multiplatform_keystore.jks").exists()}")*/
     signingConfigs {
         create("release") {
             storeFile = file("multiplatform_keystore.jks")
-            storePassword = System.getenv("ORG_GRADLE_PROJECT_storePassword") ?: ""
-            keyAlias = System.getenv("ORG_GRADLE_PROJECT_keyAlias") ?: ""
-            keyPassword = System.getenv("ORG_GRADLE_PROJECT_keyPassword")?: ""
+            storePassword = providers.gradleProperty("ORG_GRADLE_PROJECT_storePassword").getOrElse("")
+            keyAlias = providers.gradleProperty("ORG_GRADLE_PROJECT_keyAlias").getOrElse("")
+            keyPassword = providers.gradleProperty("ORG_GRADLE_PROJECT_keyPassword").getOrElse("")
         }
     }
 
@@ -141,7 +153,6 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
     }
     packaging {
         resources {

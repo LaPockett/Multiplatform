@@ -24,3 +24,4 @@ captures
 **/xcshareddata/WorkspaceSettings.xcsettings
 composeApp/kcef-bundle
 /composeApp/cache/*
+gradle.properties
