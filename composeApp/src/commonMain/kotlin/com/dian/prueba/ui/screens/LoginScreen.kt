@@ -1,7 +1,7 @@
 package com.dian.prueba.ui.screens
 
 // Componente de la librería de Dian
-//import com.lapockett.idamgon_cmp.Platform ¿por qué no va?
+import SpacerLib
 //
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -112,11 +112,7 @@ fun LoginScreen(navController: NavHostController){
                             modifier = Modifier.padding(16.dp)
                         )
                         // Componente de la librería de Dian
-                        /*CustomButtonLib(
-                            text = "Hello Dian",
-                            onClick = {TODO()}
-                        )
-                        SpacerLib()*/
+                        SpacerLib()
                         PasswordTextField(
                             value = password,
                             onValueChange = {password = it}

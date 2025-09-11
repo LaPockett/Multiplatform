@@ -2,6 +2,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.composeHotReload)
@@ -100,8 +101,7 @@ kotlin {
 
             // Librería de un componente de Dian publicado en Maven Local
             //implementation("com.lapockett.testlib:testlib:1.0.0")
-            implementation("com.lapockett:idamgon-cmp:1.0.0")
-
+            implementation("com.lapockett:lib:1.1.1")
         }
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)
@@ -110,10 +110,12 @@ kotlin {
         iosMain.dependencies {
             implementation(libs.play.services.appsearch)
             implementation(libs.ktor.client.darwin)
+
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutinesSwing)
+
         }
     }
 }
@@ -123,15 +125,25 @@ compose.resources{
     packageOfResClass = "multiplatform.composeapp.generated.resources"
     generateResClass = auto
 }
+val secretsFile = rootProject.file("secrets.gradle.properties")
+if (secretsFile.exists()) {
+    val secretsProps = Properties().apply {
+        load(secretsFile.inputStream())
+    }
+    secretsProps.forEach { key, value ->
+        project.extensions.extraProperties[key.toString()] = value
+    }
+}
+
+val storePass = project.findProperty("storePassword") as? String ?: ""
+val keyAliasValue = project.findProperty("keyAlias") as? String ?: ""
+val keyPass = project.findProperty("keyPassword") as? String ?: ""
+
 android {
     namespace = "com.dian.prueba"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
-    /*
-    Para debug
-    val storePass = (findProperty("ORG_GRADLE_PROJECT_storePassword") as? String)
-    val keyAliasValue = providers.gradleProperty("ORG_GRADLE_PROJECT_keyAlias").getOrElse("")
-    val keyPass = providers.gradleProperty("ORG_GRADLE_PROJECT_keyPassword").getOrElse("")
 
+    /*Para debug
     println("DEBUG - Store password: '$storePass'")
     println("DEBUG - Key alias: '$keyAliasValue'")
     println("DEBUG - Key password: '$keyPass'")
@@ -139,9 +151,9 @@ android {
     signingConfigs {
         create("release") {
             storeFile = file("multiplatform_keystore.jks")
-            storePassword = providers.gradleProperty("ORG_GRADLE_PROJECT_storePassword").getOrElse("")
-            keyAlias = providers.gradleProperty("ORG_GRADLE_PROJECT_keyAlias").getOrElse("")
-            keyPassword = providers.gradleProperty("ORG_GRADLE_PROJECT_keyPassword").getOrElse("")
+            storePassword = storePass
+            keyAlias = keyAliasValue
+            keyPassword =keyPass
         }
     }
 

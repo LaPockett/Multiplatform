@@ -22,7 +22,7 @@ pluginManagement {
             url = uri("https://maven.pkg.github.com/LaPockett/cmp-library")
             credentials {
                 username = "LaPockett"
-                password = providers.gradleProperty("TOKEN")
+                password = providers.gradleProperty("gpr.key")
                     .orElse(providers.environmentVariable("GITHUB_TOKEN"))
                     .getOrElse("")
             }
@@ -51,7 +51,7 @@ dependencyResolutionManagement {
             url = uri("https://maven.pkg.github.com/LaPockett/cmp-library")
             credentials {
                 username = "LaPockett"
-                password = providers.gradleProperty("TOKEN")
+                password = providers.gradleProperty("gpr.key")
                     .orElse(providers.environmentVariable("GITHUB_TOKEN"))
                     .getOrElse("")
             }
