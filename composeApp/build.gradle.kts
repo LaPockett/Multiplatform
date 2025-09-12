@@ -106,6 +106,7 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)
             implementation(libs.kotlin.test)
+            implementation(libs.ui.test.junit4)
         }
         iosMain.dependencies {
             implementation(libs.play.services.appsearch)
