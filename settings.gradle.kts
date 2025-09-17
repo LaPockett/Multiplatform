@@ -19,7 +19,7 @@ pluginManagement {
         // Librería publicada en Github Packages
         maven {
             name = "GithubPackages"
-            url = uri("https://maven.pkg.github.com/LaPockett/cmp-library")
+            url = uri("https://maven.pkg.github.com/LaPockett/kmp-library-template-wizard")
             credentials {
                 username = "LaPockett"
                 password = providers.gradleProperty("gpr.key")
@@ -27,7 +27,7 @@ pluginManagement {
                     .getOrElse("")
             }
             content {
-                includeGroup("com.lapockett")
+                includeGroup("io.lapockett")
             }
         }
     }
@@ -48,7 +48,7 @@ dependencyResolutionManagement {
         // Librería publicada en Github Packages
         maven {
             name = "GithubPackages"
-            url = uri("https://maven.pkg.github.com/LaPockett/cmp-library")
+            url = uri("https://maven.pkg.github.com/LaPockett/kmp-library-template-wizard")
             credentials {
                 username = "LaPockett"
                 password = providers.gradleProperty("gpr.key")
@@ -56,7 +56,7 @@ dependencyResolutionManagement {
                     .getOrElse("")
             }
             content {
-                includeGroup("com.lapockett")
+                includeGroup("io.lapockett")
             }
         }
     }

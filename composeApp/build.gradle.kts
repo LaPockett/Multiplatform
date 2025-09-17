@@ -101,12 +101,12 @@ kotlin {
 
             // Librería de un componente de Dian publicado en Maven Local
             //implementation("com.lapockett.testlib:testlib:1.0.0")
-            implementation("com.lapockett:lib:1.1.1")
+            //implementation("com.lapockett:lib:1.1.1")
+            implementation("io.lapockett:idamgon-cmp:1.0.0-9c130956")
         }
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)
             implementation(libs.kotlin.test)
-            implementation(libs.ui.test.junit4)
         }
         iosMain.dependencies {
             implementation(libs.play.services.appsearch)
