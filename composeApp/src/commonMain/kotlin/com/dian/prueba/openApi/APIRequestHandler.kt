@@ -12,7 +12,6 @@ import kotlinx.serialization.json.Json
 import io.ktor.http.contentType
 
 // With Dependency Injection
-
 interface HttpClientProvider {
     suspend fun registerUser(payload: UserProfile): String
     suspend fun healthPing(): String
@@ -29,8 +28,9 @@ class APIClient : HttpClientProvider {
             })
         }
     }
+    private val baseUrl = "http://192.168.10.209:8000/v0.1"
     override suspend fun registerUser(payload: UserProfile): String {
-        return client.post("http://192.168.10.209:8000/v0.1/identity/register") {
+        return client.post("{$baseUrl/identity/register}") {
             url {
                 parameters.append("self", "true")
                 parameters.append("logger", "true")
@@ -42,7 +42,7 @@ class APIClient : HttpClientProvider {
     }
 
     override suspend fun healthPing(): String {
-        return client.get("http://192.168.10.209:8000/v0.1/health/ping"){
+        return client.get("$baseUrl/health/ping"){
             url {
                 parameters.append("self", "true")
             }
@@ -50,7 +50,7 @@ class APIClient : HttpClientProvider {
     }
 
     override suspend fun getUserProfile(payload: UserProfile): String {
-        return client.get("http://192.168.10.209:8000/v0.1/identity/profile") {
+        return client.get("$baseUrl/identity/profile") {
             url {
                 parameters.append("self", "true")
                 parameters.append("authorization", "true")
@@ -61,7 +61,7 @@ class APIClient : HttpClientProvider {
     }
 }
 
-class Requests(private val httpClientProvider: HttpClientProvider) {
+class APIRequestHandler(private val httpClientProvider: HttpClientProvider) {
 
     suspend fun registerUser(payload: UserProfile) : String{
         println("** Register user **")
@@ -133,9 +133,9 @@ suspend fun registerUser() {
 suspend fun main() {
     println("Prueba de API")
     //registerUser() //Without dependency injection
-    val requests = Requests(APIClient())
+    val apiRequestHandler = APIRequestHandler(APIClient())
     val payload = UserProfile(username = "string", email = "string")
-    println(requests.healthPing())
-    println(requests.getUserProfile(payload))
-    println(requests.registerUser(payload))
+    println(apiRequestHandler.healthPing())
+    println(apiRequestHandler.getUserProfile(payload))
+    println(apiRequestHandler.registerUser(payload))
 }

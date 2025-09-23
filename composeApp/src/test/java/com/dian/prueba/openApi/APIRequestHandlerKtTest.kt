@@ -28,9 +28,9 @@ class RequestsKtTest {
     @Test
     fun `register user with valid payload returns success`() {
         val payload = UserProfile(username = "string", email = "string")
-        val requests = Requests(FakeHttpClient())
+        val apiRequestHandler = APIRequestHandler(FakeHttpClient())
         runTest {
-            val response = requests.registerUser(payload)
+            val response = apiRequestHandler.registerUser(payload)
             assertEquals("Fake API Response success", response)
         }
     }
@@ -38,27 +38,27 @@ class RequestsKtTest {
     @Test
     fun `register user with empty credentials throws exception`(){
         val payload = UserProfile(username = "", email = "")
-        val requests = Requests(FakeHttpClient())
+        val apiRequestHandler = APIRequestHandler(FakeHttpClient())
         runTest {
-            val response = requests.registerUser(payload)
+            val response = apiRequestHandler.registerUser(payload)
             assertEquals("Fake API Error", response)
         }
     }
     @Test
     fun `register user with one empty credential throws exception`(){
         val payload = UserProfile(username = "string", email = "")
-        val requests = Requests(FakeHttpClient())
+        val apiRequestHandler = APIRequestHandler(FakeHttpClient())
         runTest {
-            val response = requests.registerUser(payload)
+            val response = apiRequestHandler.registerUser(payload)
             assertEquals("Fake API Error", response)
         }
     }
 
     @Test
     fun `health ping returns pong`() {
-        val requests = Requests(FakeHttpClient())
+        val apiRequestHandler = APIRequestHandler(FakeHttpClient())
         runTest {
-            val response = requests.healthPing()
+            val response = apiRequestHandler.healthPing()
             assertEquals("pong", response)
         }
     }
@@ -66,18 +66,18 @@ class RequestsKtTest {
     @Test
     fun `get user profile with valid payload returns success`() {
         val payload = UserProfile(username = "string", email = "gnirts")
-        val requests = Requests(FakeHttpClient())
+        val apiRequestHandler = APIRequestHandler(FakeHttpClient())
         runTest {
-            val response = requests.getUserProfile(payload)
+            val response = apiRequestHandler.getUserProfile(payload)
             assertEquals("string gnirts", response)
         }
     }
     @Test
     fun `get user profile with empty credentials throws exception`() {
         val payload = UserProfile(username = "", email = "")
-        val requests = Requests(FakeHttpClient())
+        val apiRequestHandler = APIRequestHandler(FakeHttpClient())
         runTest {
-            val response = requests.getUserProfile(payload)
+            val response = apiRequestHandler.getUserProfile(payload)
             assertEquals("Fake API Error", response)
         }
     }
