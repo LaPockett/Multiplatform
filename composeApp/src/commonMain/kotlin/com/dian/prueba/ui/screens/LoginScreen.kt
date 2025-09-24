@@ -35,6 +35,7 @@ import com.dian.prueba.ui.components.buttons.CustomButtonWithIcon
 import com.dian.prueba.ui.components.dialogs.*
 import com.dian.prueba.utilities.*
 import com.russhwolf.settings.Settings
+import io.github.kotlin.fibonacci.ButtonLibWizard
 /**
  * The following two lines appear in red from time to time. It's not a error,
  * it's just a bug. You just need to clean and build project or forget about it :)
@@ -101,6 +102,7 @@ fun LoginScreen(navController: NavHostController){
                         Spacer(
                             modifier = Modifier.padding(10.dp)
                         )
+                        ButtonLibWizard()
                         EmailTextField(
                             value = email,
                             onValueChange = {email = it}

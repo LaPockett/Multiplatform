@@ -102,7 +102,7 @@ kotlin {
             // Librería de un componente de Dian publicado en Maven Local
             //implementation("com.lapockett.testlib:testlib:1.0.0")
             //implementation("com.lapockett:lib:1.1.1")
-            //implementation("io.lapockett:idamgon-cmp:1.0.0-9c130956")
+            implementation("io.lapockett:idamgon-cmp:1.1.0")
         }
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)
@@ -217,4 +217,35 @@ compose.desktop {
             jvmArgs("--add-opens", "java.desktop/sun.lwawt.macosx=ALL-UNNAMED")
         }
     }
+}
+project.afterEvaluate {
+    project.tasks["kspDebugKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidMain")
+    project.tasks["kspDebugKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidMain")
+    project.tasks["kspDebugKotlinAndroid"].dependsOn("generateActualResourceCollectorsForAndroidMain")
+    project.tasks["kspDebugKotlinAndroid"].dependsOn("generateComposeResClass")
+    project.tasks["kspDebugKotlinAndroid"].dependsOn("generateResourceAccessorsForCommonMain")
+    project.tasks["kspDebugKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidDebug")
+    project.tasks["kspDebugKotlinAndroid"].dependsOn("generateExpectResourceCollectorsForCommonMain")
+
+    project.tasks["kspKotlinDesktop"].dependsOn("generateResourceAccessorsForDesktopMain")
+    project.tasks["kspKotlinDesktop"].dependsOn("generateActualResourceCollectorsForDesktopMain")
+    project.tasks["kspKotlinDesktop"].dependsOn("generateComposeResClass")
+    project.tasks["kspKotlinDesktop"].dependsOn("generateResourceAccessorsForCommonMain")
+    project.tasks["kspKotlinDesktop"].dependsOn("generateExpectResourceCollectorsForCommonMain")
+
+    project.tasks["kspReleaseKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidRelease")
+    project.tasks["kspReleaseKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidMain")
+    project.tasks["kspReleaseKotlinAndroid"].dependsOn("generateActualResourceCollectorsForAndroidMain")
+    project.tasks["kspReleaseKotlinAndroid"].dependsOn("generateComposeResClass")
+    project.tasks["kspReleaseKotlinAndroid"].dependsOn("generateExpectResourceCollectorsForCommonMain")
+
+    project.tasks["kspDebugUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidUnitTestDebug")
+    project.tasks["kspDebugUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidUnitTest")
+    project.tasks["kspDebugUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForCommonTest")
+    project.tasks["kspDebugUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidUnitTestDebug")
+
+    project.tasks["kspReleaseUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidUnitTestRelease")
+    project.tasks["kspReleaseUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidUnitTest")
+    project.tasks["kspReleaseUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForCommonTest")
+    project.tasks["kspReleaseUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidUnitTestDebug")
 }
