@@ -102,7 +102,7 @@ kotlin {
             // Librería de un componente de Dian publicado en Maven Local
             //implementation("com.lapockett.testlib:testlib:1.0.0")
             //implementation("com.lapockett:lib:1.1.1")
-            implementation("io.lapockett:idamgon-cmp:1.1.0")
+            //implementation("io.lapockett:idamgon-cmp:1.1.0")
         }
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)
@@ -248,4 +248,13 @@ project.afterEvaluate {
     project.tasks["kspReleaseUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidUnitTest")
     project.tasks["kspReleaseUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForCommonTest")
     project.tasks["kspReleaseUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidUnitTestDebug")
+
+    project.tasks["kspKotlinIosSimulatorArm64"].dependsOn("generateResourceAccessorsForIosSimulatorArm64Main")
+    project.tasks["kspKotlinIosSimulatorArm64"].dependsOn("generateActualResourceCollectorsForIosSimulatorArm64Main")
+    project.tasks["kspKotlinIosSimulatorArm64"].dependsOn("generateResourceAccessorsForIosMain")
+    project.tasks["kspKotlinIosSimulatorArm64"].dependsOn("generateResourceAccessorsForNativeMain")
+    project.tasks["kspKotlinIosSimulatorArm64"].dependsOn("generateExpectResourceCollectorsForCommonMain")
+    project.tasks["kspKotlinIosSimulatorArm64"].dependsOn("generateComposeResClass")
+    project.tasks["kspKotlinIosSimulatorArm64"].dependsOn("generateResourceAccessorsForNativeMain")
+    project.tasks["kspKotlinIosSimulatorArm64"].dependsOn("generateResourceAccessorsForNativeMain")
 }
