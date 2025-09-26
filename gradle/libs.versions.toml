@@ -34,6 +34,10 @@ google-services-plugin = "4.4.3"
 ktor-version = "3.0.0"
 composeHotReload = "1.0.0-beta04"
 kotlinx-coroutines = "1.10.2"
+material = "1.13.0"
+material-3 = "1.5.0-alpha04"
+composeMaterial = "1.9.2"
+material-extended = "1.7.8"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -72,6 +76,16 @@ firebase-messaging-ktx = { module = "com.google.firebase:firebase-messaging-ktx"
 kmpnotifier = { module = "io.github.mirzemehdi:kmpnotifier", version.ref = "kmpnotifier" }
 kotlinx-coroutinesSwing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 kcef = { group = "dev.datlag", name = "kcef", version.ref = "kcef" }
+#Para la librería de Showkase
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material-3" }
+androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "composeMaterial" }
+androidx-compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "composeMaterial" }
+androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "composeMaterial" }
+androidx-compose-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-extended" }
+androidx-compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "composeMaterial" }
+androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "composeMaterial" }
+androidx-compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics", version.ref = "composeMaterial" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -83,3 +97,4 @@ googleServices = { id = "com.google.gms.google-services", version.ref = "google-
 
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 composeHotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "composeHotReload" }
+kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
