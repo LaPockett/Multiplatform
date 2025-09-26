@@ -68,6 +68,7 @@ kotlin {
             // ShowKase Airbnb
             implementation("com.airbnb.android:showkase:1.0.4")
             implementation("com.airbnb.android:showkase-annotation:1.0.4")
+            implementation("com.lapockett:showkase-logo:1.2.0")
         }
         commonMain.dependencies {
             implementation(libs.androidx.navigation.compose)
