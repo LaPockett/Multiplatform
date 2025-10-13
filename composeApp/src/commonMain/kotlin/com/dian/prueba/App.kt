@@ -1,11 +1,16 @@
 package com.dian.prueba
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import com.dian.prueba.utilities.TokenStorage
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContentPadding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -43,6 +48,10 @@ import com.dian.prueba.utilities.TokenStorageImpl
 import com.dian.prueba.utilities.UpdateStorageImpl
 import com.dian.prueba.viewModel.UpdateVM
 import com.russhwolf.settings.*
+import multiplatform.composeapp.generated.resources.Res
+import multiplatform.composeapp.generated.resources.compose_multiplatform
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 /**
  * NO SE USA
@@ -219,4 +228,40 @@ fun AppNavigation(onLogout: () -> Unit) {
 }
 
 
+/*@Composable
+@Preview
+fun AppPrueba() {
+    MaterialTheme {
+        var showContent by remember { mutableStateOf(false) }
+        Column(
+            modifier = Modifier
+                .background(MaterialTheme.colorScheme.primaryContainer)
+                .safeContentPadding()
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Button(onClick = { showContent = !showContent }) {
+                Text("Click me!")
+            }
+            AnimatedVisibility(showContent) {
+                val greeting = remember { Greeting().greet() }
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Image(painterResource(Res.drawable.compose_multiplatform), null)
+                    Text("Compose: $greeting")
+                }
+            }
+        }
+    }
+}
+
+class Greeting {
+    private val platform = getPlatformType()
+
+    fun greet(): String {
+        return "Hello, ${platform.name}!"
+    }
+}*/
 

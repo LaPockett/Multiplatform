@@ -5,7 +5,8 @@ import io.ktor.client.HttpClient
 enum class PlatformType {
     ANDROID,
     IOS,
-    DESKTOP
+    DESKTOP,
+    WEB,
 }
 
 interface Platform {

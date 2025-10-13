@@ -10,7 +10,6 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
@@ -41,7 +40,7 @@ class APIClient (
         logger.warn("Iniciando login...")
 
         return try {
-            withContext(Dispatchers.IO) {
+            withContext(Dispatchers.Default) {
                 val result: Login = client.get("https://jsonplaceholder.typicode.com/users/$id").body()
                 logger.debug(result.toString())
                 _loginToken = result.email

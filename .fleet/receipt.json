@@ -12,6 +12,16 @@
                 "ui": [
                     "compose"
                 ]
+            },
+            "ios": {
+                "ui": [
+                    "compose"
+                ]
+            },
+            "web": {
+                "ui": [
+                    "compose"
+                ]
             }
         }
     },
