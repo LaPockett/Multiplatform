@@ -14,7 +14,6 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "2.2.0"
     // For Firebase use
     alias(libs.plugins.googleServices)
-    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -65,10 +64,6 @@ kotlin {
             implementation(libs.firebase.analytics.ktx)
             implementation(libs.firebase.common)
             implementation(libs.firebase.messaging.ktx)
-            // ShowKase Airbnb
-            implementation("com.airbnb.android:showkase:1.0.4")
-            implementation("com.airbnb.android:showkase-annotation:1.0.4")
-            implementation("com.lapockett:showkase-logo:1.2.0")
         }
         commonMain.dependencies {
             implementation(libs.androidx.navigation.compose)
@@ -195,7 +190,6 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
-    add("ksp", "com.airbnb.android:showkase-processor:1.0.4")
     implementation(libs.kcef)
 }
 
@@ -218,44 +212,4 @@ compose.desktop {
             jvmArgs("--add-opens", "java.desktop/sun.lwawt.macosx=ALL-UNNAMED")
         }
     }
-}
-project.afterEvaluate {
-    project.tasks["kspDebugKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidMain")
-    project.tasks["kspDebugKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidMain")
-    project.tasks["kspDebugKotlinAndroid"].dependsOn("generateActualResourceCollectorsForAndroidMain")
-    project.tasks["kspDebugKotlinAndroid"].dependsOn("generateComposeResClass")
-    project.tasks["kspDebugKotlinAndroid"].dependsOn("generateResourceAccessorsForCommonMain")
-    project.tasks["kspDebugKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidDebug")
-    project.tasks["kspDebugKotlinAndroid"].dependsOn("generateExpectResourceCollectorsForCommonMain")
-
-    project.tasks["kspKotlinDesktop"].dependsOn("generateResourceAccessorsForDesktopMain")
-    project.tasks["kspKotlinDesktop"].dependsOn("generateActualResourceCollectorsForDesktopMain")
-    project.tasks["kspKotlinDesktop"].dependsOn("generateComposeResClass")
-    project.tasks["kspKotlinDesktop"].dependsOn("generateResourceAccessorsForCommonMain")
-    project.tasks["kspKotlinDesktop"].dependsOn("generateExpectResourceCollectorsForCommonMain")
-
-    project.tasks["kspReleaseKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidRelease")
-    project.tasks["kspReleaseKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidMain")
-    project.tasks["kspReleaseKotlinAndroid"].dependsOn("generateActualResourceCollectorsForAndroidMain")
-    project.tasks["kspReleaseKotlinAndroid"].dependsOn("generateComposeResClass")
-    project.tasks["kspReleaseKotlinAndroid"].dependsOn("generateExpectResourceCollectorsForCommonMain")
-
-    project.tasks["kspDebugUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidUnitTestDebug")
-    project.tasks["kspDebugUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidUnitTest")
-    project.tasks["kspDebugUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForCommonTest")
-    project.tasks["kspDebugUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidUnitTestDebug")
-
-    project.tasks["kspReleaseUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidUnitTestRelease")
-    project.tasks["kspReleaseUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidUnitTest")
-    project.tasks["kspReleaseUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForCommonTest")
-    project.tasks["kspReleaseUnitTestKotlinAndroid"].dependsOn("generateResourceAccessorsForAndroidUnitTestDebug")
-
-    project.tasks["kspKotlinIosSimulatorArm64"].dependsOn("generateResourceAccessorsForIosSimulatorArm64Main")
-    project.tasks["kspKotlinIosSimulatorArm64"].dependsOn("generateActualResourceCollectorsForIosSimulatorArm64Main")
-    project.tasks["kspKotlinIosSimulatorArm64"].dependsOn("generateResourceAccessorsForIosMain")
-    project.tasks["kspKotlinIosSimulatorArm64"].dependsOn("generateResourceAccessorsForNativeMain")
-    project.tasks["kspKotlinIosSimulatorArm64"].dependsOn("generateExpectResourceCollectorsForCommonMain")
-    project.tasks["kspKotlinIosSimulatorArm64"].dependsOn("generateComposeResClass")
-    project.tasks["kspKotlinIosSimulatorArm64"].dependsOn("generateResourceAccessorsForNativeMain")
-    project.tasks["kspKotlinIosSimulatorArm64"].dependsOn("generateResourceAccessorsForNativeMain")
 }

@@ -63,4 +63,3 @@ dependencyResolutionManagement {
 }
 
 include(":composeApp")
-include(":showkase-logo")
