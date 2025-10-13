@@ -15,9 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.airbnb.android.showkase.annotation.ShowkaseRoot
-import com.airbnb.android.showkase.annotation.ShowkaseRootModule
-import com.airbnb.android.showkase.models.Showkase
+
 import com.dian.prueba.AppLogin
 import com.dian.prueba.R
 
@@ -28,8 +26,6 @@ import com.mmk.kmpnotifier.notification.NotifierManager
 import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
 import com.mmk.kmpnotifier.permission.permissionUtil
 // Define root module for Showkase
-@ShowkaseRoot
-class MyRootModule: ShowkaseRootModule
 class MainActivity : ComponentActivity() {
     @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +46,6 @@ class MainActivity : ComponentActivity() {
         }
         setContent {
             // To open Showkase
-            startActivity(Showkase.getBrowserIntent(this))
             val darkColor = Color.Transparent
             val lightColor = Color.Transparent
             val isDarkTheme = isSystemInDarkTheme()
