@@ -15,11 +15,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-
-import com.dian.prueba.AppLogin
-import com.dian.prueba.PerplexityLogoPreview
-import com.dian.prueba.PerplexityScreen
-import com.dian.prueba.PruebaHaze
+import com.dian.prueba.Anims
+import com.dian.prueba.Controls
 import com.dian.prueba.R
 
 import com.dian.prueba.ui.Theme.MultiplatformTheme
@@ -28,6 +25,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.mmk.kmpnotifier.notification.NotifierManager
 import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
 import com.mmk.kmpnotifier.permission.permissionUtil
+
 // Define root module for Showkase
 class MainActivity : ComponentActivity() {
     @SuppressLint("StringFormatInvalid")
@@ -89,9 +87,31 @@ class MainActivity : ComponentActivity() {
                 })
             MultiplatformTheme {
                 //PruebaHaze()
-                PerplexityScreen()
+                //PerplexityScreen()
+                //LottieLogo()
+                Anims(controls = Controls.FORWARD)
                 //PerplexityLogoPreview()
             }
         }
     }
 }
+
+/*
+// Basic Usage of Compottie
+@Composable
+fun LottieLogo() {
+    val composition by rememberLottieComposition {
+        LottieCompositionSpec.JsonString(
+            Res.readBytes("files/logolottie.json").decodeToString()
+        )
+    }
+    val progress by animateLottieCompositionAsState(composition)
+
+    Image(
+        painter = rememberLottiePainter(
+            composition = composition,
+            progress = { progress },
+        ),
+        contentDescription = "Lottie animation"
+    )
+}*/

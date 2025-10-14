@@ -38,6 +38,7 @@ material = "1.13.0"
 material-3 = "1.5.0-alpha04"
 composeMaterial = "1.9.2"
 material-extended = "1.7.8"
+compottie="2.0.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -86,6 +87,13 @@ androidx-compose-material-icons-extended = { module = "androidx.compose.material
 androidx-compose-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "composeMaterial" }
 androidx-compose-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "composeMaterial" }
 androidx-compose-ui-graphics = { module = "androidx.compose.ui:ui-graphics", version.ref = "composeMaterial" }
+
+# Compottie
+compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
+compottie-lite = { module = "io.github.alexzhirkevich:compottie-lite", version.ref = "compottie" }
+compottie-dot = { module = "io.github.alexzhirkevich:compottie-dot", version.ref = "compottie" }
+compottie-network = { module = "io.github.alexzhirkevich:compottie-network", version.ref = "compottie" }
+compottie-resources = { module = "io.github.alexzhirkevich:compottie-resources", version.ref = "compottie" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

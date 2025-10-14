@@ -109,6 +109,12 @@ kotlin {
             // Haze - Glassmorphism
             implementation("dev.chrisbanes.haze:haze:1.6.10")
             implementation("dev.chrisbanes.haze:haze-materials:1.6.10")
+            // Compotti
+            implementation(libs.compottie)
+            implementation(libs.compottie.lite)
+            implementation(libs.compottie.dot)
+            implementation(libs.compottie.network)
+            implementation(libs.compottie.resources)
         }
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)
