@@ -17,6 +17,9 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
 import com.dian.prueba.AppLogin
+import com.dian.prueba.PerplexityLogoPreview
+import com.dian.prueba.PerplexityScreen
+import com.dian.prueba.PruebaHaze
 import com.dian.prueba.R
 
 import com.dian.prueba.ui.Theme.MultiplatformTheme
@@ -85,7 +88,9 @@ class MainActivity : ComponentActivity() {
                 Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                 })
             MultiplatformTheme {
-                AppLogin()
+                //PruebaHaze()
+                PerplexityScreen()
+                //PerplexityLogoPreview()
             }
         }
     }

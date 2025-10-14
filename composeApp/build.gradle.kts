@@ -106,6 +106,9 @@ kotlin {
             //implementation("com.lapockett.testlib:testlib:1.0.0")
             //implementation("com.lapockett:lib:1.1.1")
             //implementation("io.lapockett:idamgon-cmp:1.1.0")
+            // Haze - Glassmorphism
+            implementation("dev.chrisbanes.haze:haze:1.6.10")
+            implementation("dev.chrisbanes.haze:haze-materials:1.6.10")
         }
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)
