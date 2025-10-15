@@ -115,6 +115,8 @@ kotlin {
             implementation(libs.compottie.dot)
             implementation(libs.compottie.network)
             implementation(libs.compottie.resources)
+            // Texty to display text with various styles, effects and animations
+            implementation("com.arjunjadeja:texty:1.0.0-alpha")
         }
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)

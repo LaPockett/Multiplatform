@@ -15,11 +15,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.dian.prueba.Anims
-import com.dian.prueba.Controls
 import com.dian.prueba.R
 
 import com.dian.prueba.ui.Theme.MultiplatformTheme
+import com.dian.prueba.ui.screens.AnimatedSearchBar
+import com.dian.prueba.ui.screens.FeedLogo
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mmk.kmpnotifier.notification.NotifierManager
@@ -89,7 +89,9 @@ class MainActivity : ComponentActivity() {
                 //PruebaHaze()
                 //PerplexityScreen()
                 //LottieLogo()
-                Anims(controls = Controls.FORWARD)
+                //Anims(controls = Controls.FORWARD)
+                //AnimatedSearchBar()
+                FeedLogo()
                 //PerplexityLogoPreview()
             }
         }
