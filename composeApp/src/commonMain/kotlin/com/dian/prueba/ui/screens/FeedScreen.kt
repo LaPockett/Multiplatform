@@ -26,6 +26,7 @@ import com.arjunjadeja.texty.RevealingCover
 import com.arjunjadeja.texty.RevealingPattern
 import com.arjunjadeja.texty.RevealingType
 import com.arjunjadeja.texty.Texty
+import com.dian.prueba.ui.Theme.MultiplatformTheme
 import kotlinx.coroutines.delay
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.ysl
@@ -146,7 +147,7 @@ fun SearchBar(
 @Preview
 @Composable
 fun FeedLogo() {
-    MaterialTheme {
+    MultiplatformTheme {
         Box(
             modifier = Modifier.background(MaterialTheme.colorScheme.background)
         ) {
@@ -181,7 +182,7 @@ fun FeedLogo() {
                         ) {
                             Text(
                                 text = "Title of the card",
-                                style = MaterialTheme.typography.headlineMedium,
+                                style = MaterialTheme.typography.headlineLarge,
                                 modifier = Modifier.padding(bottom = 6.dp)
                             )
                             Text(
