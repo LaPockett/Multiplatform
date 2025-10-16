@@ -72,7 +72,6 @@ import multiplatform.composeapp.generated.resources.logo
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-
 /**
  * Creating a Logo with Frosted Glass Effect in Compose with Haze Library
  * https://proandroiddev.com/creating-a-logo-with-frosted-glass-effect-in-jetpack-compose-bad2453b8512
@@ -209,7 +208,6 @@ fun Page(
     )
 }
 
-
 @Preview(showBackground = true, backgroundColor = 0xFF000023)
 @Composable
 fun PerplexityLogoPreview() {
@@ -263,9 +261,6 @@ fun PreviewRoundedBox() {
         0.5f, hazeState, hazeStyle, modifier = Modifier
     )
 }
-
-
-
 
 @Composable
 fun PerplexityScreen() {
@@ -383,8 +378,6 @@ fun PerplexityScreen() {
                 fontSize = 28.sp
             )
         }
-
-
         // Bottom content
         Column(
             modifier = Modifier
