@@ -136,7 +136,7 @@ object ScrollAnimation {
         return slideInVertically(
             initialOffsetY = { 50 },
             animationSpec = tween()
-        ) + fadeIn() with slideOutVertically(
+        ) + fadeIn() togetherWith slideOutVertically(
             targetOffsetY = { -50 },
             animationSpec = tween()
         ) + fadeOut()
@@ -279,7 +279,7 @@ fun FeedLogo() {
                             style = hazeStyle,
                         ),
                     windowInsets = WindowInsets.statusBars,
-                    colors = TopAppBarDefaults.largeTopAppBarColors(Color.Transparent),
+                    colors = TopAppBarDefaults.topAppBarColors(Color.Transparent),
                     title = {
                         ImageLogo(tint = Color.Black)
                     }

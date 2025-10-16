@@ -48,13 +48,12 @@ import com.russhwolf.settings.*
  * NO SE USA
  */
 
-@Composable
+/*@Composable
 fun App() {
     MaterialTheme {
         val title by remember { mutableStateOf("Welcome to multiplatform") }
         var textFieldName by remember { mutableStateOf("") }
         val navController: NavHostController = rememberNavController()
-
         NavHost(
             navController = navController,
             startDestination = "main"
@@ -74,7 +73,6 @@ fun App() {
                             onValueChange = { textFieldName = it },
                             label = { Text("Insert your name") }
                         )
-
                     }
                     Spacer(modifier = Modifier.padding(10.dp))
                     Button(
@@ -104,7 +102,7 @@ fun App() {
         }
 
     }
-}
+}*/
 @Composable
 fun AppLogin() {
     /**

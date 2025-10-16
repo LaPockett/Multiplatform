@@ -50,7 +50,7 @@ fun ScrollRowAmazon() {
     Column(
         modifier = Modifier.padding(top = 8.dp)
     ) {
-        ScrollableTabRow(
+        PrimaryScrollableTabRow(
             selectedTabIndex = 0,
             containerColor = MaterialTheme.colorScheme.secondaryContainer,
             contentColor = MaterialTheme.colorScheme.onSecondaryContainer,

@@ -93,7 +93,8 @@ fun TopAppBarMenuDrawer(
             scrolledContainerColor = Color.White,
             navigationIconContentColor = Color.Black,
             titleContentColor = Color.Black,
-            actionIconContentColor = Color.Black
+            actionIconContentColor = Color.Black,
+            subtitleContentColor = Color.Black
         ),
         navigationIcon = {
             IconButton(onClick = {
