@@ -15,13 +15,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import androidx.navigation.compose.rememberNavController
 import com.dian.prueba.R
-
 import com.dian.prueba.ui.Theme.MultiplatformTheme
-import com.dian.prueba.ui.screens.AnimatedSearchBar
 import com.dian.prueba.ui.screens.FeedLogo
-import com.dian.prueba.ui.screens.ModalBottomSheetMaterial3Sample
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mmk.kmpnotifier.notification.NotifierManager
@@ -49,7 +45,7 @@ class MainActivity : ComponentActivity() {
         }
         setContent {
             // To open Showkase
-            val darkColor = Color.Transparent
+            val darkColor = Color.White
             val lightColor = Color.Transparent
             val isDarkTheme = isSystemInDarkTheme()
             // Enable edge-to-edge display (content extends behind system bars)

@@ -117,6 +117,9 @@ kotlin {
             implementation(libs.compottie.resources)
             // Texty to display text with various styles, effects and animations
             implementation("com.arjunjadeja:texty:1.0.0-alpha")
+            // Coil SVG
+            implementation("io.coil-kt.coil3:coil-compose:3.0.4")
+            implementation("io.coil-kt.coil3:coil-svg:3.0.4")
         }
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)

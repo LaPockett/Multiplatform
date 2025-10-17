@@ -1,5 +1,10 @@
 package com.dian.prueba.navigation
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Home
@@ -7,8 +12,22 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextAlign
+import dev.chrisbanes.haze.HazeState
+import multiplatform.composeapp.generated.resources.Res
+import multiplatform.composeapp.generated.resources.matcha
+import multiplatform.composeapp.generated.resources.ysl
+import org.jetbrains.compose.resources.painterResource
 
+/**
+ * Bottom navigation de la app mock
+ */
 data class BottomNavigationItem(
     val title: String,
     val icon: ImageVector,
@@ -21,14 +40,59 @@ val navigationItems = listOf(
     BottomNavigationItem("Explore", Icons.Default.Menu, "explore")
 )
 
-//Bottom navigation de feed de logo
+/**
+ * Bottom navigation de feed de logo
+ */
 data class BottomNavigationItemLogo(
     val title: String,
     val icon: ImageVector,
     val route: String,
 )
 val navigationItemsLogo = listOf(
-    BottomNavigationItemLogo("Closet", Icons.Default.Notifications, "closet"),
-    BottomNavigationItemLogo("Profile", Icons.Default.Person, "profile"),
     BottomNavigationItemLogo("Newspaper", Icons.Default.Email, "newspaper"),
+    BottomNavigationItemLogo("Closet", Icons.Default.Notifications, "closet"),
+    BottomNavigationItemLogo("Profile", Icons.Default.Person, "profile")
 )
+
+/**
+ * Para ver su comportamiento junto con el bottom navigation
+ */
+@Composable
+fun ProfileScreen() {
+    Box(
+        modifier = Modifier.fillMaxSize()
+            .background(Color.Cyan),
+        contentAlignment = Alignment.Center
+    ) {
+        LazyColumn {
+            items(22){
+                Image(
+                    painter = painterResource(Res.drawable.matcha),
+                    contentDescription = "Profile",
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+        }
+
+    }
+}
+
+@Composable
+fun NewspaperScreen() {
+    Box(
+        modifier = Modifier.fillMaxSize()
+            .background(Color.Magenta),
+        contentAlignment = Alignment.Center
+    ) {
+        LazyColumn {
+            items(22){
+                Image(
+                    painter = painterResource(Res.drawable.ysl),
+                    contentDescription = "Newspaper",
+                    modifier = Modifier.fillMaxSize()
+                )
+            }
+        }
+
+    }
+}

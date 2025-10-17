@@ -1,0 +1,151 @@
+package com.dian.prueba.ui.components
+
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ContentTransform
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
+import androidx.compose.animation.togetherWith
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.dp
+import com.arjunjadeja.texty.DisplayStyle
+import com.arjunjadeja.texty.RevealingCover
+import com.arjunjadeja.texty.RevealingPattern
+import com.arjunjadeja.texty.RevealingType
+import com.arjunjadeja.texty.Texty
+import kotlinx.coroutines.delay
+import multiplatform.composeapp.generated.resources.Res
+import multiplatform.composeapp.generated.resources.logo
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
+
+@Preview
+@Composable
+fun AnimatedSearchBar() {
+    MaterialTheme {
+        Column(
+            modifier = Modifier.fillMaxSize().padding(WindowInsets.safeDrawing.asPaddingValues()),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            SearchBar(
+                query = "",
+                onQueryChange = {}
+            )
+        }
+    }
+}
+
+/**
+ * Animated Placeholder
+ * https://proandroiddev.com/animated-placeholder-with-jetpack-compose-60c85547b47a
+ */
+@Composable
+fun AnimatedPlaceholder(
+    hints: List<String>,
+    textStyle: TextStyle = MaterialTheme.typography.bodySmall,
+    textColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+) {
+    val iterator = hints.listIterator()
+
+    val target by produceState(initialValue = hints.first()) {
+        iterator.doWhenHasNextOrPrevious {
+            value = it
+        }
+    }
+
+    AnimatedContent(
+        targetState = target,
+        transitionSpec = { ScrollAnimation() }
+    ) { str ->
+        Texty(
+            text = str,
+            textStyle = textStyle,
+            displayStyle = DisplayStyle.Revealing(
+                delayBeforeRevealing = 500L,
+                pattern = RevealingPattern.START_TO_END,
+                type = RevealingType.ByEachCharacter(delayInMillis = 30L),
+                cover = RevealingCover.Custom(" ")
+            )
+        )
+    }
+}
+
+suspend fun <T> ListIterator<T>.doWhenHasNextOrPrevious(
+    delayMills: Long = 2400,
+    doWork: suspend (T) -> Unit
+) {
+    while (hasNext() || hasPrevious()) {
+        while (hasNext()) {
+            delay(delayMills)
+            doWork(next())
+        }
+        while (hasPrevious()) {
+            delay(delayMills)
+            doWork(previous())
+        }
+    }
+}
+
+object ScrollAnimation {
+    @OptIn(ExperimentalAnimationApi::class)
+    operator fun invoke(): ContentTransform {
+        return slideInVertically(
+            initialOffsetY = { 50 },
+            animationSpec = tween()
+        ) + fadeIn() togetherWith slideOutVertically(
+            targetOffsetY = { -50 },
+            animationSpec = tween()
+        ) + fadeOut()
+    }
+}
+
+@Composable
+fun SearchBar(
+    modifier: Modifier = Modifier,
+    query: String,
+    onQueryChange: (String) -> Unit,
+) {
+    OutlinedTextField(
+        modifier = modifier,
+        value = query,
+        onValueChange = onQueryChange,
+        enabled = false,
+        readOnly = true,
+        label = {
+            AnimatedPlaceholder(
+                hints = listOf(
+                    "Hey Maria! Here are the perfect pieces for your week",
+                    "What will you choose?",
+                    "Pick your bag!",
+                ),
+            )
+        },
+        leadingIcon = {
+            Icon(
+                painter = painterResource(Res.drawable.logo),
+                contentDescription = "Search",
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+    )
+}
