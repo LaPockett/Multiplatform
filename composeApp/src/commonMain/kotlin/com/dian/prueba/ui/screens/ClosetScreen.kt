@@ -65,6 +65,17 @@ fun ClosetScreen() {
         noiseFactor = -1f,
         fallbackTint = HazeTint.Unspecified,
     )
+    val hazeStyle2 = HazeStyle(
+        backgroundColor = Color.White,
+        tints = listOf(
+            HazeTint(
+                Color.White.copy(alpha = if (Color.White.luminance() >= 0.5) lightAlpha else darkAlpha),
+            )
+        ),
+        blurRadius = 3.dp,
+        noiseFactor = -1f,
+        fallbackTint = HazeTint.Unspecified,
+    )
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -125,7 +136,7 @@ fun ClosetScreen() {
             ),
             modifier = Modifier.size(50.dp) // Sí que está pero detrás del bottom navigation
                 .align(Alignment.Center)
-                //.padding(bottom = 90.dp)
+                //.padding(bottom = 5.dp)
                 .clickable(
                     interactionSource = interactionSource,
                     indication = null,
@@ -135,7 +146,7 @@ fun ClosetScreen() {
             Box(
                 modifier = Modifier.fillMaxSize().hazeEffect(
                     state = hazeState,
-                    style = hazeStyle
+                    style = hazeStyle2
                 ),
                 contentAlignment = Alignment.Center
             ) {

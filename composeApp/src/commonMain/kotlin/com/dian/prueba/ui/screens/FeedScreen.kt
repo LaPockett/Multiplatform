@@ -33,7 +33,7 @@ fun HeaderLogo() {
     MultiplatformTheme {
         Column(
             modifier = Modifier.background(MaterialTheme.colorScheme.background)
-                .padding(top = 70.dp).fillMaxSize(),
+                .padding(top = 50.dp).fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
