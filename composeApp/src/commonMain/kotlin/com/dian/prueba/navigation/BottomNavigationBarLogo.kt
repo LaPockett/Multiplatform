@@ -76,7 +76,7 @@ fun BottomNavigationBarLogo(
         fallbackTint = HazeTint.Unspecified,
     )
 
-    val selectedNavigationIndex = rememberSaveable { mutableStateOf(0) }
+    val selectedNavigationIndex = rememberSaveable { mutableStateOf(1) }
     BottomAppBar(
         containerColor = Color.Transparent,
         contentColor = Color.Transparent,
