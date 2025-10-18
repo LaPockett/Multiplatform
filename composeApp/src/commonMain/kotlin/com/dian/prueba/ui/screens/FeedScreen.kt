@@ -52,13 +52,13 @@ fun HeaderLogo() {
                         .border(3.dp, Color(0xf0dcb57f)).align(Alignment.BottomCenter),
                 )*/
                 AsyncImage(
-                    model = Res.getUri("files/banner.svg"),
-                    contentDescription = "Banner SVG",
+                    model = Res.getUri("files/border.svg"),
+                    contentDescription = "Border SVG",
                     modifier = Modifier.fillMaxSize().align(Alignment.BottomCenter),
                 )
                 AsyncImage(
-                    model = Res.getUri("files/border.svg"),
-                    contentDescription = "Border SVG",
+                    model = Res.getUri("files/banner.plain.svg"),
+                    contentDescription = "Banner SVG",
                     modifier = Modifier.fillMaxSize().align(Alignment.BottomCenter),
                 )
             }
