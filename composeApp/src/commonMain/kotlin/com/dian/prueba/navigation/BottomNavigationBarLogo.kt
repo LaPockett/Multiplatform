@@ -1,5 +1,14 @@
 package com.dian.prueba.navigation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -98,14 +107,45 @@ fun BottomNavigationBarLogo(
                     navController.navigate(tab.route)
                 },
                 icon = {
-                    Icon(
-                        imageVector = tab.icon,
-                        contentDescription = tab.title
-                    )
+                    if (isSelected) {
+                        AnimatedVisibility(
+                            visible = isSelected,
+                            enter = fadeIn(animationSpec = tween(300)) + scaleIn(animationSpec = tween(300, easing = FastOutSlowInEasing)),
+                            exit = fadeOut(animationSpec = tween(300)) + scaleOut(animationSpec = tween(300, easing = FastOutSlowInEasing))
+                        ) {
+                            Icon(
+                                imageVector = tab.icon,
+                                contentDescription = tab.title,
+                            )
+                        }
+                    } else {
+                        AnimatedVisibility(
+                            visible = !isSelected,
+                            enter = fadeIn(animationSpec = tween(300)) + scaleIn(animationSpec = tween(300, easing = FastOutSlowInEasing)),
+                            exit = fadeOut(animationSpec = tween(300)) + scaleOut(animationSpec = tween(300, easing = FastOutSlowInEasing))
+                        ) {
+                            Icon(
+                                imageVector = tab.icon,
+                                contentDescription = tab.title,
+                            )
+                        }
+                    }
                 },
-                label = if (isSelected) {
-                    { Text(text = tab.title, style = MaterialTheme.typography.bodyMedium) }
-                } else null,
+                label = {
+                    AnimatedVisibility(
+                        visible = isSelected,
+                        enter = fadeIn(animationSpec = tween(250)) + slideInVertically(
+                            initialOffsetY = { it / 2 },
+                            animationSpec = tween(250, easing = FastOutSlowInEasing)
+                        ),
+                        exit = fadeOut(animationSpec = tween(250)) + slideOutVertically(
+                            targetOffsetY = { it / 2 },
+                            animationSpec = tween(250, easing = FastOutSlowInEasing)
+                        )
+                    ) {
+                        Text(text = tab.title, style = MaterialTheme.typography.titleSmall)
+                    }
+                },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = Color(0xffffffff),
                     unselectedIconColor = Color(0x84ffffff),
