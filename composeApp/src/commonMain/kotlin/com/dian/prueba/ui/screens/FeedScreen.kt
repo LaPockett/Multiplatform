@@ -3,14 +3,18 @@ package com.dian.prueba.ui.screens
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
@@ -39,6 +43,20 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun HeaderLogo() {
     MultiplatformTheme {
+        val lightAlpha = 0.3f
+        val darkAlpha = 0.1f
+        val hazeState = rememberHazeState()
+        val hazeStyle = HazeStyle(
+            backgroundColor = Color.White,
+            tints = listOf(
+                HazeTint(
+                    Color.White.copy(alpha = if (Color.White.luminance() >= 0.5) lightAlpha else darkAlpha),
+                )
+            ),
+            blurRadius = 3.dp,
+            noiseFactor = -1f,
+            fallbackTint = HazeTint.Unspecified,
+        )
         Column(
             modifier = Modifier.background(MaterialTheme.colorScheme.background)
                 .padding(top = 50.dp).fillMaxSize(),
@@ -61,8 +79,43 @@ fun HeaderLogo() {
                 AsyncImage(
                     model = Res.getUri("files/banner.plain.svg"),
                     contentDescription = "Banner SVG",
-                    modifier = Modifier.fillMaxSize().align(Alignment.BottomCenter),
+                    modifier = Modifier
+                        .hazeSource(hazeState)
+                        .fillMaxSize()
+                        .align(Alignment.BottomCenter),
                 )
+                Card(
+                    shape = RoundedCornerShape(50.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = Color.Transparent
+                    ),
+                    modifier = Modifier
+                        .height(30.dp)
+                        .width(80.dp)
+                        .graphicsLayer {
+                            translationX = -10.dp.toPx()
+                            translationY = -10.dp.toPx()
+                        }
+                        .clickable { /* POR IMPLEMENTAR */ }
+                        .align(Alignment.BottomEnd)
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(50.dp))
+                            .fillMaxSize()
+                            .hazeEffect(state = hazeState, style = hazeStyle),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        //ImageLogo(tint = Color.White, size = 25.dp)
+                        Text(
+                            text = "View Post",
+                            style = MaterialTheme.typography.titleSmall,
+                            color = Color.White,
+                            textAlign = TextAlign.Center
+                        )
+
+                    }
+                }
             }
             Spacer(modifier = Modifier.padding(10.dp))
             Column(

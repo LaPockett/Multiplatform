@@ -56,7 +56,7 @@ fun Typography(): Typography {
         titleSmall = TextStyle(
             fontFamily = bellota,
             fontWeight = FontWeight.Bold,
-            fontSize = 14.sp
+            fontSize = 12.sp
         ),
         bodyLarge = TextStyle(
             fontFamily = bellota,
