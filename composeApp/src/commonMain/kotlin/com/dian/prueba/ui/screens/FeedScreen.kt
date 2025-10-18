@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.painter.Painter
@@ -31,6 +32,7 @@ import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.rememberHazeState
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.logo
+import multiplatform.composeapp.generated.resources.logotitle
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
@@ -131,8 +133,31 @@ fun FeedLogo() {
             bottomBar = {
                 BottomNavigationBarLogo(navController, hazeState)
             },
-            /*topBar = {
-            }*/
+            topBar = {
+                CenterAlignedTopAppBar(
+                    modifier = Modifier.fillMaxWidth().padding(WindowInsets.safeDrawing.asPaddingValues())
+                        .height(45.dp)
+                        .hazeEffect(
+                            state = hazeState,
+                            style = hazeStyle,
+                        )
+                        .background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(MaterialTheme.colorScheme.background, Color.Transparent),
+                                startY = 95f,
+                                endY = 300f,
+                            )
+                        ),
+                    windowInsets = WindowInsets(0, 0, 0, 0),
+                    colors = TopAppBarDefaults.topAppBarColors(Color.Transparent),
+                    navigationIcon = {},
+                    actions = {},
+                    title = {
+                        ImageLogo(tint = Color.Black, painter = painterResource(Res.drawable.logotitle), size = 60.dp)
+
+                    }
+                )
+            }
         ) {
             NavHost(
                 navController = navController,
