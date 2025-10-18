@@ -98,7 +98,7 @@ kotlin {
             implementation(libs.multiplatform.settings.no.arg)
 
             implementation(libs.material.icons.core) // Icons.Default.Menu
-
+            implementation(compose.materialIconsExtended)
             // KMPNotifier
             api(libs.kmpnotifier)
 
