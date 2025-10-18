@@ -90,6 +90,7 @@ fun BottomNavigationBarLogo(
             )
     ) {
         navigationItemsLogo.forEachIndexed { index, tab ->
+            val isSelected = selectedNavigationIndex.value == index
             NavigationBarItem(
                 selected = selectedNavigationIndex.value == index,
                 onClick = {
@@ -102,9 +103,9 @@ fun BottomNavigationBarLogo(
                         contentDescription = tab.title
                     )
                 },
-                label = {
-                    Text(text = tab.title, style = MaterialTheme.typography.bodyMedium)
-                },
+                label = if (isSelected) {
+                    { Text(text = tab.title, style = MaterialTheme.typography.bodyMedium) }
+                } else null,
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = Color(0xffffffff),
                     unselectedIconColor = Color(0x84ffffff),
