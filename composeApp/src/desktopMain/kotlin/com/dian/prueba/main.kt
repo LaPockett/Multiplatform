@@ -10,7 +10,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.navigation.compose.rememberNavController
-import com.dian.prueba.ui.screens.BottomNavigationBar
 import com.dian.prueba.ui.screens.FeedLogo
 import com.dian.prueba.ui.screens.LoginScreen
 import dev.datlag.kcef.KCEF
@@ -53,16 +52,11 @@ fun main() = application {
             Text(text = "Restart required.")
         } else {
             if (initialized) {
-                val navController = rememberNavController()
-                /*LoginScreen(
-                    navController = navController
-                )*/
                 FeedLogo()
             } else {
                 Text(text = "Downloading $downloading%")
             }
         }
-
         DisposableEffect(Unit) {
             onDispose {
                 KCEF.disposeBlocking()
