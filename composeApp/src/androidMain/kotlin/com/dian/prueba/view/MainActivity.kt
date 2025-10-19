@@ -18,6 +18,7 @@ import androidx.core.view.WindowCompat
 import com.dian.prueba.R
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.screens.FeedLogo
+import com.dian.prueba.ui.screens.FeedLogoWebView
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mmk.kmpnotifier.notification.NotifierManager
@@ -89,7 +90,7 @@ class MainActivity : ComponentActivity() {
                 //LottieLogo()
                 //Anims(controls = Controls.FORWARD)
                 //AnimatedSearchBar()
-                FeedLogo()
+                FeedLogoWebView()
                 /*MaterialsSample(
                     navController = rememberNavController(),
                     blurEnabled = true

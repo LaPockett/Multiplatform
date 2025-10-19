@@ -1,17 +1,17 @@
 package com.dian.prueba.ui.components
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.unit.*
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
 import com.multiplatform.webview.web.WebContent
 import com.multiplatform.webview.web.WebView
 import com.multiplatform.webview.web.rememberWebViewState
+import dev.chrisbanes.haze.hazeSource
+import dev.chrisbanes.haze.rememberHazeState
 
 @Composable
 fun WebViewHome (
@@ -123,5 +123,71 @@ fun WebViewSearch (
     WebView(
         state = webViewState,
         modifier = modifier.fillMaxSize()
+    )
+}
+
+/**
+ * FEED LOGO WEBVIEW
+ */
+
+@Composable
+fun WebViewLogoCloset(
+    modifier: Modifier =  Modifier
+) {
+    val logger = Logger("WebViewLogoCloset")
+    val headers = WebViewHeaderManager.getHeaders()
+    logger.debug(headers.toString())
+    val url = "https://www.bottegaveneta.com"
+
+    val webViewState = rememberWebViewState(
+        url = url,
+    )
+    val hazeState = rememberHazeState()
+    WebView(
+        state = webViewState,
+        modifier = modifier
+            .fillMaxSize()
+            .hazeSource(hazeState)
+    )
+}
+@Composable
+fun WebViewLogoNewsletter(
+    modifier: Modifier =  Modifier
+) {
+    val logger = Logger("WebViewLogoCloset")
+    val headers = WebViewHeaderManager.getHeaders()
+    logger.debug(headers.toString())
+    val url = "https://www.bottegaveneta.com/en-es/cart"
+
+    val webViewState = rememberWebViewState(
+        url = url,
+    )
+    val hazeState = rememberHazeState()
+    WebView(
+        state = webViewState,
+        modifier = modifier
+            .fillMaxSize()
+            .hazeSource(hazeState)
+    )
+}
+
+@Composable
+fun WebViewLogoProfile(
+    modifier: Modifier =  Modifier
+) {
+    val logger = Logger("WebViewLogoCloset")
+    val headers = WebViewHeaderManager.getHeaders()
+    logger.debug(headers.toString())
+    val url = "https://www.bottegaveneta.com/en-es/login"
+
+    val webViewState = rememberWebViewState(
+        url = url,
+    )
+    val hazeState = rememberHazeState()
+    WebView(
+        state = webViewState,
+        modifier = modifier
+            .fillMaxSize()
+            .hazeSource(hazeState)
     )
 }

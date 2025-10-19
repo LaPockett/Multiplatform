@@ -71,6 +71,16 @@ fun HeaderLogo() {
                         .fillMaxSize()
                         .border(3.dp, Color(0xf0dcb57f)).align(Alignment.BottomCenter),
                 )*/
+                // Como la imagen de la mujer no se carga para iOS, se puede agregar por separado
+                /*AsyncImage(
+                    model = Res.getUri("files/example.png"),
+                    contentDescription = "Border SVG",
+                    modifier = Modifier
+                        .height(190.dp)
+                        .width(161.dp)
+                        .align(Alignment.BottomEnd)
+                        .zIndex(2f),
+                )*/
                 AsyncImage(
                     model = Res.getUri("files/border.svg"),
                     contentDescription = "Border SVG",
