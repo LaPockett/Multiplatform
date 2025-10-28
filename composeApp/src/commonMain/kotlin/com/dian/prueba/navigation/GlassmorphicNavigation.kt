@@ -195,7 +195,7 @@ fun GlassmorphicBottomNavigation(hazeState: HazeState, navController: NavControl
 
             val tabWidth = size.width / tabs.size
             drawPath(
-                path,
+                path = path,
                 brush = Brush.horizontalGradient(
                     colors = listOf(
                         animatedColor.copy(alpha = 0f),
@@ -226,7 +226,7 @@ fun BottomBarTabs(
     CompositionLocalProvider(
         LocalTextStyle provides LocalTextStyle.current.copy(
             fontSize = 12.sp,
-            fontWeight = FontWeight.Medium,
+            fontWeight = FontWeight.Normal,
         ),
         LocalContentColor provides Color.White
     ) {

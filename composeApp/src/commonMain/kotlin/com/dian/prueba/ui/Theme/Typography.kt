@@ -14,98 +14,83 @@ import multiplatform.composeapp.generated.resources.BellotaText_Light
 import multiplatform.composeapp.generated.resources.BellotaText_LightItalic
 import multiplatform.composeapp.generated.resources.BellotaText_Regular
 import multiplatform.composeapp.generated.resources.Res
+import multiplatform.composeapp.generated.resources.Ubuntu_Bold
+import multiplatform.composeapp.generated.resources.Ubuntu_BoldItalic
+import multiplatform.composeapp.generated.resources.Ubuntu_Italic
+import multiplatform.composeapp.generated.resources.Ubuntu_Light
+import multiplatform.composeapp.generated.resources.Ubuntu_LightItalic
+import multiplatform.composeapp.generated.resources.Ubuntu_Medium
+import multiplatform.composeapp.generated.resources.Ubuntu_MediumItalic
+import multiplatform.composeapp.generated.resources.Ubuntu_Regular
 import org.jetbrains.compose.resources.Font
+
 
 @Suppress("ComposableNaming")
 @Composable
-fun Typography(): Typography {
-    val bellota = FontFamily(
+fun BellotaFamily() = FontFamily(
         Font(Res.font.BellotaText_Bold, FontWeight.Bold),
         Font(Res.font.BellotaText_BoldItalic, FontWeight.Bold, FontStyle.Italic),
         Font(Res.font.BellotaText_Light, FontWeight.Light),
         Font(Res.font.BellotaText_Regular, FontWeight.Normal),
         Font(Res.font.BellotaText_Italic, FontWeight.Medium, FontStyle.Italic),
-        Font(Res.font.BellotaText_LightItalic, FontWeight.Light, FontStyle.Italic),
-    )
-    return Typography(
-        headlineLarge = TextStyle(
-            fontFamily = bellota,
-            fontWeight = FontWeight.Bold,
-            fontSize = 26.sp
-        ),
-        headlineMedium = TextStyle(
-            fontFamily = bellota,
-            fontWeight = FontWeight.Bold,
-            fontSize = 18.sp
-        ),
-        headlineSmall = TextStyle(
-            fontFamily = bellota,
-            fontWeight = FontWeight.Bold,
-            fontSize = 16.sp
-        ),
-        titleLarge = TextStyle(
-            fontFamily = bellota,
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
-        ),
-        titleMedium = TextStyle(
-            fontFamily = bellota,
-            fontWeight = FontWeight.Bold,
-            fontSize = 16.sp
-        ),
-        titleSmall = TextStyle(
-            fontFamily = bellota,
-            fontWeight = FontWeight.Bold,
-            fontSize = 12.sp
-        ),
-        bodyLarge = TextStyle(
-            fontFamily = bellota,
-            fontWeight = FontWeight.Normal,
-            fontSize = 16.sp
-        ),
-        bodyMedium = TextStyle(
-            fontFamily = bellota,
-            fontWeight = FontWeight.Normal,
-            fontSize = 14.sp
-        ),
-        bodySmall = TextStyle(
-            fontFamily = bellota,
-            fontWeight = FontWeight.Normal,
-            fontSize = 12.sp
-        ),
-        displayLarge = TextStyle(
-            fontFamily = bellota,
-            fontWeight = FontWeight.Bold,
-            fontSize = 20.sp
-        ),
-        displayMedium = TextStyle(
-            fontFamily = bellota,
-            fontWeight = FontWeight.Bold,
-            fontSize = 18.sp
-        ),
-        displaySmall = TextStyle(
-            fontFamily = bellota,
-            fontWeight = FontWeight.Medium,
-            fontSize = 14.sp
-        ),
-        labelSmall = TextStyle(
-            fontFamily = bellota,
-            fontWeight = FontWeight.Medium,
-            fontSize = 12.sp
-        ),
-        labelMedium = TextStyle(
-            fontFamily = bellota,
-            fontWeight = FontWeight.Medium,
-            fontSize = 14.sp
-        ),
-        labelLarge = TextStyle(
-            fontFamily = bellota,
-            fontWeight = FontWeight.Medium,
-            fontSize = 16.sp
-        )
+        Font(Res.font.BellotaText_LightItalic, FontWeight.Light, FontStyle.Italic))
+@Suppress("ComposableNaming")
+@Composable
+fun BellotaTypography() = Typography().run{
+    val fontFamily = BellotaFamily()
+    copy(
+        displayLarge = displayLarge.copy(fontFamily = fontFamily),
+        displayMedium = displayMedium.copy(fontFamily = fontFamily),
+        displaySmall = displaySmall.copy(fontFamily = fontFamily),
+        headlineLarge = headlineLarge.copy(fontFamily = fontFamily),
+        headlineMedium = headlineMedium.copy(fontFamily = fontFamily),
+        headlineSmall = headlineSmall.copy(fontFamily = fontFamily),
+        titleLarge = titleLarge.copy(fontFamily = fontFamily),
+        titleMedium = titleMedium.copy(fontFamily = fontFamily),
+        titleSmall = titleSmall.copy(fontFamily = fontFamily),
+        bodyLarge = bodyLarge.copy(fontFamily =  fontFamily),
+        bodyMedium = bodyMedium.copy(fontFamily = fontFamily),
+        bodySmall = bodySmall.copy(fontFamily = fontFamily),
+        labelLarge = labelLarge.copy(fontFamily = fontFamily),
+        labelMedium = labelMedium.copy(fontFamily = fontFamily),
+        labelSmall = labelSmall.copy(fontFamily = fontFamily, fontWeight = FontWeight.Bold)
     )
 }
 
+@Suppress("ComposableNaming")
+@Composable
+fun UbuntuFamily() = FontFamily(
+    Font(Res.font.Ubuntu_Bold, FontWeight.Bold),
+    Font(Res.font.Ubuntu_BoldItalic, FontWeight.Bold, FontStyle.Italic),
+    Font(Res.font.Ubuntu_Italic, FontWeight.Medium, FontStyle.Italic),
+    Font(Res.font.Ubuntu_Light, FontWeight.Light),
+    Font(Res.font.Ubuntu_LightItalic, FontWeight.Light, FontStyle.Italic),
+    Font(Res.font.Ubuntu_Medium, FontWeight.Medium),
+    Font(Res.font.Ubuntu_MediumItalic, FontWeight.Medium, FontStyle.Italic),
+    Font(Res.font.Ubuntu_Regular, FontWeight.Normal))
+
+@Suppress("ComposableNaming")
+@Composable
+fun UbuntuTypography() = Typography().run{
+    val fontFamily = UbuntuFamily()
+    copy(
+        displayLarge = displayLarge.copy(fontFamily = fontFamily),
+        displayMedium = displayMedium.copy(fontFamily = fontFamily),
+        displaySmall = displaySmall.copy(fontFamily = fontFamily),
+        headlineLarge = headlineLarge.copy(fontFamily = fontFamily),
+        headlineMedium = headlineMedium.copy(fontFamily = fontFamily),
+        headlineSmall = headlineSmall.copy(fontFamily = fontFamily),
+        titleLarge = titleLarge.copy(fontFamily = fontFamily),
+        titleMedium = titleMedium.copy(fontFamily = fontFamily),
+        titleSmall = titleSmall.copy(fontFamily = fontFamily),
+        bodyLarge = bodyLarge.copy(fontFamily =  fontFamily),
+        bodyMedium = bodyMedium.copy(fontFamily = fontFamily),
+        bodySmall = bodySmall.copy(fontFamily = fontFamily),
+        labelLarge = labelLarge.copy(fontFamily = fontFamily),
+        labelMedium = labelMedium.copy(fontFamily = fontFamily),
+        labelSmall = labelSmall.copy(fontFamily = fontFamily, fontWeight = FontWeight.Bold)
+    )
+}
 /*
 // Basic Usage
 val Typography: Typography = Typography(

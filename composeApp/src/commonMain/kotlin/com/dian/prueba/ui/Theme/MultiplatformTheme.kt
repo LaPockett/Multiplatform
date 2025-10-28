@@ -92,6 +92,6 @@ fun MultiplatformTheme(
     MaterialTheme(
         colorScheme = theme,
         content = content,
-        typography = Typography()
+        typography = UbuntuTypography()
     )
 }

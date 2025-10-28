@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -27,6 +28,7 @@ import com.dian.prueba.navigation.ProfileScreen
 import com.dian.prueba.navigation.ScreenBottom
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.components.SearchBar
+import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.HazeTint
 import dev.chrisbanes.haze.hazeEffect
@@ -65,21 +67,6 @@ fun HeaderLogo() {
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                /*Box(
-                    modifier = Modifier.height(130.dp)
-                        .fillMaxSize()
-                        .border(3.dp, Color(0xf0dcb57f)).align(Alignment.BottomCenter),
-                )*/
-                // Como la imagen de la mujer no se carga para iOS, se puede agregar por separado
-                /*AsyncImage(
-                    model = Res.getUri("files/example.png"),
-                    contentDescription = "Border SVG",
-                    modifier = Modifier
-                        .height(190.dp)
-                        .width(161.dp)
-                        .align(Alignment.BottomEnd)
-                        .zIndex(2f),
-                )*/
                 AsyncImage(
                     model = Res.getUri("files/border.svg"),
                     contentDescription = "Border SVG",
@@ -93,37 +80,30 @@ fun HeaderLogo() {
                         .fillMaxSize()
                         .align(Alignment.BottomCenter),
                 )
-                Card(
-                    shape = RoundedCornerShape(50.dp),
-                    colors = CardDefaults.cardColors(
-                        containerColor = Color.Transparent
-                    ),
+                Box(
                     modifier = Modifier
-                        .height(30.dp)
+                        .height(29.dp)
                         .width(80.dp)
                         .graphicsLayer {
-                            translationX = -10.dp.toPx()
-                            translationY = -10.dp.toPx()
+                            translationX = 140.dp.toPx()
+                            translationY = 50.dp.toPx()
                         }
-                        .clickable { /* POR IMPLEMENTAR */ }
-                        .align(Alignment.BottomEnd)
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(50.dp))
-                            .fillMaxSize()
-                            .hazeEffect(state = hazeState, style = hazeStyle),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        //ImageLogo(tint = Color.White, size = 25.dp)
-                        Text(
-                            text = "View Post",
-                            style = MaterialTheme.typography.titleSmall,
-                            color = Color.White,
-                            textAlign = TextAlign.Center
-                        )
+                        .clip(RoundedCornerShape(50.dp))
+                        .fillMaxSize()
+                        .hazeEffect(state = hazeState, style = hazeStyle)
+                        .clickable { /* POR IMPLEMENTAR */ },
 
-                    }
+                    contentAlignment = Alignment.Center
+                ) {
+                    //ImageLogo(tint = Color.White, size = 25.dp)
+                    Text(
+                        text = "VIEW POST",
+                        style = MaterialTheme.typography.labelSmall,
+                        fontWeight = FontWeight.Medium,
+                        color = Color.White,
+                        textAlign = TextAlign.Center
+                    )
+
                 }
             }
             Spacer(modifier = Modifier.padding(10.dp))
@@ -133,7 +113,7 @@ fun HeaderLogo() {
             ) {
                 Text(
                     text = "Your daily inspiration",
-                    style = MaterialTheme.typography.bodyLarge,
+                    style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(bottom = 10.dp),
                 )
             }
@@ -144,9 +124,9 @@ fun HeaderLogo() {
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.padding(5.dp))
-            }
         }
     }
+}
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Preview
@@ -170,17 +150,18 @@ fun LogoNavigation() {
         )
         Scaffold(
             floatingActionButton = {
-                    Box(
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .size(45.dp)
-                            .background(Color.Transparent)
-                            .hazeEffect(state = hazeState, style = hazeStyle)
-                            .clickable { /* POR IMPLEMENTAR */ },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        ImageLogo(tint = Color.White, size = 24.dp)
-                    }
+                /*Box(
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .size(45.dp)
+                        .background(Color.Transparent)
+                        .hazeEffect(state = hazeState, style = hazeStyle)
+                        .clickable { /* POR IMPLEMENTAR */ },
+                    contentAlignment = Alignment.Center
+                ) {
+                    ImageLogo(tint = Color.White, size = 24.dp)
+                }*/
+                ClippyLogo(hazeState, hazeStyle)
             },
             floatingActionButtonPosition = FabPosition.End,
             containerColor = Color.Transparent,
@@ -190,7 +171,8 @@ fun LogoNavigation() {
             },
             topBar = {
                 CenterAlignedTopAppBar(
-                    modifier = Modifier.fillMaxWidth().padding(WindowInsets.safeDrawing.asPaddingValues())
+                    modifier = Modifier.fillMaxWidth()
+                        .padding(WindowInsets.safeDrawing.asPaddingValues())
                         .height(45.dp)
                         .hazeEffect(
                             state = hazeState,
@@ -198,7 +180,10 @@ fun LogoNavigation() {
                         )
                         .background(
                             brush = Brush.verticalGradient(
-                                colors = listOf(MaterialTheme.colorScheme.background, Color.Transparent),
+                                colors = listOf(
+                                    MaterialTheme.colorScheme.background,
+                                    Color.Transparent
+                                ),
                                 startY = 95f,
                                 endY = 300f,
                             )
@@ -208,7 +193,11 @@ fun LogoNavigation() {
                     navigationIcon = {},
                     actions = {},
                     title = {
-                        ImageLogo(tint = Color.Black, painter = painterResource(Res.drawable.logotitle), size = 60.dp)
+                        ImageLogo(
+                            tint = Color.Black,
+                            painter = painterResource(Res.drawable.logotitle),
+                            size = 60.dp
+                        )
                     }
                 )
             }
@@ -231,7 +220,7 @@ fun LogoNavigation() {
 
 @Composable
 fun ImageLogo(
-    painter : Painter = painterResource(Res.drawable.logo),
+    painter: Painter = painterResource(Res.drawable.logo),
     tint: Color,
     size: Dp = 55.dp
 ) {
@@ -241,4 +230,22 @@ fun ImageLogo(
         modifier = Modifier.size(size),
         tint = tint
     )
+}
+
+@Composable
+fun ClippyLogo(
+    hazeState: HazeState,
+    hazeStyle: HazeStyle
+){
+    Box(
+        modifier = Modifier
+            .clip(CircleShape)
+            .size(45.dp)
+            .background(Color.Transparent)
+            .hazeEffect(state = hazeState, style = hazeStyle)
+            .clickable { /* POR IMPLEMENTAR */ },
+        contentAlignment = Alignment.Center
+    ) {
+        ImageLogo(tint = Color.White, size = 24.dp)
+    }
 }
