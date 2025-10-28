@@ -9,9 +9,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
-import androidx.navigation.compose.rememberNavController
-import com.dian.prueba.ui.screens.FeedLogo
-import com.dian.prueba.ui.screens.LoginScreen
+import com.dian.prueba.ui.screens.LogoNavigation
 import dev.datlag.kcef.KCEF
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -52,7 +50,7 @@ fun main() = application {
             Text(text = "Restart required.")
         } else {
             if (initialized) {
-                FeedLogo()
+                LogoNavigation()
             } else {
                 Text(text = "Downloading $downloading%")
             }

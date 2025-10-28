@@ -17,12 +17,11 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
-import com.dian.prueba.navigation.BottomNavigationBarLogo
+import com.dian.prueba.navigation.GlassmorphicBottomNavigation
 import com.dian.prueba.navigation.NewspaperScreen
 import com.dian.prueba.navigation.ProfileScreen
 import com.dian.prueba.navigation.ScreenBottom
@@ -152,7 +151,7 @@ fun HeaderLogo() {
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Preview
 @Composable
-fun FeedLogo() {
+fun LogoNavigation() {
     MultiplatformTheme {
         val hazeState = rememberHazeState()
         val navController = rememberNavController()
@@ -171,30 +170,23 @@ fun FeedLogo() {
         )
         Scaffold(
             floatingActionButton = {
-                Card(
-                    shape = CircleShape,
-                    colors = CardDefaults.cardColors(
-                        containerColor = Color.Transparent
-                    ),
-                    modifier = Modifier
-                        .size(48.dp)
-                        .clickable { /* POR IMPLEMENTAR */ }
-                ) {
                     Box(
                         modifier = Modifier
-                            .fillMaxSize()
-                            .hazeEffect(state = hazeState, style = hazeStyle),
+                            .clip(CircleShape)
+                            .size(45.dp)
+                            .background(Color.Transparent)
+                            .hazeEffect(state = hazeState, style = hazeStyle)
+                            .clickable { /* POR IMPLEMENTAR */ },
                         contentAlignment = Alignment.Center
                     ) {
-                        ImageLogo(tint = Color.White, size = 25.dp)
+                        ImageLogo(tint = Color.White, size = 24.dp)
                     }
-                }
             },
             floatingActionButtonPosition = FabPosition.End,
             containerColor = Color.Transparent,
             modifier = Modifier.fillMaxSize(),
             bottomBar = {
-                BottomNavigationBarLogo(navController, hazeState)
+                GlassmorphicBottomNavigation(hazeState, navController)
             },
             topBar = {
                 CenterAlignedTopAppBar(
@@ -217,7 +209,6 @@ fun FeedLogo() {
                     actions = {},
                     title = {
                         ImageLogo(tint = Color.Black, painter = painterResource(Res.drawable.logotitle), size = 60.dp)
-
                     }
                 )
             }

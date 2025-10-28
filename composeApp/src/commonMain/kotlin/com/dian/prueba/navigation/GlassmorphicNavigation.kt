@@ -1,9 +1,18 @@
 package com.dian.prueba.navigation
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -20,11 +29,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.List
+import androidx.compose.material.icons.rounded.Newspaper
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -104,7 +115,7 @@ fun GlassmorphicBottomNavigation(hazeState: HazeState, navController: NavControl
                 Color.Transparent.copy(alpha = if (Color.Transparent.luminance() >= 0.5) lightAlpha else darkAlpha),
             )
         ),
-        blurRadius = 10.dp,
+        blurRadius = 6.dp,
         noiseFactor = -1f,
         fallbackTint = HazeTint.Unspecified,
     )
@@ -118,9 +129,10 @@ fun GlassmorphicBottomNavigation(hazeState: HazeState, navController: NavControl
     }
     Box(
         modifier = Modifier
-            .padding(vertical = 24.dp, horizontal = 64.dp)
+            .padding(horizontal = 64.dp).padding(bottom = 16.dp)
             .fillMaxWidth()
             .height(64.dp)
+            .clip(CircleShape)
             .hazeEffect(state = hazeState, style = hazeStyle)
             .border(
                 width = Dp.Hairline,
@@ -132,7 +144,6 @@ fun GlassmorphicBottomNavigation(hazeState: HazeState, navController: NavControl
                 ),
                 shape = CircleShape
             )
-            .clip(CircleShape)
             .background(Color.White.copy(alpha = 0.05f))
     ) {
         BottomBarTabs(
@@ -164,7 +175,7 @@ fun GlassmorphicBottomNavigation(hazeState: HazeState, navController: NavControl
         Canvas(
             modifier = Modifier
                 .fillMaxSize()
-                .blur(50.dp, BlurredEdgeTreatment.Unbounded)
+                .blur(35.dp, BlurredEdgeTreatment.Unbounded)
         ) {
             val tabWidth = size.width / tabs.size
             drawCircle(
@@ -209,6 +220,7 @@ fun BottomBarTabs(
                     ),
                     label = "scale"
                 )
+                val isSelected = selectedTab == tabs.indexOf(tab)
                 Column(
                     modifier = Modifier
                         .scale(scale)
@@ -223,8 +235,13 @@ fun BottomBarTabs(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
                 ) {
-                    Icon(imageVector = tab.icon, contentDescription = "tab ${tab.title}")
-                    Text(text = tab.title)
+                    // Para que solo salga el title si se ha seleccionado el tab
+                    if (isSelected){
+                        Icon(imageVector = tab.icon, contentDescription = "tab ${tab.title}")
+                        Text(text = tab.title)
+                    } else {
+                        Icon(imageVector = tab.icon, contentDescription = "tab ${tab.title}")
+                    }
                 }
             }
         }
@@ -234,13 +251,13 @@ fun BottomBarTabs(
 sealed class BottomBarTab(val title: String, val icon: ImageVector, val color: Color) {
     data object Newspaper : BottomBarTab(
         title = "Newspaper",
-        icon = Icons.Rounded.List,
+        icon = Icons.Rounded.Newspaper,
         color = Color.White
     )
     data object Closet : BottomBarTab(
         title = "Closet",
         icon = Icons.Rounded.Notifications,
-        color = Color(0xffb7af98)
+        color = Color.White
     )
     data object Profile : BottomBarTab(
         title = "Profile",
