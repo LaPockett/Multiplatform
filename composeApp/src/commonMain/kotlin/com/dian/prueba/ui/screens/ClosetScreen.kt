@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -50,9 +50,8 @@ fun ClosetScreen() {
             verticalArrangement = Arrangement.spacedBy(3.dp),
             modifier = Modifier
                 .hazeSource(hazeState)
-                .windowInsetsPadding(WindowInsets.safeDrawing)
-                .fillMaxSize(),
-            //contentPadding = PaddingValues(top = 70.dp, bottom = 24.dp)
+                .windowInsetsPadding(WindowInsets.statusBars)
+                .fillMaxSize()
         ) {
             item(
                 span = { GridItemSpan(2) }

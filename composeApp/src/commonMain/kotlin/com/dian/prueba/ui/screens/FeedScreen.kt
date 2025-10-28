@@ -54,7 +54,7 @@ fun HeaderLogo() {
                     Color.White.copy(alpha = if (Color.White.luminance() >= 0.5) lightAlpha else darkAlpha),
                 )
             ),
-            blurRadius = 3.dp,
+            blurRadius = 4.dp,
             noiseFactor = -1f,
             fallbackTint = HazeTint.Unspecified,
         )
@@ -150,17 +150,6 @@ fun LogoNavigation() {
         )
         Scaffold(
             floatingActionButton = {
-                /*Box(
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .size(45.dp)
-                        .background(Color.Transparent)
-                        .hazeEffect(state = hazeState, style = hazeStyle)
-                        .clickable { /* POR IMPLEMENTAR */ },
-                    contentAlignment = Alignment.Center
-                ) {
-                    ImageLogo(tint = Color.White, size = 24.dp)
-                }*/
                 ClippyLogo(hazeState, hazeStyle)
             },
             floatingActionButtonPosition = FabPosition.End,
@@ -238,14 +227,21 @@ fun ClippyLogo(
     hazeStyle: HazeStyle
 ){
     Box(
-        modifier = Modifier
-            .clip(CircleShape)
-            .size(45.dp)
-            .background(Color.Transparent)
-            .hazeEffect(state = hazeState, style = hazeStyle)
-            .clickable { /* POR IMPLEMENTAR */ },
-        contentAlignment = Alignment.Center
-    ) {
-        ImageLogo(tint = Color.White, size = 24.dp)
+        modifier = Modifier.graphicsLayer {
+            translationX = 4.4.dp.toPx()
+            translationY = 12.dp.toPx()
+        }
+    ){
+        Box(
+            modifier = Modifier
+                .clip(CircleShape)
+                .size(45.dp)
+                .background(Color.Transparent)
+                .hazeEffect(state = hazeState, style = hazeStyle)
+                .clickable { /* POR IMPLEMENTAR */ },
+            contentAlignment = Alignment.Center
+        ) {
+            ImageLogo(tint = Color.White, size = 24.dp)
+        }
     }
 }
