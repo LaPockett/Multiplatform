@@ -1,8 +1,6 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetTree
 import java.util.Properties
 
 plugins {
@@ -102,10 +100,6 @@ kotlin {
             // KMPNotifier
             api(libs.kmpnotifier)
 
-            // Librería de un componente de Dian publicado en Maven Local
-            //implementation("com.lapockett.testlib:testlib:1.0.0")
-            //implementation("com.lapockett:lib:1.1.1")
-            //implementation("io.lapockett:idamgon-cmp:1.1.0")
             // Haze - Glassmorphism
             implementation("dev.chrisbanes.haze:haze:1.6.10")
             implementation("dev.chrisbanes.haze:haze-materials:1.6.10")
@@ -120,6 +114,8 @@ kotlin {
             // Coil SVG
             implementation("io.coil-kt.coil3:coil-compose:3.0.4")
             implementation("io.coil-kt.coil3:coil-svg:3.0.4")
+            // Own library
+            implementation("io.lapockett:logoui:1.2.0")
         }
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)

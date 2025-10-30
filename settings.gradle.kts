@@ -19,7 +19,7 @@ pluginManagement {
         // Librería publicada en Github Packages
         maven {
             name = "GithubPackages"
-            url = uri("https://maven.pkg.github.com/LaPockett/kmp-library-template-wizard")
+            url = uri("https://maven.pkg.github.com/LaPockett/ui-logo")
             credentials {
                 username = "LaPockett"
                 password = providers.gradleProperty("gpr.key")
@@ -48,7 +48,7 @@ dependencyResolutionManagement {
         // Librería publicada en Github Packages
         maven {
             name = "GithubPackages"
-            url = uri("https://maven.pkg.github.com/LaPockett/kmp-library-template-wizard")
+            url = uri("https://maven.pkg.github.com/LaPockett/ui-logo")
             credentials {
                 username = "LaPockett"
                 password = providers.gradleProperty("gpr.key")
