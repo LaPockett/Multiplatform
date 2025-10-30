@@ -62,6 +62,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.dian.prueba.ui.screens.ClosetScreen
+import com.dian.prueba.ui.screens.NewsletterScreen
+import com.dian.prueba.ui.screens.ProfileScreen
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.HazeTint
@@ -93,7 +95,7 @@ fun MainNavigationPrueba() {
             //.padding(padding)
         ) {
             composable(ScreenBottom.Closet.route) { ClosetScreen() }
-            composable(ScreenBottom.Newspaper.route) { NewspaperScreen() }
+            composable(ScreenBottom.Newspaper.route) { NewsletterScreen() }
             composable(ScreenBottom.Profile.route) { ProfileScreen() }
         }
     }
@@ -143,7 +145,7 @@ fun GlassmorphicBottomNavigation(hazeState: HazeState, navController: NavControl
             .background(Color.White.copy(alpha = 0.05f))
     ) {
         BottomBarTabs(
-            tabs,
+            tabs = tabs,
             selectedTab = selectedTabIndex,
             onTabSelected = { tab ->
                 val index = tabs.indexOf(tab)
@@ -277,7 +279,7 @@ fun BottomBarTabs(
 
 sealed class BottomBarTab(val title: String, val icon: ImageVector, val color: Color) {
     data object Newspaper : BottomBarTab(
-        title = "Newspaper",
+        title = "Newsletter",
         icon = Icons.Rounded.Newspaper,
         color = Color.White
     )
@@ -300,7 +302,7 @@ val tabs = listOf(
 )
 
 sealed class ScreenBottom(val route: String) {
-    data object Newspaper : Screen("newspaper")
+    data object Newspaper : Screen("newsletter")
     data object Closet : Screen("closet")
     data object Profile : Screen("profile")
 }

@@ -23,8 +23,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
 import com.dian.prueba.navigation.GlassmorphicBottomNavigation
-import com.dian.prueba.navigation.NewspaperScreen
-import com.dian.prueba.navigation.ProfileScreen
 import com.dian.prueba.navigation.ScreenBottom
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.components.SearchBar
@@ -163,18 +161,19 @@ fun LogoNavigation() {
                     modifier = Modifier.fillMaxWidth()
                         .padding(WindowInsets.safeDrawing.asPaddingValues())
                         .height(45.dp)
-                        .hazeEffect(
+                        /*.hazeEffect(
                             state = hazeState,
                             style = hazeStyle,
-                        )
+                        )*/
                         .background(
                             brush = Brush.verticalGradient(
                                 colors = listOf(
                                     MaterialTheme.colorScheme.background,
+                                    MaterialTheme.colorScheme.background.copy(alpha = 0.99f),
                                     Color.Transparent
                                 ),
-                                startY = 95f,
-                                endY = 300f,
+                                startY = 120f,
+                                endY = 140f,
                             )
                         ),
                     windowInsets = WindowInsets(0, 0, 0, 0),
@@ -199,7 +198,7 @@ fun LogoNavigation() {
                     .hazeSource(hazeState)
                 //.padding(padding)
             ) {
-                composable(ScreenBottom.Newspaper.route) { NewspaperScreen() }
+                composable(ScreenBottom.Newspaper.route) { NewsletterScreen() }
                 composable(ScreenBottom.Closet.route) { ClosetScreen() }
                 composable(ScreenBottom.Profile.route) { ProfileScreen() }
             }
