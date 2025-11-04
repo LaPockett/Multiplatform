@@ -41,15 +41,16 @@ kotlin {
             isStatic = true
         }
     }
-    jvm("desktop")
+    applyDefaultHierarchyTemplate()
+
+    jvm()
 
     @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
+    /*wasmJs {
         browser()
         binaries.executable()
-    }
+    }*/
     sourceSets {
-        val desktopMain by getting
         androidMain.dependencies {
             implementation(libs.play.services.appsearch)
 
@@ -116,19 +117,29 @@ kotlin {
             implementation("io.coil-kt.coil3:coil-svg:3.0.4")
             // Own library
             implementation("io.lapockett:logoui:1.2.0")
+            // Liquid glasss library
+            implementation("io.lapockett:cmpglass:1.1.0")
         }
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)
             implementation(libs.kotlin.test)
         }
-        iosMain.dependencies {
-            implementation(libs.play.services.appsearch)
-            implementation(libs.ktor.client.darwin)
-
+        val skikoMain by creating {
+            dependsOn(commonMain.get())
         }
-        desktopMain.dependencies {
-            implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutinesSwing)
+        iosMain {
+            dependsOn(skikoMain)
+            dependencies {
+                implementation(libs.play.services.appsearch)
+                implementation(libs.ktor.client.darwin)
+            }
+        }
+        jvmMain {
+            dependsOn(skikoMain)
+            dependencies {
+                implementation(compose.desktop.currentOs)
+                implementation(libs.kotlinx.coroutinesSwing)
+            }
         }
     }
 }
