@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import com.dian.prueba.R
+import com.dian.prueba.liquidglass.CatalogApp
 import com.dian.prueba.liquidglass.destinations.BottomTabsContent
 import com.dian.prueba.liquidglass.destinations.ButtonsContent
 import com.dian.prueba.ui.Theme.MultiplatformTheme
@@ -92,7 +93,7 @@ class MainActivity : ComponentActivity() {
                 //Anims(controls = Controls.FORWARD)
                 //AnimatedSearchBar()
                 //LogoNavigation()
-                BottomTabsContent()
+                CatalogApp()
                 /*MaterialsSample(
                     navController = rememberNavController(),
                     blurEnabled = true

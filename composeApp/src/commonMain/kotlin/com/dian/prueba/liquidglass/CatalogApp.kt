@@ -1,6 +1,6 @@
 package com.dian.prueba.liquidglass
 
-/*import androidx.compose.foundation.LocalIndication
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -74,4 +74,4 @@ private fun MainContent() {
         CatalogDestination.ScrollContainer -> ScrollContainerContent()
         CatalogDestination.LazyScrollContainer -> LazyScrollContainerContent()
     }
-}*/
+}
