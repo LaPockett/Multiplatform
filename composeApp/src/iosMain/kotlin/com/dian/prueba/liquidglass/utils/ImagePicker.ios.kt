@@ -13,7 +13,7 @@ import platform.UIKit.UINavigationControllerDelegateProtocol
 import platform.darwin.NSObject
 
 @Composable
-actual fun rememberImagePicker(onResult: (PlatformImage?) -> Unit): com.kyant.backdrop.catalog.utils.ImagePicker {
+actual fun rememberImagePicker(onResult: (PlatformImage?) -> Unit): ImagePicker {
     val imagePicker = UIImagePickerController()
     val galleryDelegate = remember {
         object : NSObject(), UIImagePickerControllerDelegateProtocol,
