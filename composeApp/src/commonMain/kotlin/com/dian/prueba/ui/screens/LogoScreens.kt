@@ -13,6 +13,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.kyant.backdrop.backdrops.LayerBackdrop
+import com.kyant.backdrop.backdrops.layerBackdrop
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.matcha
 import multiplatform.composeapp.generated.resources.ysl
@@ -22,9 +24,12 @@ import org.jetbrains.compose.resources.painterResource
  * Para ver su comportamiento junto con el bottom navigation
  */
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    backdrop: LayerBackdrop
+) {
     Box(
         modifier = Modifier
+            .layerBackdrop(backdrop)
             .background(MaterialTheme.colorScheme.background)
             .padding(WindowInsets.statusBars.asPaddingValues())
             .fillMaxSize(),
@@ -44,9 +49,12 @@ fun ProfileScreen() {
 }
 
 @Composable
-fun NewsletterScreen() {
+fun NewsletterScreen(
+    backdrop: LayerBackdrop
+) {
     Box(
         modifier = Modifier
+            .layerBackdrop(backdrop)
             .background(MaterialTheme.colorScheme.background)
             .padding(WindowInsets.statusBars.asPaddingValues())
             .fillMaxSize(),

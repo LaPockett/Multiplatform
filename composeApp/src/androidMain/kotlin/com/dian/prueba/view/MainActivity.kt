@@ -18,6 +18,7 @@ import androidx.core.view.WindowCompat
 import com.dian.prueba.R
 import com.dian.prueba.liquidglass.CatalogApp
 import com.dian.prueba.liquidglass.destinations.BottomTabsContent
+import com.dian.prueba.liquidglass.destinations.BottomTabsLiquidGlass
 import com.dian.prueba.liquidglass.destinations.ButtonsContent
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.screens.LogoNavigation
@@ -92,8 +93,10 @@ class MainActivity : ComponentActivity() {
                 //LottieLogo()
                 //Anims(controls = Controls.FORWARD)
                 //AnimatedSearchBar()
-                //LogoNavigation()
-                CatalogApp()
+                //BottomTabsContent()
+                //BottomTabsLiquidGlass()
+                LogoNavigation()
+                //CatalogApp()
                 /*MaterialsSample(
                     navController = rememberNavController(),
                     blurEnabled = true

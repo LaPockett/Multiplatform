@@ -2,16 +2,21 @@ package com.dian.prueba.liquidglass.destinations
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.VectorConverter
+import androidx.compose.foundation.LocalIndication
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -22,16 +27,23 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
+import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.util.fastCoerceAtMost
+import androidx.compose.ui.util.lerp
 import com.dian.prueba.liquidglass.components.LiquidButton
 import com.dian.prueba.liquidglass.components.LiquidSlider
 import com.dian.prueba.liquidglass.BackdropDemoScaffold
 import com.dian.prueba.liquidglass.Block
+import com.dian.prueba.liquidglass.utils.InteractiveHighlight
+import com.kyant.backdrop.Backdrop
 import com.kyant.backdrop.backdrops.rememberLayerBackdrop
 import com.kyant.backdrop.drawBackdrop
 import com.kyant.backdrop.effects.blur
@@ -39,9 +51,15 @@ import com.kyant.backdrop.effects.lens
 import com.kyant.backdrop.effects.vibrancy
 import com.kyant.backdrop.highlight.Highlight
 import kotlinx.coroutines.launch
+import multiplatform.composeapp.generated.resources.Res
+import multiplatform.composeapp.generated.resources.logo
+import org.jetbrains.compose.resources.painterResource
 import kotlin.math.PI
+import kotlin.math.abs
+import kotlin.math.atan2
 import kotlin.math.cos
 import kotlin.math.sin
+import kotlin.math.tanh
 
 @Composable
 fun GlassPlaygroundContent() {
@@ -214,4 +232,111 @@ fun GlassPlaygroundContent() {
             }
         }
     }
+}
+
+
+@Composable
+fun GlassClippyLogo(
+    onClick: () -> Unit,
+    backdrop: Backdrop,
+    isInteractive: Boolean = true,
+    tint: Color = Color.Unspecified,
+    surfaceColor: Color = Color.Unspecified,
+    content: @Composable BoxScope.() -> Unit
+) {
+    val animationScope = rememberCoroutineScope()
+    val offsetAnimation = remember { Animatable(Offset.Zero, Offset.VectorConverter) }
+    val zoomAnimation = remember { Animatable(1f) }
+    val rotationAnimation = remember { Animatable(0f) }
+
+    var isSheetExpanded by remember { mutableStateOf(true) }
+
+    var cornerRadiusFrac by remember { mutableFloatStateOf(0.5f) }
+    var blurRadiusDp by remember { mutableFloatStateOf(1.5f) }
+    var refractionHeightFrac by remember { mutableFloatStateOf(0.2f) }
+    var refractionAmountFrac by remember { mutableFloatStateOf(0.2f) }
+    var chromaticAberration by remember { mutableFloatStateOf(0f) }
+
+
+    val interactiveHighlight = remember(animationScope) {
+        InteractiveHighlight(
+            animationScope = animationScope
+        )
+    }
+
+    Box(
+        Modifier
+            .statusBarsPadding()
+            .drawBackdrop(
+                backdrop = backdrop,
+                shape = { RoundedCornerShape(45f.dp / 2f * 1f) },
+                effects = {
+                    val minDimension = size.minDimension
+                    vibrancy()
+                    blur(blurRadiusDp.dp.toPx())
+                    lens(
+                        refractionHeight = refractionHeightFrac * minDimension * 0.8f,
+                        refractionAmount = refractionAmountFrac * minDimension,
+                        depthEffect = true,
+                        chromaticAberration = chromaticAberration > 0f
+                    )
+                },
+                highlight = { Highlight.Plain },
+                layerBlock = if (isInteractive) {
+                    {
+                        val width = size.width
+                        val height = size.height
+
+                        val progress = interactiveHighlight.pressProgress
+                        val scale = lerp(1f, 1f + 4f.dp.toPx() / size.height, progress)
+
+                        val maxOffset = size.minDimension
+                        val initialDerivative = 0.05f
+                        val offset = interactiveHighlight.offset
+                        translationX = maxOffset * tanh(initialDerivative * offset.x / maxOffset)
+                        translationY = maxOffset * tanh(initialDerivative * offset.y / maxOffset)
+
+                        val maxDragScale = 4f.dp.toPx() / size.height
+                        val offsetAngle = atan2(offset.y, offset.x)
+                        scaleX =
+                            scale +
+                                    maxDragScale * abs(cos(offsetAngle) * offset.x / size.maxDimension) *
+                                    (width / height).fastCoerceAtMost(1f)
+                        scaleY =
+                            scale +
+                                    maxDragScale * abs(sin(offsetAngle) * offset.y / size.maxDimension) *
+                                    (height / width).fastCoerceAtMost(1f)
+                    }
+                } else {
+                    null
+                },
+                onDrawSurface = {
+                    if (tint.isSpecified) {
+                        drawRect(tint, blendMode = BlendMode.Hue)
+                        drawRect(tint.copy(alpha = 0.75f))
+                    }
+                    if (surfaceColor.isSpecified) {
+                        drawRect(surfaceColor)
+                    }
+                }
+            )
+            .clickable(
+                interactionSource = null,
+                indication = if (isInteractive) null else LocalIndication.current,
+                role = Role.Button,
+                onClick = onClick
+            )
+            .then(
+                if (isInteractive) {
+                    Modifier
+                        .then(interactiveHighlight.modifier)
+                        .then(interactiveHighlight.gestureModifier)
+                } else {
+                    Modifier
+                }
+            )
+            .size(45f.dp),
+        contentAlignment = Alignment.Center,
+        content = content
+    )
 }

@@ -3,10 +3,13 @@ package com.dian.prueba.liquidglass
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.dian.prueba.liquidglass.components.LiquidButton
 import com.dian.prueba.liquidglass.utils.rememberImagePicker
+import com.dian.prueba.ui.screens.ClosetScreen
 import com.kyant.backdrop.backdrops.LayerBackdrop
 import com.kyant.backdrop.backdrops.layerBackdrop
 import com.kyant.backdrop.backdrops.rememberLayerBackdrop
@@ -81,4 +85,17 @@ fun BackdropDemoScaffold(
             )
         }
     }
+}
+
+@Composable
+fun BackdropDemoScaffold2(
+    modifier: Modifier = Modifier,
+    initialPainterResId: DrawableResource = Res.drawable.wallpaper_light,
+    content: @Composable BoxScope.() -> Unit
+) {
+    Box(
+        Modifier.fillMaxSize().windowInsetsPadding(WindowInsets.safeDrawing),
+        contentAlignment = Alignment.BottomCenter,
+        content = content
+    )
 }

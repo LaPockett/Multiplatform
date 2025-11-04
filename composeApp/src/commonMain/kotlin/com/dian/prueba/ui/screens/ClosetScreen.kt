@@ -25,6 +25,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.kyant.backdrop.Backdrop
+import com.kyant.backdrop.backdrops.LayerBackdrop
+import com.kyant.backdrop.backdrops.layerBackdrop
+import com.kyant.backdrop.backdrops.rememberLayerBackdrop
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.rememberHazeState
@@ -36,10 +40,13 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Preview
 @Composable
-fun ClosetScreen() {
+fun ClosetScreen(
+    backdrop: LayerBackdrop
+) {
     val hazeState = rememberHazeState()
     Box(
         modifier = Modifier
+            .layerBackdrop(backdrop)
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)//.windowInsetsPadding(WindowInsets.safeDrawing)
             .padding(horizontal = 12.dp)//.statusBarsPadding(),

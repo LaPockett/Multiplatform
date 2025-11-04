@@ -22,10 +22,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import coil3.compose.AsyncImage
+import com.dian.prueba.liquidglass.BackdropDemoScaffold
+import com.dian.prueba.liquidglass.BackdropDemoScaffold2
+import com.dian.prueba.liquidglass.destinations.BottomTabsLiquidGlass
+import com.dian.prueba.liquidglass.destinations.GlassClippyLogo
 import com.dian.prueba.navigation.GlassmorphicBottomNavigation
 import com.dian.prueba.navigation.ScreenBottom
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.components.SearchBar
+import com.kyant.backdrop.backdrops.rememberLayerBackdrop
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.HazeTint
@@ -132,6 +137,7 @@ fun HeaderLogo() {
 fun LogoNavigation() {
     MultiplatformTheme {
         val hazeState = rememberHazeState()
+        val backdrop = rememberLayerBackdrop()
         val navController = rememberNavController()
         val lightAlpha = 0.3f
         val darkAlpha = 0.1f
@@ -148,13 +154,30 @@ fun LogoNavigation() {
         )
         Scaffold(
             floatingActionButton = {
-                ClippyLogo(hazeState, hazeStyle)
+                GlassClippyLogo(
+                    onClick = {},
+                    backdrop = backdrop,
+                    surfaceColor = Color.DarkGray.copy(0.2f)
+                ) {
+                    Icon(
+                        painter = painterResource(Res.drawable.logo),
+                        contentDescription = "Logo",
+                        tint = Color.White,
+                        modifier = Modifier.size(30.dp)
+                    )
+                }
+
             },
             floatingActionButtonPosition = FabPosition.End,
             containerColor = Color.Transparent,
             modifier = Modifier.fillMaxSize(),
             bottomBar = {
-                GlassmorphicBottomNavigation(hazeState, navController)
+                //GlassmorphicBottomNavigation(hazeState, navController)
+                Box(
+                    modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
+                ){
+                    BottomTabsLiquidGlass(backdrop, navController)
+                }
             },
             topBar = {
                 CenterAlignedTopAppBar(
@@ -198,9 +221,9 @@ fun LogoNavigation() {
                     .hazeSource(hazeState)
                 //.padding(padding)
             ) {
-                composable(ScreenBottom.Newspaper.route) { NewsletterScreen() }
-                composable(ScreenBottom.Closet.route) { ClosetScreen() }
-                composable(ScreenBottom.Profile.route) { ProfileScreen() }
+                composable(ScreenBottom.Newspaper.route) { NewsletterScreen(backdrop) }
+                composable(ScreenBottom.Closet.route) { ClosetScreen(backdrop) }
+                composable(ScreenBottom.Profile.route) { ProfileScreen(backdrop) }
             }
         }
     }
@@ -224,13 +247,13 @@ fun ImageLogo(
 fun ClippyLogo(
     hazeState: HazeState,
     hazeStyle: HazeStyle
-){
+) {
     Box(
         modifier = Modifier.graphicsLayer {
             translationX = 4.4.dp.toPx()
             translationY = 12.dp.toPx()
         }
-    ){
+    ) {
         Box(
             modifier = Modifier
                 .clip(CircleShape)

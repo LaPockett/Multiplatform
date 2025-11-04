@@ -94,9 +94,9 @@ fun MainNavigationPrueba() {
                 .hazeSource(hazeState)
             //.padding(padding)
         ) {
-            composable(ScreenBottom.Closet.route) { ClosetScreen() }
-            composable(ScreenBottom.Newspaper.route) { NewsletterScreen() }
-            composable(ScreenBottom.Profile.route) { ProfileScreen() }
+            //composable(ScreenBottom.Closet.route) { ClosetScreen() }
+            //composable(ScreenBottom.Newspaper.route) { NewsletterScreen() }
+            //composable(ScreenBottom.Profile.route) { ProfileScreen() }
         }
     }
 }
