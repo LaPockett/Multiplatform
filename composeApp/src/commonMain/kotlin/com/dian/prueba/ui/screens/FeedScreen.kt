@@ -223,9 +223,9 @@ fun LogoNavigation() {
                     .hazeSource(hazeState)
                 //.padding(padding)
             ) {
-                composable(ScreenBottom.Newspaper.route) { NewsletterScreen(backdrop) }
-                composable(ScreenBottom.Closet.route) { ClosetScreen(backdrop) }
-                composable(ScreenBottom.Profile.route) { ProfileScreen(backdrop) }
+                composable(ScreenBottom.Newspaper.route) { NewsletterScreen() }
+                composable(ScreenBottom.Closet.route) { ClosetScreen() }
+                composable(ScreenBottom.Profile.route) { ProfileScreen() }
             }
         }
     }

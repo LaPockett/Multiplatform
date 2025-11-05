@@ -40,13 +40,10 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Preview
 @Composable
-fun ClosetScreen(
-    backdrop: LayerBackdrop
-) {
+fun ClosetScreen() {
     val hazeState = rememberHazeState()
     Box(
         modifier = Modifier
-            .layerBackdrop(backdrop)
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)//.windowInsetsPadding(WindowInsets.safeDrawing)
             .padding(horizontal = 12.dp)//.statusBarsPadding(),

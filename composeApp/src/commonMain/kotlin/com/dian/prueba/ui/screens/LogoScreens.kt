@@ -24,12 +24,9 @@ import org.jetbrains.compose.resources.painterResource
  * Para ver su comportamiento junto con el bottom navigation
  */
 @Composable
-fun ProfileScreen(
-    backdrop: LayerBackdrop
-) {
+fun ProfileScreen() {
     Box(
         modifier = Modifier
-            .layerBackdrop(backdrop)
             .background(MaterialTheme.colorScheme.background)
             .padding(WindowInsets.statusBars.asPaddingValues())
             .fillMaxSize(),
@@ -49,12 +46,9 @@ fun ProfileScreen(
 }
 
 @Composable
-fun NewsletterScreen(
-    backdrop: LayerBackdrop
-) {
+fun NewsletterScreen() {
     Box(
         modifier = Modifier
-            .layerBackdrop(backdrop)
             .background(MaterialTheme.colorScheme.background)
             .padding(WindowInsets.statusBars.asPaddingValues())
             .fillMaxSize(),
