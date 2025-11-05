@@ -30,6 +30,7 @@ import com.dian.prueba.navigation.GlassmorphicBottomNavigation
 import com.dian.prueba.navigation.ScreenBottom
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.components.SearchBar
+import com.kyant.backdrop.backdrops.layerBackdrop
 import com.kyant.backdrop.backdrops.rememberLayerBackdrop
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
@@ -218,6 +219,7 @@ fun LogoNavigation() {
                 startDestination = ScreenBottom.Closet.route,
                 modifier = Modifier
                     .fillMaxSize()
+                    .layerBackdrop(backdrop)
                     .hazeSource(hazeState)
                 //.padding(padding)
             ) {
