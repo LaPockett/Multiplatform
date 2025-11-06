@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,6 +20,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.dian.prueba.liquidglass.destinations.BottomTabsLiquidGlass
 import com.dian.prueba.liquidglass.destinations.GlassClippyLogo
+import com.dian.prueba.model.LocalPadding
+import com.dian.prueba.model.Padding
 import com.dian.prueba.navigation.ScreenBottom
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.kyant.backdrop.backdrops.layerBackdrop
@@ -116,7 +119,9 @@ fun LogoNavigation() {
                 //.padding(padding)
             ) {
                 composable(ScreenBottom.Newspaper.route) { NewsletterScreen(paddingValues) }
-                composable(ScreenBottom.Closet.route) { ClosetScreen(paddingValues) }
+                composable(ScreenBottom.Closet.route) {
+                        ClosetScreen(paddingValues)
+                }
                 composable(ScreenBottom.Profile.route) { ProfileScreen(paddingValues) }
             }
         }

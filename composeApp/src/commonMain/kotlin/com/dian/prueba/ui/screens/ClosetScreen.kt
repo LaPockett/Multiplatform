@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.dian.prueba.model.LocalPadding
 import com.dian.prueba.ui.components.HeaderLogo2
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
@@ -43,18 +44,19 @@ fun ClosetScreen(
     paddingValues: PaddingValues
 ) {
     val hazeState = rememberHazeState()
+    val paddingModifier = LocalPadding.current
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.background)
             .padding(top = paddingValues.calculateTopPadding())
             //.windowInsetsPadding(WindowInsets.statusBars)
-            .padding(horizontal = 12.dp)//.statusBarsPadding(),
+            .padding(horizontal = paddingModifier.tiny)//.statusBarsPadding(),
     ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            horizontalArrangement = Arrangement.spacedBy(3.dp),
-            verticalArrangement = Arrangement.spacedBy(3.dp),
+            horizontalArrangement = Arrangement.spacedBy(paddingModifier.spacedBy),
+            verticalArrangement = Arrangement.spacedBy(paddingModifier.spacedBy),
             modifier = Modifier
                 .hazeSource(hazeState)
                 .fillMaxSize()
