@@ -3,6 +3,7 @@ package com.dian.prueba.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -113,10 +114,14 @@ fun HeaderLogo() {
 }
 
 @Composable
-fun HeaderLogo2() {
+fun HeaderLogo2(
+    paddingValues: PaddingValues
+) {
     MultiplatformTheme {
         val backdrop = rememberLayerBackdrop()
-        Column {
+        Column (
+            modifier = Modifier.padding(top = paddingValues.calculateTopPadding()/2)
+        ){
             Box(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -180,7 +185,7 @@ fun HeaderLogo2() {
             Text(
                 text = "Your daily inspiration",
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(bottom = 5.dp),
+                modifier = Modifier.padding(bottom = 4.dp),
             )
             // Here Search Bar with animated placeholder
             SearchBar(

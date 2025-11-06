@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.windowInsetsPadding
@@ -45,24 +46,24 @@ fun ClosetScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)//.windowInsetsPadding(WindowInsets.safeDrawing)
+            .background(MaterialTheme.colorScheme.background)
+            .padding(top = paddingValues.calculateTopPadding())
+            //.windowInsetsPadding(WindowInsets.statusBars)
             .padding(horizontal = 12.dp)//.statusBarsPadding(),
     ) {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             horizontalArrangement = Arrangement.spacedBy(3.dp),
-            contentPadding = paddingValues,
             verticalArrangement = Arrangement.spacedBy(3.dp),
             modifier = Modifier
                 .hazeSource(hazeState)
                 .fillMaxSize()
-                .windowInsetsPadding(WindowInsets.statusBars)
         ) {
             item(
                 span = { GridItemSpan(2) }
             ) {
                 // Header of the feed
-                HeaderLogo2()
+                HeaderLogo2(paddingValues)
             }
             items(22) {
                 Card(
