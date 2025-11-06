@@ -62,7 +62,12 @@ fun LiquidButton(
                 effects = {
                     vibrancy()
                     blur(2f.dp.toPx())
-                    lens(12f.dp.toPx(), 24f.dp.toPx())
+                    val quarterPx = (height / 4).toPx()
+                    val halfPx = (height / 2).toPx()
+                    lens(
+                        quarterPx,
+                        halfPx
+                    )
                 },
                 layerBlock = if (isInteractive) {
                     {

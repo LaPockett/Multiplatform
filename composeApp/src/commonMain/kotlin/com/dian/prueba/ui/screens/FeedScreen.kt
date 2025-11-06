@@ -75,7 +75,7 @@ fun LogoNavigation() {
                 CenterAlignedTopAppBar(
                     modifier = Modifier.fillMaxWidth()
                         //.padding(WindowInsets.safeDrawing.asPaddingValues())
-                        .height(75.dp)
+                        .height(78.dp)
                         /*.hazeEffect(
                             state = hazeState,
                             style = hazeStyle,
@@ -100,7 +100,7 @@ fun LogoNavigation() {
                         ImageLogo(
                             tint = Color.Black,
                             painter = painterResource(Res.drawable.logotitle),
-                            size = 72.dp
+                            modifier = Modifier.size(78.dp)
                         )
                     }
                 )
@@ -127,12 +127,12 @@ fun LogoNavigation() {
 fun ImageLogo(
     painter: Painter = painterResource(Res.drawable.logo),
     tint: Color,
-    size: Dp = 55.dp
+    modifier : Modifier = Modifier
 ) {
     Icon(
         painter = painter,
         contentDescription = "Logo de Logo Circular Luxury Closet",
-        modifier = Modifier.size(size),
+        modifier = modifier,
         tint = tint
     )
 }
@@ -160,7 +160,7 @@ fun ClippyLogo(
                 .clickable { /* POR IMPLEMENTAR */ },
             contentAlignment = Alignment.Center
         ) {
-            ImageLogo(tint = Color.White, size = 24.dp)
+            ImageLogo(tint = Color.White, modifier = Modifier.size(24.dp))
         }
     }
 }

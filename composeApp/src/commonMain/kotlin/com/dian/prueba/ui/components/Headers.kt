@@ -119,9 +119,9 @@ fun HeaderLogo2(
 ) {
     MultiplatformTheme {
         val backdrop = rememberLayerBackdrop()
-        Column (
-            modifier = Modifier.padding(top = paddingValues.calculateTopPadding()/2)
-        ){
+        Column(
+            modifier = Modifier.padding(top = paddingValues.calculateTopPadding() / 2)
+        ) {
             Box(
                 modifier = Modifier
                     .fillMaxSize(),
@@ -156,30 +156,25 @@ fun HeaderLogo2(
                         )
                     }
                 }
-                Box(
+                LiquidButton(
+                    onClick = { /* POR IMPLEMENTAR */ },
+                    backdrop = backdrop,
+                    height = 28.dp,
+                    surfaceColor = Color.White.copy(0.3f),
                     modifier = Modifier
-                        .zIndex(2f)
                         .graphicsLayer {
-                            translationX = 130.dp.toPx()
-                            translationY = 25.dp.toPx()
-                        },
-                    contentAlignment = Alignment.Center
+                            translationX = -15.dp.toPx()
+                            translationY = -35.dp.toPx()
+                        }
+                        //.height(28.dp)
+                        .width(92.dp).align(Alignment.BottomEnd)
                 ) {
-                    LiquidButton(
-                        onClick = { /* POR IMPLEMENTAR */ },
-                        backdrop = backdrop,
-                        surfaceColor = Color.White.copy(0.3f),
-                        modifier = Modifier
-                            .height(28.dp)
-                            .width(92.dp)
-                    ) {
-                        Text(
-                            text = "VIEW POST",
-                            fontSize = 10.sp,
-                            color = Color.White,
-                            style = MaterialTheme.typography.labelSmall
-                        )
-                    }
+                    Text(
+                        text = "VIEW POST",
+                        fontSize = 10.sp,
+                        color = Color.White,
+                        style = MaterialTheme.typography.labelSmall
+                    )
                 }
             }
             Text(

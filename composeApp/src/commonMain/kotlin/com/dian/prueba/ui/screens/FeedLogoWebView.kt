@@ -84,7 +84,7 @@ fun FeedLogoWebView() {
                             .hazeEffect(state = hazeState, style = hazeStyle),
                         contentAlignment = Alignment.Center
                     ) {
-                        ImageLogo(tint = Color.White, size = 25.dp)
+                        ImageLogo(tint = Color.White, modifier = Modifier.size(25.dp))
                     }
                 }
             },
