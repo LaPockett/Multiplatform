@@ -3,6 +3,7 @@ package com.dian.prueba.ui.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,15 +25,18 @@ import org.jetbrains.compose.resources.painterResource
  * Para ver su comportamiento junto con el bottom navigation
  */
 @Composable
-fun ProfileScreen() {
+fun ProfileScreen(
+    paddingValues: PaddingValues
+) {
     Box(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
-            .padding(WindowInsets.statusBars.asPaddingValues())
             .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        LazyColumn {
+        LazyColumn(
+            contentPadding = paddingValues
+        ) {
             items(22){
                 Image(
                     painter = painterResource(Res.drawable.matcha),
@@ -46,15 +50,18 @@ fun ProfileScreen() {
 }
 
 @Composable
-fun NewsletterScreen() {
+fun NewsletterScreen(
+    paddingValues: PaddingValues
+) {
     Box(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.background)
-            .padding(WindowInsets.statusBars.asPaddingValues())
             .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        LazyColumn {
+        LazyColumn (
+            contentPadding = paddingValues
+        ){
             items(22){
                 Image(
                     painter = painterResource(Res.drawable.ysl),

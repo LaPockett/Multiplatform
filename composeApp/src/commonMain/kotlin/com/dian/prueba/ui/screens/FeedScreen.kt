@@ -66,7 +66,7 @@ fun LogoNavigation() {
             bottomBar = {
                 //GlassmorphicBottomNavigation(hazeState, navController)
                 Box(
-                    modifier = Modifier.windowInsetsPadding(WindowInsets.safeDrawing)
+                    modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars)
                 ) {
                     BottomTabsLiquidGlass(backdrop, navController)
                 }
@@ -115,9 +115,9 @@ fun LogoNavigation() {
                     .hazeSource(hazeState)
                 //.padding(padding)
             ) {
-                composable(ScreenBottom.Newspaper.route) { NewsletterScreen() }
+                composable(ScreenBottom.Newspaper.route) { NewsletterScreen(paddingValues) }
                 composable(ScreenBottom.Closet.route) { ClosetScreen(paddingValues) }
-                composable(ScreenBottom.Profile.route) { ProfileScreen() }
+                composable(ScreenBottom.Profile.route) { ProfileScreen(paddingValues) }
             }
         }
     }
