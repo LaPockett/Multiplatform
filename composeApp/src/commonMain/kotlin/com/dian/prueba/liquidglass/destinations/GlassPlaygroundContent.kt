@@ -9,14 +9,13 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -34,6 +33,7 @@ import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.fastCoerceAtMost
@@ -51,9 +51,6 @@ import com.kyant.backdrop.effects.lens
 import com.kyant.backdrop.effects.vibrancy
 import com.kyant.backdrop.highlight.Highlight
 import kotlinx.coroutines.launch
-import multiplatform.composeapp.generated.resources.Res
-import multiplatform.composeapp.generated.resources.logo
-import org.jetbrains.compose.resources.painterResource
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.atan2
@@ -234,7 +231,6 @@ fun GlassPlaygroundContent() {
     }
 }
 
-
 @Composable
 fun GlassClippyLogo(
     onClick: () -> Unit,
@@ -242,43 +238,29 @@ fun GlassClippyLogo(
     isInteractive: Boolean = true,
     tint: Color = Color.Unspecified,
     surfaceColor: Color = Color.Unspecified,
-    content: @Composable BoxScope.() -> Unit
+    sizeClippy : Dp = 50.dp,
+    content: @Composable BoxScope.() -> Unit,
 ) {
     val animationScope = rememberCoroutineScope()
-    val offsetAnimation = remember { Animatable(Offset.Zero, Offset.VectorConverter) }
-    val zoomAnimation = remember { Animatable(1f) }
-    val rotationAnimation = remember { Animatable(0f) }
-
-    var isSheetExpanded by remember { mutableStateOf(true) }
-
-    var cornerRadiusFrac by remember { mutableFloatStateOf(0.5f) }
-    var blurRadiusDp by remember { mutableFloatStateOf(1.5f) }
-    var refractionHeightFrac by remember { mutableFloatStateOf(0.2f) }
-    var refractionAmountFrac by remember { mutableFloatStateOf(0.2f) }
-    var chromaticAberration by remember { mutableFloatStateOf(0f) }
-
-
     val interactiveHighlight = remember(animationScope) {
         InteractiveHighlight(
             animationScope = animationScope
         )
     }
-
     Box(
         Modifier
             .statusBarsPadding()
             .drawBackdrop(
                 backdrop = backdrop,
-                shape = { RoundedCornerShape(45f.dp / 2f * 1f) },
+                shape = { CircleShape },
                 effects = {
-                    val minDimension = size.minDimension
                     vibrancy()
-                    blur(blurRadiusDp.dp.toPx())
+                    blur(2f.dp.toPx())
+                    val quarterPx = (sizeClippy / 4).toPx()
+                    val halfPx = (sizeClippy / 2).toPx()
                     lens(
-                        refractionHeight = refractionHeightFrac * minDimension * 0.8f,
-                        refractionAmount = refractionAmountFrac * minDimension,
-                        depthEffect = true,
-                        chromaticAberration = chromaticAberration > 0f
+                        quarterPx,
+                        halfPx
                     )
                 },
                 highlight = { Highlight.Plain },
@@ -335,7 +317,7 @@ fun GlassClippyLogo(
                     Modifier
                 }
             )
-            .size(45f.dp),
+            .size(sizeClippy),
         contentAlignment = Alignment.Center,
         content = content
     )

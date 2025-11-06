@@ -1,11 +1,11 @@
 package com.dian.prueba.liquidglass.destinations
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,11 +21,20 @@ import multiplatform.composeapp.generated.resources.logo
 
 @Composable
 fun ButtonsContent() {
-    BackdropDemoScaffold { backdrop ->
+        BackdropDemoScaffold { backdrop ->
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16f.dp)
         ) {
+            LiquidButton(
+                {},
+                backdrop
+            ) {
+                Text(
+                    "Button Test",
+                    style = TextStyle(Color.Black, 15f.sp)
+                )
+            }
             LiquidButton(
                 {},
                 backdrop
@@ -35,27 +44,15 @@ fun ButtonsContent() {
                     style = TextStyle(Color.Black, 15f.sp)
                 )
             }
-
-            /*LiquidButton(
+            LiquidButton(
                 {},
-                backdrop
+                backdrop,
+                height = 62.dp
             ) {
                 Icon(
                     painter = painterResource(Res.drawable.logo),
                     contentDescription = "Logo",
-                    tint = Color.White,
-                    modifier = Modifier.size(60.dp)
-                )
-            }*/
-            GlassClippyLogo(
-                {},
-                backdrop,
-                surfaceColor = Color.White.copy(0.3f),
-                ){
-                Icon(
-                    painter = painterResource(Res.drawable.logo),
-                    contentDescription = "Logo",
-                    tint = Color.White,
+                    tint = Color(0xfff6f6f6),
                     modifier = Modifier.size(30.dp)
                 )
             }

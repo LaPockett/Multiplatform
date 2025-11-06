@@ -7,11 +7,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.BasicText
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Newspaper
-import androidx.compose.material.icons.rounded.Notifications
-import androidx.compose.material.icons.rounded.Person
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -30,13 +28,11 @@ import androidx.navigation.NavController
 import com.dian.prueba.liquidglass.components.LiquidBottomTab
 import com.dian.prueba.liquidglass.components.LiquidBottomTabs
 import com.dian.prueba.liquidglass.BackdropDemoScaffold
-import com.dian.prueba.liquidglass.BackdropDemoScaffold2
 import com.dian.prueba.liquidglass.Block
-import com.dian.prueba.navigation.BottomBarTab
 import com.dian.prueba.navigation.ScreenBottom
 import com.dian.prueba.navigation.tabs
+import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.kyant.backdrop.backdrops.LayerBackdrop
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
 import org.jetbrains.compose.resources.painterResource
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.flight_40px
@@ -116,11 +112,7 @@ fun BottomTabsLiquidGlass(
     val isLightTheme = !isSystemInDarkTheme()
     val contentColor = if (isLightTheme) Color.LightGray else Color.White
 
-    val airplaneModeIcon = painterResource(Res.drawable.flight_40px)
-
     val iconColorFilter = ColorFilter.tint(contentColor)
-    //val backdrop = rememberLayerBackdrop()
-
     // Primer destino
     var selectedTabIndex by remember { mutableIntStateOf(1) }
 
@@ -132,40 +124,44 @@ fun BottomTabsLiquidGlass(
         ScreenBottom.Profile.route -> 2
         else -> selectedTabIndex
     }
-    Column(verticalArrangement = Arrangement.spacedBy(32f.dp)) {
-        Block {
+    MultiplatformTheme {
+        Column(verticalArrangement = Arrangement.spacedBy(32f.dp)) {
+            Block {
 
-            LiquidBottomTabs(
-                selectedTabIndex = { selectedTabIndex },
-                onTabSelected = { tab ->
-                    selectedTabIndex = tab
-                    when (tab) {
-                        0 -> navController.navigate(ScreenBottom.Newspaper.route)
-                        1 -> navController.navigate(ScreenBottom.Closet.route)
-                        2 -> navController.navigate(ScreenBottom.Profile.route)
-                    }
-                },
-                backdrop = backdrop,
-                tabsCount = 3,
-                modifier = Modifier.padding(horizontal = 36f.dp)
-            ) {
-                tabs.forEachIndexed { index, tab ->
-                    LiquidBottomTab({ selectedTabIndex = index }) {
-                        Box (
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally
+                LiquidBottomTabs(
+                    selectedTabIndex = { selectedTabIndex },
+                    onTabSelected = { tab ->
+                        selectedTabIndex = tab
+                        when (tab) {
+                            0 -> navController.navigate(ScreenBottom.Newspaper.route)
+                            1 -> navController.navigate(ScreenBottom.Closet.route)
+                            2 -> navController.navigate(ScreenBottom.Profile.route)
+                        }
+                    },
+                    backdrop = backdrop,
+                    tabsCount = 3,
+                    modifier = Modifier.padding(horizontal = 36f.dp)
+                ) {
+                    tabs.forEachIndexed { index, tab ->
+                        LiquidBottomTab({ selectedTabIndex = index }) {
+                            Box (
+                                contentAlignment = Alignment.Center
                             ) {
-                                Icon(
-                                    imageVector = tabs[index].icon,
-                                    contentDescription = "Icon newsletter",
-                                    tint = Color.White
-                                )
-                                BasicText(
-                                    text = tabs[index].title,
-                                    style = TextStyle(Color.White, 12f.sp)
-                                )
+                                Column(
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ) {
+                                    Icon(
+                                        imageVector = tabs[index].icon,
+                                        contentDescription = "Icon ${tabs[index].title}",
+                                        tint = Color(0xffcccccc)
+                                    )
+                                    Text(
+                                        text = tabs[index].title,
+                                        style = MaterialTheme.typography.labelMedium,
+                                        color = Color(0xffcccccc),
+                                        modifier = Modifier.padding(top = 5.dp)
+                                    )
+                                }
                             }
                         }
                     }
@@ -173,5 +169,5 @@ fun BottomTabsLiquidGlass(
             }
         }
     }
-}
 
+}

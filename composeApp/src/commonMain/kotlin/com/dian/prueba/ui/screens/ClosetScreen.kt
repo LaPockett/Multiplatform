@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,10 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import com.kyant.backdrop.Backdrop
-import com.kyant.backdrop.backdrops.LayerBackdrop
-import com.kyant.backdrop.backdrops.layerBackdrop
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.dian.prueba.ui.components.HeaderLogo2
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.rememberHazeState
@@ -40,7 +38,9 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Preview
 @Composable
-fun ClosetScreen() {
+fun ClosetScreen(
+    paddingValues: PaddingValues
+) {
     val hazeState = rememberHazeState()
     Box(
         modifier = Modifier
@@ -51,17 +51,18 @@ fun ClosetScreen() {
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             horizontalArrangement = Arrangement.spacedBy(3.dp),
+            contentPadding = paddingValues,
             verticalArrangement = Arrangement.spacedBy(3.dp),
             modifier = Modifier
                 .hazeSource(hazeState)
-                .windowInsetsPadding(WindowInsets.statusBars)
                 .fillMaxSize()
+                .windowInsetsPadding(WindowInsets.statusBars)
         ) {
             item(
                 span = { GridItemSpan(2) }
             ) {
                 // Header of the feed
-                HeaderLogo()
+                HeaderLogo2()
             }
             items(22) {
                 Card(
