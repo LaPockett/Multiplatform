@@ -29,6 +29,7 @@ import com.dian.prueba.liquidglass.components.LiquidBottomTab
 import com.dian.prueba.liquidglass.components.LiquidBottomTabs
 import com.dian.prueba.liquidglass.BackdropDemoScaffold
 import com.dian.prueba.liquidglass.Block
+import com.dian.prueba.model.LocalPadding
 import com.dian.prueba.navigation.ScreenBottom
 import com.dian.prueba.navigation.tabs
 import com.dian.prueba.ui.Theme.MultiplatformTheme
@@ -109,6 +110,7 @@ fun BottomTabsLiquidGlass(
     backdrop: LayerBackdrop,
     navController: NavController
 ) {
+    val paddingModifier = LocalPadding.current
     val isLightTheme = !isSystemInDarkTheme()
     val contentColor = if (isLightTheme) Color.LightGray else Color.White
 
@@ -125,9 +127,8 @@ fun BottomTabsLiquidGlass(
         else -> selectedTabIndex
     }
     MultiplatformTheme {
-        Column(verticalArrangement = Arrangement.spacedBy(32f.dp)) {
+        Column(verticalArrangement = Arrangement.spacedBy(paddingModifier.extraBig)) {
             Block {
-
                 LiquidBottomTabs(
                     selectedTabIndex = { selectedTabIndex },
                     onTabSelected = { tab ->
@@ -140,7 +141,7 @@ fun BottomTabsLiquidGlass(
                     },
                     backdrop = backdrop,
                     tabsCount = 3,
-                    modifier = Modifier.padding(horizontal = 36f.dp)
+                    modifier = Modifier.padding(horizontal = paddingModifier.extraLarge)
                 ) {
                     tabs.forEachIndexed { index, tab ->
                         LiquidBottomTab({ selectedTabIndex = index }) {
@@ -159,7 +160,7 @@ fun BottomTabsLiquidGlass(
                                         text = tabs[index].title,
                                         style = MaterialTheme.typography.labelMedium,
                                         color = Color(0xffcccccc),
-                                        modifier = Modifier.padding(top = 5.dp)
+                                        modifier = Modifier.padding(paddingModifier.extraTiny)
                                     )
                                 }
                             }

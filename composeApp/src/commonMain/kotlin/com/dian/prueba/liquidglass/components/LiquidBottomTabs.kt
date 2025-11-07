@@ -193,6 +193,7 @@ fun LiquidBottomTabs(
                 lerp(1f, 1.2f, dampedDragAnimation.pressProgress)
             }
         ) {
+            // El box detrás de la burbuja
             Row(
                 Modifier
                     .clearAndSetSemantics {}
@@ -228,7 +229,7 @@ fun LiquidBottomTabs(
                 content = content
             )
         }
-
+        // La burbuja del bottom navigation
         Box(
             Modifier
                 .padding(horizontal = 4f.dp)

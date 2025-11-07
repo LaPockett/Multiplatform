@@ -8,12 +8,14 @@ import androidx.compose.ui.unit.dp
  * Global padding
  */
 data class Padding(
-    val spacedBy : Dp = 3.dp,
+    val extraTiny : Dp = 3.dp,
     val tiny : Dp = 8.dp,
     val small: Dp = 12.dp,
     val normal: Dp = 16.dp,
     val big: Dp = 20.dp,
-    val large: Dp = 24.dp
+    val large: Dp = 24.dp,
+    val extraBig : Dp = 32.dp,
+    val extraLarge : Dp = 36.dp
 )
 
 val LocalPadding = compositionLocalOf { Padding() }

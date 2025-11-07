@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -13,15 +12,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.dian.prueba.liquidglass.destinations.BottomTabsLiquidGlass
 import com.dian.prueba.liquidglass.destinations.GlassClippyLogo
-import com.dian.prueba.model.LocalPadding
-import com.dian.prueba.model.Padding
+import com.dian.prueba.model.LocalDimension
 import com.dian.prueba.navigation.ScreenBottom
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.kyant.backdrop.backdrops.layerBackdrop
@@ -43,6 +40,7 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun LogoNavigation() {
     MultiplatformTheme {
+        val uiDimensions = LocalDimension.current
         val hazeState = rememberHazeState()
         val backdrop = rememberLayerBackdrop()
         val navController = rememberNavController()
@@ -59,7 +57,7 @@ fun LogoNavigation() {
                         painter = painterResource(Res.drawable.logo),
                         contentDescription = "Logo",
                         tint = Color.White,
-                        modifier = Modifier.size(23.dp)
+                        modifier = Modifier.size(uiDimensions.iconNormal)
                     )
                 }
             },

@@ -37,8 +37,8 @@ fun ProfileScreen(
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             contentPadding = paddingValues,
-            horizontalArrangement = Arrangement.spacedBy(paddingModifier.spacedBy),
-            verticalArrangement = Arrangement.spacedBy(paddingModifier.spacedBy),
+            horizontalArrangement = Arrangement.spacedBy(paddingModifier.extraTiny),
+            verticalArrangement = Arrangement.spacedBy(paddingModifier.extraTiny),
             modifier = Modifier
                 .fillMaxSize()
         ) {
@@ -69,8 +69,8 @@ fun NewsletterScreen(
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
             contentPadding = paddingValues,
-            horizontalArrangement = Arrangement.spacedBy(paddingModifier.spacedBy),
-            verticalArrangement = Arrangement.spacedBy(paddingModifier.spacedBy),
+            horizontalArrangement = Arrangement.spacedBy(paddingModifier.extraTiny),
+            verticalArrangement = Arrangement.spacedBy(paddingModifier.extraTiny),
             modifier = Modifier
                 .fillMaxSize()
         ) {

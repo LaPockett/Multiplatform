@@ -10,11 +10,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
@@ -22,6 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import coil3.compose.AsyncImage
 import com.dian.prueba.liquidglass.components.LiquidButton
+import com.dian.prueba.model.LocalPadding
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.kyant.backdrop.backdrops.layerBackdrop
 import com.kyant.backdrop.backdrops.rememberLayerBackdrop
@@ -117,6 +126,7 @@ fun HeaderLogo() {
 fun HeaderLogo2(
     paddingValues: PaddingValues
 ) {
+    val paddingModifier = LocalPadding.current
     MultiplatformTheme {
         val backdrop = rememberLayerBackdrop()
         Column(
@@ -180,7 +190,7 @@ fun HeaderLogo2(
             Text(
                 text = "Your daily inspiration",
                 style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(bottom = 4.dp),
+                modifier = Modifier.padding(bottom = paddingModifier.extraTiny),
             )
             // Here Search Bar with animated placeholder
             SearchBar(
@@ -188,7 +198,7 @@ fun HeaderLogo2(
                 onQueryChange = {},
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.padding(5.dp))
+            Spacer(modifier = Modifier.padding(bottom = paddingModifier.tiny))
         }
     }
 }
