@@ -5,13 +5,17 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -32,11 +36,14 @@ import coil3.compose.AsyncImage
 import com.dian.prueba.liquidglass.components.LiquidButton
 import com.dian.prueba.model.LocalPadding
 import com.dian.prueba.ui.Theme.MultiplatformTheme
+import com.dian.prueba.ui.screens.ImageLogo
 import com.kyant.backdrop.backdrops.layerBackdrop
 import com.kyant.backdrop.backdrops.rememberLayerBackdrop
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
 import multiplatform.composeapp.generated.resources.Res
+import multiplatform.composeapp.generated.resources.logotitle
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun HeaderLogo() {
@@ -123,14 +130,12 @@ fun HeaderLogo() {
 }
 
 @Composable
-fun HeaderLogo2(
-    paddingValues: PaddingValues
-) {
+fun HeaderLogo2() {
     val paddingModifier = LocalPadding.current
     MultiplatformTheme {
         val backdrop = rememberLayerBackdrop()
         Column(
-            modifier = Modifier.padding(top = paddingValues.calculateTopPadding() / 2)
+            modifier = Modifier.padding(top = paddingModifier.small)
         ) {
             Box(
                 modifier = Modifier
@@ -150,16 +155,13 @@ fun HeaderLogo2(
                             contentDescription = "Border SVG",
                             modifier = Modifier.fillMaxSize()
                                 .align(Alignment.Center)
-                                .graphicsLayer {
-                                    translationY = -16.dp.toPx()
-                                },
                         )
                         AsyncImage(
                             model = Res.getUri("files/banner.svg"),
                             contentDescription = "Banner SVG",
                             modifier = Modifier
                                 .graphicsLayer {
-                                    translationY = -25.dp.toPx()
+                                    translationY = -8.dp.toPx()
                                 }
                                 .fillMaxSize()
                                 .align(Alignment.TopCenter),
@@ -174,7 +176,7 @@ fun HeaderLogo2(
                     modifier = Modifier
                         .graphicsLayer {
                             translationX = -15.dp.toPx()
-                            translationY = -35.dp.toPx()
+                            translationY = -22.dp.toPx()
                         }
                         //.height(28.dp)
                         .width(92.dp).align(Alignment.BottomEnd)

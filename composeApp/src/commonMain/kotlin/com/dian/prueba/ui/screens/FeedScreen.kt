@@ -3,15 +3,21 @@ package com.dian.prueba.ui.screens
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.dropShadow
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.shadow.Shadow
+import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,11 +29,14 @@ import com.dian.prueba.navigation.ScreenBottom
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.kyant.backdrop.backdrops.layerBackdrop
 import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import dev.chrisbanes.haze.HazeProgressive
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
+import dev.chrisbanes.haze.HazeTint
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
+import dev.chrisbanes.haze.materials.HazeMaterials
 import dev.chrisbanes.haze.rememberHazeState
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.logo
@@ -44,7 +53,69 @@ fun LogoNavigation() {
         val hazeState = rememberHazeState()
         val backdrop = rememberLayerBackdrop()
         val navController = rememberNavController()
+        val lightAlpha = 0.3f
+        val darkAlpha = 0.1f
+        val hazeStyle = HazeStyle(
+            backgroundColor = Color.White,
+            tints = listOf(
+                HazeTint(
+                    Color.White.copy(alpha = if (Color.White.luminance() >= 0.5) lightAlpha else darkAlpha),
+                )
+            ),
+            blurRadius = 5.dp,
+            noiseFactor = -1f,
+            fallbackTint = HazeTint.Unspecified,
+        )
         Scaffold(
+            //modifier = Modifier.fillMaxSize(),
+            topBar = {
+                CenterAlignedTopAppBar(
+                    modifier = Modifier
+                        .hazeEffect(state = hazeState, style = hazeStyle)
+                        .fillMaxWidth()
+                        .dropShadow(
+                            shape = RoundedCornerShape(20.dp),
+                            shadow = Shadow(
+                                radius = 8.dp,
+                                spread = 3.dp,
+                                color = Color(0xd7ffffff),
+                                offset = DpOffset(x = 4.dp, 4.dp)
+                            )
+                        )
+                        .height(95.dp)
+                        .background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    MaterialTheme.colorScheme.background,
+                                    MaterialTheme.colorScheme.background.copy(alpha = 1f),
+                                    MaterialTheme.colorScheme.background.copy(alpha = 0.9f),
+                                    MaterialTheme.colorScheme.background.copy(alpha = 0.8f),
+                                    MaterialTheme.colorScheme.background.copy(alpha = 0.7f),
+                                    MaterialTheme.colorScheme.background.copy(alpha = 0.6f),
+                                    MaterialTheme.colorScheme.background.copy(alpha = 0.5f),
+                                    MaterialTheme.colorScheme.background.copy(alpha = 0.4f),
+                                    MaterialTheme.colorScheme.background.copy(alpha = 0.3f),
+                                    MaterialTheme.colorScheme.background.copy(alpha = 0.1f),
+                                    MaterialTheme.colorScheme.background.copy(alpha = 0f),
+                                ),
+                                startY = 245f,
+                                endY = 300f,
+                            )
+                        ),
+                    windowInsets = WindowInsets.statusBars,
+                    navigationIcon = {},//
+                    actions = {},
+                    title = {
+                        ImageLogo(
+                            tint = Color.Black,
+                            painter = painterResource(Res.drawable.logotitle),
+                            modifier = Modifier.height(48.dp)
+                        )
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(Color.Transparent),
+
+                )
+            },
             contentWindowInsets = WindowInsets.safeDrawing,
             floatingActionButton = {
                 GlassClippyLogo(
@@ -63,7 +134,6 @@ fun LogoNavigation() {
             },
             floatingActionButtonPosition = FabPosition.End,
             containerColor = Color.Transparent,
-            modifier = Modifier.fillMaxSize(),
             bottomBar = {
                 //GlassmorphicBottomNavigation(hazeState, navController)
                 Box(
@@ -71,40 +141,6 @@ fun LogoNavigation() {
                 ) {
                     BottomTabsLiquidGlass(backdrop, navController)
                 }
-            },
-            topBar = {
-                CenterAlignedTopAppBar(
-                    modifier = Modifier.fillMaxWidth()
-                        //.padding(WindowInsets.safeDrawing.asPaddingValues())
-                        .height(78.dp)
-                        /*.hazeEffect(
-                            state = hazeState,
-                            style = hazeStyle,
-                        )*/
-                        .background(
-                            brush = Brush.verticalGradient(
-                                colors = listOf(
-                                    MaterialTheme.colorScheme.background,
-                                    MaterialTheme.colorScheme.background.copy(alpha = 0.99f),
-                                    Color.Transparent
-                                ),
-                                startY = 120f,
-                                endY = 140f,
-                            )
-                            //Color.Red
-                        ),
-                    windowInsets = WindowInsets.statusBars,
-                    colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.background),
-                    navigationIcon = {},//
-                    actions = {},
-                    title = {
-                        ImageLogo(
-                            tint = Color.Black,
-                            painter = painterResource(Res.drawable.logotitle),
-                            modifier = Modifier.size(78.dp)
-                        )
-                    }
-                )
             }
         ) { paddingValues ->
             NavHost(
@@ -112,15 +148,19 @@ fun LogoNavigation() {
                 startDestination = ScreenBottom.Closet.route,
                 modifier = Modifier
                     .fillMaxSize()
-                    .layerBackdrop(backdrop)
                     .hazeSource(hazeState)
+                    .layerBackdrop(backdrop)
                 //.padding(padding)
             ) {
-                composable(ScreenBottom.Newspaper.route) { NewsletterScreen(paddingValues) }
-                composable(ScreenBottom.Closet.route) {
-                        ClosetScreen(paddingValues)
+                composable(ScreenBottom.Newspaper.route) {
+                    NewsletterScreen(paddingValues)
                 }
-                composable(ScreenBottom.Profile.route) { ProfileScreen(paddingValues) }
+                composable(ScreenBottom.Closet.route) {
+                    ClosetScreen(paddingValues)
+                }
+                composable(ScreenBottom.Profile.route) {
+                    ProfileScreen(paddingValues)
+                }
             }
         }
     }
@@ -130,7 +170,7 @@ fun LogoNavigation() {
 fun ImageLogo(
     painter: Painter = painterResource(Res.drawable.logo),
     tint: Color,
-    modifier : Modifier = Modifier
+    modifier: Modifier = Modifier
 ) {
     Icon(
         painter = painter,
