@@ -10,7 +10,9 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 
 interface ApiService {
@@ -66,4 +68,50 @@ class APIClient (
             newVersion = "1.3", // Desde aquí podemos cambiar a otra versión
         )
     }
+}
+
+// Prueba del servidor en Ktor
+@Serializable
+data class Post(
+    val userId: Int,
+    val id: Int,
+    val title: String,
+    val body: String
+)
+
+interface ApiServiceTest {
+    suspend fun getPosts(): List<Post>
+}
+
+class APIClientTest : ApiServiceTest {
+    private val logger = Logger("APIClient")
+    private val client = HttpClient {
+        install(ContentNegotiation) {
+            json(Json {
+                ignoreUnknownKeys = true
+                isLenient = true
+            })
+        }
+    }
+
+    override suspend fun getPosts(): List<Post> = withContext(Dispatchers.Default) {
+       try {
+            logger.warn("Solicitando posts al servidor Ktor...")
+            val baseUrl = "http://127.0.0.1:8080/posts"
+
+            val result: List<Post> = client.get(baseUrl).body()
+            logger.debug("Recibidos ${result.size} posts")
+            result
+        } catch (e: Exception) {
+            logger.error(e)
+            emptyList()
+        }
+    }
+}
+
+fun main() = runBlocking {
+    val api = APIClientTest()
+    val posts = api.getPosts()
+    println("Resultado de los posts: ")
+    posts.take(5).forEach { println(it) }
 }
