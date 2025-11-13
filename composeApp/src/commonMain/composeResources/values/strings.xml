@@ -1,0 +1,5 @@
+<resources>
+    <string name="second_splash_screen">Welcome to</string>
+    <string name="greeting">Hello, world!</string>
+    <string name="welcome_message">Welcome, %s!</string>
+</resources>
