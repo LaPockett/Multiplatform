@@ -18,6 +18,8 @@ import androidx.core.view.WindowCompat
 import com.dian.prueba.R
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.screens.LogoNavigation
+import com.dian.prueba.ui.screens.RootNavigation
+import com.dian.prueba.ui.splash.Secondplash
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mmk.kmpnotifier.notification.NotifierManager
@@ -91,7 +93,9 @@ class MainActivity : ComponentActivity() {
                 //AnimatedSearchBar()
                 //BottomTabsContent()
                 //BottomTabsLiquidGlass()
-                LogoNavigation()
+                //LogoNavigation()
+                RootNavigation()
+                //Secondplash()
                 //CatalogApp()
                 /*MaterialsSample(
                     navController = rememberNavController(),

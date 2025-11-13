@@ -26,6 +26,10 @@ Este tipo de problemas solo los ves cuando te enfrentas a ellos de verdad. Si er
 - [KMPNotifier](https://github.com/mirzemehdi/KMPNotifier?tab=readme-ov-file) - Multiplatform Push Notifications Library
 - [FCM](https://firebase.google.com/docs/cloud-messaging?hl=es-419) - Firebase Cloud Messaging for Notifications
 - [SplashScreen](https://developer.android.com/jetpack/androidx/releases/core?hl=es-419#core_splashscreen_version_12_2) - Launch Screen
+- [LiquidGLass](https://github.com/Kyant0/AndroidLiquidGlass) - Compose blur and Liquid Glass effects
+- [Haze](https://github.com/chrisbanes/haze) - Background blurring
+- [Coil](https://github.com/coil-kt/coil) - Image loading
+- [Compottie](https://github.com/alexzhirkevich/compottie) - Rendering Lottie animations
 
 ## Conceptos que se han visto
 - [Git](https://learngitbranching.js.org/?locale=es_ES)

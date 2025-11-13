@@ -27,6 +27,8 @@ import com.dian.prueba.liquidglass.destinations.GlassClippyLogo
 import com.dian.prueba.model.LocalDimension
 import com.dian.prueba.navigation.ScreenBottom
 import com.dian.prueba.ui.Theme.MultiplatformTheme
+import com.dian.prueba.ui.splash.FirstSplash
+import com.dian.prueba.ui.splash.Secondplash
 import com.kyant.backdrop.backdrops.layerBackdrop
 import com.kyant.backdrop.backdrops.rememberLayerBackdrop
 import dev.chrisbanes.haze.HazeProgressive
@@ -204,6 +206,42 @@ fun ClippyLogo(
             contentAlignment = Alignment.Center
         ) {
             ImageLogo(tint = Color.White, modifier = Modifier.size(24.dp))
+        }
+    }
+}
+
+@Composable
+fun RootNavigation() {
+    val navController = rememberNavController()
+    NavHost(
+        navController = navController,
+        startDestination = "firstSplashScreen"
+    ) {
+        // Welcome SplashScreens
+        composable("firstSplashScreen") {
+            FirstSplash(
+                onFinish = {
+                    navController.navigate("secondSplashScreen"){
+                        popUpTo("firstSplashScreen"){
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+        }
+        composable("secondSplashScreen") {
+            Secondplash(
+                onFinish = {
+                    navController.navigate("mainNavigation"){
+                        popUpTo("secondSplashScreen"){
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+        }
+        composable("mainNavigation") {
+            LogoNavigation()
         }
     }
 }
