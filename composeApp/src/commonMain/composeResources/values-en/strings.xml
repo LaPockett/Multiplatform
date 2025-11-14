@@ -1,0 +1,8 @@
+<resources>
+    <string name="first_splash_screen">We have carefully reviewed your access request and have reached a decision</string>
+    <string name="title_feed">Your daily inspiration</string>
+    <string name="animated_textfield1">Hey Maria! Here are the perfect pieces for your week</string>
+    <string name="animated_textfield2">What will you choose?</string>
+    <string name="button_splash_screen">Access my closet</string>
+    <string name="button_msg1">VIEW POST</string>
+</resources>

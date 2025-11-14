@@ -17,9 +17,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import com.dian.prueba.R
 import com.dian.prueba.ui.Theme.MultiplatformTheme
-import com.dian.prueba.ui.screens.LogoNavigation
-import com.dian.prueba.ui.screens.RootNavigation
-import com.dian.prueba.ui.splash.Secondplash
+import com.dian.prueba.ui.screens.RootNavigation2
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mmk.kmpnotifier.notification.NotifierManager
@@ -94,7 +92,7 @@ class MainActivity : ComponentActivity() {
                 //BottomTabsContent()
                 //BottomTabsLiquidGlass()
                 //LogoNavigation()
-                RootNavigation()
+                RootNavigation2()
                 //Secondplash()
                 //CatalogApp()
                 /*MaterialsSample(

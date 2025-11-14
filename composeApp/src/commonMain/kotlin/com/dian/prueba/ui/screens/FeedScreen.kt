@@ -1,16 +1,22 @@
 package com.dian.prueba.ui.screens
 
-import androidx.compose.foundation.*
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.dropShadow
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
@@ -28,17 +34,15 @@ import com.dian.prueba.model.LocalDimension
 import com.dian.prueba.navigation.ScreenBottom
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.splash.FirstSplash
-import com.dian.prueba.ui.splash.Secondplash
+import com.dian.prueba.ui.splash.SecondSplash
 import com.kyant.backdrop.backdrops.layerBackdrop
 import com.kyant.backdrop.backdrops.rememberLayerBackdrop
-import dev.chrisbanes.haze.HazeProgressive
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.HazeTint
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
-import dev.chrisbanes.haze.materials.HazeMaterials
 import dev.chrisbanes.haze.rememberHazeState
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.logo
@@ -116,7 +120,7 @@ fun LogoNavigation() {
                     },
                     colors = TopAppBarDefaults.topAppBarColors(Color.Transparent),
 
-                )
+                    )
             },
             contentWindowInsets = WindowInsets.safeDrawing,
             floatingActionButton = {
@@ -209,39 +213,65 @@ fun ClippyLogo(
         }
     }
 }
+@Composable
+fun RootNavigation2() {
+    var currentScreen by remember { mutableStateOf<Screen>(Screen.First) }
+    var nextScreen by remember { mutableStateOf<Screen?>(null) }
+    val isAnimating = nextScreen != null
+
+    val offsetY by animateDpAsState(
+        targetValue = if (isAnimating) (-990).dp else 0.dp,
+        animationSpec = tween(1500),
+        finishedListener = {
+            if (isAnimating) {
+                currentScreen = nextScreen!!
+                nextScreen = null
+            }
+        }
+    )
+    Box(Modifier.fillMaxSize()) {
+        // Static screen
+        if (nextScreen != null) {
+            ScreenContent(
+                screen = nextScreen!!,
+                onNavigate = { /* No navigation while the navigation*/ }
+            )
+        } else {
+            ScreenContent(
+                screen = currentScreen,
+                onNavigate = { target ->
+                    if (!isAnimating) {
+                        nextScreen = target
+                    }
+                }
+            )
+        }
+        // Animated screen
+        if (isAnimating) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .offset(y = offsetY)
+            ) {
+                ScreenContent(
+                    screen = currentScreen,
+                    onNavigate = {}
+                )
+            }
+        }
+    }
+}
+sealed class Screen {
+    object First : Screen()
+    object Second : Screen()
+    object Main : Screen()
+}
 
 @Composable
-fun RootNavigation() {
-    val navController = rememberNavController()
-    NavHost(
-        navController = navController,
-        startDestination = "firstSplashScreen"
-    ) {
-        // Welcome SplashScreens
-        composable("firstSplashScreen") {
-            FirstSplash(
-                onFinish = {
-                    navController.navigate("secondSplashScreen"){
-                        popUpTo("firstSplashScreen"){
-                            inclusive = true
-                        }
-                    }
-                }
-            )
-        }
-        composable("secondSplashScreen") {
-            Secondplash(
-                onFinish = {
-                    navController.navigate("mainNavigation"){
-                        popUpTo("secondSplashScreen"){
-                            inclusive = true
-                        }
-                    }
-                }
-            )
-        }
-        composable("mainNavigation") {
-            LogoNavigation()
-        }
+fun ScreenContent(screen: Screen, onNavigate: (Screen) -> Unit = {}) {
+    when (screen) {
+        Screen.First -> FirstSplash { onNavigate(Screen.Second) }
+        Screen.Second -> SecondSplash{ onNavigate(Screen.Main) }
+        Screen.Main -> LogoNavigation()
     }
 }

@@ -3,30 +3,17 @@ package com.dian.prueba.ui.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
@@ -36,14 +23,14 @@ import coil3.compose.AsyncImage
 import com.dian.prueba.liquidglass.components.LiquidButton
 import com.dian.prueba.model.LocalPadding
 import com.dian.prueba.ui.Theme.MultiplatformTheme
-import com.dian.prueba.ui.screens.ImageLogo
 import com.kyant.backdrop.backdrops.layerBackdrop
 import com.kyant.backdrop.backdrops.rememberLayerBackdrop
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
 import multiplatform.composeapp.generated.resources.Res
-import multiplatform.composeapp.generated.resources.logotitle
-import org.jetbrains.compose.resources.painterResource
+import multiplatform.composeapp.generated.resources.button_msg1
+import multiplatform.composeapp.generated.resources.title_feed
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun HeaderLogo() {
@@ -182,7 +169,7 @@ fun HeaderLogo2() {
                         .width(92.dp).align(Alignment.BottomEnd)
                 ) {
                     Text(
-                        text = "VIEW POST",
+                        text = stringResource(Res.string.button_msg1),
                         fontSize = 10.sp,
                         color = Color.White,
                         style = MaterialTheme.typography.labelSmall
@@ -190,7 +177,7 @@ fun HeaderLogo2() {
                 }
             }
             Text(
-                text = "Your daily inspiration",
+                text = stringResource(Res.string.title_feed),
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(bottom = paddingModifier.extraTiny),
             )

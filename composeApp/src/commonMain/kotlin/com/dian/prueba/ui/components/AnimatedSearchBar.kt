@@ -34,8 +34,11 @@ import com.arjunjadeja.texty.RevealingType
 import com.arjunjadeja.texty.Texty
 import kotlinx.coroutines.delay
 import multiplatform.composeapp.generated.resources.Res
+import multiplatform.composeapp.generated.resources.animated_textfield1
+import multiplatform.composeapp.generated.resources.animated_textfield2
 import multiplatform.composeapp.generated.resources.logo
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Preview
@@ -133,8 +136,8 @@ fun SearchBar(
         label = {
             AnimatedPlaceholder(
                 hints = listOf(
-                    "Hey Maria! Here are the perfect pieces for your week",
-                    "What will you choose?",
+                    stringResource(Res.string.animated_textfield1),
+                    stringResource(Res.string.animated_textfield2),
                     "Pick your bag!",
                 ),
             )

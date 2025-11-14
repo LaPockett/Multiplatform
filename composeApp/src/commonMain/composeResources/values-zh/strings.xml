@@ -1,0 +1,8 @@
+<resources>
+    <string name="first_splash_screen">我们已仔细审查您的访问请求，并已作出决定</string>
+    <string name="title_feed">您的每日灵感</string>
+    <string name="animated_textfield1">嗨，Maria！这是您本周的完美搭配</string>
+    <string name="animated_textfield2">您会选择哪一个？</string>
+    <string name="button_splash_screen">访问我的衣橱</string>
+    <string name="button_msg1">查看帖子</string>
+</resources>

@@ -1,0 +1,8 @@
+<resources>
+    <string name="first_splash_screen">Nous avons soigneusement examiné votre demande d'accès et avons pris une décision</string>
+    <string name="title_feed">Votre inspiration quotidienne</string>
+    <string name="animated_textfield1">Salut Maria ! Voici les pièces parfaites pour votre semaine</string>
+    <string name="animated_textfield2">Que choisirez-vous ?</string>
+    <string name="button_splash_screen">Accéder à mon dressing</string>
+    <string name="button_msg1">VOIR LE POST</string>
+</resources>
