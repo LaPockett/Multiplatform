@@ -9,10 +9,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.dian.prueba.model.LocalColors
 import com.dian.prueba.model.LocalPadding
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.flower
@@ -27,9 +27,10 @@ fun ProfileScreen(
     paddingValues: PaddingValues
 ) {
     val paddingModifier = LocalPadding.current
+    val colorModifier = LocalColors.current
     Box(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
+            .background(colorModifier.backgroundApp)
             .padding(horizontal = paddingModifier.tiny)
             .fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -59,9 +60,10 @@ fun NewsletterScreen(
     paddingValues: PaddingValues
 ) {
     val paddingModifier = LocalPadding.current
+    val colorModifier = LocalColors.current
     Box(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
+            .background(colorModifier.backgroundApp)
             .padding(horizontal = paddingModifier.tiny)
             .fillMaxSize(),
         contentAlignment = Alignment.Center

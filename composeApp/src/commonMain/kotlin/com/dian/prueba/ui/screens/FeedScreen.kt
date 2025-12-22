@@ -33,8 +33,7 @@ import com.dian.prueba.liquidglass.destinations.GlassClippyLogo
 import com.dian.prueba.model.LocalDimension
 import com.dian.prueba.navigation.ScreenBottom
 import com.dian.prueba.ui.Theme.MultiplatformTheme
-import com.dian.prueba.ui.splash.FirstSplash
-import com.dian.prueba.ui.splash.SecondSplash
+import com.dian.prueba.ui.splash.CentralSplashScreen
 import com.kyant.backdrop.backdrops.layerBackdrop
 import com.kyant.backdrop.backdrops.rememberLayerBackdrop
 import dev.chrisbanes.haze.HazeState
@@ -214,7 +213,7 @@ fun ClippyLogo(
     }
 }
 @Composable
-fun RootNavigation2() {
+fun RootNavigation() {
     var currentScreen by remember { mutableStateOf<Screen>(Screen.First) }
     var nextScreen by remember { mutableStateOf<Screen?>(null) }
     val isAnimating = nextScreen != null
@@ -234,7 +233,7 @@ fun RootNavigation2() {
         if (nextScreen != null) {
             ScreenContent(
                 screen = nextScreen!!,
-                onNavigate = { /* No navigation while the navigation*/ }
+                onNavigate = { /* NO navigation while the animation*/ }
             )
         } else {
             ScreenContent(
@@ -264,14 +263,12 @@ fun RootNavigation2() {
 sealed class Screen {
     object First : Screen()
     object Second : Screen()
-    object Main : Screen()
 }
 
 @Composable
 fun ScreenContent(screen: Screen, onNavigate: (Screen) -> Unit = {}) {
     when (screen) {
-        Screen.First -> FirstSplash { onNavigate(Screen.Second) }
-        Screen.Second -> SecondSplash{ onNavigate(Screen.Main) }
-        Screen.Main -> LogoNavigation()
+        Screen.First -> CentralSplashScreen { onNavigate(Screen.Second) }
+        Screen.Second -> LogoNavigation()
     }
 }

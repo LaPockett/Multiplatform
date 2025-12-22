@@ -1,6 +1,7 @@
 package com.dian.prueba.model
 
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -34,3 +35,11 @@ data class Dimensions(
 )
 
 val LocalDimension = compositionLocalOf { Dimensions() }
+
+data class Colors(
+    val backgroundApp : Color = Color(0xfffdfbff),
+    val backgroundSplash : Color = Color(0xff000000),
+    val containerColor: Color = Color(0xffa69d83),
+    val containerLightColorLogo : Color = Color(0xffb7af98)
+)
+val LocalColors = compositionLocalOf { Colors() }

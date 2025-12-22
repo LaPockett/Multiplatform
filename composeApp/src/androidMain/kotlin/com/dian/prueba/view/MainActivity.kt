@@ -17,7 +17,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import com.dian.prueba.R
 import com.dian.prueba.ui.Theme.MultiplatformTheme
-import com.dian.prueba.ui.screens.RootNavigation2
+import com.dian.prueba.ui.screens.RootNavigation
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mmk.kmpnotifier.notification.NotifierManager
@@ -84,22 +84,7 @@ class MainActivity : ComponentActivity() {
                 Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                 })
             MultiplatformTheme {
-                //PruebaHaze()
-                //PerplexityScreen()
-                //LottieLogo()
-                //Anims(controls = Controls.FORWARD)
-                //AnimatedSearchBar()
-                //BottomTabsContent()
-                //BottomTabsLiquidGlass()
-                //LogoNavigation()
-                RootNavigation2()
-                //Secondplash()
-                //CatalogApp()
-                /*MaterialsSample(
-                    navController = rememberNavController(),
-                    blurEnabled = true
-                )*/
-                //PerplexityLogoPreview()
+                RootNavigation()
             }
         }
     }

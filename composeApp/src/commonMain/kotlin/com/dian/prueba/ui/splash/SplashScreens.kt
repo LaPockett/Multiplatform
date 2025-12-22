@@ -1,12 +1,8 @@
 package com.dian.prueba.ui.splash
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -37,6 +32,8 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.dian.prueba.model.LocalColors
 import com.dian.prueba.model.LocalPadding
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.screens.ImageLogo
@@ -47,13 +44,15 @@ import multiplatform.composeapp.generated.resources.first_splash_screen
 import multiplatform.composeapp.generated.resources.logotitle
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
-@Preview
 @Composable
-fun FirstSplash(
+fun CentralSplashScreen(
     onFinish: () -> Unit
 ) {
+    val paddingModifier = LocalPadding.current
+    val colorModifier = LocalColors.current
+    var showTitle by remember { mutableStateOf(false) }
+    var showButton by rememberSaveable { mutableStateOf(false) }
     var showMsg by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
         delay(1000)
@@ -61,63 +60,41 @@ fun FirstSplash(
         delay(3500)
         showMsg = false
         delay(1100)
-        onFinish()
+        showTitle = true
+        delay(1700)
+        showButton = true
+        delay(2000)
     }
     MultiplatformTheme {
         Box(
             modifier = Modifier.fillMaxSize()
-                .background(Color.Black)
-                .padding(horizontal = 100.dp),
+                .background(colorModifier.backgroundSplash),
             contentAlignment = Alignment.Center
         ) {
-            AnimatedVisibility(
-                visible = showMsg,
-                enter = fadeIn(animationSpec = tween(900)) + slideInVertically(initialOffsetY = { it / 2 }),
-                exit = fadeOut(animationSpec = tween(900))
-            ){
-                Text(
-                    text = stringResource(Res.string.first_splash_screen),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleMedium,
-                    color = Color.White,
-                    fontWeight = FontWeight.Light
-                )
-            }
-
-        }
-    }
-}
-@Composable
-fun SecondSplash(
-    onFinish: () -> Unit
-) {
-    MultiplatformTheme {
-        val paddingModifier = LocalPadding.current
-        var showTitle by remember { mutableStateOf(false) }
-        var showButton by rememberSaveable { mutableStateOf(false) }
-
-        LaunchedEffect(Unit) {
-            delay(1400)
-            showTitle = true
-            delay(1700)
-            showButton = true
-        }
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.Black),
-            contentAlignment = Alignment.Center
-        ) {
-
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 32.dp, vertical = 24.dp),
+                    .padding(horizontal = 75.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-
+                SmoothAppear(visible = showMsg) {
+                    Text(
+                        text = stringResource(Res.string.first_splash_screen),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.titleLarge,
+                        color = Color.White,
+                        fontWeight = FontWeight.Light,
+                        lineHeight = 34.sp
+                    )
+                }
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
                 SmoothAppear(visible = showTitle) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -137,16 +114,14 @@ fun SecondSplash(
                         )
                     }
                 }
-
                 Spacer(modifier = Modifier.padding(vertical = paddingModifier.extraLarge))
-
                 SmoothAppear(visible = showButton) {
                     Button(
-                        onClick = onFinish,
+                        onClick = { onFinish() },
                         modifier = Modifier.height(56.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xffb7af98),
+                            containerColor = colorModifier.containerColor,
                             contentColor = Color.White
                         )
                     ) {

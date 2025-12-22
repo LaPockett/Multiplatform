@@ -2,6 +2,7 @@ package com.dian.prueba.ui.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -24,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.dian.prueba.model.LocalColors
 import com.dian.prueba.model.LocalPadding
 import com.dian.prueba.ui.components.HeaderLogo2
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
@@ -39,9 +41,10 @@ fun ClosetScreen(
     paddingValues: PaddingValues
 ) {
     val paddingModifier = LocalPadding.current
+    val colorModifier = LocalColors.current
     Box(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.background)
+            .background(colorModifier.backgroundApp)
             .fillMaxSize()
             //.windowInsetsPadding(WindowInsets.statusBars)
             .padding(horizontal = paddingModifier.tiny),//.statusBarsPadding()
@@ -54,6 +57,10 @@ fun ClosetScreen(
             verticalArrangement = Arrangement.spacedBy(paddingModifier.extraTiny),
             modifier = Modifier
                 .fillMaxSize()
+                .clickable(
+                    onClick = {
+                    }
+                )
         ) {
             item(
                 span = { GridItemSpan(2) }
