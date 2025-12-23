@@ -2,7 +2,14 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.util.Properties
+//import org.jetbrains.compose.resources.ExperimentalResourceApi
 
+/*@OptIn(ExperimentalResourceApi::class)
+suspend fun loadData(): List<WebContent.Data> {
+    val readBytes = Res.readBytes("files/data.json")
+    val jsonString = String(readBytes)
+    return Json.decodeFromString(jsonString)
+}*/
 plugins {
     alias(libs.plugins.composeHotReload)
     alias(libs.plugins.kotlinMultiplatform)
@@ -115,6 +122,8 @@ kotlin {
             // Coil SVG
             implementation("io.coil-kt.coil3:coil-compose:3.0.4")
             implementation("io.coil-kt.coil3:coil-svg:3.0.4")
+            // To load remote images from the network
+            implementation("io.coil-kt.coil3:coil-network-ktor3:3.0.4")
             // Own library
             implementation("io.lapockett:logoui:1.2.0")
             // Liquid glasss library

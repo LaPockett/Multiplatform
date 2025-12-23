@@ -32,6 +32,7 @@ import com.dian.prueba.liquidglass.destinations.BottomTabsLiquidGlass
 import com.dian.prueba.liquidglass.destinations.GlassClippyLogo
 import com.dian.prueba.model.LocalDimension
 import com.dian.prueba.navigation.ScreenBottom
+import com.dian.prueba.network.ProductLogoAPI
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.splash.CentralSplashScreen
 import com.kyant.backdrop.backdrops.layerBackdrop
@@ -164,7 +165,7 @@ fun LogoNavigation() {
                     ClosetScreen(paddingValues)
                 }
                 composable(ScreenBottom.Profile.route) {
-                    ProfileScreen(paddingValues)
+                    ProductLogoAPI(paddingValues)
                 }
             }
         }
