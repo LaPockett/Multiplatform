@@ -130,6 +130,8 @@ kotlin {
             implementation("io.lapockett:cmpglass:1.1.0")
             // Ref: https://stackoverflow.com/questions/79340066/backhandler-on-compose-multiplatform-android-and-ios
             implementation("org.jetbrains.compose.ui:ui-backhandler:1.9.2")
+            // Media Player (probar con móvil físico)
+            //implementation("io.github.khubaibkhan4:mediaplayer-kmp:2.1.0")
         }
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)
