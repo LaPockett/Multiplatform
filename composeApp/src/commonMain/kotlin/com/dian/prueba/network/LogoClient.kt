@@ -63,8 +63,8 @@ class LogoAPIClient : LogoAPIService {
     }
 }
 
-fun main() = runBlocking {
+/*fun main() = runBlocking {
     val api = LogoAPIClient()
     val list = api.getProductList()
     println("Resultado de la logoapi: $list")
-}
+}*/

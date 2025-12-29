@@ -83,8 +83,8 @@ class PokemonAPIClient : PokemonAPIService {
     }
 }
 
-fun main() = runBlocking {
+/*fun main() = runBlocking {
     val api = PokemonAPIClient()
     val pokemon = api.getPokemon(3)
     println("Resultado de la pokeapi: $pokemon")
-}
+}*/

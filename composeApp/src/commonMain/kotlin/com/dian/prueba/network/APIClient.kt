@@ -109,9 +109,9 @@ class APIClientTest : ApiServiceTest {
     }
 }
 
-fun main() = runBlocking {
+/*fun main() = runBlocking {
     val api = APIClientTest()
     val posts = api.getPosts()
     println("Resultado de los posts: ")
     posts.take(5).forEach { println(it) }
-}
+}*/
