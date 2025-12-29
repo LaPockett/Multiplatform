@@ -1,7 +1,7 @@
 <resources>
     <string name="first_splash_screen">Hemos revisado cuidadosamente tu solicitud de acceso y tenemos un veredicto</string>
     <string name="title_feed">Tu inspiración diaria</string>
-    <string name="animated_textfield1">¡Hey Maria! Aquí tienes las piezas ideales para tu semana</string>
+    <string name="animated_textfield1">Aquí tienes las piezas ideales para tu semana</string>
     <string name="animated_textfield2">¿Qué vas a elegir?</string>
     <string name="button_splash_screen">Acceder a mi closet</string>
     <string name="button_msg1">VER POST</string>

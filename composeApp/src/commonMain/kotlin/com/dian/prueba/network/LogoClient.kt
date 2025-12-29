@@ -10,12 +10,12 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 
-interface LogoAPIService{
+interface LogoAPIService {
     suspend fun getProductList(): List<ProductUIModel>
 }
 
 class LogoAPIClient : LogoAPIService {
-    private val logger : Logger = Logger("LogoAPIClient")
+    private val logger: Logger = Logger("LogoAPIClient")
     private val client = HttpClient {
         install(ContentNegotiation) {
             json(Json {
@@ -32,14 +32,28 @@ class LogoAPIClient : LogoAPIService {
                 .get("http://192.168.10.209:8160/feed")
                 .body<FeedResponse>()
             response.data.feed
-                .filter { it.asset.type == AssetType.IMAGE }
                 .mapNotNull { item ->
-                    val firstVariant = item.asset.variants?.firstOrNull()
-                    firstVariant?.let {
-                        ProductUIModel(imageUrl = it.url, assetType = item.asset.type)
+                    when (item.asset.type) {
+                        AssetType.IMAGE -> {
+                            val image = item.asset.variants?.firstOrNull()?.url
+                            image?.let {
+                                ProductUIModel(
+                                    imageUrl = it,
+                                    assetType = AssetType.IMAGE
+                                )
+                            }
+                        }
+                        AssetType.VIDEO -> {
+                            val videoId = item.asset.posterVariants?.firstOrNull()?.url
+                            videoId?.let {
+                                ProductUIModel(
+                                    assetType = AssetType.VIDEO,
+                                    imageUrl = it
+                                )
+                            }
+                        }
                     }
                 }
-
         } catch (e: Exception) {
             e.printStackTrace()
             print("Error en Api Logo Client: $e")
@@ -47,6 +61,7 @@ class LogoAPIClient : LogoAPIService {
         }
     }
 }
+
 fun main() = runBlocking {
     val api = LogoAPIClient()
     val list = api.getProductList()

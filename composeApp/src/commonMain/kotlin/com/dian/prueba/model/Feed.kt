@@ -22,7 +22,8 @@ data class FeedItem(
 @Serializable
 data class AssetResponse(
     val type: AssetType,
-    val variants: List<Variant>? = null
+    val variants: List<Variant>? = null,
+    val posterVariants: List<Variant>? = null
 )
 
 @Serializable
