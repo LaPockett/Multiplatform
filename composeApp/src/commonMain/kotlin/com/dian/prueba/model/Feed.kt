@@ -8,6 +8,11 @@ data class FeedResponse(
 )
 
 @Serializable
+data class Asset(
+    val url: String? = null
+)
+
+@Serializable
 data class FeedData(
     val feed: List<FeedItem>
 )
@@ -21,6 +26,7 @@ data class FeedItem(
 
 @Serializable
 data class AssetResponse(
+    val url: String? = null, // En caso de que sea un video tendrá la URL en asset directamente
     val type: AssetType,
     val variants: List<Variant>? = null,
     val posterVariants: List<Variant>? = null
@@ -38,6 +44,8 @@ enum class AssetType {
 }
 @Serializable
 data class ProductUIModel(
+    val urlVideo : String? = null,
     val imageUrl: String,
+    val posterVariants: List<Variant>? = null,
     val assetType : AssetType
 )

@@ -16,10 +16,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,21 +38,22 @@ import com.dian.prueba.model.LocalColors
 import com.dian.prueba.model.LocalPadding
 import com.dian.prueba.model.ProductUIModel
 import com.dian.prueba.network.LogoAPIClient
-import com.kyant.backdrop.backdrops.LayerBackdrop
-import com.kyant.backdrop.backdrops.layerBackdrop
+import kotlinx.coroutines.delay
 
 @Composable
 fun ProductItem(product: ProductUIModel) {
     /**
      * Como no tenemos autorización para los videos de logo, ponemos este video de ejemplo de pexels:
      */
-    val pexelsVideo = "https://videos.pexels.com/video-files/20570352/20570352-hd_720_1280_30fps.mp4"
+    val pexelsVideo =
+        "https://videos.pexels.com/video-files/20570352/20570352-hd_720_1280_30fps.mp4"
     val playerHost = remember {
         MediaPlayerHost(
-            mediaUrl = pexelsVideo,
-            isMuted = true)
+            mediaUrl = product.urlVideo.toString(),
+            isMuted = true
+        )
     }
-
+    var showVideo by remember { mutableStateOf(false) }
     Card(
         modifier = Modifier
             .fillMaxWidth(),
@@ -62,42 +67,66 @@ fun ProductItem(product: ProductUIModel) {
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             if (product.assetType == AssetType.VIDEO) {
-                VideoPlayerComposable(
-                    modifier = Modifier.fillMaxWidth().height(290.dp),
-                    playerHost = playerHost,
-                    playerConfig = VideoPlayerConfig(
-                        showControls = false,
-                        isSeekBarVisible = false,
-                        seekBarBottomPadding = 0.dp,
-                        seekBarBottomPaddingInFullScreen = 0.dp,
-                        isZoomEnabled = false,
-                        isGestureVolumeControlEnabled = false,
-                        enableFullEdgeToEdge = true,
-                        loadingIndicatorColor = Color.Transparent
-                    )
-                )
+
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(290.dp)
+                ) {
+                    if (!showVideo) {
+                        println("PREVIDEO")
+                        AsyncImage(
+                            model = product.imageUrl,
+                            contentDescription = "Preview",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    } else {
+                        VideoPlayerComposable(
+                            modifier = Modifier.fillMaxSize(),
+                            playerHost = playerHost,
+                            playerConfig = VideoPlayerConfig(
+                                showControls = false,
+                                isSeekBarVisible = false,
+                                isZoomEnabled = false,
+                                loadingIndicatorColor = Color.Transparent,
+                                isDurationVisible = false,
+                                loaderView = null,
+                                controlClickAnimationDuration = 0,
+                                controlHideIntervalSeconds = 0,
+                                backdropAlpha = 1f
+                            )
+                        )
+                    }
+                }
+
+                LaunchedEffect(Unit) {
+                    delay(1000)
+                    showVideo = true
+                }
+
             } else {
                 AsyncImage(
                     model = product.imageUrl,
-                    contentDescription = "Product ${product.imageUrl}",
-                    modifier = Modifier
-                        .fillMaxWidth(),
+                    contentDescription = "Image",
+                    modifier = Modifier.fillMaxWidth(),
                     contentScale = ContentScale.Crop
                 )
-
             }
-            /*Text(
+            Text(
                 text = product.assetType.toString(),
                 style = MaterialTheme.typography.titleSmall,
                 maxLines = 1,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
-            )*/
+            )
         }
     }
 }
+
 @Composable
 fun FeedLogoApiScreen(paddingValues: PaddingValues) {
     val paddingModifier = LocalPadding.current
@@ -127,7 +156,7 @@ fun FeedLogoApiScreen(paddingValues: PaddingValues) {
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            items(items = products, key = {product -> product.imageUrl}) { index ->
+            items(items = products) { index ->
                 ProductItem(product = index)
             }
 

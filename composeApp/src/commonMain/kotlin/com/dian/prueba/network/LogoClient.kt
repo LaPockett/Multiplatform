@@ -48,7 +48,8 @@ class LogoAPIClient : LogoAPIService {
                             videoId?.let {
                                 ProductUIModel(
                                     assetType = AssetType.VIDEO,
-                                    imageUrl = it
+                                    imageUrl = it,
+                                    urlVideo = item.asset.url
                                 )
                             }
                         }
