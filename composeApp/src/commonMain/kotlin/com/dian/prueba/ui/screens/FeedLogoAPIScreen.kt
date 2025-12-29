@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import chaintech.videoplayer.host.MediaPlayerHost
 import chaintech.videoplayer.model.VideoPlayerConfig
 import chaintech.videoplayer.ui.video.VideoPlayerComposable
@@ -42,11 +43,6 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun ProductItem(product: ProductUIModel) {
-    /**
-     * Como no tenemos autorización para los videos de logo, ponemos este video de ejemplo de pexels:
-     */
-    val pexelsVideo =
-        "https://videos.pexels.com/video-files/20570352/20570352-hd_720_1280_30fps.mp4"
     val playerHost = remember {
         MediaPlayerHost(
             mediaUrl = product.urlVideo.toString(),
@@ -54,6 +50,13 @@ fun ProductItem(product: ProductUIModel) {
         )
     }
     var showVideo by remember { mutableStateOf(false) }
+    /**
+     * Delay para desaparecer el poster del video
+     */
+    LaunchedEffect(Unit) {
+        delay(1000)
+        showVideo = true
+    }
     Card(
         modifier = Modifier
             .fillMaxWidth(),
@@ -69,44 +72,36 @@ fun ProductItem(product: ProductUIModel) {
         ) {
 
             if (product.assetType == AssetType.VIDEO) {
-
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(290.dp)
                 ) {
                     if (!showVideo) {
-                        println("PREVIDEO")
+                        print("POSTER DEL VIDEO $showVideo")
                         AsyncImage(
                             model = product.imageUrl,
                             contentDescription = "Preview",
-                            modifier = Modifier.fillMaxSize(),
+                            modifier = Modifier.fillMaxSize().zIndex(2f),
                             contentScale = ContentScale.Crop
                         )
-                    } else {
-                        VideoPlayerComposable(
-                            modifier = Modifier.fillMaxSize(),
-                            playerHost = playerHost,
-                            playerConfig = VideoPlayerConfig(
-                                showControls = false,
-                                isSeekBarVisible = false,
-                                isZoomEnabled = false,
-                                loadingIndicatorColor = Color.Transparent,
-                                isDurationVisible = false,
-                                loaderView = null,
-                                controlClickAnimationDuration = 0,
-                                controlHideIntervalSeconds = 0,
-                                backdropAlpha = 1f
-                            )
-                        )
                     }
+                    VideoPlayerComposable(
+                        modifier = Modifier.fillMaxSize(),
+                        playerHost = playerHost,
+                        playerConfig = VideoPlayerConfig(
+                            showControls = false,
+                            isSeekBarVisible = false,
+                            isZoomEnabled = false,
+                            loadingIndicatorColor = Color.Transparent,
+                            isDurationVisible = false,
+                            loaderView = null,
+                            controlClickAnimationDuration = 0,
+                            controlHideIntervalSeconds = 0,
+                            backdropAlpha = 1f
+                        )
+                    )
                 }
-
-                LaunchedEffect(Unit) {
-                    delay(1000)
-                    showVideo = true
-                }
-
             } else {
                 AsyncImage(
                     model = product.imageUrl,
@@ -115,14 +110,14 @@ fun ProductItem(product: ProductUIModel) {
                     contentScale = ContentScale.Crop
                 )
             }
-            Text(
+            /*Text(
                 text = product.assetType.toString(),
                 style = MaterialTheme.typography.titleSmall,
                 maxLines = 1,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
-            )
+            )*/
         }
     }
 }
