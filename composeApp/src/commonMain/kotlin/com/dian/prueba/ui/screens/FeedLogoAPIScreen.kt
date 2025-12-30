@@ -78,7 +78,7 @@ fun ProductItem(product: ProductUIModel) {
                                 AsyncImage(
                                     model = product.imageUrl,
                                     contentDescription = "Poster Video Preview",
-                                    modifier = Modifier.fillMaxSize().zIndex(2f),
+                                    modifier = Modifier.fillMaxSize(),
                                     contentScale = ContentScale.Crop
                                 )
                             },
@@ -92,7 +92,7 @@ fun ProductItem(product: ProductUIModel) {
                 AsyncImage(
                     model = product.imageUrl,
                     contentDescription = "Image",
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().height(290.dp),
                     contentScale = ContentScale.Crop
                 )
             }
