@@ -19,11 +19,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,7 +36,6 @@ import com.dian.prueba.model.LocalColors
 import com.dian.prueba.model.LocalPadding
 import com.dian.prueba.model.ProductUIModel
 import com.dian.prueba.network.LogoAPIClient
-import kotlinx.coroutines.delay
 
 @Composable
 fun ProductItem(product: ProductUIModel) {
@@ -48,14 +44,6 @@ fun ProductItem(product: ProductUIModel) {
             mediaUrl = product.urlVideo.toString(),
             isMuted = true
         )
-    }
-    var showVideo by remember { mutableStateOf(false) }
-    /**
-     * Delay para desaparecer el poster del video
-     */
-    LaunchedEffect(Unit) {
-        delay(1000)
-        showVideo = true
     }
     Card(
         modifier = Modifier
@@ -77,15 +65,6 @@ fun ProductItem(product: ProductUIModel) {
                         .fillMaxWidth()
                         .height(290.dp)
                 ) {
-                    if (!showVideo) {
-                        print("POSTER DEL VIDEO $showVideo")
-                        AsyncImage(
-                            model = product.imageUrl,
-                            contentDescription = "Preview",
-                            modifier = Modifier.fillMaxSize().zIndex(2f),
-                            contentScale = ContentScale.Crop
-                        )
-                    }
                     VideoPlayerComposable(
                         modifier = Modifier.fillMaxSize(),
                         playerHost = playerHost,
@@ -95,7 +74,14 @@ fun ProductItem(product: ProductUIModel) {
                             isZoomEnabled = false,
                             loadingIndicatorColor = Color.Transparent,
                             isDurationVisible = false,
-                            loaderView = null,
+                            loaderView = {
+                                AsyncImage(
+                                    model = product.imageUrl,
+                                    contentDescription = "Poster Video Preview",
+                                    modifier = Modifier.fillMaxSize().zIndex(2f),
+                                    contentScale = ContentScale.Crop
+                                )
+                            },
                             controlClickAnimationDuration = 0,
                             controlHideIntervalSeconds = 0,
                             backdropAlpha = 1f
