@@ -1,4 +1,4 @@
-package com.dian.prueba.repository
+package com.dian.prueba.ui.screens
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -28,28 +28,12 @@ import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import com.dian.prueba.model.LocalColors
 import com.dian.prueba.model.LocalPadding
+import com.dian.prueba.model.PokemonUiModel
 import com.dian.prueba.network.PokemonAPIClient
-import kotlinx.serialization.Serializable
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.pokeball
 import org.jetbrains.compose.resources.painterResource
 
-@Serializable
-data class PokemonListResponse(
-    val results: List<PokemonListItem>
-)
-
-@Serializable
-data class PokemonListItem(
-    val name: String,
-    val url: String
-)
-
-data class PokemonUiModel(
-    val id: Int,
-    val name: String,
-    val imageUrl: String
-)
 
 @Composable
 fun PokemonApi(

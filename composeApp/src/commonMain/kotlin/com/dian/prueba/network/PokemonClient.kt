@@ -1,14 +1,11 @@
 package com.dian.prueba.network
 
-import com.dian.prueba.repository.PokemonListItem
-import com.dian.prueba.repository.PokemonListResponse
-import com.dian.prueba.repository.PokemonUiModel
+import com.dian.prueba.model.*
 import io.ktor.client.HttpClient
 import io.ktor.client.call.*
 import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.*
-import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 

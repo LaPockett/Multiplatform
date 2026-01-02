@@ -165,6 +165,7 @@ fun LogoNavigation() {
                 }
                 composable(ScreenBottom.Profile.route) {
                     FeedLogoApiScreen(paddingValues)
+                    //PokemonApi(paddingValues)
                 }
             }
         }
