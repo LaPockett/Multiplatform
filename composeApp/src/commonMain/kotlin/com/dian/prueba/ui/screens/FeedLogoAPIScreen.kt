@@ -110,21 +110,23 @@ fun ProductItem(product: ProductUIModel) {
 }
 
 @Composable
-fun FeedLogoApiScreen(paddingValues: PaddingValues) {
+fun FeedLogoApiScreen(
+    paddingValues: PaddingValues,
+    feedVM: FeedVM) {
     val paddingModifier = LocalPadding.current
     val colorModifier = LocalColors.current
-    val feedVM = remember {
+    /*val feedVM = remember {
         FeedVM(
             FeedRepositoryImpl(
                 LogoAPIClient()
             )
         )
-    }
+    }*/
     val products by feedVM.productList.collectAsState()
 
-    LaunchedEffect(Unit) {
+    /*LaunchedEffect(Unit) {
         feedVM.loadFeedLogo()
-    }
+    }*/
     Box(
         modifier = Modifier
             .background(colorModifier.backgroundApp)

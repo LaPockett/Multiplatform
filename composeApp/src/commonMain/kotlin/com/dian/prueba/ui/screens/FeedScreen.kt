@@ -9,6 +9,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,8 +34,11 @@ import com.dian.prueba.liquidglass.destinations.BottomTabsLiquidGlass
 import com.dian.prueba.liquidglass.destinations.GlassClippyLogo
 import com.dian.prueba.model.LocalDimension
 import com.dian.prueba.navigation.ScreenBottom
+import com.dian.prueba.network.LogoAPIClient
+import com.dian.prueba.repository.FeedRepositoryImpl
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.splash.CentralSplashScreen
+import com.dian.prueba.viewModel.FeedVM
 import com.kyant.backdrop.backdrops.layerBackdrop
 import com.kyant.backdrop.backdrops.rememberLayerBackdrop
 import dev.chrisbanes.haze.HazeState
@@ -54,6 +59,18 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 fun LogoNavigation() {
     MultiplatformTheme {
+        val feedVM = remember {
+            FeedVM(
+                FeedRepositoryImpl(
+                    LogoAPIClient()
+                )
+            )
+        }
+        LaunchedEffect(Unit){
+            feedVM.loadFeedLogo()
+        }
+        println("LogoNavigation: ${feedVM.productList.collectAsState().value}")
+
         val uiDimensions = LocalDimension.current
         val hazeState = rememberHazeState()
         val backdrop = rememberLayerBackdrop()
@@ -164,7 +181,7 @@ fun LogoNavigation() {
                     ClosetScreen(paddingValues)
                 }
                 composable(ScreenBottom.Profile.route) {
-                    FeedLogoApiScreen(paddingValues)
+                    FeedLogoApiScreen(paddingValues, feedVM)
                     //PokemonApi(paddingValues)
                 }
             }
@@ -213,6 +230,7 @@ fun ClippyLogo(
         }
     }
 }
+
 @Composable
 fun RootNavigation() {
     var currentScreen by remember { mutableStateOf<Screen>(Screen.First) }
@@ -261,6 +279,7 @@ fun RootNavigation() {
         }
     }
 }
+
 sealed class Screen {
     object First : Screen()
     object Second : Screen()

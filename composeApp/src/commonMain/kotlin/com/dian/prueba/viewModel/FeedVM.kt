@@ -15,6 +15,10 @@ class FeedVM(
     val productList: MutableStateFlow<List<ProductUIModel>> get() = _productList
     private val logger = Logger("FeedVM")
 
+    init {
+        loadFeedLogo()
+    }
+
     fun loadFeedLogo(){
         viewModelScope.launch {
             try {
