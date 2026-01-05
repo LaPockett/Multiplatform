@@ -16,8 +16,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -34,8 +34,6 @@ import com.dian.prueba.model.AssetType
 import com.dian.prueba.model.LocalColors
 import com.dian.prueba.model.LocalPadding
 import com.dian.prueba.model.ProductUIModel
-import com.dian.prueba.network.LogoAPIClient
-import com.dian.prueba.repository.FeedRepositoryImpl
 import com.dian.prueba.viewModel.FeedVM
 
 @Composable
@@ -97,14 +95,38 @@ fun ProductItem(product: ProductUIModel) {
                     contentScale = ContentScale.Crop
                 )
             }
-            /*Text(
+            Text(
                 text = product.assetType.toString(),
                 style = MaterialTheme.typography.titleSmall,
                 maxLines = 1,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
-            )*/
+            )
+            Text(
+                text = product.feedItem.isPremium.toString(),
+                style = MaterialTheme.typography.titleSmall,
+                maxLines = 1,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+            )
+            Text(
+                text = product.feedItem.isFavorite.toString(),
+                style = MaterialTheme.typography.titleSmall,
+                maxLines = 1,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+            )
+            Text(
+                text = product.feedItem.product.product,
+                style = MaterialTheme.typography.titleSmall,
+                maxLines = 1,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(4.dp),
+            )
         }
     }
 }
@@ -115,18 +137,7 @@ fun FeedLogoApiScreen(
     feedVM: FeedVM) {
     val paddingModifier = LocalPadding.current
     val colorModifier = LocalColors.current
-    /*val feedVM = remember {
-        FeedVM(
-            FeedRepositoryImpl(
-                LogoAPIClient()
-            )
-        )
-    }*/
     val products by feedVM.productList.collectAsState()
-
-    /*LaunchedEffect(Unit) {
-        feedVM.loadFeedLogo()
-    }*/
     Box(
         modifier = Modifier
             .background(colorModifier.backgroundApp)

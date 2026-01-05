@@ -14,14 +14,15 @@ data class Asset(
 
 @Serializable
 data class FeedData(
-    val feed: List<FeedItem>
+    val feed: List<FeedItemUI>
 )
 
 @Serializable
-data class FeedItem(
+data class FeedItemUI(
     val isPremium: Boolean,
     val isFavorite: Boolean,
-    val asset: AssetResponse
+    val asset: AssetResponse,
+    val product: Product
 )
 
 @Serializable
@@ -47,5 +48,7 @@ data class ProductUIModel(
     val urlVideo : String? = null,
     val imageUrl: String,
     val posterVariants: List<Variant>? = null,
-    val assetType : AssetType
+    val assetType : AssetType,
+    val feedItem : FeedItemUI,
+    val productId: String
 )

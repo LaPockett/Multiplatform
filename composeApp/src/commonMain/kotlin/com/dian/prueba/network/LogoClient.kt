@@ -7,7 +7,9 @@ import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.json
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
 interface LogoAPIService {
@@ -24,12 +26,12 @@ class LogoAPIClient : LogoAPIService {
         }
     }
 
-    override suspend fun getProductList(): List<ProductUIModel> {
+    override suspend fun getProductList(): List<ProductUIModel> = withContext(Dispatchers.IO) {
         logger.warn("Enter to GetProductList")
 
-        return try {
+        return@withContext try {
             val response = client
-                .get("http://192.168.10.209:8160/feed")
+                .get("http://192.168.1.141:8160/feed")
                 .body<FeedResponse>()
             response.data.feed
                 .mapNotNull { item ->
@@ -39,17 +41,22 @@ class LogoAPIClient : LogoAPIService {
                             image?.let {
                                 ProductUIModel(
                                     imageUrl = it,
-                                    assetType = AssetType.IMAGE
+                                    assetType = AssetType.IMAGE,
+                                    feedItem = item,
+                                    productId = item.product.product
                                 )
                             }
                         }
+
                         AssetType.VIDEO -> {
                             val videoId = item.asset.posterVariants?.firstOrNull()?.url
                             videoId?.let {
                                 ProductUIModel(
                                     assetType = AssetType.VIDEO,
                                     imageUrl = it,
-                                    urlVideo = item.asset.url
+                                    urlVideo = item.asset.url,
+                                    feedItem = item,
+                                    productId = item.product.product
                                 )
                             }
                         }
