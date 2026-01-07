@@ -1,6 +1,7 @@
 package com.dian.prueba.network
 
 import com.dian.prueba.model.*
+import com.dian.prueba.modelNuFeed.NuFeedResponse
 import com.dian.prueba.utilities.Logger
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -14,6 +15,7 @@ import kotlinx.serialization.json.Json
 
 interface LogoAPIService {
     suspend fun getProductList(): List<ProductUIModel>
+    suspend fun getNuFeed(paginationIndex: Int): NuFeedResponse
 }
 
 class LogoAPIClient : LogoAPIService {
@@ -26,6 +28,9 @@ class LogoAPIClient : LogoAPIService {
         }
     }
 
+    /**
+     * Mapeando los datos en el servicio de la API
+     */
     override suspend fun getProductList(): List<ProductUIModel> = withContext(Dispatchers.IO) {
         logger.warn("Enter to GetProductList")
 
@@ -66,6 +71,19 @@ class LogoAPIClient : LogoAPIService {
             e.printStackTrace()
             print("Error en Api Logo Client: $e")
             emptyList()
+        }
+    }
+    override suspend fun getNuFeed(paginationIndex: Int): NuFeedResponse = withContext(Dispatchers.IO){
+        logger.warn("Enter to getNuFeed")
+        try {
+            client
+                .get("http://192.168.1.141:8160/nufeed") {
+                    parameter("paginationIndex", paginationIndex)
+                }
+                .body()
+        } catch (e: Exception) {
+            logger.error(e)
+            throw e
         }
     }
 }
