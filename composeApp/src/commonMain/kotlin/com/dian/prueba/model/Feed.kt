@@ -1,5 +1,6 @@
 package com.dian.prueba.model
 
+import com.dian.prueba.modelNuFeed.Variant
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -28,18 +29,14 @@ data class FeedItemUI(
 @Serializable
 data class AssetResponse(
     val url: String? = null, // En caso de que sea un video tendrá la URL en asset directamente
-    val type: AssetType,
-    val variants: List<Variant>? = null,
-    val posterVariants: List<Variant>? = null
+    val type: AssetMediaType,
+    val variants: List<Variant>? = emptyList(),
+    val posterVariants: List<Variant>? = emptyList()
 )
 
-@Serializable
-data class Variant(
-    val url: String
-)
 
 @Serializable
-enum class AssetType {
+enum class AssetMediaType {
     IMAGE,
     VIDEO
 }
@@ -48,7 +45,7 @@ data class ProductUIModel(
     val urlVideo : String? = null,
     val imageUrl: String,
     val posterVariants: List<Variant>? = null,
-    val assetType : AssetType,
+    val assetType : AssetMediaType,
     val feedItem : FeedItemUI,
-    val productId: String
+    val productId: String,
 )

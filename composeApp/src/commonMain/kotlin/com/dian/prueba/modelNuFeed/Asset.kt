@@ -8,5 +8,6 @@ data class Asset(
     val meta: Meta,
     val props: Props,
     val type: String,
-    val variants: List<Variant> = emptyList()
+    val variants: List<Variant> = emptyList(),
+    val posterVariants : List<Variant> = emptyList()
 )

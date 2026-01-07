@@ -39,6 +39,7 @@ import com.dian.prueba.repository.FeedRepositoryImpl
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.splash.CentralSplashScreen
 import com.dian.prueba.viewModel.FeedVM
+import com.dian.prueba.viewModel.NuFeedVM
 import com.kyant.backdrop.backdrops.layerBackdrop
 import com.kyant.backdrop.backdrops.rememberLayerBackdrop
 import dev.chrisbanes.haze.HazeState
@@ -58,134 +59,140 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Preview
 @Composable
 fun LogoNavigation() {
-    MultiplatformTheme {
-        val feedVM = remember {
-            FeedVM(
-                FeedRepositoryImpl(
-                    LogoAPIClient()
-                )
+    val feedVM = remember {
+        FeedVM(
+            FeedRepositoryImpl(
+                LogoAPIClient()
             )
-        }
-        LaunchedEffect(Unit){
-            feedVM.loadFeedLogo()
-        }
-        println("LogoNavigation: ${feedVM.productList.collectAsState().value}")
-
-        val uiDimensions = LocalDimension.current
-        val hazeState = rememberHazeState()
-        val backdrop = rememberLayerBackdrop()
-        val navController = rememberNavController()
-        val lightAlpha = 0.3f
-        val darkAlpha = 0.1f
-        val hazeStyle = HazeStyle(
-            backgroundColor = Color.White,
-            tints = listOf(
-                HazeTint(
-                    Color.White.copy(alpha = if (Color.White.luminance() >= 0.5) lightAlpha else darkAlpha),
-                )
-            ),
-            blurRadius = 5.dp,
-            noiseFactor = -1f,
-            fallbackTint = HazeTint.Unspecified,
         )
-        Scaffold(
-            //modifier = Modifier.fillMaxSize(),
-            topBar = {
-                CenterAlignedTopAppBar(
-                    modifier = Modifier
-                        .hazeEffect(state = hazeState, style = hazeStyle)
-                        .fillMaxWidth()
-                        .dropShadow(
-                            shape = RoundedCornerShape(20.dp),
-                            shadow = Shadow(
-                                radius = 8.dp,
-                                spread = 3.dp,
-                                color = Color(0xd7ffffff),
-                                offset = DpOffset(x = 4.dp, 4.dp)
-                            )
-                        )
-                        .height(95.dp)
-                        .background(
-                            brush = Brush.verticalGradient(
-                                colors = listOf(
-                                    MaterialTheme.colorScheme.background,
-                                    MaterialTheme.colorScheme.background.copy(alpha = 1f),
-                                    MaterialTheme.colorScheme.background.copy(alpha = 0.9f),
-                                    MaterialTheme.colorScheme.background.copy(alpha = 0.8f),
-                                    MaterialTheme.colorScheme.background.copy(alpha = 0.7f),
-                                    MaterialTheme.colorScheme.background.copy(alpha = 0.6f),
-                                    MaterialTheme.colorScheme.background.copy(alpha = 0.5f),
-                                    MaterialTheme.colorScheme.background.copy(alpha = 0.4f),
-                                    MaterialTheme.colorScheme.background.copy(alpha = 0.3f),
-                                    MaterialTheme.colorScheme.background.copy(alpha = 0.1f),
-                                    MaterialTheme.colorScheme.background.copy(alpha = 0f),
-                                ),
-                                startY = 245f,
-                                endY = 300f,
-                            )
-                        ),
-                    windowInsets = WindowInsets.statusBars,
-                    navigationIcon = {},//
-                    actions = {},
-                    title = {
-                        ImageLogo(
-                            tint = Color.Black,
-                            painter = painterResource(Res.drawable.logotitle),
-                            modifier = Modifier.height(48.dp)
-                        )
-                    },
-                    colors = TopAppBarDefaults.topAppBarColors(Color.Transparent),
-
-                    )
-            },
-            contentWindowInsets = WindowInsets.safeDrawing,
-            floatingActionButton = {
-                GlassClippyLogo(
-                    onClick = {},
-                    backdrop = backdrop,
-                    surfaceColor = Color.DarkGray.copy(0.2f),
-                    sizeClippy = 50.dp
-                ) {
-                    Icon(
-                        painter = painterResource(Res.drawable.logo),
-                        contentDescription = "Logo",
-                        tint = Color.White,
-                        modifier = Modifier.size(uiDimensions.iconNormal)
-                    )
-                }
-            },
-            floatingActionButtonPosition = FabPosition.End,
-            containerColor = Color.Transparent,
-            bottomBar = {
-                //GlassmorphicBottomNavigation(hazeState, navController)
-                Box(
-                    modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars)
-                ) {
-                    BottomTabsLiquidGlass(backdrop, navController)
-                }
-            }
-        ) { paddingValues ->
-            NavHost(
-                navController = navController,
-                startDestination = ScreenBottom.Closet.route,
+    }
+    LaunchedEffect(Unit) {
+        feedVM.loadFeedLogo()
+    }
+    println("LogoNavigation: ${feedVM.productList.collectAsState().value}")
+    val nuFeedVM = remember {
+        NuFeedVM(
+            FeedRepositoryImpl(
+                LogoAPIClient()
+            )
+        )
+    }
+    val uiDimensions = LocalDimension.current
+    val hazeState = rememberHazeState()
+    val backdrop = rememberLayerBackdrop()
+    val navController = rememberNavController()
+    val lightAlpha = 0.3f
+    val darkAlpha = 0.1f
+    val hazeStyle = HazeStyle(
+        backgroundColor = Color.White,
+        tints = listOf(
+            HazeTint(
+                Color.White.copy(alpha = if (Color.White.luminance() >= 0.5) lightAlpha else darkAlpha),
+            )
+        ),
+        blurRadius = 5.dp,
+        noiseFactor = -1f,
+        fallbackTint = HazeTint.Unspecified,
+    )
+    Scaffold(
+        //modifier = Modifier.fillMaxSize(),
+        topBar = {
+            CenterAlignedTopAppBar(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .hazeSource(hazeState)
-                    .layerBackdrop(backdrop)
-                //.padding(padding)
+                    .hazeEffect(state = hazeState, style = hazeStyle)
+                    .fillMaxWidth()
+                    .dropShadow(
+                        shape = RoundedCornerShape(20.dp),
+                        shadow = Shadow(
+                            radius = 8.dp,
+                            spread = 3.dp,
+                            color = Color(0xd7ffffff),
+                            offset = DpOffset(x = 4.dp, 4.dp)
+                        )
+                    )
+                    .height(95.dp)
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                MaterialTheme.colorScheme.background,
+                                MaterialTheme.colorScheme.background.copy(alpha = 1f),
+                                MaterialTheme.colorScheme.background.copy(alpha = 0.9f),
+                                MaterialTheme.colorScheme.background.copy(alpha = 0.8f),
+                                MaterialTheme.colorScheme.background.copy(alpha = 0.7f),
+                                MaterialTheme.colorScheme.background.copy(alpha = 0.6f),
+                                MaterialTheme.colorScheme.background.copy(alpha = 0.5f),
+                                MaterialTheme.colorScheme.background.copy(alpha = 0.4f),
+                                MaterialTheme.colorScheme.background.copy(alpha = 0.3f),
+                                MaterialTheme.colorScheme.background.copy(alpha = 0.1f),
+                                MaterialTheme.colorScheme.background.copy(alpha = 0f),
+                            ),
+                            startY = 245f,
+                            endY = 300f,
+                        )
+                    ),
+                windowInsets = WindowInsets.statusBars,
+                navigationIcon = {},//
+                actions = {},
+                title = {
+                    ImageLogo(
+                        tint = Color.Black,
+                        painter = painterResource(Res.drawable.logotitle),
+                        modifier = Modifier.height(48.dp)
+                    )
+                },
+                colors = TopAppBarDefaults.topAppBarColors(Color.Transparent),
+
+                )
+        },
+        contentWindowInsets = WindowInsets.safeDrawing,
+        floatingActionButton = {
+            GlassClippyLogo(
+                onClick = {},
+                backdrop = backdrop,
+                surfaceColor = Color.DarkGray.copy(0.2f),
+                sizeClippy = 50.dp
             ) {
-                composable(ScreenBottom.Newspaper.route) {
-                    NewsletterScreen(paddingValues)
-                }
-                composable(ScreenBottom.Closet.route) {
-                    ClosetScreen(paddingValues)
-                }
-                composable(ScreenBottom.Profile.route) {
-                    FeedLogoApiScreen(paddingValues, feedVM)
-                    //PokemonApi(paddingValues)
-                }
+                Icon(
+                    painter = painterResource(Res.drawable.logo),
+                    contentDescription = "Logo",
+                    tint = Color.White,
+                    modifier = Modifier.size(uiDimensions.iconNormal)
+                )
+            }
+        },
+        floatingActionButtonPosition = FabPosition.End,
+        containerColor = Color.Transparent,
+        bottomBar = {
+            //GlassmorphicBottomNavigation(hazeState, navController)
+            Box(
+                modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars)
+            ) {
+                BottomTabsLiquidGlass(backdrop, navController)
             }
         }
+    ) { paddingValues ->
+        NavHost(
+            navController = navController,
+            startDestination = ScreenBottom.Closet.route,
+            modifier = Modifier
+                .fillMaxSize()
+                .hazeSource(hazeState)
+                .layerBackdrop(backdrop)
+            //.padding(padding)
+        ) {
+            composable(ScreenBottom.Newspaper.route) {
+                //NewsletterScreen(paddingValues)
+                NuFeedScreen(nuFeedVM, paddingValues)
+            }
+            composable(ScreenBottom.Closet.route) {
+                ClosetScreen(paddingValues)
+            }
+            composable(ScreenBottom.Profile.route) {
+                FeedLogoApiScreen(paddingValues, feedVM)
+                //PokemonApi(paddingValues)
+            }
+        }
+
     }
 }
 

@@ -22,12 +22,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.dian.prueba.model.LocalColors
 import com.dian.prueba.model.LocalPadding
-import com.dian.prueba.ui.components.HeaderLogo2
+import com.dian.prueba.ui.components.HeaderFeedLogo
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.lechiquito
@@ -66,7 +65,7 @@ fun ClosetScreen(
                 span = { GridItemSpan(2) }
             ) {
                 // Header of the feed
-                HeaderLogo2()
+                HeaderFeedLogo()
             }
             items(22) {
                 Card(

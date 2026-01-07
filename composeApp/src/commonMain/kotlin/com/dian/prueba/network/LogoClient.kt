@@ -36,28 +36,28 @@ class LogoAPIClient : LogoAPIService {
 
         return@withContext try {
             val response = client
-                .get("http://192.168.1.141:8160/feed")
+                .get("http://192.168.10.209:8160/feed")
                 .body<FeedResponse>()
             response.data.feed
                 .mapNotNull { item ->
                     when (item.asset.type) {
-                        AssetType.IMAGE -> {
+                        AssetMediaType.IMAGE -> {
                             val image = item.asset.variants?.firstOrNull()?.url
                             image?.let {
                                 ProductUIModel(
                                     imageUrl = it,
-                                    assetType = AssetType.IMAGE,
+                                    assetType = AssetMediaType.IMAGE,
                                     feedItem = item,
                                     productId = item.product.product
                                 )
                             }
                         }
 
-                        AssetType.VIDEO -> {
+                        AssetMediaType.VIDEO -> {
                             val videoId = item.asset.posterVariants?.firstOrNull()?.url
                             videoId?.let {
                                 ProductUIModel(
-                                    assetType = AssetType.VIDEO,
+                                    assetType = AssetMediaType.VIDEO,
                                     imageUrl = it,
                                     urlVideo = item.asset.url,
                                     feedItem = item,
@@ -77,7 +77,7 @@ class LogoAPIClient : LogoAPIService {
         logger.warn("Enter to getNuFeed")
         try {
             client
-                .get("http://192.168.1.141:8160/nufeed") {
+                .get("http://192.168.10.209:8160/nufeed") {
                     parameter("paginationIndex", paginationIndex)
                 }
                 .body()

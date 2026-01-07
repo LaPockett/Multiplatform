@@ -152,3 +152,32 @@ fun SearchBar(
         }
     )
 }
+
+@Composable
+fun CustomSearchBar(
+    modifier: Modifier = Modifier,
+    query: String,
+    onQueryChange: (String) -> Unit,
+    placeholder: String
+) {
+    OutlinedTextField(
+        modifier = modifier,
+        value = query,
+        onValueChange = onQueryChange,
+        enabled = false,
+        readOnly = true,
+        label = {
+            AnimatedPlaceholder(
+                hints = listOf(placeholder),
+            )
+        },
+        leadingIcon = {
+            Icon(
+                painter = painterResource(Res.drawable.logo),
+                contentDescription = "Search",
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.size(24.dp)
+            )
+        }
+    )
+}

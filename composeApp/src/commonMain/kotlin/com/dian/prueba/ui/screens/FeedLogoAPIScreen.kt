@@ -30,7 +30,7 @@ import chaintech.videoplayer.host.MediaPlayerHost
 import chaintech.videoplayer.model.VideoPlayerConfig
 import chaintech.videoplayer.ui.video.VideoPlayerComposable
 import coil3.compose.AsyncImage
-import com.dian.prueba.model.AssetType
+import com.dian.prueba.model.AssetMediaType
 import com.dian.prueba.model.LocalColors
 import com.dian.prueba.model.LocalPadding
 import com.dian.prueba.model.ProductUIModel
@@ -58,7 +58,7 @@ fun ProductItem(product: ProductUIModel) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            if (product.assetType == AssetType.VIDEO) {
+            if (product.assetType == AssetMediaType.VIDEO) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()

@@ -2,7 +2,8 @@ package com.dian.prueba.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dian.prueba.modelNuFeed.TypeAsset
+import com.dian.prueba.model.AssetMediaType
+import com.dian.prueba.modelNuFeed.AssetType
 import com.dian.prueba.modelNuFeed.Feed
 import com.dian.prueba.modelNuFeed.NuFeedUIModel
 import com.dian.prueba.repository.FeedRepository
@@ -44,6 +45,7 @@ class NuFeedVM(
                 val mapped = response.feed.mapNotNull { it.toUIModel() }
 
                 logger.warn("Total items: $rawCount, UI items: ${mapped.size}")
+                logger.warn("New Items $newItems")
                 logger.warn("Next index: ${response.next_index}, hasMore: ${response.has_more}")
                 nextIndex = response.next_index
                 hasMore = response.has_more
@@ -63,9 +65,9 @@ class NuFeedVM(
  * u otros (en el caso de message solo texto y en el caso de tile más elementos)
  */
 fun Feed.toUIModel(): NuFeedUIModel? {
-    return when (type) {
+    return when {
 
-        TypeAsset.MESSAGE_IN -> {
+        type == AssetType.MESSAGE_IN -> {
             val actions = actions
 
             body?.let {
@@ -75,25 +77,41 @@ fun Feed.toUIModel(): NuFeedUIModel? {
                 )
             }
         }
-        TypeAsset.MESSAGE_OUT ->{
+        type == AssetType.MESSAGE_OUT ->{
             body?.let {
                 NuFeedUIModel.MessageOut(text = it)
             }
         }
-        TypeAsset.TILE -> {
+        type ==AssetType.TILE -> {
             val imageUrl = asset?.variants?.firstOrNull()?.url
 
             val productId = product?.product
 
-            if (imageUrl != null && productId != null) {
-                NuFeedUIModel.Tile(
-                    imageUrl = imageUrl,
-                    isPremium = isPremium ?: false,
-                    isFavorite = isFavorite ?: false,
-                    productId = productId
-                )
-            } else null
+            NuFeedUIModel.Tile(
+                imageUrl = imageUrl.toString(),
+                isPremium = isPremium ?: false,
+                isFavorite = isFavorite ?: false,
+                productId = productId.toString()
+            )
         }
-    }
+        typeMedia == AssetMediaType.VIDEO -> {
+            val videoUrl = asset?.posterVariants?.firstOrNull()?.url
+            NuFeedUIModel.Asset(
+                url = videoUrl,
+                type = AssetMediaType.VIDEO,
+                posterVariants = asset?.posterVariants
+            )
+        }
+
+        typeMedia == AssetMediaType.IMAGE -> {
+            val imageUrl = asset?.posterVariants?.firstOrNull()?.url
+            NuFeedUIModel.Asset(
+                url = imageUrl ?: "",
+                type = AssetMediaType.IMAGE,
+                variants = asset?.variants ?: emptyList()
+            )
+        }
+        else -> null
+    } as NuFeedUIModel?
 }
 

@@ -30,6 +30,7 @@ import dev.chrisbanes.haze.rememberHazeState
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.title_feed
 import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun HeaderLogo() {
@@ -116,7 +117,7 @@ fun HeaderLogo() {
 }
 
 @Composable
-fun HeaderLogo2() {
+fun HeaderFeedLogo() {
     val paddingModifier = LocalPadding.current
     MultiplatformTheme {
         val backdrop = rememberLayerBackdrop()
