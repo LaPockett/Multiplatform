@@ -1,16 +1,16 @@
 package com.dian.prueba.modelNuFeed
 
 import com.dian.prueba.model.AssetMediaType
+import com.dian.prueba.model.AssetResponse
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class Feed(
     val type: AssetType,
-    val typeMedia: AssetMediaType = AssetMediaType.IMAGE,
     val body: String? = null,
     val actions: List<String> = emptyList(),
     val product: Product? = null,
-    val asset: Asset? = null,
+    val asset: AssetResponse? = null,
     val large: Boolean? = null,
     val isPremium: Boolean? = null,
     val isFavorite: Boolean? = null
@@ -28,9 +28,12 @@ sealed class NuFeedUIModel {
 
     data class Tile(
         val imageUrl: String,
+        val urlVideo: String? = null,
         val isPremium: Boolean,
         val isFavorite: Boolean,
-        val productId: String
+        val productId: String,
+        val typeMedia: AssetMediaType,
+        val posterVariants: List<Variant>? = null
     ) : NuFeedUIModel()
 
     data class Asset(

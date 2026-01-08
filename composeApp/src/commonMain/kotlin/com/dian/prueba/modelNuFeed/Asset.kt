@@ -1,5 +1,6 @@
 package com.dian.prueba.modelNuFeed
 
+import com.dian.prueba.model.AssetMediaType
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -7,7 +8,7 @@ data class Asset(
     val typeName: String = "None",
     val meta: Meta,
     val props: Props,
-    val type: String,
+    val type: AssetMediaType,
     val variants: List<Variant> = emptyList(),
     val posterVariants : List<Variant> = emptyList()
 )

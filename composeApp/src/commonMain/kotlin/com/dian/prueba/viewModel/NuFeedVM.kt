@@ -84,34 +84,28 @@ fun Feed.toUIModel(): NuFeedUIModel? {
         }
         type ==AssetType.TILE -> {
             val imageUrl = asset?.variants?.firstOrNull()?.url
-
+            val posterUrl = asset?.posterVariants?.firstOrNull()?.url
             val productId = product?.product
-
-            NuFeedUIModel.Tile(
-                imageUrl = imageUrl.toString(),
-                isPremium = isPremium ?: false,
-                isFavorite = isFavorite ?: false,
-                productId = productId.toString()
-            )
-        }
-        typeMedia == AssetMediaType.VIDEO -> {
-            val videoUrl = asset?.posterVariants?.firstOrNull()?.url
-            NuFeedUIModel.Asset(
-                url = videoUrl,
-                type = AssetMediaType.VIDEO,
-                posterVariants = asset?.posterVariants
-            )
-        }
-
-        typeMedia == AssetMediaType.IMAGE -> {
-            val imageUrl = asset?.posterVariants?.firstOrNull()?.url
-            NuFeedUIModel.Asset(
-                url = imageUrl ?: "",
-                type = AssetMediaType.IMAGE,
-                variants = asset?.variants ?: emptyList()
-            )
+            if (asset?.type == AssetMediaType.VIDEO){
+                NuFeedUIModel.Tile(
+                    imageUrl = posterUrl.toString(),
+                    urlVideo = asset.url,
+                    isPremium = isPremium ?: false,
+                    isFavorite = isFavorite ?: false,
+                    productId = productId.toString(),
+                    typeMedia = AssetMediaType.VIDEO
+                )
+            } else {
+                NuFeedUIModel.Tile(
+                    imageUrl = imageUrl.toString(),
+                    isPremium = isPremium ?: false,
+                    isFavorite = isFavorite ?: false,
+                    productId = productId.toString(),
+                    typeMedia = AssetMediaType.IMAGE
+                )
+            }
         }
         else -> null
-    } as NuFeedUIModel?
+    }
 }
 

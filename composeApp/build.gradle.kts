@@ -131,7 +131,7 @@ kotlin {
             // Ref: https://stackoverflow.com/questions/79340066/backhandler-on-compose-multiplatform-android-and-ios
             implementation("org.jetbrains.compose.ui:ui-backhandler:1.9.2")
             // CMP - Media Player (probar con móvil físico)
-            implementation("network.chaintech:compose-multiplatform-media-player:1.0.50")
+            implementation("network.chaintech:compose-multiplatform-media-player:1.0.51")
         }
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)

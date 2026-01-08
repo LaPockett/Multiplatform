@@ -8,9 +8,3 @@ enum class AssetType() {
     MESSAGE_IN,
     MESSAGE_OUT,
 }
-
-@Serializable
-enum class Mood() {
-    CHILL,
-    EVENTFUL
-}

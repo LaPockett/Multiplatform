@@ -9,11 +9,6 @@ data class FeedResponse(
 )
 
 @Serializable
-data class Asset(
-    val url: String? = null
-)
-
-@Serializable
 data class FeedData(
     val feed: List<FeedItemUI>
 )
@@ -33,7 +28,6 @@ data class AssetResponse(
     val variants: List<Variant>? = emptyList(),
     val posterVariants: List<Variant>? = emptyList()
 )
-
 
 @Serializable
 enum class AssetMediaType {

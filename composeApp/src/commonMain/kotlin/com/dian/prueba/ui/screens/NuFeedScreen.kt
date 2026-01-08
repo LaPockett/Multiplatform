@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,14 +18,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -34,10 +34,12 @@ import com.dian.prueba.model.AssetMediaType
 import com.dian.prueba.model.LocalColors
 import com.dian.prueba.model.LocalPadding
 import com.dian.prueba.modelNuFeed.NuFeedUIModel
-import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.components.CustomSearchBar
 import com.dian.prueba.viewModel.NuFeedVM
-import org.jetbrains.compose.ui.tooling.preview.Preview
+import chaintech.videoplayer.host.MediaPlayerHost
+import chaintech.videoplayer.model.ScreenResize
+import chaintech.videoplayer.model.VideoPlayerConfig
+import chaintech.videoplayer.ui.video.VideoPlayerComposable
 
 @Composable
 fun NuFeedScreen(
@@ -48,7 +50,6 @@ fun NuFeedScreen(
     val listState = rememberLazyGridState()
     val paddingModifier = LocalPadding.current
     val colorModifier = LocalColors.current
-
     Box(
         modifier = Modifier
             .background(colorModifier.backgroundApp)
@@ -65,7 +66,7 @@ fun NuFeedScreen(
             modifier = Modifier
                 .fillMaxSize(),
             state = listState
-        )  {
+        ) {
             items(
                 items = feedItems,
                 span = { item ->
@@ -92,7 +93,7 @@ fun NuFeedScreen(
                 layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
             lastVisibleItem to totalItems
         }.collect { (lastVisible, total) ->
-            if (lastVisible >= total - 6) {
+            if (lastVisible >= total - 14) {
                 viewModel.loadNextPage()
             }
         }
@@ -102,70 +103,77 @@ fun NuFeedScreen(
 
 @Composable
 fun TileItem(item: NuFeedUIModel.Tile) {
-    val paddingModifier = LocalPadding.current
-    MultiplatformTheme {
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(340.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant
-            ),
-            shape = RoundedCornerShape(6.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-        ) {
-            /*Column(
-                modifier = Modifier.fillMaxWidth().padding(paddingModifier.small),
-                verticalArrangement = Arrangement.Center,
-            ) {
-                AsyncImage(
-                    model = item.imageUrl,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(290.dp),
-                    contentScale = ContentScale.Crop
-                )
-                Spacer(
-                    modifier = Modifier.height(paddingModifier.small)
-                )
-                Text(
-                    text = "Premium: ${item.isPremium}",
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(bottom = paddingModifier.extraTiny)
-                )
-                Text(
-                    text = "Favorite: ${item.isFavorite}",
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(bottom = paddingModifier.extraTiny)
-                )
-                Text(
-                    text = "Product: ${item.productId}",
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(bottom = paddingModifier.extraTiny)
-                )*/
+    Card(
+        modifier = Modifier
+            .fillMaxWidth().height(290.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        ),
+        shape = RoundedCornerShape(6.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+    ) {
+        if (item.typeMedia == AssetMediaType.IMAGE) {
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 AsyncImage(
                     model = item.imageUrl,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    contentDescription = item.typeMedia.toString(),
+                    modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
+                )
+            }
+        } else {
+            /**
+             * Need to fix
+             * Issue: Video overlay another video
+             * Web: https://github.com/Chaintech-Network/ComposeMultiplatformMediaPlayer/issues/187
+             */
+            val playerHost = remember {
+                MediaPlayerHost(
+                    mediaUrl = item.urlVideo.toString(),
+                    isMuted = true,
+                    initialVideoFitMode = ScreenResize.FILL
+                )
+            }
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                VideoPlayerComposable(
+                    modifier = Modifier.fillMaxSize(),
+                    playerHost = playerHost,
+                    playerConfig = VideoPlayerConfig(
+                        showControls = false,
+                        isSeekBarVisible = false,
+                        isZoomEnabled = false,
+                        loadingIndicatorColor = Color.Transparent,
+                        isDurationVisible = false,
+                        reelVerticalScrolling = false,
+                        loaderView = {
+                            AsyncImage(
+                                model = item.imageUrl,
+                                contentDescription = "Poster Video Preview",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
+                        },
+                        controlClickAnimationDuration = 0,
+                        controlHideIntervalSeconds = 0,
+                    )
                 )
             }
         }
     }
-
 }
 
 @Composable
 fun MessageItem(item: NuFeedUIModel.MessageOut) {
+    val paddingModifier = LocalPadding.current
     Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.Start
+        modifier = Modifier.fillMaxWidth().padding(bottom = paddingModifier.extraTiny),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CustomSearchBar(
             query = "",
@@ -180,8 +188,8 @@ fun MessageItem(item: NuFeedUIModel.MessageOut) {
 fun MessageItem(item: NuFeedUIModel.MessageIn) {
     val paddingModifier = LocalPadding.current
     Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.Start
+        modifier = Modifier.fillMaxWidth().padding(bottom = paddingModifier.extraTiny),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CustomSearchBar(
             query = "",
