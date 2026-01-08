@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -36,7 +37,6 @@ import com.dian.prueba.model.LocalDimension
 import com.dian.prueba.navigation.ScreenBottom
 import com.dian.prueba.network.LogoAPIClient
 import com.dian.prueba.repository.FeedRepositoryImpl
-import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.splash.CentralSplashScreen
 import com.dian.prueba.viewModel.FeedVM
 import com.dian.prueba.viewModel.NuFeedVM
@@ -56,26 +56,16 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
-@Preview
 @Composable
 fun LogoNavigation() {
+    val repository = remember {
+        FeedRepositoryImpl(LogoAPIClient())
+    }
     val feedVM = remember {
-        FeedVM(
-            FeedRepositoryImpl(
-                LogoAPIClient()
-            )
-        )
+        FeedVM(repository)
     }
-    LaunchedEffect(Unit) {
-        feedVM.loadFeedLogo()
-    }
-    println("LogoNavigation: ${feedVM.productList.collectAsState().value}")
     val nuFeedVM = remember {
-        NuFeedVM(
-            FeedRepositoryImpl(
-                LogoAPIClient()
-            )
-        )
+        NuFeedVM(repository)
     }
     val uiDimensions = LocalDimension.current
     val hazeState = rememberHazeState()
