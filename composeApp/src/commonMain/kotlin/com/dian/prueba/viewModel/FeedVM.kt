@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.dian.prueba.model.ProductUIModel
 import com.dian.prueba.repository.FeedRepository
 import com.dian.prueba.utilities.Logger
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -20,7 +22,7 @@ class FeedVM(
     }
 
     fun loadFeedLogo(){
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             try {
                 _productList.value = feedRepository.fetchProductList()
             } catch (e: Exception){

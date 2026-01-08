@@ -8,6 +8,8 @@ import com.dian.prueba.modelNuFeed.Feed
 import com.dian.prueba.modelNuFeed.NuFeedUIModel
 import com.dian.prueba.repository.FeedRepository
 import com.dian.prueba.utilities.Logger
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -31,7 +33,7 @@ class NuFeedVM(
     fun loadNextPage() {
         if (isLoading || !hasMore) return
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             isLoading = true
             try {
                 val response = nuFeedRepository.getNuFeed(nextIndex)
