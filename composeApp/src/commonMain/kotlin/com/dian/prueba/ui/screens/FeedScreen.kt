@@ -54,7 +54,7 @@ import org.jetbrains.compose.resources.painterResource
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Composable
 fun LogoNavigation(
-    //feedVM: FeedVM,
+    feedVM: FeedVM,
     nuFeedVM: NuFeedVM
 ) {
     val uiDimensions = LocalDimension.current
