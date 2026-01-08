@@ -182,12 +182,12 @@ fun HeaderFeedLogo() {
                 modifier = Modifier.padding(bottom = paddingModifier.extraTiny),
             )
             // Here Search Bar with animated placeholder
-            SearchBar(
+            /*SearchBar(
                 query = "",
                 onQueryChange = {},
                 modifier = Modifier.fillMaxWidth()
             )
-            Spacer(modifier = Modifier.padding(bottom = paddingModifier.tiny))
+            Spacer(modifier = Modifier.padding(bottom = paddingModifier.tiny))*/
         }
     }
 }

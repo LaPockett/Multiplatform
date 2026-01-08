@@ -9,8 +9,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,7 +25,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -53,20 +50,13 @@ import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.logo
 import multiplatform.composeapp.generated.resources.logotitle
 import org.jetbrains.compose.resources.painterResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Composable
-fun LogoNavigation() {
-    val repository = remember {
-        FeedRepositoryImpl(LogoAPIClient())
-    }
-    val feedVM = remember {
-        FeedVM(repository)
-    }
-    val nuFeedVM = remember {
-        NuFeedVM(repository)
-    }
+fun LogoNavigation(
+    //feedVM: FeedVM,
+    nuFeedVM: NuFeedVM
+) {
     val uiDimensions = LocalDimension.current
     val hazeState = rememberHazeState()
     val backdrop = rememberLayerBackdrop()
@@ -168,18 +158,15 @@ fun LogoNavigation() {
                 .fillMaxSize()
                 .hazeSource(hazeState)
                 .layerBackdrop(backdrop)
-            //.padding(padding)
         ) {
             composable(ScreenBottom.Newspaper.route) {
-                //NewsletterScreen(paddingValues)
-                NuFeedScreen(nuFeedVM, paddingValues)
+                NewsletterScreen(paddingValues)
             }
             composable(ScreenBottom.Closet.route) {
-                ClosetScreen(paddingValues)
+                ClosetScreen(viewModel = nuFeedVM, paddingValues = paddingValues)
             }
             composable(ScreenBottom.Profile.route) {
-                FeedLogoApiScreen(paddingValues, feedVM)
-                //PokemonApi(paddingValues)
+                ProfileScreen(paddingValues)
             }
         }
 
@@ -233,6 +220,15 @@ fun RootNavigation() {
     var currentScreen by remember { mutableStateOf<Screen>(Screen.First) }
     var nextScreen by remember { mutableStateOf<Screen?>(null) }
     val isAnimating = nextScreen != null
+    val repository = remember {
+        FeedRepositoryImpl(LogoAPIClient())
+    }
+    val feedVM = remember {
+        FeedVM(repository)
+    }
+    val nuFeedVM = remember {
+        NuFeedVM(repository)
+    }
 
     val offsetY by animateDpAsState(
         targetValue = if (isAnimating) (-990).dp else 0.dp,
@@ -249,7 +245,9 @@ fun RootNavigation() {
         if (nextScreen != null) {
             ScreenContent(
                 screen = nextScreen!!,
-                onNavigate = { /* NO navigation while the animation*/ }
+                onNavigate = { /* NO navigation while the animation*/ },
+                feedVM = feedVM,
+                nuFeedVM = nuFeedVM
             )
         } else {
             ScreenContent(
@@ -258,7 +256,9 @@ fun RootNavigation() {
                     if (!isAnimating) {
                         nextScreen = target
                     }
-                }
+                },
+                feedVM = feedVM,
+                nuFeedVM = nuFeedVM
             )
         }
         // Animated screen
@@ -270,7 +270,9 @@ fun RootNavigation() {
             ) {
                 ScreenContent(
                     screen = currentScreen,
-                    onNavigate = {}
+                    onNavigate = {},
+                    feedVM = feedVM,
+                    nuFeedVM = nuFeedVM
                 )
             }
         }
@@ -283,9 +285,9 @@ sealed class Screen {
 }
 
 @Composable
-fun ScreenContent(screen: Screen, onNavigate: (Screen) -> Unit = {}) {
+fun ScreenContent(screen: Screen, onNavigate: (Screen) -> Unit = {}, feedVM: FeedVM, nuFeedVM: NuFeedVM) {
     when (screen) {
         Screen.First -> CentralSplashScreen { onNavigate(Screen.Second) }
-        Screen.Second -> LogoNavigation()
+        Screen.Second -> LogoNavigation(feedVM, nuFeedVM)
     }
 }
