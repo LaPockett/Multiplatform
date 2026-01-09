@@ -1,7 +1,5 @@
 package com.dian.prueba.ui.screens
 
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,10 +7,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,9 +26,6 @@ import com.dian.prueba.liquidglass.destinations.BottomTabsLiquidGlass
 import com.dian.prueba.liquidglass.destinations.GlassClippyLogo
 import com.dian.prueba.model.LocalDimension
 import com.dian.prueba.navigation.ScreenBottom
-import com.dian.prueba.network.LogoAPIClient
-import com.dian.prueba.repository.FeedRepositoryImpl
-import com.dian.prueba.ui.splash.CentralSplashScreen
 import com.dian.prueba.viewModel.FeedVM
 import com.dian.prueba.viewModel.NuFeedVM
 import com.kyant.backdrop.backdrops.layerBackdrop
@@ -212,82 +203,5 @@ fun ClippyLogo(
         ) {
             ImageLogo(tint = Color.White, modifier = Modifier.size(24.dp))
         }
-    }
-}
-
-@Composable
-fun RootNavigation() {
-    var currentScreen by remember { mutableStateOf<Screen>(Screen.First) }
-    var nextScreen by remember { mutableStateOf<Screen?>(null) }
-    val isAnimating = nextScreen != null
-    val repository = remember {
-        FeedRepositoryImpl(LogoAPIClient())
-    }
-    val feedVM = remember {
-        FeedVM(repository)
-    }
-    val nuFeedVM = remember {
-        NuFeedVM(repository)
-    }
-
-    val offsetY by animateDpAsState(
-        targetValue = if (isAnimating) (-990).dp else 0.dp,
-        animationSpec = tween(1500),
-        finishedListener = {
-            if (isAnimating) {
-                currentScreen = nextScreen!!
-                nextScreen = null
-            }
-        }
-    )
-    Box(Modifier.fillMaxSize()) {
-        // Static screen
-        if (nextScreen != null) {
-            ScreenContent(
-                screen = nextScreen!!,
-                onNavigate = { /* NO navigation while the animation*/ },
-                feedVM = feedVM,
-                nuFeedVM = nuFeedVM
-            )
-        } else {
-            ScreenContent(
-                screen = currentScreen,
-                onNavigate = { target ->
-                    if (!isAnimating) {
-                        nextScreen = target
-                    }
-                },
-                feedVM = feedVM,
-                nuFeedVM = nuFeedVM
-            )
-        }
-        // Animated screen
-        if (isAnimating) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .offset(y = offsetY)
-            ) {
-                ScreenContent(
-                    screen = currentScreen,
-                    onNavigate = {},
-                    feedVM = feedVM,
-                    nuFeedVM = nuFeedVM
-                )
-            }
-        }
-    }
-}
-
-sealed class Screen {
-    object First : Screen()
-    object Second : Screen()
-}
-
-@Composable
-fun ScreenContent(screen: Screen, onNavigate: (Screen) -> Unit = {}, feedVM: FeedVM, nuFeedVM: NuFeedVM) {
-    when (screen) {
-        Screen.First -> CentralSplashScreen { onNavigate(Screen.Second) }
-        Screen.Second -> LogoNavigation(feedVM, nuFeedVM)
     }
 }
