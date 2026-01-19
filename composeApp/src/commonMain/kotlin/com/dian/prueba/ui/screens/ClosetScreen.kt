@@ -41,6 +41,8 @@ import com.dian.prueba.modelNuFeed.NuFeedUIModel
 import com.dian.prueba.ui.components.CustomSearchBar
 import com.dian.prueba.ui.components.HeaderFeedLogo
 import com.dian.prueba.viewModel.NuFeedVM
+import io.github.kdroidfilter.composemediaplayer.VideoPlayerSurface
+import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
 
 @Composable
 fun ClosetScreen(
@@ -106,9 +108,15 @@ fun ClosetScreen(
     }
 }
 
-
 @Composable
 fun TileItem(item: NuFeedUIModel.Tile) {
+    val playerState = rememberVideoPlayerState()
+    val url = item.urlVideo.toString()
+    LaunchedEffect(url){
+        playerState.volume = 0f
+        playerState.openUri(url)
+        playerState.loop = true
+    }
     Card(
         modifier = Modifier
             .fillMaxWidth().height(290.dp),
@@ -131,12 +139,35 @@ fun TileItem(item: NuFeedUIModel.Tile) {
                 )
             }
         } else {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+            ) {
+                VideoPlayerSurface(
+                    playerState = playerState,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+                if (playerState.isLoading){
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        AsyncImage(
+                            model = item.imageUrl,
+                            contentDescription = "Poster Video Preview",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
+                    }
+                }
+            }
             /**
              * Need to fix
              * Issue: Video overlay another video
              * Web: https://github.com/Chaintech-Network/ComposeMultiplatformMediaPlayer/issues/187
              */
-            val playerHost = remember {
+            /*val playerHost = remember {
                 MediaPlayerHost(
                     mediaUrl = item.urlVideo.toString(),
                     isMuted = true,
@@ -169,7 +200,7 @@ fun TileItem(item: NuFeedUIModel.Tile) {
                         controlHideIntervalSeconds = 0,
                     )
                 )
-            }
+            }*/
         }
     }
 }
