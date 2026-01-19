@@ -22,17 +22,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import chaintech.videoplayer.host.MediaPlayerHost
-import chaintech.videoplayer.model.ScreenResize
-import chaintech.videoplayer.model.VideoPlayerConfig
-import chaintech.videoplayer.ui.video.VideoPlayerComposable
 import coil3.compose.AsyncImage
 import com.dian.prueba.model.AssetMediaType
 import com.dian.prueba.model.LocalColors

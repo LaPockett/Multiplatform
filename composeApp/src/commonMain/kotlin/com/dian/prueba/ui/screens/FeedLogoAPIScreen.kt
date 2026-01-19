@@ -25,9 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import chaintech.videoplayer.host.MediaPlayerHost
-import chaintech.videoplayer.model.VideoPlayerConfig
-import chaintech.videoplayer.ui.video.VideoPlayerComposable
 import coil3.compose.AsyncImage
 import com.dian.prueba.model.AssetMediaType
 import com.dian.prueba.model.LocalColors
@@ -37,12 +34,6 @@ import com.dian.prueba.viewModel.FeedVM
 
 @Composable
 fun ProductItem(product: ProductUIModel) {
-    val playerHost = remember {
-        MediaPlayerHost(
-            mediaUrl = product.urlVideo.toString(),
-            isMuted = true
-        )
-    }
     Card(
         modifier = Modifier
             .fillMaxWidth(),
@@ -63,28 +54,7 @@ fun ProductItem(product: ProductUIModel) {
                         .fillMaxWidth()
                         .height(290.dp)
                 ) {
-                    VideoPlayerComposable(
-                        modifier = Modifier.fillMaxSize(),
-                        playerHost = playerHost,
-                        playerConfig = VideoPlayerConfig(
-                            showControls = false,
-                            isSeekBarVisible = false,
-                            isZoomEnabled = false,
-                            loadingIndicatorColor = Color.Transparent,
-                            isDurationVisible = false,
-                            loaderView = {
-                                AsyncImage(
-                                    model = product.imageUrl,
-                                    contentDescription = "Poster Video Preview",
-                                    modifier = Modifier.fillMaxSize(),
-                                    contentScale = ContentScale.Crop
-                                )
-                            },
-                            controlClickAnimationDuration = 0,
-                            controlHideIntervalSeconds = 0,
-                            backdropAlpha = 1f
-                        )
-                    )
+
                 }
             } else {
                 AsyncImage(
