@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
         }
         setContent {
             // To open Showkase
-            val darkColor = Color.White
+            val darkColor = Color.Transparent
             val lightColor = Color.Transparent
             val isDarkTheme = isSystemInDarkTheme()
             // Enable edge-to-edge display (content extends behind system bars)

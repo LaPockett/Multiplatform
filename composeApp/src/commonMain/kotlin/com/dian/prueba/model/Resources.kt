@@ -40,6 +40,7 @@ data class Colors(
     val backgroundApp : Color = Color(0xfffdfbff),
     val backgroundSplash : Color = Color(0xff000000),
     val containerColor: Color = Color(0xffa69d83),
-    val containerLightColorLogo : Color = Color(0xffb7af98)
+    val containerLightColorLogo : Color = Color(0xffb7af98),
+    val logoColorMessage : Color = Color(0xff171717)
 )
 val LocalColors = compositionLocalOf { Colors() }

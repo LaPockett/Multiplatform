@@ -24,6 +24,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.dian.prueba.liquidglass.destinations.BottomTabsLiquidGlass
 import com.dian.prueba.liquidglass.destinations.GlassClippyLogo
+import com.dian.prueba.model.LocalColors
 import com.dian.prueba.model.LocalDimension
 import com.dian.prueba.navigation.ScreenBottom
 import com.dian.prueba.viewModel.FeedVM
@@ -49,6 +50,7 @@ fun LogoNavigation(
     nuFeedVM: NuFeedVM
 ) {
     val uiDimensions = LocalDimension.current
+    val colorModifier = LocalColors.current
     val hazeState = rememberHazeState()
     val backdrop = rememberLayerBackdrop()
     val navController = rememberNavController()
@@ -85,17 +87,17 @@ fun LogoNavigation(
                     .background(
                         brush = Brush.verticalGradient(
                             colors = listOf(
-                                MaterialTheme.colorScheme.background,
-                                MaterialTheme.colorScheme.background.copy(alpha = 1f),
-                                MaterialTheme.colorScheme.background.copy(alpha = 0.9f),
-                                MaterialTheme.colorScheme.background.copy(alpha = 0.8f),
-                                MaterialTheme.colorScheme.background.copy(alpha = 0.7f),
-                                MaterialTheme.colorScheme.background.copy(alpha = 0.6f),
-                                MaterialTheme.colorScheme.background.copy(alpha = 0.5f),
-                                MaterialTheme.colorScheme.background.copy(alpha = 0.4f),
-                                MaterialTheme.colorScheme.background.copy(alpha = 0.3f),
-                                MaterialTheme.colorScheme.background.copy(alpha = 0.1f),
-                                MaterialTheme.colorScheme.background.copy(alpha = 0f),
+                                colorModifier.backgroundApp,
+                                colorModifier.backgroundApp.copy(alpha = 0.9f),
+                                colorModifier.backgroundApp.copy(alpha = 1f),
+                                colorModifier.backgroundApp.copy(alpha = 0.8f),
+                                colorModifier.backgroundApp.copy(alpha = 0.7f),
+                                colorModifier.backgroundApp.copy(alpha = 0.6f),
+                                colorModifier.backgroundApp.copy(alpha = 0.5f),
+                                colorModifier.backgroundApp.copy(alpha = 0.4f),
+                                colorModifier.backgroundApp.copy(alpha = 0.3f),
+                                colorModifier.backgroundApp.copy(alpha = 0.1f),
+                                colorModifier.backgroundApp.copy(alpha = 0f),
                             ),
                             startY = 245f,
                             endY = 300f,

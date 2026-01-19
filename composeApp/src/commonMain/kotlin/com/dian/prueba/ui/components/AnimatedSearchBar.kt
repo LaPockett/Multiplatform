@@ -32,6 +32,7 @@ import com.arjunjadeja.texty.RevealingCover
 import com.arjunjadeja.texty.RevealingPattern
 import com.arjunjadeja.texty.RevealingType
 import com.arjunjadeja.texty.Texty
+import com.dian.prueba.model.LocalColors
 import kotlinx.coroutines.delay
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.animated_textfield1
@@ -160,6 +161,7 @@ fun CustomSearchBar(
     onQueryChange: (String) -> Unit,
     placeholder: String
 ) {
+    val colorModifier = LocalColors.current
     OutlinedTextField(
         modifier = modifier,
         value = query,
@@ -175,7 +177,7 @@ fun CustomSearchBar(
             Icon(
                 painter = painterResource(Res.drawable.logo),
                 contentDescription = "Search",
-                tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                tint = colorModifier.logoColorMessage,
                 modifier = Modifier.size(24.dp)
             )
         }
