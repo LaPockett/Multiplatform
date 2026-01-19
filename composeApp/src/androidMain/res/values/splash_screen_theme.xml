@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.App.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">
-            #cdcee8
-        </item>
+        <item name="windowSplashScreenBackground">#000000</item>
         <item name="windowSplashScreenAnimatedIcon">
-            @drawable/amazon_color
+            @drawable/logo_launch
         </item>
         <item name="postSplashScreenTheme">
             @android:style/Theme.Material.NoActionBar
