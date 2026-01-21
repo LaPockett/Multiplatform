@@ -3,7 +3,7 @@
     <style name="Theme.App.Splash" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">#000000</item>
         <item name="windowSplashScreenAnimatedIcon">
-            @drawable/logo_launch
+            @drawable/animated_logo
         </item>
         <item name="postSplashScreenTheme">
             @android:style/Theme.Material.NoActionBar

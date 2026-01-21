@@ -35,7 +35,7 @@ class MainActivity : ComponentActivity() {
         //Initialize NotifierManager from KMPNotifier
         NotifierManager.initialize(
             configuration = NotificationPlatformConfiguration.Android(
-                notificationIconResId = R.drawable.amazonlogo,
+                notificationIconResId = R.drawable.logo,
                 showPushNotification = true
             )
         )
