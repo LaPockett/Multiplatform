@@ -1,19 +1,26 @@
 package com.dian.prueba.view
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.animation.AccelerateInterpolator
+import android.view.animation.AnticipateInterpolator
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
+import androidx.core.animation.doOnEnd
 import androidx.core.view.WindowCompat
 import com.dian.prueba.R
 import com.dian.prueba.ui.Theme.MultiplatformTheme
@@ -23,9 +30,12 @@ import com.google.firebase.messaging.FirebaseMessaging
 import com.mmk.kmpnotifier.notification.NotifierManager
 import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
 import com.mmk.kmpnotifier.permission.permissionUtil
+import java.time.Instant
+import kotlin.time.Duration
 
 // Define root module for Showkase
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.S)
     @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +52,20 @@ class MainActivity : ComponentActivity() {
         //To see internal logs of NotifierManager
         NotifierManager.setLogger { message ->
             println("NotifierManager: $message")
+        }
+        /**
+         * To customize the exit of the splash screen animation
+         */
+        splashScreen.setOnExitAnimationListener { splashScreenView ->
+            val fadeOut = ObjectAnimator.ofFloat(
+                splashScreenView,
+                View.ALPHA,
+                1f,
+                0f)
+            fadeOut.interpolator = AccelerateInterpolator()
+            fadeOut.duration = 800L
+            fadeOut.doOnEnd { splashScreenView.remove() }
+            fadeOut.start()
         }
         setContent {
             // To open Showkase

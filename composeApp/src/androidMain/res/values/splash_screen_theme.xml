@@ -9,7 +9,7 @@
             @android:style/Theme.Material.NoActionBar
         </item>
         <item name="windowSplashScreenAnimationDuration">
-            100
+            2500
         </item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowDisablePreview">true</item>
