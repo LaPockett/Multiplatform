@@ -20,6 +20,8 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "2.2.0"
     // For Firebase use
     alias(libs.plugins.googleServices)
+    // KSP for i18N
+    alias(libs.plugins.ksp)
 }
 
 kotlin {
@@ -134,6 +136,8 @@ kotlin {
             //implementation("network.chaintech:compose-multiplatform-media-player:1.0.52")
             // CMP - Media PLayer de kdroidFilter
             implementation("io.github.kdroidfilter:composemediaplayer:0.8.7")
+            // Lyricist
+            implementation("cafe.adriel.lyricist:lyricist:1.8.0")
         }
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)
@@ -173,7 +177,6 @@ if (secretsFile.exists()) {
         project.extensions.extraProperties[key.toString()] = value
     }
 }
-
 val storePass = project.findProperty("storePassword") as? String ?: ""
 val keyAliasValue = project.findProperty("keyAlias") as? String ?: ""
 val keyPass = project.findProperty("keyPassword") as? String ?: ""
