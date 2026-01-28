@@ -4,10 +4,6 @@ data class Strings(
     val translations: Map<String, String>
 )
 
-fun Strings.translate(originalText: String): String {
-    return translations[originalText] ?: originalText
-}
-
 object TranslationManager {
     const val MSG1 = "¡Hola de nuevo! Aquí tienes unas recomendaciones siguiendo tu estilo habitual"
     const val MSG2 = "En qué mood estás hoy?"
