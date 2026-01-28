@@ -18,26 +18,24 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.snapshotFlow
-import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
-import cafe.adriel.lyricist.ProvideStrings
-import cafe.adriel.lyricist.rememberStrings
 import coil3.compose.AsyncImage
 import com.dian.prueba.model.AssetMediaType
 import com.dian.prueba.model.LocalColors
 import com.dian.prueba.model.LocalPadding
 import com.dian.prueba.modelNuFeed.NuFeedUIModel
-import com.dian.prueba.strings.EnStrings
 import com.dian.prueba.strings.Locales
-import com.dian.prueba.strings.PtStrings
+import com.dian.prueba.strings.TranslationManager
 import com.dian.prueba.ui.components.CustomSearchBar
 import com.dian.prueba.ui.components.HeaderFeedLogo
 import com.dian.prueba.viewModel.NuFeedVM
@@ -93,6 +91,7 @@ fun ClosetScreen(
             }
         }
     }
+
     LaunchedEffect(listState) {
         snapshotFlow {
             val layoutInfo = listState.layoutInfo
@@ -112,7 +111,7 @@ fun ClosetScreen(
 fun TileItem(item: NuFeedUIModel.Tile) {
     val playerState = rememberVideoPlayerState()
     val url = item.urlVideo.toString()
-    LaunchedEffect(url){
+    LaunchedEffect(url) {
         playerState.volume = 0f
         playerState.openUri(url)
         playerState.loop = true
@@ -148,7 +147,7 @@ fun TileItem(item: NuFeedUIModel.Tile) {
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
-                if (playerState.isLoading){
+                if (playerState.isLoading) {
                     Box(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
@@ -205,9 +204,12 @@ fun TileItem(item: NuFeedUIModel.Tile) {
     }
 }
 
+val currentLanguage = Locale.current.language
+
 @Composable
 fun MessageItem(item: NuFeedUIModel.MessageOut) {
     val paddingModifier = LocalPadding.current
+
     Column(
         modifier = Modifier.fillMaxWidth().padding(bottom = paddingModifier.extraTiny),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -215,7 +217,7 @@ fun MessageItem(item: NuFeedUIModel.MessageOut) {
         CustomSearchBar(
             query = "",
             onQueryChange = {},
-            placeholder = item.text,
+            placeholder = TranslationManager.translate(item.text, currentLanguage),
             modifier = Modifier.fillMaxWidth()
         )
     }
@@ -224,26 +226,16 @@ fun MessageItem(item: NuFeedUIModel.MessageOut) {
 @Composable
 fun MessageItem(item: NuFeedUIModel.MessageIn) {
     val paddingModifier = LocalPadding.current
+    print("Current language: $currentLanguage")
     Column(
         modifier = Modifier.fillMaxWidth().padding(bottom = paddingModifier.extraTiny),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val strings = mapOf(
-            Locales.EN to EnStrings,
-            Locales.PT to PtStrings,
-        )
-        val lyricist = rememberStrings(
-            defaultLanguageTag = "pt", currentLanguageTag = "en",
-            translations = strings
-        )
-        val LocalStrings = staticCompositionLocalOf { EnStrings }
-        ProvideStrings(lyricist, LocalStrings) {
         CustomSearchBar(
             query = "",
             onQueryChange = {},
-            placeholder = lyricist.strings.parameter(item.text),
-            modifier = Modifier.fillMaxWidth()
+            placeholder = TranslationManager.translate(item.text, currentLanguage),
+            modifier = Modifier.fillMaxWidth(),
         )
-        }
     }
 }

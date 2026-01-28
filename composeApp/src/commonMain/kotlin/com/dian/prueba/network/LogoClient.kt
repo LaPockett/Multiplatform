@@ -36,7 +36,7 @@ class LogoAPIClient : LogoAPIService {
 
         return@withContext try {
             val response = client
-                .get("http://192.168.10.209:8160/feed")
+                .get("http://192.168.10.130:8160/feed")
                 .body<FeedResponse>()
             response.data.feed
                 .mapNotNull { item ->
@@ -77,7 +77,7 @@ class LogoAPIClient : LogoAPIService {
         logger.warn("Enter to getNuFeed")
         try {
             client
-                .get("http://192.168.10.209:8160/nufeed") {
+                .get("http://192.168.10.130:8160/nufeed") {
                     parameter("paginationIndex", paginationIndex)
                 }
                 .body()

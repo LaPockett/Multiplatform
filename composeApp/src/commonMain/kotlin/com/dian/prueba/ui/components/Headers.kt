@@ -28,6 +28,7 @@ import com.kyant.backdrop.backdrops.rememberLayerBackdrop
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
 import multiplatform.composeapp.generated.resources.Res
+import multiplatform.composeapp.generated.resources.button_msg1
 import multiplatform.composeapp.generated.resources.title_feed
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -169,7 +170,7 @@ fun HeaderFeedLogo() {
                         .width(92.dp).align(Alignment.BottomEnd)
                 ) {
                     Text(
-                        text = "VIEW POST",
+                        text = stringResource(Res.string.button_msg1),
                         fontSize = 10.sp,
                         color = Color.White,
                         style = MaterialTheme.typography.labelSmall

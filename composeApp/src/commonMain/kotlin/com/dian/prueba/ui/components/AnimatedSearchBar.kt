@@ -67,6 +67,7 @@ fun AnimatedPlaceholder(
     hints: List<String>,
     textStyle: TextStyle = MaterialTheme.typography.bodySmall,
     textColor: Color = MaterialTheme.colorScheme.onSurfaceVariant,
+    delayBeforeRevealing: Long = 500L,
 ) {
     val iterator = hints.listIterator()
 
@@ -84,7 +85,7 @@ fun AnimatedPlaceholder(
             text = str,
             textStyle = textStyle,
             displayStyle = DisplayStyle.Revealing(
-                delayBeforeRevealing = 500L,
+                delayBeforeRevealing = delayBeforeRevealing,
                 pattern = RevealingPattern.START_TO_END,
                 type = RevealingType.ByEachCharacter(delayInMillis = 30L),
                 cover = RevealingCover.Custom(" ")
@@ -159,7 +160,8 @@ fun CustomSearchBar(
     modifier: Modifier = Modifier,
     query: String,
     onQueryChange: (String) -> Unit,
-    placeholder: String
+    placeholder: String,
+    delayBeforeRevealing: Long = 500L,
 ) {
     val colorModifier = LocalColors.current
     OutlinedTextField(
@@ -170,7 +172,8 @@ fun CustomSearchBar(
         readOnly = true,
         label = {
             AnimatedPlaceholder(
-                hints = listOf(placeholder),
+                hints = listOf(placeholder, ""),
+                delayBeforeRevealing = delayBeforeRevealing
             )
         },
         leadingIcon = {

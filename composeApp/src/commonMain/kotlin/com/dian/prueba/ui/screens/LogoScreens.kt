@@ -12,11 +12,11 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import coil3.compose.AsyncImage
 import com.dian.prueba.model.LocalColors
 import com.dian.prueba.model.LocalPadding
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.flower
+import multiplatform.composeapp.generated.resources.matcha
 import org.jetbrains.compose.resources.painterResource
 
 /**
@@ -44,16 +44,16 @@ fun ProfileScreen(
                 .fillMaxSize()
         ) {
             items(22){
-                /*Image(
+                Image(
                     painter = painterResource(Res.drawable.matcha),
                     contentDescription = "Profile",
                     modifier = Modifier.fillMaxSize()
-                )*/
-                AsyncImage(
+                )
+                /*AsyncImage(
                     model = "https://images.pexels.com/photos/979003/pexels-photo-979003.jpeg",
                     contentDescription = "ImageExample",
                     modifier = Modifier.fillMaxSize()
-                )
+                )*/
             }
         }
 

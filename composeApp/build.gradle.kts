@@ -136,8 +136,6 @@ kotlin {
             //implementation("network.chaintech:compose-multiplatform-media-player:1.0.52")
             // CMP - Media PLayer de kdroidFilter
             implementation("io.github.kdroidfilter:composemediaplayer:0.8.7")
-            // Lyricist
-            implementation("cafe.adriel.lyricist:lyricist:1.8.0")
         }
         commonTest.dependencies {
             implementation(libs.kotlinx.coroutines.test)
