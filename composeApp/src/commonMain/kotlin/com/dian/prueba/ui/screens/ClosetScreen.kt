@@ -29,23 +29,18 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import coil3.compose.AsyncImage
 import com.dian.prueba.model.AssetMediaType
 import com.dian.prueba.model.LocalColors
 import com.dian.prueba.model.LocalPadding
 import com.dian.prueba.modelNuFeed.NuFeedUIModel
-import com.dian.prueba.strings.TranslationManager
 import com.dian.prueba.ui.components.CustomSearchBar
 import com.dian.prueba.ui.components.HeaderFeedLogo
 import com.dian.prueba.viewModel.NuFeedVM
@@ -55,8 +50,7 @@ import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun ClosetScreen(
-    viewModel: NuFeedVM,
-    paddingValues: PaddingValues
+    viewModel: NuFeedVM, paddingValues: PaddingValues, isAnimatedFinished: Boolean
 ) {
     val feedItems by viewModel.feedItems.collectAsState()
     val listState = rememberLazyGridState()
@@ -67,9 +61,7 @@ fun ClosetScreen(
     )
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
     Box(
-        modifier = Modifier
-            .background(colorModifier.backgroundApp)
-            .fillMaxSize()
+        modifier = Modifier.background(colorModifier.backgroundApp).fillMaxSize()
             //.windowInsetsPadding(WindowInsets.statusBars)
             .padding(horizontal = paddingModifier.tiny),//.statusBarsPadding()
         contentAlignment = Alignment.Center
@@ -79,33 +71,32 @@ fun ClosetScreen(
             contentPadding = paddingValues,
             horizontalArrangement = Arrangement.spacedBy(paddingModifier.extraTiny),
             verticalArrangement = Arrangement.spacedBy(paddingModifier.extraTiny),
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             state = listState
         ) {
             item(
-                span = { GridItemSpan(2) }
-            ) {
+                span = { GridItemSpan(2) }) {
                 HeaderFeedLogo()
             }
             items(
-                items = feedItems,
-                span = { item ->
+                items = feedItems, span = { item ->
                     when (item) {
                         is NuFeedUIModel.MessageIn -> GridItemSpan(2)
                         is NuFeedUIModel.MessageOut -> GridItemSpan(2)
                         is NuFeedUIModel.Tile -> GridItemSpan(1)
                     }
-                }
-            ) { item ->
+                }) { item ->
                 when (item) {
                     is NuFeedUIModel.MessageIn -> MessageItem(item)
                     is NuFeedUIModel.MessageOut -> MessageItem(item)
-                    is NuFeedUIModel.Tile -> TileItem(item,
-                        onItemClick = { selectedItem ->
+                    is NuFeedUIModel.Tile -> TileItem(
+                        item, onItemClick = { selectedItem ->
                             // Handle item click
-                            isSheetOpen = true
-                        })
+                            if (isAnimatedFinished) {
+                                isSheetOpen = true
+                            }
+                        }
+                    )
                 }
             }
         }
@@ -121,20 +112,17 @@ fun ClosetScreen(
             LazyColumn {
                 items(10) {
                     Text(
-                        text = "Bag in progess",
-                        modifier = Modifier.padding(16.dp)
+                        text = "Bag in progess", modifier = Modifier.padding(16.dp)
                     )
                 }
             }
         }
     }
-
     LaunchedEffect(listState) {
         snapshotFlow {
             val layoutInfo = listState.layoutInfo
             val totalItems = layoutInfo.totalItemsCount
-            val lastVisibleItem =
-                layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
+            val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
             lastVisibleItem to totalItems
         }.collect { (lastVisible, total) ->
             if (lastVisible >= total - 14) {
@@ -147,9 +135,8 @@ fun ClosetScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TileItem(
-    item: NuFeedUIModel.Tile,
-    onItemClick: (item: NuFeedUIModel.Tile) -> Unit
-    ) {
+    item: NuFeedUIModel.Tile, onItemClick: (item: NuFeedUIModel.Tile) -> Unit
+) {
     val playerState = rememberVideoPlayerState()
     val url = item.urlVideo.toString()
     LaunchedEffect(url) {
@@ -159,8 +146,7 @@ fun TileItem(
     }
     onItemClick
     Card(
-        modifier = Modifier
-            .fillMaxWidth().height(290.dp),
+        modifier = Modifier.fillMaxWidth().height(290.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         ),
@@ -169,12 +155,10 @@ fun TileItem(
         onClick = {
             println("TileItem clicked: ${item.productId}")
             onItemClick(item)
-        }
-    ) {
+        }) {
         if (item.typeMedia == AssetMediaType.IMAGE) {
             Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
+                modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
             ) {
                 AsyncImage(
                     model = item.imageUrl,
@@ -185,8 +169,7 @@ fun TileItem(
             }
         } else {
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
+                modifier = Modifier.fillMaxSize()
             ) {
                 VideoPlayerSurface(
                     playerState = playerState,
@@ -195,8 +178,7 @@ fun TileItem(
                 )
                 if (playerState.isLoading) {
                     Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.Center
+                        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
                     ) {
                         AsyncImage(
                             model = item.imageUrl,
@@ -211,8 +193,7 @@ fun TileItem(
              * Need to fix
              * Issue: Video overlay another video
              * Web: https://github.com/Chaintech-Network/ComposeMultiplatformMediaPlayer/issues/187
-             */
-            /*val playerHost = remember {
+             *//*val playerHost = remember {
                 MediaPlayerHost(
                     mediaUrl = item.urlVideo.toString(),
                     isMuted = true,
@@ -250,7 +231,7 @@ fun TileItem(
     }
 }
 
-val currentLanguage = Locale.current.language
+//val currentLanguage = Locale.current.language
 
 @Composable
 fun MessageItem(item: NuFeedUIModel.MessageOut) {
@@ -261,10 +242,9 @@ fun MessageItem(item: NuFeedUIModel.MessageOut) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         CustomSearchBar(
-            query = "",
-            onQueryChange = {},
-            placeholder = TranslationManager.translate(item.text, currentLanguage),
-            modifier = Modifier.fillMaxWidth()
+            query = "", onQueryChange = {},
+            //placeholder = TranslationManager.translate(item.text, currentLanguage),
+            placeholder = item.text, modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -272,7 +252,7 @@ fun MessageItem(item: NuFeedUIModel.MessageOut) {
 @Composable
 fun MessageItem(item: NuFeedUIModel.MessageIn) {
     val paddingModifier = LocalPadding.current
-    print("Current language: $currentLanguage")
+    //print("Current language: $currentLanguage")
     Column(
         modifier = Modifier.fillMaxWidth().padding(bottom = paddingModifier.extraTiny),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -280,7 +260,8 @@ fun MessageItem(item: NuFeedUIModel.MessageIn) {
         CustomSearchBar(
             query = "",
             onQueryChange = {},
-            placeholder = TranslationManager.translate(item.text, currentLanguage),
+            //placeholder = TranslationManager.translate(item.text, currentLanguage),
+            placeholder = item.text,
             modifier = Modifier.fillMaxWidth(),
         )
     }

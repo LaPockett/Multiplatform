@@ -96,7 +96,7 @@ fun CentralSplashScreen(
     Box(
         modifier = Modifier.fillMaxSize()
     ){
-        LogoNavigation(feedVM, nuFeedVM)
+        LogoNavigation(feedVM, nuFeedVM, isAnimatedFinished)
     }
     Box(
         modifier = Modifier.fillMaxSize()

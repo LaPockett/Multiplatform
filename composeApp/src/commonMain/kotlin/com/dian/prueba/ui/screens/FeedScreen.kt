@@ -47,7 +47,8 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun LogoNavigation(
     feedVM: FeedVM,
-    nuFeedVM: NuFeedVM
+    nuFeedVM: NuFeedVM,
+    isAnimatedFinished: Boolean
 ) {
     val uiDimensions = LocalDimension.current
     val colorModifier = LocalColors.current
@@ -156,7 +157,10 @@ fun LogoNavigation(
                 NewsletterScreen(paddingValues)
             }
             composable(ScreenBottom.Closet.route) {
-                ClosetScreen(viewModel = nuFeedVM, paddingValues = paddingValues)
+                ClosetScreen(
+                    viewModel = nuFeedVM,
+                    paddingValues = paddingValues,
+                    isAnimatedFinished = isAnimatedFinished)
             }
             composable(ScreenBottom.Profile.route) {
                 ProfileScreen(paddingValues)
