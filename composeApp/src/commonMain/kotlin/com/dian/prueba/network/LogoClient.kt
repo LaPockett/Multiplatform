@@ -1,11 +1,13 @@
 package com.dian.prueba.network
 
+import androidx.compose.ui.text.intl.Locale
 import com.dian.prueba.model.*
 import com.dian.prueba.modelNuFeed.NuFeedResponse
 import com.dian.prueba.utilities.Logger
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.*
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.coroutines.Dispatchers
@@ -20,11 +22,15 @@ interface LogoAPIService {
 
 class LogoAPIClient : LogoAPIService {
     private val logger: Logger = Logger("LogoAPIClient")
+    private val currentLanguage = Locale.current.language
     private val client = HttpClient {
         install(ContentNegotiation) {
             json(Json {
                 ignoreUnknownKeys = true
             })
+        }
+        defaultRequest {
+            header("Accept-Language", currentLanguage)
         }
     }
 
