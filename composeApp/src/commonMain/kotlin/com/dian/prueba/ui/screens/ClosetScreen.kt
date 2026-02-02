@@ -9,32 +9,42 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import coil3.compose.AsyncImage
 import com.dian.prueba.model.AssetMediaType
 import com.dian.prueba.model.LocalColors
 import com.dian.prueba.model.LocalPadding
 import com.dian.prueba.modelNuFeed.NuFeedUIModel
-import com.dian.prueba.strings.Locales
 import com.dian.prueba.strings.TranslationManager
 import com.dian.prueba.ui.components.CustomSearchBar
 import com.dian.prueba.ui.components.HeaderFeedLogo
@@ -42,6 +52,7 @@ import com.dian.prueba.viewModel.NuFeedVM
 import io.github.kdroidfilter.composemediaplayer.VideoPlayerSurface
 import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
 
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun ClosetScreen(
     viewModel: NuFeedVM,
@@ -51,6 +62,10 @@ fun ClosetScreen(
     val listState = rememberLazyGridState()
     val paddingModifier = LocalPadding.current
     val colorModifier = LocalColors.current
+    val state = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true
+    )
+    var isSheetOpen by rememberSaveable { mutableStateOf(false) }
     Box(
         modifier = Modifier
             .background(colorModifier.backgroundApp)
@@ -86,7 +101,29 @@ fun ClosetScreen(
                 when (item) {
                     is NuFeedUIModel.MessageIn -> MessageItem(item)
                     is NuFeedUIModel.MessageOut -> MessageItem(item)
-                    is NuFeedUIModel.Tile -> TileItem(item)
+                    is NuFeedUIModel.Tile -> TileItem(item,
+                        onItemClick = { selectedItem ->
+                            // Handle item click
+                            isSheetOpen = true
+                        })
+                }
+            }
+        }
+    }
+    if (isSheetOpen){
+        ModalBottomSheet(
+            onDismissRequest = {
+                isSheetOpen = false
+            },
+            sheetState = state,
+            containerColor = colorModifier.backgroundApp,
+        ) {
+            LazyColumn {
+                items(10) {
+                    Text(
+                        text = "Bag in progess",
+                        modifier = Modifier.padding(16.dp)
+                    )
                 }
             }
         }
@@ -107,8 +144,12 @@ fun ClosetScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TileItem(item: NuFeedUIModel.Tile) {
+fun TileItem(
+    item: NuFeedUIModel.Tile,
+    onItemClick: (item: NuFeedUIModel.Tile) -> Unit
+    ) {
     val playerState = rememberVideoPlayerState()
     val url = item.urlVideo.toString()
     LaunchedEffect(url) {
@@ -116,6 +157,7 @@ fun TileItem(item: NuFeedUIModel.Tile) {
         playerState.openUri(url)
         playerState.loop = true
     }
+    onItemClick
     Card(
         modifier = Modifier
             .fillMaxWidth().height(290.dp),
@@ -124,6 +166,10 @@ fun TileItem(item: NuFeedUIModel.Tile) {
         ),
         shape = RoundedCornerShape(6.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+        onClick = {
+            println("TileItem clicked: ${item.productId}")
+            onItemClick(item)
+        }
     ) {
         if (item.typeMedia == AssetMediaType.IMAGE) {
             Box(
