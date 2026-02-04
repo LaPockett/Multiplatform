@@ -43,6 +43,7 @@ import com.dian.prueba.model.LocalPadding
 import com.dian.prueba.modelNuFeed.NuFeedUIModel
 import com.dian.prueba.ui.components.CustomSearchBar
 import com.dian.prueba.ui.components.HeaderFeedLogo
+import com.dian.prueba.ui.components.ModalBottomSheetBag
 import com.dian.prueba.viewModel.NuFeedVM
 import io.github.kdroidfilter.composemediaplayer.VideoPlayerSurface
 import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
@@ -60,6 +61,7 @@ fun ClosetScreen(
         skipPartiallyExpanded = true
     )
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
+    var itemSelected : NuFeedUIModel.Tile? by rememberSaveable { mutableStateOf(null) }
     Box(
         modifier = Modifier.background(colorModifier.backgroundApp).fillMaxSize()
             //.windowInsetsPadding(WindowInsets.statusBars)
@@ -92,6 +94,7 @@ fun ClosetScreen(
                     is NuFeedUIModel.Tile -> TileItem(
                         item, onItemClick = { selectedItem ->
                             // Handle item click
+                            itemSelected = selectedItem
                             if (isAnimatedFinished) {
                                 isSheetOpen = true
                             }
@@ -101,22 +104,29 @@ fun ClosetScreen(
             }
         }
     }
-    if (isSheetOpen){
-        ModalBottomSheet(
+    if (isSheetOpen && itemSelected != null){
+        /*ModalBottomSheet(
             onDismissRequest = {
                 isSheetOpen = false
             },
             sheetState = state,
             containerColor = colorModifier.backgroundApp,
         ) {
-            LazyColumn {
-                items(10) {
-                    Text(
-                        text = "Bag in progess", modifier = Modifier.padding(16.dp)
-                    )
-                }
-            }
-        }
+                AsyncImage(
+                    model = itemSelected!!.imageUrl,
+                    contentDescription = itemSelected!!.typeMedia.toString(),
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+        }*/
+        ModalBottomSheetBag(
+            isSheetOpen = isSheetOpen,
+            onDismissRequest = {
+                isSheetOpen = false
+            },
+            state = state,
+            selected = itemSelected
+        )
     }
     LaunchedEffect(listState) {
         snapshotFlow {

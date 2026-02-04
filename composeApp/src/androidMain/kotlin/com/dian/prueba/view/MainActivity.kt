@@ -24,6 +24,7 @@ import androidx.core.animation.doOnEnd
 import androidx.core.view.WindowCompat
 import com.dian.prueba.R
 import com.dian.prueba.ui.Theme.MultiplatformTheme
+import com.dian.prueba.ui.components.CarouselCalendar
 import com.dian.prueba.ui.components.ModalBottomSheetBag
 import com.dian.prueba.ui.splash.CentralSplashScreen
 import com.google.android.gms.tasks.OnCompleteListener
@@ -109,8 +110,9 @@ class MainActivity : ComponentActivity() {
                 Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                 })
             MultiplatformTheme {
-                //CentralSplashScreen()
-                ModalBottomSheetBag()
+                CentralSplashScreen()
+                //ModalBottomSheetBag()
+                //CarouselCalendar()
             }
         }
     }
