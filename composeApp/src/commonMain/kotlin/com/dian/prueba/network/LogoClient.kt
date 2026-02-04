@@ -3,6 +3,8 @@ package com.dian.prueba.network
 import androidx.compose.ui.text.intl.Locale
 import com.dian.prueba.model.*
 import com.dian.prueba.modelNuFeed.NuFeedResponse
+import com.dian.prueba.modelProduct.ProductDetail
+import com.dian.prueba.modelProduct.ProductDetailUIModel
 import com.dian.prueba.utilities.Logger
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -18,6 +20,7 @@ import kotlinx.serialization.json.Json
 interface LogoAPIService {
     suspend fun getProductList(): List<ProductUIModel>
     suspend fun getNuFeed(paginationIndex: Int): NuFeedResponse
+    suspend fun getProductById(productId: String): ProductDetailUIModel?
 }
 
 class LogoAPIClient : LogoAPIService {
@@ -34,6 +37,28 @@ class LogoAPIClient : LogoAPIService {
         }
     }
 
+    override suspend fun getProductById(productId: String): ProductDetailUIModel? = withContext(Dispatchers.IO) {
+        logger.warn("Enter to GetProductById")
+        try {
+            val response = client
+                .get("http://192.168.10.130:8160/product/$productId")
+                .body<ProductDetail>()
+            return@withContext ProductDetailUIModel(
+                _id = response.data.product._id,
+                brand = response.data.product.brand,
+                manufacturingCountry = response.data.product.manufacturingCountry,
+                productName = response.data.product.productName,
+                storyTelling = response.data.product.storyTelling,
+                styleIt = response.data.product.styleIt,
+                type = response.data.product.type,
+                variants = response.data.product.variants
+            )
+        } catch (e: Exception) {
+            e.printStackTrace()
+            print("Error en Api Logo Client obteniendo el producto: $e")
+            throw e
+        }
+    }
     /**
      * Mapeando los datos en el servicio de la API
      */

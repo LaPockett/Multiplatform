@@ -160,7 +160,9 @@ fun LogoNavigation(
                 ClosetScreen(
                     viewModel = nuFeedVM,
                     paddingValues = paddingValues,
-                    isAnimatedFinished = isAnimatedFinished)
+                    isAnimatedFinished = isAnimatedFinished,
+                    feedViewModel = feedVM
+                )
             }
             composable(ScreenBottom.Profile.route) {
                 ProfileScreen(paddingValues)

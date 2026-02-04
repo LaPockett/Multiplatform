@@ -44,6 +44,7 @@ import com.dian.prueba.modelNuFeed.NuFeedUIModel
 import com.dian.prueba.ui.components.CustomSearchBar
 import com.dian.prueba.ui.components.HeaderFeedLogo
 import com.dian.prueba.ui.components.ModalBottomSheetBag
+import com.dian.prueba.viewModel.FeedVM
 import com.dian.prueba.viewModel.NuFeedVM
 import io.github.kdroidfilter.composemediaplayer.VideoPlayerSurface
 import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
@@ -51,7 +52,7 @@ import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun ClosetScreen(
-    viewModel: NuFeedVM, paddingValues: PaddingValues, isAnimatedFinished: Boolean
+    viewModel: NuFeedVM, paddingValues: PaddingValues, isAnimatedFinished: Boolean, feedViewModel: FeedVM
 ) {
     val feedItems by viewModel.feedItems.collectAsState()
     val listState = rememberLazyGridState()
@@ -119,12 +120,15 @@ fun ClosetScreen(
                     contentScale = ContentScale.Crop
                 )
         }*/
+        val productId = itemSelected!!.productId
         ModalBottomSheetBag(
             isSheetOpen = isSheetOpen,
             onDismissRequest = {
                 isSheetOpen = false
             },
             state = state,
+            productId = productId,
+            feedViewModel = feedViewModel,
             selected = itemSelected
         )
     }
