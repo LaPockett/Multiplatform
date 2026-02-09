@@ -1,5 +1,11 @@
 package com.dian.prueba.ui.screens
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -52,7 +58,10 @@ import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun ClosetScreen(
-    viewModel: NuFeedVM, paddingValues: PaddingValues, isAnimatedFinished: Boolean, feedViewModel: FeedVM
+    viewModel: NuFeedVM,
+    paddingValues: PaddingValues,
+    isAnimatedFinished: Boolean,
+    feedViewModel: FeedVM
 ) {
     val feedItems by viewModel.feedItems.collectAsState()
     val listState = rememberLazyGridState()
@@ -62,7 +71,20 @@ fun ClosetScreen(
         skipPartiallyExpanded = true
     )
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
-    var itemSelected : NuFeedUIModel.Tile? by rememberSaveable { mutableStateOf(null) }
+    var itemSelected: NuFeedUIModel.Tile? by rememberSaveable { mutableStateOf(null) }
+
+    LaunchedEffect(listState) {
+        snapshotFlow {
+            val layoutInfo = listState.layoutInfo
+            val totalItems = layoutInfo.totalItemsCount
+            val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
+            lastVisibleItem to totalItems
+        }.collect { (lastVisible, total) ->
+            if (lastVisible >= total - 14) {
+                viewModel.loadNextPage()
+            }
+        }
+    }
     Box(
         modifier = Modifier.background(colorModifier.backgroundApp).fillMaxSize()
             //.windowInsetsPadding(WindowInsets.statusBars)
@@ -132,18 +154,6 @@ fun ClosetScreen(
             selected = itemSelected
         )
     }
-    LaunchedEffect(listState) {
-        snapshotFlow {
-            val layoutInfo = listState.layoutInfo
-            val totalItems = layoutInfo.totalItemsCount
-            val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
-            lastVisibleItem to totalItems
-        }.collect { (lastVisible, total) ->
-            if (lastVisible >= total - 14) {
-                viewModel.loadNextPage()
-            }
-        }
-    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -188,20 +198,22 @@ fun TileItem(
                 VideoPlayerSurface(
                     playerState = playerState,
                     modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-                if (playerState.isLoading) {
-                    Box(
-                        modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
-                    ) {
-                        AsyncImage(
-                            model = item.imageUrl,
-                            contentDescription = "Poster Video Preview",
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Crop
-                        )
+                    contentScale = ContentScale.Crop,
+                    overlay = {
+                        if (playerState.isLoading) {
+                            //Box(
+                            //modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+                            //) {
+                            AsyncImage(
+                                model = item.imageUrl,
+                                contentDescription = "Poster Video Preview",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
+                            //}
+                        }
                     }
-                }
+                )
             }
             /**
              * Need to fix

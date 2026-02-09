@@ -43,6 +43,7 @@ data class Colors(
     val containerLightColorLogo : Color = Color(0xffb7af98),
     val logoColorMessage : Color = Color(0xff171717),
     val logoColor : Color = Color(0xffb8b89c),
+    val logoColorLight : Color = Color(0xffebebe4),
     val blackLight : Color = Color(0xff7b7c77),
     val dividerLight : Color = Color(0xffefefef)
 )
