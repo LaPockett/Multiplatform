@@ -17,12 +17,11 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
@@ -31,9 +30,18 @@ import com.dian.prueba.model.LocalColors
 import com.dian.prueba.model.LocalPadding
 import com.dian.prueba.model.ProductUIModel
 import com.dian.prueba.viewModel.FeedVM
+import io.github.kdroidfilter.composemediaplayer.VideoPlayerSurface
+import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
 
 @Composable
 fun ProductItem(product: ProductUIModel) {
+    val playerState = rememberVideoPlayerState()
+    val url = product.urlVideo.toString()
+    LaunchedEffect(url) {
+        playerState.volume = 0f
+        playerState.openUri(url)
+        playerState.loop = true
+    }
     Card(
         modifier = Modifier
             .fillMaxWidth(),
@@ -54,7 +62,25 @@ fun ProductItem(product: ProductUIModel) {
                         .fillMaxWidth()
                         .height(290.dp)
                 ) {
-
+                    VideoPlayerSurface(
+                        playerState = playerState,
+                        modifier = Modifier.fillMaxWidth().height(290.dp),
+                        contentScale = ContentScale.Crop,
+                        overlay = {
+                            if (playerState.isLoading) {
+                                //Box(
+                                //modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+                                //) {
+                                AsyncImage(
+                                    model = product.imageUrl,
+                                    contentDescription = "Poster Video Preview",
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop
+                                )
+                                //}
+                            }
+                        }
+                    )
                 }
             } else {
                 AsyncImage(
@@ -103,7 +129,8 @@ fun ProductItem(product: ProductUIModel) {
 @Composable
 fun FeedLogoApiScreen(
     paddingValues: PaddingValues,
-    feedVM: FeedVM) {
+    feedVM: FeedVM
+) {
     val paddingModifier = LocalPadding.current
     val colorModifier = LocalColors.current
     val products by feedVM.productList.collectAsState()

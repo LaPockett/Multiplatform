@@ -1,11 +1,5 @@
 package com.dian.prueba.ui.screens
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -27,7 +20,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -80,7 +72,7 @@ fun ClosetScreen(
             val lastVisibleItem = layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: 0
             lastVisibleItem to totalItems
         }.collect { (lastVisible, total) ->
-            if (lastVisible >= total - 14) {
+            if (lastVisible >= total - 9) {
                 viewModel.loadNextPage()
             }
         }
@@ -128,20 +120,6 @@ fun ClosetScreen(
         }
     }
     if (isSheetOpen && itemSelected != null){
-        /*ModalBottomSheet(
-            onDismissRequest = {
-                isSheetOpen = false
-            },
-            sheetState = state,
-            containerColor = colorModifier.backgroundApp,
-        ) {
-                AsyncImage(
-                    model = itemSelected!!.imageUrl,
-                    contentDescription = itemSelected!!.typeMedia.toString(),
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-        }*/
         val productId = itemSelected!!.productId
         ModalBottomSheetBag(
             isSheetOpen = isSheetOpen,
@@ -181,23 +159,26 @@ fun TileItem(
             onItemClick(item)
         }) {
         if (item.typeMedia == AssetMediaType.IMAGE) {
-            Box(
-                modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
-            ) {
+            /*Box(
+                //modifier = Modifier.fillMaxSize(),
+                //modifier = Modifier.size(290.dp),
+                contentAlignment = Alignment.Center
+            ) {*/
                 AsyncImage(
                     model = item.imageUrl,
                     contentDescription = item.typeMedia.toString(),
                     modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop
                 )
-            }
+            //}
         } else {
-            Box(
-                modifier = Modifier.fillMaxSize()
-            ) {
+            /*Box(
+                //modifier = Modifier.fillMaxSize()
+                //modifier = Modifier.size(290.dp)
+            ) {*/
                 VideoPlayerSurface(
                     playerState = playerState,
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxWidth().height(290.dp),
                     contentScale = ContentScale.Crop,
                     overlay = {
                         if (playerState.isLoading) {
@@ -214,7 +195,7 @@ fun TileItem(
                         }
                     }
                 )
-            }
+            //}
             /**
              * Need to fix
              * Issue: Video overlay another video

@@ -89,7 +89,8 @@ fun AnimatedPlaceholder(
                 pattern = RevealingPattern.START_TO_END,
                 type = RevealingType.ByEachCharacter(delayInMillis = 30L),
                 cover = RevealingCover.Custom(" ")
-            )
+            ),
+            maxLines = 1
         )
     }
 }
