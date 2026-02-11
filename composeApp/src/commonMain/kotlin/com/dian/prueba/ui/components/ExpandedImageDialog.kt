@@ -1,4 +1,4 @@
-package com.dian.prueba.liquidglass.components
+package com.dian.prueba.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures

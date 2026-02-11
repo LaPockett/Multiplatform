@@ -50,7 +50,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.input.pointer.pointerInput
 import com.dian.prueba.liquidglass.components.CarouselHorizontalSample
-import com.dian.prueba.liquidglass.components.ExpandedImageDialog
 import com.dian.prueba.ui.components.buttons.SlideToBookButton
 
 @OptIn(ExperimentalMaterial3Api::class)
