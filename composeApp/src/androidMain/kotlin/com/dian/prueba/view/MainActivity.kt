@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.AccelerateInterpolator
-import android.view.animation.AnticipateInterpolator
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
@@ -24,16 +23,12 @@ import androidx.core.animation.doOnEnd
 import androidx.core.view.WindowCompat
 import com.dian.prueba.R
 import com.dian.prueba.ui.Theme.MultiplatformTheme
-import com.dian.prueba.ui.components.CarouselCalendar
-import com.dian.prueba.ui.components.ModalBottomSheetBag
 import com.dian.prueba.ui.splash.CentralSplashScreen
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mmk.kmpnotifier.notification.NotifierManager
 import com.mmk.kmpnotifier.notification.configuration.NotificationPlatformConfiguration
 import com.mmk.kmpnotifier.permission.permissionUtil
-import java.time.Instant
-import kotlin.time.Duration
 
 // Define root module for Showkase
 class MainActivity : ComponentActivity() {
@@ -77,25 +72,27 @@ class MainActivity : ComponentActivity() {
             // Enable edge-to-edge display (content extends behind system bars)
             enableEdgeToEdge(
                 // Status bar style: dark/light based on theme with transparent background
-                statusBarStyle = if (!isDarkTheme){
+                statusBarStyle = if (!isDarkTheme) {
                     SystemBarStyle.dark(darkColor.hashCode())
                 } else SystemBarStyle.light(lightColor.hashCode(), lightColor.hashCode()),
                 // Navigation bar style: same logic as status bar
-                navigationBarStyle = if (!isDarkTheme){
+                navigationBarStyle = if (!isDarkTheme) {
                     SystemBarStyle.dark(darkColor.hashCode())
                 } else SystemBarStyle.light(lightColor.hashCode(), lightColor.hashCode())
             )
 
-            val view= LocalView.current
+            val view = LocalView.current
             SideEffect {
                 val window = (view.context as ComponentActivity).window
                 //Makes status bar transparent
                 window.statusBarColor = Color.Transparent.toArgb()
                 //Adjusts icons (light/dark) based on theme
-                WindowCompat.getInsetsController(window,view).isAppearanceLightStatusBars = !isDarkTheme
+                WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
+                    !isDarkTheme
                 //Same configuration for navigation bar
                 window.navigationBarColor = Color.Transparent.toArgb()
-                WindowCompat.getInsetsController(window,view).isAppearanceLightNavigationBars = !isDarkTheme
+                WindowCompat.getInsetsController(window, view).isAppearanceLightNavigationBars =
+                    !isDarkTheme
             }
             //To get fcm token and send a local test notification
             FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -108,11 +105,9 @@ class MainActivity : ComponentActivity() {
                 val msg = getString(R.string.msg_token_fmt, token)
                 Log.d(TAG, msg)
                 Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-                })
+            })
             MultiplatformTheme {
                 CentralSplashScreen()
-                //ModalBottomSheetBag()
-                //CarouselCalendar()
             }
         }
     }

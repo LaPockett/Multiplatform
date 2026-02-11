@@ -1,6 +1,7 @@
 package com.dian.prueba.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -42,7 +43,14 @@ import com.dian.prueba.model.LocalPadding
 import com.dian.prueba.modelNuFeed.NuFeedUIModel
 import com.dian.prueba.viewModel.FeedVM
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.input.pointer.pointerInput
+import com.dian.prueba.liquidglass.components.CarouselHorizontalSample
+import com.dian.prueba.liquidglass.components.ExpandedImageDialog
 import com.dian.prueba.ui.components.buttons.SlideToBookButton
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -59,6 +67,7 @@ fun ModalBottomSheetBag(
     val colorModifier = LocalColors.current
     feedViewModel.loadProductDetail(productId)
     val product = feedViewModel.productDetail.collectAsState()
+    var expandedImageUrl by remember { mutableStateOf<String?>(null) }
     if (isSheetOpen) {
         ModalBottomSheet(
             onDismissRequest = onDismissRequest,
@@ -67,11 +76,11 @@ fun ModalBottomSheetBag(
             dragHandle = {
                 BottomSheetDefaults.DragHandle()
             },
-            sheetGesturesEnabled = false // TODO: Improve this
+            sheetGesturesEnabled = false,
         ) {
             Box(
                 modifier = Modifier.fillMaxSize().background(colorModifier.backgroundApp)
-            ){
+            ) {
                 Column(
                     modifier = Modifier.fillMaxSize()
                         .verticalScroll(rememberScrollState())
@@ -81,9 +90,8 @@ fun ModalBottomSheetBag(
                         ?.flatMap { picture -> picture.variants }
                         ?: emptyList()
                     LazyColumn(
-                        modifier = Modifier.fillMaxWidth()
-                            .height(450.dp)
-                    ){
+                        modifier = Modifier.fillMaxWidth().height(450.dp)
+                    ) {
                         // Para cargar solo el primer elemento de los variant dentro de pictures
                         /*items(pictures,
                         ){ picture ->
@@ -97,11 +105,11 @@ fun ModalBottomSheetBag(
                         }*/
                         // Carga todos los elementos de los variant dentro de pictures
                         items(allImageVariants) { variant ->
-                            AsyncImage(
-                                model = variant.url,
-                                contentDescription = selected?.typeMedia.toString(),
-                                modifier = Modifier.fillMaxSize(),
-                                contentScale = ContentScale.Crop
+                            ZoomableImage(
+                                imageUrl = variant.url,
+                                onExpand = {
+                                    expandedImageUrl = it
+                                }
                             )
                         }
                     }
@@ -167,21 +175,21 @@ fun ModalBottomSheetBag(
                                 text = feedViewModel.productDetail.value?.styleIt ?: "nil",
                                 style = MaterialTheme.typography.bodyMedium
                             )
-                            Spacer(modifier = Modifier.padding(vertical = paddingModifier.extraTiny))
+                            Spacer(modifier = Modifier.padding(vertical = paddingModifier.tiny))
                             Text(
                                 text = "YOURS NEXT",
                                 style = MaterialTheme.typography.labelLarge,
                                 color = colorModifier.logoColor,
                                 letterSpacing = 0.4.sp,
-                                modifier = Modifier.padding(vertical = paddingModifier.extraTiny)
+                                modifier = Modifier.padding(bottom = paddingModifier.extraTiny)
                             )
                         }
                     }
                     CarouselCalendar()
-                    Column (
+                    Column(
                         modifier = Modifier.fillMaxWidth()
                             .padding(horizontal = paddingModifier.small)
-                    ){
+                    ) {
                         SlideToBookButton(
                             btnText = "Slide to receive it",
                             outerBtnBackgroundColor = colorModifier.logoColorLight,
@@ -190,27 +198,62 @@ fun ModalBottomSheetBag(
                                 println("Slide to book button swiped!")
                             },
                         )
+                        Spacer(modifier = Modifier.padding(vertical = paddingModifier.tiny))
+                        Text(
+                            text = "SIMILAR BAGS",
+                            style = MaterialTheme.typography.labelLarge,
+                            color = colorModifier.logoColor,
+                            letterSpacing = 0.4.sp,
+                            modifier = Modifier.padding(bottom = paddingModifier.extraTiny)
+                        )
+                        CarouselHorizontalSample()
                         Spacer(modifier = Modifier.padding(vertical = paddingModifier.normal))
                     }
                 }
-
-
-                //
                 FloatingActionButton(
                     onClick = {
                         println("Floating action button clicked!")
                         //TODO
                     },
-                    modifier = Modifier.padding(paddingModifier.extraTiny).align(Alignment.BottomEnd),
+                    modifier = Modifier.padding(paddingModifier.tiny)
+                        .align(Alignment.BottomEnd),
                     backgroundColor = colorModifier.logoColor,
                     contentColor = Color.White
-                ){
+                ) {
                     Icon(
                         imageVector = Icons.Default.Favorite,
                         contentDescription = "Favorite Bag"
                     )
                 }
+                if (expandedImageUrl != null) {
+                    ExpandedImageDialog(
+                        imageUrl = expandedImageUrl!!,
+                        onDismiss = {
+                            expandedImageUrl = null
+                        }
+                    )
+                }
             }
         }
     }
+}
+@Composable
+fun ZoomableImage(
+    imageUrl: String,
+    onExpand: (String) -> Unit
+) {
+    AsyncImage(
+        model = imageUrl,
+        contentDescription = "Zoomable Image",
+        contentScale = ContentScale.Crop,
+        modifier = Modifier
+            .fillMaxSize()
+            .pointerInput(Unit) {
+                detectTapGestures(
+                    onDoubleTap = {
+                        onExpand(imageUrl)
+                    }
+                )
+            }
+    )
 }
