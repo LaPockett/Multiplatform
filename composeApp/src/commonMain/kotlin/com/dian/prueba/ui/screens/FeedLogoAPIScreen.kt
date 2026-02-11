@@ -37,92 +37,88 @@ import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
 fun ProductItem(product: ProductUIModel) {
     val playerState = rememberVideoPlayerState()
     val url = product.urlVideo.toString()
-    LaunchedEffect(url) {
+    /*LaunchedEffect(url) {
         playerState.volume = 0f
         playerState.openUri(url)
         playerState.loop = true
-    }
+    }*/
     Card(
         modifier = Modifier
-            .fillMaxWidth(),
+            .fillMaxWidth().height(290.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceVariant
         ),
         shape = RoundedCornerShape(6.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
     ) {
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
 
-            if (product.assetType == AssetMediaType.VIDEO) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(290.dp)
-                ) {
-                    VideoPlayerSurface(
-                        playerState = playerState,
-                        modifier = Modifier.fillMaxWidth().height(290.dp),
-                        contentScale = ContentScale.Crop,
-                        overlay = {
-                            if (playerState.isLoading) {
-                                //Box(
-                                //modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
-                                //) {
-                                AsyncImage(
-                                    model = product.imageUrl,
-                                    contentDescription = "Poster Video Preview",
-                                    modifier = Modifier.fillMaxSize(),
-                                    contentScale = ContentScale.Crop
-                                )
-                                //}
-                            }
-                        }
-                    )
-                }
-            } else {
-                AsyncImage(
-                    model = product.imageUrl,
-                    contentDescription = "Image",
+        if (product.assetType == AssetMediaType.VIDEO) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(290.dp)
+            ) {
+                /*VideoPlayerSurface(
+                    playerState = playerState,
                     modifier = Modifier.fillMaxWidth().height(290.dp),
-                    contentScale = ContentScale.Crop
-                )
+                    contentScale = ContentScale.Crop,
+                    overlay = {
+                        if (playerState.isLoading) {
+                            //Box(
+                            //modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
+                            //) {
+                            AsyncImage(
+                                model = product.imageUrl,
+                                contentDescription = "Poster Video Preview",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.Crop
+                            )
+                            //}
+                        }
+                    }
+                )*/
             }
-            /*Text(
-                text = product.assetType.toString(),
-                style = MaterialTheme.typography.titleSmall,
-                maxLines = 1,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
+        } else {
+            AsyncImage(
+                model = product.imageUrl,
+                contentDescription = "Image",
+                modifier = Modifier.fillMaxWidth().height(290.dp),
+                contentScale = ContentScale.Crop
             )
-            Text(
-                text = product.feedItem.isPremium.toString(),
-                style = MaterialTheme.typography.titleSmall,
-                maxLines = 1,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-            )
-            Text(
-                text = product.feedItem.isFavorite.toString(),
-                style = MaterialTheme.typography.titleSmall,
-                maxLines = 1,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-            )
-            Text(
-                text = product.feedItem.product.product,
-                style = MaterialTheme.typography.titleSmall,
-                maxLines = 1,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(4.dp),
-            )*/
         }
+        /*Text(
+            text = product.assetType.toString(),
+            style = MaterialTheme.typography.titleSmall,
+            maxLines = 1,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+        )
+        Text(
+            text = product.feedItem.isPremium.toString(),
+            style = MaterialTheme.typography.titleSmall,
+            maxLines = 1,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+        )
+        Text(
+            text = product.feedItem.isFavorite.toString(),
+            style = MaterialTheme.typography.titleSmall,
+            maxLines = 1,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
+        )
+        Text(
+            text = product.feedItem.product.product,
+            style = MaterialTheme.typography.titleSmall,
+            maxLines = 1,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(4.dp),
+        )*/
+
     }
 }
 

@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -119,7 +120,7 @@ fun ClosetScreen(
             }
         }
     }
-    if (isSheetOpen && itemSelected != null){
+    if (isSheetOpen && itemSelected != null) {
         val productId = itemSelected!!.productId
         ModalBottomSheetBag(
             isSheetOpen = isSheetOpen,
@@ -141,12 +142,13 @@ fun TileItem(
 ) {
     val playerState = rememberVideoPlayerState()
     val url = item.urlVideo.toString()
+    /*
+    For video and audio
     LaunchedEffect(url) {
         playerState.volume = 0f
         playerState.openUri(url)
         playerState.loop = true
-    }
-    onItemClick
+    }*/
     Card(
         modifier = Modifier.fillMaxWidth().height(290.dp),
         colors = CardDefaults.cardColors(
@@ -164,14 +166,14 @@ fun TileItem(
                 //modifier = Modifier.size(290.dp),
                 contentAlignment = Alignment.Center
             ) {*/
-                AsyncImage(
-                    model = item.imageUrl,
-                    contentDescription = item.typeMedia.toString(),
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
+            AsyncImage(
+                model = item.imageUrl,
+                contentDescription = item.typeMedia.toString(),
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
             //}
-        } else {
+        } /*else {
             /*Box(
                 //modifier = Modifier.fillMaxSize()
                 //modifier = Modifier.size(290.dp)
@@ -234,7 +236,7 @@ fun TileItem(
                     )
                 )
             }*/
-        }
+        }*/
     }
 }
 

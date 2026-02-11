@@ -1,9 +1,11 @@
 package com.dian.prueba.modelNuFeed
 
+import androidx.compose.runtime.Immutable
 import com.dian.prueba.model.AssetMediaType
 import com.dian.prueba.model.AssetResponse
 import kotlinx.serialization.Serializable
 
+@Immutable
 @Serializable
 data class Feed(
     val type: AssetType,

@@ -1,5 +1,7 @@
 package com.dian.prueba.model
 
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import com.dian.prueba.modelNuFeed.Variant
 import kotlinx.serialization.Serializable
 
@@ -21,6 +23,7 @@ data class FeedItemUI(
     val product: Product
 )
 
+@Immutable
 @Serializable
 data class AssetResponse(
     val url: String? = null, // En caso de que sea un video tendrá la URL en asset directamente
@@ -34,6 +37,7 @@ enum class AssetMediaType {
     IMAGE,
     VIDEO
 }
+@Stable
 @Serializable
 data class ProductUIModel(
     val urlVideo : String? = null,
