@@ -48,6 +48,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.input.pointer.pointerInput
 import com.dian.prueba.liquidglass.components.CarouselHorizontalSample
 import com.dian.prueba.ui.components.buttons.SlideToBookButton
@@ -88,29 +89,49 @@ fun ModalBottomSheetBag(
                     val allImageVariants = product.value?.variants?.firstOrNull()?.pictures
                         ?.flatMap { picture -> picture.variants }
                         ?: emptyList()
-                    LazyColumn(
-                        modifier = Modifier.fillMaxWidth().height(450.dp)
+                    Box(
+                        modifier = Modifier.fillMaxWidth().height(650.dp)
                     ) {
-                        // Para cargar solo el primer elemento de los variant dentro de pictures
-                        /*items(pictures,
-                        ){ picture ->
-                            val imageUrl = picture.variants.firstOrNull()?.url
-                            AsyncImage(
-                                model = imageUrl,
-                                contentDescription = selected?.typeMedia.toString(),
-                                modifier = Modifier.fillMaxSize(),
-                                contentScale = ContentScale.Crop
-                            )
-                        }*/
-                        // Carga todos los elementos de los variant dentro de pictures
-                        items(allImageVariants) { variant ->
-                            ZoomableImage(
-                                imageUrl = variant.url,
-                                onExpand = {
-                                    expandedImageUrl = it
-                                }
-                            )
+                        LazyColumn(
+                            modifier = Modifier.fillMaxSize()
+                        ) {
+                            // Para cargar solo el primer elemento de los variant dentro de pictures
+                            /*items(pictures,
+                            ){ picture ->
+                                val imageUrl = picture.variants.firstOrNull()?.url
+                                AsyncImage(
+                                    model = imageUrl,
+                                    contentDescription = selected?.typeMedia.toString(),
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop
+                                )
+                            }*/
+                            // Carga todos los elementos de los variant dentro de pictures
+                            items(allImageVariants) { variant ->
+                                ZoomableImage(
+                                    imageUrl = variant.url,
+                                    onExpand = {
+                                        expandedImageUrl = it
+                                    }
+                                )
+                            }
                         }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(10.dp)
+                                .align(Alignment.BottomCenter)
+                                .background(
+                                    brush = Brush.verticalGradient(
+                                        colorStops = arrayOf(
+                                            0.0f to Color.Transparent,
+                                            0.3f to colorModifier.backgroundApp.copy(alpha = 0.4f),
+                                            0.6f to colorModifier.backgroundApp.copy(alpha = 0.7f),
+                                            1.0f to colorModifier.backgroundApp
+                                        )
+                                    )
+                                )
+                        )
                     }
                     Spacer(modifier = Modifier.height(paddingModifier.small))
                     Column(
@@ -250,6 +271,9 @@ fun ZoomableImage(
             .fillMaxSize()
             .pointerInput(Unit) {
                 detectTapGestures(
+                    onTap = {
+                        onExpand(imageUrl)
+                    },
                     onDoubleTap = {
                         onExpand(imageUrl)
                     }
