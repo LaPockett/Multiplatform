@@ -90,7 +90,7 @@ fun AnimatedPlaceholder(
                 type = RevealingType.ByEachCharacter(delayInMillis = 30L),
                 cover = RevealingCover.Custom(" ")
             ),
-            maxLines = 1
+            //maxLines = 1
         )
     }
 }

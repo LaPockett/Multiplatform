@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -17,11 +16,12 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -45,8 +45,6 @@ import com.dian.prueba.ui.components.HeaderFeedLogo
 import com.dian.prueba.ui.components.ModalBottomSheetBag
 import com.dian.prueba.viewModel.FeedVM
 import com.dian.prueba.viewModel.NuFeedVM
-import io.github.kdroidfilter.composemediaplayer.VideoPlayerSurface
-import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
@@ -60,8 +58,11 @@ fun ClosetScreen(
     val listState = rememberLazyGridState()
     val paddingModifier = LocalPadding.current
     val colorModifier = LocalColors.current
-    val state = rememberModalBottomSheetState(
-        skipPartiallyExpanded = true
+    val sheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
+        confirmValueChange = {
+            it != SheetValue.PartiallyExpanded
+        }
     )
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
     var itemSelected: NuFeedUIModel.Tile? by rememberSaveable { mutableStateOf(null) }
@@ -127,7 +128,7 @@ fun ClosetScreen(
             onDismissRequest = {
                 isSheetOpen = false
             },
-            state = state,
+            state = sheetState,
             productId = productId,
             feedViewModel = feedViewModel,
             selected = itemSelected
@@ -140,15 +141,7 @@ fun ClosetScreen(
 fun TileItem(
     item: NuFeedUIModel.Tile, onItemClick: (item: NuFeedUIModel.Tile) -> Unit
 ) {
-    val playerState = rememberVideoPlayerState()
-    val url = item.urlVideo.toString()
-    /*
-    For video and audio
-    LaunchedEffect(url) {
-        playerState.volume = 0f
-        playerState.openUri(url)
-        playerState.loop = true
-    }*/
+    //val playerState = rememberVideoPlayerState()
     Card(
         modifier = Modifier.fillMaxWidth().height(290.dp),
         colors = CardDefaults.cardColors(
@@ -161,11 +154,6 @@ fun TileItem(
             onItemClick(item)
         }) {
         if (item.typeMedia == AssetMediaType.IMAGE) {
-            /*Box(
-                //modifier = Modifier.fillMaxSize(),
-                //modifier = Modifier.size(290.dp),
-                contentAlignment = Alignment.Center
-            ) {*/
             AsyncImage(
                 model = item.imageUrl,
                 contentDescription = item.typeMedia.toString(),
@@ -173,36 +161,37 @@ fun TileItem(
                 contentScale = ContentScale.Crop
             )
             //}
-        } /*else {
-            /*Box(
-                //modifier = Modifier.fillMaxSize()
-                //modifier = Modifier.size(290.dp)
-            ) {*/
-                VideoPlayerSurface(
-                    playerState = playerState,
-                    modifier = Modifier.fillMaxWidth().height(290.dp),
-                    contentScale = ContentScale.Crop,
-                    overlay = {
-                        if (playerState.isLoading) {
-                            //Box(
-                            //modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center
-                            //) {
-                            AsyncImage(
-                                model = item.imageUrl,
-                                contentDescription = "Poster Video Preview",
-                                modifier = Modifier.fillMaxSize(),
-                                contentScale = ContentScale.Crop
-                            )
-                            //}
-                        }
+        } /*
+            // Feature: load videos correctly
+            else {
+            val url = item.urlVideo.toString()
+            playerState.loop = true
+            playerState.openUri(url)
+            playerState.error?.let { error ->
+                println("Error detected: ${error}")
+                playerState.clearError()
+            }
+            VideoPlayerSurface(
+                playerState = playerState,
+                modifier = Modifier.fillMaxWidth().height(290.dp),
+                contentScale = ContentScale.Crop,
+                overlay = {
+                    if (playerState.isLoading) {
+                        AsyncImage(
+                            model = item.imageUrl,
+                            contentDescription = "Poster Video Preview",
+                            modifier = Modifier.fillMaxSize(),
+                            contentScale = ContentScale.Crop
+                        )
                     }
-                )
-            //}
-            /**
-             * Need to fix
-             * Issue: Video overlay another video
-             * Web: https://github.com/Chaintech-Network/ComposeMultiplatformMediaPlayer/issues/187
-             *//*val playerHost = remember {
+                }
+            )
+        }*/
+        /**
+         * Need to fix
+         * Issue: Video overlay another video
+         * Web: https://github.com/Chaintech-Network/ComposeMultiplatformMediaPlayer/issues/187
+         *//*val playerHost = remember {
                 MediaPlayerHost(
                     mediaUrl = item.urlVideo.toString(),
                     isMuted = true,
@@ -236,7 +225,6 @@ fun TileItem(
                     )
                 )
             }*/
-        }*/
     }
 }
 

@@ -75,7 +75,7 @@ fun ModalBottomSheetBag(
             dragHandle = {
                 BottomSheetDefaults.DragHandle()
             },
-            sheetGesturesEnabled = false,
+            sheetGesturesEnabled = false
         ) {
             Box(
                 modifier = Modifier.fillMaxSize().background(colorModifier.backgroundApp)
@@ -236,6 +236,7 @@ fun ModalBottomSheetBag(
         }
     }
 }
+
 @Composable
 fun ZoomableImage(
     imageUrl: String,

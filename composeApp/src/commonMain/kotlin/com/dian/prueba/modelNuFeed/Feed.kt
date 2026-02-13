@@ -18,16 +18,20 @@ data class Feed(
     val isFavorite: Boolean? = null
 )
 
+@Immutable
 sealed class NuFeedUIModel {
+    @Immutable
     data class MessageOut(
         val text: String
     ): NuFeedUIModel()
 
+    @Immutable
     data class MessageIn(
         val text: String,
         val actions: List<String>
     ) : NuFeedUIModel()
 
+    @Immutable
     data class Tile(
         val imageUrl: String,
         val urlVideo: String? = null,
