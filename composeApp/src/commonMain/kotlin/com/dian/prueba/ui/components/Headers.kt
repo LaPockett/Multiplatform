@@ -166,8 +166,7 @@ fun HeaderFeedLogo() {
                             translationX = -15.dp.toPx()
                             translationY = -22.dp.toPx()
                         }
-                        //.height(28.dp)
-                        .width(92.dp).align(Alignment.BottomEnd)
+                        .align(Alignment.BottomEnd)
                 ) {
                     Text(
                         text = stringResource(Res.string.button_msg1),
