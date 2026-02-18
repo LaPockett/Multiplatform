@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import coil3.compose.AsyncImage
 import com.dian.prueba.liquidglass.components.LiquidButton
-import com.dian.prueba.model.LocalPadding
+import com.dian.prueba.data.model.LocalPadding
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.kyant.backdrop.backdrops.layerBackdrop
 import com.kyant.backdrop.backdrops.rememberLayerBackdrop
@@ -31,7 +31,6 @@ import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.button_msg1
 import multiplatform.composeapp.generated.resources.title_feed
 import org.jetbrains.compose.resources.stringResource
-import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun HeaderLogo() {

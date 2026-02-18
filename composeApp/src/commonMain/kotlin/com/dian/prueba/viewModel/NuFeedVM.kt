@@ -2,10 +2,10 @@ package com.dian.prueba.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dian.prueba.model.AssetMediaType
-import com.dian.prueba.modelNuFeed.AssetType
-import com.dian.prueba.modelNuFeed.Feed
-import com.dian.prueba.modelNuFeed.NuFeedUIModel
+import com.dian.prueba.data.model.AssetMediaType
+import com.dian.prueba.data.modelNuFeed.AssetType
+import com.dian.prueba.data.modelNuFeed.Feed
+import com.dian.prueba.data.modelNuFeed.NuFeedUIModel
 import com.dian.prueba.repository.FeedRepository
 import com.dian.prueba.utilities.Logger
 import kotlinx.coroutines.Dispatchers

@@ -1,9 +1,9 @@
 package com.dian.prueba.repository
 
-import com.dian.prueba.model.ProductUIModel
-import com.dian.prueba.modelFeatureFlag.FeatureFlagsResponse
-import com.dian.prueba.modelNuFeed.NuFeedResponse
-import com.dian.prueba.modelProduct.ProductDetailUIModel
+import com.dian.prueba.data.model.ProductUIModel
+import com.dian.prueba.data.modelFeatureFlag.FeatureFlagsResponse
+import com.dian.prueba.data.modelNuFeed.NuFeedResponse
+import com.dian.prueba.data.modelProduct.ProductDetailUIModel
 import com.dian.prueba.network.LogoAPIService
 
 /**

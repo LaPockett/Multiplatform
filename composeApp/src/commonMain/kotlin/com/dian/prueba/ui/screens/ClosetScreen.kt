@@ -36,10 +36,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.dian.prueba.model.AssetMediaType
-import com.dian.prueba.model.LocalColors
-import com.dian.prueba.model.LocalPadding
-import com.dian.prueba.modelNuFeed.NuFeedUIModel
+import com.dian.prueba.data.model.AssetMediaType
+import com.dian.prueba.data.model.LocalColors
+import com.dian.prueba.data.model.LocalPadding
+import com.dian.prueba.data.modelNuFeed.NuFeedUIModel
 import com.dian.prueba.ui.components.CustomSearchBar
 import com.dian.prueba.ui.components.HeaderFeedLogo
 import com.dian.prueba.ui.components.ModalBottomSheetBag

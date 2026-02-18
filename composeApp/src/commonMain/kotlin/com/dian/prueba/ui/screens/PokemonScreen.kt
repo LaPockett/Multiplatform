@@ -26,9 +26,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.dian.prueba.model.LocalColors
-import com.dian.prueba.model.LocalPadding
-import com.dian.prueba.model.PokemonUiModel
+import com.dian.prueba.data.model.LocalColors
+import com.dian.prueba.data.model.LocalPadding
+import com.dian.prueba.data.model.PokemonUiModel
 import com.dian.prueba.network.PokemonAPIClient
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.pokeball

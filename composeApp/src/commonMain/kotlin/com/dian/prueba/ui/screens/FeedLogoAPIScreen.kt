@@ -3,7 +3,6 @@ package com.dian.prueba.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,7 +16,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -25,12 +23,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.dian.prueba.model.AssetMediaType
-import com.dian.prueba.model.LocalColors
-import com.dian.prueba.model.LocalPadding
-import com.dian.prueba.model.ProductUIModel
+import com.dian.prueba.data.model.AssetMediaType
+import com.dian.prueba.data.model.LocalColors
+import com.dian.prueba.data.model.LocalPadding
+import com.dian.prueba.data.model.ProductUIModel
 import com.dian.prueba.viewModel.FeedVM
-import io.github.kdroidfilter.composemediaplayer.VideoPlayerSurface
 import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
 
 @Composable

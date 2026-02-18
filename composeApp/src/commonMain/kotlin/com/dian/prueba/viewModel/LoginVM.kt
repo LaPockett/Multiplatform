@@ -4,7 +4,7 @@ import com.dian.prueba.utilities.Logger
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.*
 import androidx.lifecycle.*
-import com.dian.prueba.model.Tokens
+import com.dian.prueba.data.model.Tokens
 import com.dian.prueba.repository.LoginRepository
 import com.dian.prueba.utilities.TokenStorage
 
