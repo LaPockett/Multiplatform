@@ -24,10 +24,22 @@ class NuFeedVM(
     private var hasMore: Boolean = true
     private var isLoading: Boolean = false
 
+    //UserID
+    private val userId = "0"
+
+    private val _featureFlags = MutableStateFlow<Map<String, Boolean>>(emptyMap())
+    val featureFlags: StateFlow<Map<String, Boolean>> = _featureFlags
+    //private val _featureFlags = MutableStateFlow<String>("")
+    //val featureFlags: StateFlow<String> = _featureFlags
+
+    // TODO
+    private val _requiredActions = MutableStateFlow<List<String>>(emptyList())
+    val requiredActions: StateFlow<List<String>> = _requiredActions
     private val logger = Logger("NuFeedVM")
 
     init {
         loadNextPage()
+        loadFeatureFlags()
     }
 
     fun loadNextPage() {
@@ -56,6 +68,38 @@ class NuFeedVM(
                 logger.error(e)
             } finally {
                 isLoading = false
+            }
+        }
+    }
+
+    fun loadFeatureFlags() {
+        viewModelScope.launch(Dispatchers.IO){
+            try {
+                val response = nuFeedRepository.getFeatureFlags(userId = userId)
+                _featureFlags.update { response.flags }
+                _requiredActions.update { response.requiredActions }
+
+                logger.warn("Feature flags loaded: ${response.flags}")
+            } catch (e: Exception){
+                logger.error(e)
+            }
+        }
+    }
+
+    fun setFeatureFlag(flagName: String, enabled: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                val response = nuFeedRepository.setFeatureFlag(
+                    userId = userId,
+                    flagName = flagName,
+                    enabled = enabled
+                )
+
+                _featureFlags.update { response.flags }
+                logger.warn("Feature flag '$flagName' set to: $enabled")
+
+            } catch (e: Exception) {
+
             }
         }
     }
