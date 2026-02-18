@@ -74,7 +74,7 @@ class LogoAPIClient : LogoAPIService {
         logger.warn("Enter to GetFeatureFlags")
         try {
             val response = client
-                .get("http://127.0.0.1:8160/ux/$userId")
+                .get("http://192.168.10.130:8160/ux/$userId")
                 .body<FeatureFlagsResponse>()
             return@withContext response
 

@@ -45,6 +45,9 @@ import com.dian.prueba.ui.components.HeaderFeedLogo
 import com.dian.prueba.ui.components.ModalBottomSheetBag
 import com.dian.prueba.viewModel.FeedVM
 import com.dian.prueba.viewModel.NuFeedVM
+import io.github.kdroidfilter.composemediaplayer.VideoPlayerSurface
+import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
@@ -52,7 +55,8 @@ fun ClosetScreen(
     viewModel: NuFeedVM,
     paddingValues: PaddingValues,
     isAnimatedFinished: Boolean,
-    feedViewModel: FeedVM
+    feedViewModel: FeedVM,
+    nuFeedVM: NuFeedVM
 ) {
     val feedItems by viewModel.feedItems.collectAsState()
     val listState = rememberLazyGridState()
@@ -66,6 +70,21 @@ fun ClosetScreen(
     )
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
     var itemSelected: NuFeedUIModel.Tile? by remember { mutableStateOf(null) }
+    // TODO In progress
+    val featureFlags by nuFeedVM.featureFlags.collectAsState()
+    val setVideosInFeed: Boolean? = featureFlags["videosInFeed"]
+    println("Set Videos In Feed: $setVideosInFeed")
+    LaunchedEffect(Unit) {
+        if (setVideosInFeed == true) {
+            nuFeedVM.setFeatureFlag("videosInFeed", false)
+            println("Response Feature Flags: ${featureFlags.keys} ${featureFlags.values}")
+            delay(10000)
+        } else if (setVideosInFeed == false) {
+            nuFeedVM.setFeatureFlag("videosInFeed", true)
+            println("Response Feature Flags: ${featureFlags.keys} ${featureFlags.values}")
+            delay(10000)
+        }
+    }
 
     LaunchedEffect(listState) {
         snapshotFlow {
@@ -109,13 +128,14 @@ fun ClosetScreen(
                     is NuFeedUIModel.MessageIn -> MessageItem(item)
                     is NuFeedUIModel.MessageOut -> MessageItem(item)
                     is NuFeedUIModel.Tile -> TileItem(
-                        item, onItemClick = { selectedItem ->
+                        item,
+                        onItemClick = { selectedItem ->
                             // Handle item click
                             itemSelected = selectedItem
                             if (isAnimatedFinished) {
                                 isSheetOpen = true
                             }
-                        }
+                        }, setVideosInFeed = setVideosInFeed!!
                     )
                 }
             }
@@ -139,9 +159,11 @@ fun ClosetScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TileItem(
-    item: NuFeedUIModel.Tile, onItemClick: (item: NuFeedUIModel.Tile) -> Unit
+    item: NuFeedUIModel.Tile, onItemClick: (item: NuFeedUIModel.Tile) -> Unit,
+    setVideosInFeed: Boolean = false
 ) {
-    //val playerState = rememberVideoPlayerState()
+    val playerState = rememberVideoPlayerState()
+    val url = item.urlVideo.toString()
     Card(
         modifier = Modifier.fillMaxWidth().height(290.dp),
         colors = CardDefaults.cardColors(
@@ -153,45 +175,57 @@ fun TileItem(
             println("TileItem clicked: ${item.productId}")
             onItemClick(item)
         }) {
-        if (item.typeMedia == AssetMediaType.IMAGE) {
+        if (item.typeMedia != AssetMediaType.IMAGE && !setVideosInFeed) {
             AsyncImage(
                 model = item.imageUrl,
                 contentDescription = item.typeMedia.toString(),
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
-            //}
-        } /*
-            // Feature: load videos correctly
-            else {
-            val url = item.urlVideo.toString()
-            playerState.loop = true
+        } else if (item.typeMedia != AssetMediaType.IMAGE && setVideosInFeed) {
+            //println("URL VIDEO: $url de item: ${item.productId}")
             playerState.openUri(url)
-            playerState.error?.let { error ->
-                println("Error detected: ${error}")
-                playerState.clearError()
-            }
-            VideoPlayerSurface(
-                playerState = playerState,
-                modifier = Modifier.fillMaxWidth().height(290.dp),
-                contentScale = ContentScale.Crop,
-                overlay = {
-                    if (playerState.isLoading) {
-                        AsyncImage(
-                            model = item.imageUrl,
-                            contentDescription = "Poster Video Preview",
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Crop
-                        )
+            playerState.volume = 0f
+            playerState.loop = true
+            Box(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                VideoPlayerSurface(
+                    playerState = playerState,
+                    modifier = Modifier.fillMaxWidth().height(290.dp),
+                    contentScale = ContentScale.Crop,
+                    overlay = {
+                        if (playerState.isLoading) {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                AsyncImage(
+                                    model = item.imageUrl,
+                                    contentDescription = "Poster Video Preview",
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop
+                                )
+                            }
+                        }
                     }
-                }
+                )
+            }
+
+        } else if (item.typeMedia == AssetMediaType.IMAGE) {
+            AsyncImage(
+                model = item.imageUrl,
+                contentDescription = item.typeMedia.toString(),
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
             )
-        }*/
-        /**
-         * Need to fix
-         * Issue: Video overlay another video
-         * Web: https://github.com/Chaintech-Network/ComposeMultiplatformMediaPlayer/issues/187
-         *//*val playerHost = remember {
+        }
+    }
+    /**
+     * Need to fix
+     * Issue: Video overlay another video
+     * Web: https://github.com/Chaintech-Network/ComposeMultiplatformMediaPlayer/issues/187
+     *//*val playerHost = remember {
                 MediaPlayerHost(
                     mediaUrl = item.urlVideo.toString(),
                     isMuted = true,
@@ -225,7 +259,7 @@ fun TileItem(
                     )
                 )
             }*/
-    }
+
 }
 
 //val currentLanguage = Locale.current.language

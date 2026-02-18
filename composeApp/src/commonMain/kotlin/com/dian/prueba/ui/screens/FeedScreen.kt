@@ -161,7 +161,8 @@ fun LogoNavigation(
                     viewModel = nuFeedVM,
                     paddingValues = paddingValues,
                     isAnimatedFinished = isAnimatedFinished,
-                    feedViewModel = feedVM
+                    feedViewModel = feedVM,
+                    nuFeedVM = nuFeedVM
                 )
             }
             composable(ScreenBottom.Profile.route) {
