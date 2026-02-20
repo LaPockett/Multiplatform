@@ -111,9 +111,8 @@ class NuFeedVM(
  * u otros (en el caso de message solo texto y en el caso de tile más elementos)
  */
 fun Feed.toUIModel(): NuFeedUIModel? {
-    return when {
-
-        type == AssetType.MESSAGE_IN -> {
+    return when (type) {
+        AssetType.MESSAGE_IN -> {
             val actions = actions
 
             body?.let {
@@ -123,35 +122,32 @@ fun Feed.toUIModel(): NuFeedUIModel? {
                 )
             }
         }
-        type == AssetType.MESSAGE_OUT ->{
+        AssetType.MESSAGE_OUT -> {
             body?.let {
                 NuFeedUIModel.MessageOut(text = it)
             }
         }
-        type ==AssetType.TILE -> {
-            val imageUrl = asset?.variants?.firstOrNull()?.url
+        AssetType.TILE -> {
             val posterUrl = asset?.posterVariants?.firstOrNull()?.url
-            val productId = product?.product
             if (asset?.type == AssetMediaType.VIDEO){
                 NuFeedUIModel.Tile(
                     imageUrl = posterUrl.toString(),
                     urlVideo = asset.url,
                     isPremium = isPremium ?: false,
                     isFavorite = isFavorite ?: false,
-                    productId = productId.toString(),
+                    productId = product?.product ?: return null,
                     typeMedia = AssetMediaType.VIDEO
                 )
             } else {
                 NuFeedUIModel.Tile(
-                    imageUrl = imageUrl.toString(),
+                    imageUrl = asset?.variants?.firstOrNull()?.url ?: return null,
                     isPremium = isPremium ?: false,
                     isFavorite = isFavorite ?: false,
-                    productId = productId.toString(),
+                    productId = product?.product ?: return null,
                     typeMedia = AssetMediaType.IMAGE
                 )
             }
         }
-        else -> null
     }
 }
 

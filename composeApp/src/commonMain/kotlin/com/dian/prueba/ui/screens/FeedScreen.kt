@@ -158,10 +158,9 @@ fun LogoNavigation(
             }
             composable(ScreenBottom.Closet.route) {
                 ClosetScreen(
-                    viewModel = nuFeedVM,
                     paddingValues = paddingValues,
                     isAnimatedFinished = isAnimatedFinished,
-                    feedViewModel = feedVM,
+                    feedVM = feedVM,
                     nuFeedVM = nuFeedVM
                 )
             }

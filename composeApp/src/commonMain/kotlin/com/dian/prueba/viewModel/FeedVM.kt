@@ -9,15 +9,17 @@ import com.dian.prueba.utilities.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class FeedVM(
     private val feedRepository: FeedRepository
 ): ViewModel() {
     private val _productList = MutableStateFlow<List<ProductUIModel>>(emptyList())
-    val productList: MutableStateFlow<List<ProductUIModel>> get() = _productList
+    val productList: StateFlow<List<ProductUIModel>> = _productList.asStateFlow()
     private val _productDetail = MutableStateFlow<ProductDetailUIModel?>(null)
-    val productDetail: MutableStateFlow<ProductDetailUIModel?> get() = _productDetail
+    val productDetail: StateFlow<ProductDetailUIModel?> = _productDetail.asStateFlow()
     private val logger = Logger("FeedVM")
 
     init {

@@ -52,13 +52,12 @@ import kotlinx.coroutines.delay
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun ClosetScreen(
-    viewModel: NuFeedVM,
     paddingValues: PaddingValues,
     isAnimatedFinished: Boolean,
-    feedViewModel: FeedVM,
+    feedVM: FeedVM,
     nuFeedVM: NuFeedVM
 ) {
-    val feedItems by viewModel.feedItems.collectAsState()
+    val feedItems by nuFeedVM.feedItems.collectAsState()
     val listState = rememberLazyGridState()
     val paddingModifier = LocalPadding.current
     val colorModifier = LocalColors.current
@@ -94,7 +93,7 @@ fun ClosetScreen(
             lastVisibleItem to totalItems
         }.collect { (lastVisible, total) ->
             if (lastVisible >= total - 9) {
-                viewModel.loadNextPage()
+                nuFeedVM.loadNextPage()
             }
         }
     }
@@ -135,7 +134,7 @@ fun ClosetScreen(
                             if (isAnimatedFinished) {
                                 isSheetOpen = true
                             }
-                        }, setVideosInFeed = setVideosInFeed!!
+                        }, setVideosInFeed = setVideosInFeed ?: false
                     )
                 }
             }
@@ -150,7 +149,7 @@ fun ClosetScreen(
             },
             state = sheetState,
             productId = productId,
-            feedViewModel = feedViewModel,
+            feedViewModel = feedVM,
             selected = itemSelected
         )
     }
