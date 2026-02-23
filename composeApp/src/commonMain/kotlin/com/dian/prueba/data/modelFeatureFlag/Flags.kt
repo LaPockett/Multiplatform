@@ -12,3 +12,8 @@ data class FeatureFlagsResponse(
     val requiredActions: List<String>,
     val flags: Map<String, Boolean>
 )
+
+@Serializable
+data class FeatureFlagValue(
+    val value: Boolean
+)

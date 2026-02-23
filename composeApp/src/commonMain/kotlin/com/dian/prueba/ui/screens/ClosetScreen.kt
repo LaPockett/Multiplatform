@@ -43,11 +43,11 @@ import com.dian.prueba.data.modelNuFeed.NuFeedUIModel
 import com.dian.prueba.ui.components.CustomSearchBar
 import com.dian.prueba.ui.components.HeaderFeedLogo
 import com.dian.prueba.ui.components.ModalBottomSheetBag
+import com.dian.prueba.utilities.FeatureFlagsManager
 import com.dian.prueba.viewModel.FeedVM
 import com.dian.prueba.viewModel.NuFeedVM
 import io.github.kdroidfilter.composemediaplayer.VideoPlayerSurface
 import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
-import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
@@ -57,6 +57,7 @@ fun ClosetScreen(
     feedVM: FeedVM,
     nuFeedVM: NuFeedVM
 ) {
+    nuFeedVM.loadFeatureFlags()
     val feedItems by nuFeedVM.feedItems.collectAsState()
     val listState = rememberLazyGridState()
     val paddingModifier = LocalPadding.current
@@ -69,22 +70,13 @@ fun ClosetScreen(
     )
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
     var itemSelected: NuFeedUIModel.Tile? by remember { mutableStateOf(null) }
-    // TODO In progress
+    /**
+     * Cada vez que cambiemos de screen del navigation se hará update de las flags
+     * Al matar la app también, claro
+     */
     val featureFlags by nuFeedVM.featureFlags.collectAsState()
-    val setVideosInFeed: Boolean? = featureFlags["videosInFeed"]
-    println("Set Videos In Feed: $setVideosInFeed")
-    LaunchedEffect(Unit) {
-        if (setVideosInFeed == true) {
-            nuFeedVM.setFeatureFlag("videosInFeed", false)
-            println("Response Feature Flags: ${featureFlags.keys} ${featureFlags.values}")
-            delay(10000)
-        } else if (setVideosInFeed == false) {
-            nuFeedVM.setFeatureFlag("videosInFeed", true)
-            println("Response Feature Flags: ${featureFlags.keys} ${featureFlags.values}")
-            delay(10000)
-        }
-    }
-
+    FeatureFlagsManager.update(featureFlags)
+    val isFeatureEnabled: Boolean = FeatureFlagsManager.getData("videosInFeed")
     LaunchedEffect(listState) {
         snapshotFlow {
             val layoutInfo = listState.layoutInfo
@@ -134,7 +126,7 @@ fun ClosetScreen(
                             if (isAnimatedFinished) {
                                 isSheetOpen = true
                             }
-                        }, setVideosInFeed = setVideosInFeed ?: false
+                        }, setVideosInFeed = isFeatureEnabled
                     )
                 }
             }

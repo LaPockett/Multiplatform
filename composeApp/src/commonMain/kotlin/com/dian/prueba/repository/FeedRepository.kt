@@ -14,7 +14,6 @@ interface FeedRepository {
     suspend fun getNuFeed(paginationIndex: Int): NuFeedResponse
     suspend fun getProductById(productId: String): ProductDetailUIModel?
     suspend fun getFeatureFlags(userId: String): FeatureFlagsResponse
-    suspend fun setFeatureFlag(userId: String, flagName: String, enabled: Boolean): FeatureFlagsResponse
 }
 
 class FeedRepositoryImpl(
@@ -32,9 +31,5 @@ class FeedRepositoryImpl(
 
     override suspend fun getFeatureFlags(userId: String): FeatureFlagsResponse {
         return logoAPIService.getFeatureFlags(userId)
-    }
-
-    override suspend fun setFeatureFlag(userId: String, flagName: String, enabled: Boolean): FeatureFlagsResponse {
-        return logoAPIService.setFeatureFlag(userId, flagName, enabled)
     }
 }
