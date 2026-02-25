@@ -1,4 +1,4 @@
-package com.dian.prueba.ui.screens
+package com.dian.prueba.ui.screens.unused
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

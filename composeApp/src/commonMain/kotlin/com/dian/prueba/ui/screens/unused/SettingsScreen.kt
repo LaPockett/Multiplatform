@@ -1,4 +1,4 @@
-package com.dian.prueba.ui.screens
+package com.dian.prueba.ui.screens.unused
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

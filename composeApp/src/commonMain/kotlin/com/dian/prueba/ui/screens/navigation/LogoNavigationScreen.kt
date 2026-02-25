@@ -1,4 +1,4 @@
-package com.dian.prueba.ui.screens
+package com.dian.prueba.ui.screens.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -26,7 +26,7 @@ import com.dian.prueba.liquidglass.destinations.BottomTabsLiquidGlass
 import com.dian.prueba.liquidglass.destinations.GlassClippyLogo
 import com.dian.prueba.data.model.LocalColors
 import com.dian.prueba.data.model.LocalDimension
-import com.dian.prueba.navigation.ScreenBottom
+import com.dian.prueba.liquidglass.components.navigation.ScreenBottom
 import com.dian.prueba.viewModel.FeedVM
 import com.dian.prueba.viewModel.NuFeedVM
 import com.kyant.backdrop.backdrops.layerBackdrop
@@ -45,7 +45,7 @@ import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Composable
-fun LogoNavigation(
+fun LogoNavigationScreen(
     feedVM: FeedVM,
     nuFeedVM: NuFeedVM,
     isAnimatedFinished: Boolean

@@ -1,4 +1,4 @@
-package com.dian.prueba.ui.screens
+package com.dian.prueba.ui.screens.navigation
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

@@ -1,4 +1,4 @@
-package com.dian.prueba.ui.splash
+package com.dian.prueba.ui.screens.splash
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -38,8 +38,8 @@ import com.dian.prueba.data.model.LocalColors
 import com.dian.prueba.data.model.LocalPadding
 import com.dian.prueba.network.LogoAPIClient
 import com.dian.prueba.repository.FeedRepositoryImpl
-import com.dian.prueba.ui.screens.ImageLogo
-import com.dian.prueba.ui.screens.LogoNavigation
+import com.dian.prueba.ui.screens.navigation.ImageLogo
+import com.dian.prueba.ui.screens.navigation.LogoNavigationScreen
 import com.dian.prueba.viewModel.FeedVM
 import com.dian.prueba.viewModel.NuFeedVM
 import kotlinx.coroutines.delay
@@ -95,7 +95,7 @@ fun CentralSplashScreen(
     Box(
         modifier = Modifier.fillMaxSize()
     ){
-        LogoNavigation(feedVM, nuFeedVM, isAnimatedFinished)
+        LogoNavigationScreen(feedVM, nuFeedVM, isAnimatedFinished)
     }
     Box(
         modifier = Modifier.fillMaxSize()

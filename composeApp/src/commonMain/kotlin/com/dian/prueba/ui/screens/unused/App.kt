@@ -1,9 +1,6 @@
-package com.dian.prueba
+package com.dian.prueba.ui.screens.unused
 
 import com.dian.prueba.utilities.TokenStorage
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
@@ -11,14 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -26,17 +17,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
 import com.dian.prueba.ui.Theme.MultiplatformTheme
-import com.dian.prueba.navigation.BottomNavigationBar
-import com.dian.prueba.navigation.Screen
+import com.dian.prueba.liquidglass.components.navigation.BottomNavigationBar
+import com.dian.prueba.liquidglass.components.navigation.Screen
 import com.dian.prueba.network.APIClient
 import com.dian.prueba.ui.components.MenuDrawer
-import com.dian.prueba.ui.screens.BrandScreen
-import com.dian.prueba.ui.screens.WelcomeScreen
-import com.dian.prueba.ui.screens.CartScreen
-import com.dian.prueba.ui.screens.HomeScreen
-import com.dian.prueba.ui.screens.LoginScreen
-import com.dian.prueba.ui.screens.ProfileScreen
-import com.dian.prueba.ui.screens.SearchScreen
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.ui.components.dialogs.UpdateAlertDialog
 import com.dian.prueba.utilities.TokenStorageImpl

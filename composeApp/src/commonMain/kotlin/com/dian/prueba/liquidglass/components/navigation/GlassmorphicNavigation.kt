@@ -1,4 +1,4 @@
-package com.dian.prueba.navigation
+package com.dian.prueba.liquidglass.components.navigation
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
@@ -59,11 +59,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.dian.prueba.ui.screens.ClosetScreen
-import com.dian.prueba.ui.screens.NewsletterScreen
-import com.dian.prueba.ui.screens.ProfileScreen
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.HazeTint

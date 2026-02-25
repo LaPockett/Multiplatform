@@ -1,4 +1,4 @@
-package com.dian.prueba.ui
+package com.dian.prueba.ui.components
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape

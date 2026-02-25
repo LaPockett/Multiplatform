@@ -1,4 +1,4 @@
-package com.dian.prueba.ui.screens
+package com.dian.prueba.ui.screens.unused
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,7 +11,7 @@ import androidx.compose.ui.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.dian.prueba.navigation.Screen
+import com.dian.prueba.liquidglass.components.navigation.Screen
 import com.dian.prueba.network.APIClient
 import com.dian.prueba.repository.LoginRepositoryImpl
 import com.dian.prueba.ui.components.WebViewAccount

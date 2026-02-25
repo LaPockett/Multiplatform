@@ -23,7 +23,7 @@ import androidx.core.animation.doOnEnd
 import androidx.core.view.WindowCompat
 import com.dian.prueba.R
 import com.dian.prueba.ui.Theme.MultiplatformTheme
-import com.dian.prueba.ui.splash.CentralSplashScreen
+import com.dian.prueba.ui.screens.splash.CentralSplashScreen
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mmk.kmpnotifier.notification.NotifierManager

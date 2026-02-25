@@ -4,7 +4,6 @@
 *.jks
 node_modules
 .releaserc
-composeApp/src/commonMain/kotlin/com/dian/prueba/utilities/TopAppBarScreen.kt
 screenshot_error.png
 .gradle
 **/build/

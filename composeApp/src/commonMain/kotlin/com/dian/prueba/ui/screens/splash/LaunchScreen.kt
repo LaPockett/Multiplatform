@@ -1,4 +1,4 @@
-package com.dian.prueba.ui.splash
+package com.dian.prueba.ui.screens.splash
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

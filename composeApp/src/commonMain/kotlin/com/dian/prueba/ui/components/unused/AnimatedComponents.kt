@@ -1,4 +1,4 @@
-package com.dian.prueba
+package com.dian.prueba.ui.components.unused
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

@@ -1,4 +1,4 @@
-package com.dian.prueba.navigation
+package com.dian.prueba.liquidglass.components.navigation
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing

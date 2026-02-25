@@ -1,4 +1,4 @@
-package com.dian.prueba.navigation
+package com.dian.prueba.liquidglass.components.navigation
 
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material3.Icon

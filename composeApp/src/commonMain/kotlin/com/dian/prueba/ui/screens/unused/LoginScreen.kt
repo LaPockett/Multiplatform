@@ -1,4 +1,4 @@
-package com.dian.prueba.ui.screens
+package com.dian.prueba.ui.screens.unused
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -25,11 +25,11 @@ import androidx.compose.ui.unit.*
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
 import com.dian.prueba.ui.Theme.MultiplatformTheme
-import com.dian.prueba.navigation.Screen
+import com.dian.prueba.liquidglass.components.navigation.Screen
 import com.dian.prueba.network.APIClient
 import com.dian.prueba.repository.LoginRepositoryImpl
-import com.dian.prueba.ui.EmailTextField
-import com.dian.prueba.ui.PasswordTextField
+import com.dian.prueba.ui.components.EmailTextField
+import com.dian.prueba.ui.components.PasswordTextField
 import com.dian.prueba.ui.components.MenuDrawer
 import com.dian.prueba.ui.components.buttons.CustomButtonWithIcon
 import com.dian.prueba.ui.components.dialogs.*

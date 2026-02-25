@@ -1,4 +1,4 @@
-package com.dian.prueba.navigation
+package com.dian.prueba.liquidglass.components.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
