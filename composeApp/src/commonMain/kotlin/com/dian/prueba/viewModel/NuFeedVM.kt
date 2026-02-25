@@ -7,10 +7,10 @@ import com.dian.prueba.data.modelNuFeed.AssetType
 import com.dian.prueba.data.modelNuFeed.Feed
 import com.dian.prueba.data.modelNuFeed.NuFeedUIModel
 import com.dian.prueba.repository.FeedRepository
-import com.dian.prueba.utilities.FeatureFlagsManager
 import com.dian.prueba.utilities.Logger
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -31,16 +31,24 @@ class NuFeedVM(
     private val _featureFlags = MutableStateFlow<Map<String, Boolean>>(emptyMap())
     val featureFlags: StateFlow<Map<String, Boolean>> = _featureFlags
 
-    // TODO: in the future
     private val _requiredActions = MutableStateFlow<List<String>>(emptyList())
     val requiredActions: StateFlow<List<String>> = _requiredActions
     private val logger = Logger("NuFeedVM")
 
     init {
         loadNextPage()
-        loadFeatureFlags()
+        startFeatureFlagPolling(10000L)
     }
 
+    fun startFeatureFlagPolling(intervalMs : Long) {
+        viewModelScope.launch(Dispatchers.IO){
+            while (true) {
+                logger.warn("=== Starting polling ===")
+                loadFeatureFlags()
+                delay(intervalMs)
+            }
+        }
+    }
     fun loadNextPage() {
         if (isLoading || !hasMore) return
 
@@ -76,7 +84,6 @@ class NuFeedVM(
             try {
                 val response = nuFeedRepository.getFeatureFlags(userId = userId)
                 _featureFlags.update { response.flags }
-                FeatureFlagsManager.update(response.flags)
                 _requiredActions.update { response.requiredActions }
                 logger.warn("Feature flags loaded: ${response.flags}")
             } catch (e: Exception){

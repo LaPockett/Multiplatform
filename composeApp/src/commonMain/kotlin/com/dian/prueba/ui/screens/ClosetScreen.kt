@@ -43,7 +43,6 @@ import com.dian.prueba.data.modelNuFeed.NuFeedUIModel
 import com.dian.prueba.ui.components.CustomSearchBar
 import com.dian.prueba.ui.components.HeaderFeedLogo
 import com.dian.prueba.ui.components.ModalBottomSheetBag
-import com.dian.prueba.utilities.FeatureFlagsManager
 import com.dian.prueba.viewModel.FeedVM
 import com.dian.prueba.viewModel.NuFeedVM
 import io.github.kdroidfilter.composemediaplayer.VideoPlayerSurface
@@ -57,7 +56,6 @@ fun ClosetScreen(
     feedVM: FeedVM,
     nuFeedVM: NuFeedVM
 ) {
-    nuFeedVM.loadFeatureFlags()
     val feedItems by nuFeedVM.feedItems.collectAsState()
     val listState = rememberLazyGridState()
     val paddingModifier = LocalPadding.current
@@ -71,12 +69,10 @@ fun ClosetScreen(
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
     var itemSelected: NuFeedUIModel.Tile? by remember { mutableStateOf(null) }
     /**
-     * Cada vez que cambiemos de screen del navigation se hará update de las flags
-     * Al matar la app también, claro
+     * We'll see the value of feature flags per 10 seconds
      */
     val featureFlags by nuFeedVM.featureFlags.collectAsState()
-    FeatureFlagsManager.update(featureFlags)
-    val isFeatureEnabled: Boolean = FeatureFlagsManager.getData("videosInFeed")
+    val isFeatureEnabled = featureFlags["videosInFeed"] ?: false
     LaunchedEffect(listState) {
         snapshotFlow {
             val layoutInfo = listState.layoutInfo
