@@ -39,7 +39,7 @@ enum class AssetMediaType {
 }
 @Stable
 @Serializable
-data class ProductUIModel(
+data class  ProductUIModel(
     val urlVideo : String? = null,
     val imageUrl: String,
     val posterVariants: List<Variant>? = null,

@@ -1,6 +1,6 @@
 package com.dian.prueba.viewModel
 
-import com.dian.prueba.model.UpdateInfo
+import com.dian.prueba.data.model.UpdateInfo
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.utilities.UpdateStorage
 import kotlinx.coroutines.test.runTest
@@ -59,11 +59,12 @@ class UpdateVMTest {
 
     @Test
     fun `get expected values in fakeApiService when the app isn't updated`() = runTest {
-        val result = fakeApiService.checkUpdateAvailable()
+        fakeApiService.checkUpdateAvailable()
+        val result = updateViewModel.updateInfo.value
         logger.debug("getExpectedValuesInFakeApiService $result")
-        assertEquals("1.3", result.newVersion)
-        assertEquals("1.2", result.currentVersion)
-        assertTrue(result.mustUpdate)
+        assertEquals("1.3", result?.newVersion ?: "none")
+        assertEquals("1.2", result?.currentVersion ?: "none")
+        assertTrue(result?.mustUpdate ?: true)
     }
 
     @Test

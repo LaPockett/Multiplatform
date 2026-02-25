@@ -1,7 +1,6 @@
 package com.dian.prueba.viewModel
 
-
-import com.dian.prueba.model.Tokens
+import com.dian.prueba.data.model.Tokens
 import com.dian.prueba.repository.LoginRepositoryImpl
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.utilities.TokenStorage
@@ -26,7 +25,6 @@ class FakeTokenStorage : TokenStorage {
     override fun saveTokens(tokens: Tokens) {
         this.tokens = tokens
     }
-
     override fun loadTokens(): Tokens? {
         return tokens
     }

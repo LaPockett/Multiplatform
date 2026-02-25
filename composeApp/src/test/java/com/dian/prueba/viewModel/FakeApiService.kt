@@ -1,6 +1,6 @@
 package com.dian.prueba.viewModel
 
-import com.dian.prueba.model.UpdateInfo
+import com.dian.prueba.data.model.UpdateInfo
 import com.dian.prueba.network.ApiService
 
 /**
