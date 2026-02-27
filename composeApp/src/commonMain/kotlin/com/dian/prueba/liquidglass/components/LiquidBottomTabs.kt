@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -169,7 +170,7 @@ fun LiquidBottomTabs(
                     shape = { CircleShape },
                     effects = {
                         vibrancy()
-                        blur(2f.dp.toPx())
+                        blur(8f.dp.toPx())
                         lens(24f.dp.toPx(), 24f.dp.toPx())
                     },
                     layerBlock = {
@@ -242,7 +243,10 @@ fun LiquidBottomTabs(
                 .then(dampedDragAnimation.modifier)
                 .drawBackdrop(
                     backdrop = rememberCombinedBackdrop(backdrop, tabsBackdrop),
-                    shape = { CircleShape },
+                    shape = {
+                        RoundedCornerShape(45.dp)
+                        //CircleShape
+                    },
                     effects = {
                         val progress = dampedDragAnimation.pressProgress
                         lens(

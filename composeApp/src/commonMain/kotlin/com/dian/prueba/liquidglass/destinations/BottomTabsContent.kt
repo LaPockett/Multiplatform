@@ -158,7 +158,7 @@ fun BottomTabsLiquidGlass(
                                     )
                                     Text(
                                         text = tabs[index].title,
-                                        style = MaterialTheme.typography.labelMedium,
+                                        style = MaterialTheme.typography.labelSmall,
                                         color = Color(0xffcccccc),
                                         modifier = Modifier.padding(paddingModifier.extraTiny)
                                     )

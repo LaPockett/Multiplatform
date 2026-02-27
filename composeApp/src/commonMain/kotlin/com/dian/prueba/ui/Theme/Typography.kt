@@ -88,7 +88,7 @@ fun UbuntuTypography() = Typography().run{
         bodySmall = bodySmall.copy(fontFamily = fontFamily),
         labelLarge = labelLarge.copy(fontFamily = fontFamily),
         labelMedium = labelMedium.copy(fontFamily = fontFamily),
-        labelSmall = labelSmall.copy(fontFamily = fontFamily, fontWeight = FontWeight.Bold)
+        labelSmall = labelSmall.copy(fontFamily = fontFamily)
     )
 }
 /*
