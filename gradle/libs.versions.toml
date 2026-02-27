@@ -18,7 +18,7 @@ firebaseCommon = "22.0.0"
 firebaseMessagingKtx = "24.1.2"
 junit = "4.13.2"
 kmpnotifier = "1.5.1"
-kotlin = "2.3.0"
+kotlin = "2.3.10"
 ksp = "2.2.20-2.0.3"
 kcef = "2025.03.23"
 
@@ -86,9 +86,11 @@ androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
 composeMultiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 googleServices = { id = "com.google.gms.google-services", version.ref = "google-services-plugin" }
 
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 composeHotReload = { id = "org.jetbrains.compose.hot-reload", version.ref = "composeHotReload" }
 kotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
