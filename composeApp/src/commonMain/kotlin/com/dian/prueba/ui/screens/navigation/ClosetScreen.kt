@@ -36,10 +36,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.dian.prueba.data.model.AssetMediaType
-import com.dian.prueba.data.model.LocalColors
-import com.dian.prueba.data.model.LocalPadding
-import com.dian.prueba.data.modelNuFeed.NuFeedUIModel
+import com.dian.prueba.data.feed.enums.AssetMediaType
+import com.dian.prueba.data.globalResources.LocalColors
+import com.dian.prueba.data.globalResources.LocalPadding
+import com.dian.prueba.data.nuFeed.mapper.NuFeedUIModel
 import com.dian.prueba.ui.components.CustomSearchBar
 import com.dian.prueba.ui.components.HeaderFeedLogo
 import com.dian.prueba.ui.components.ModalBottomSheetBag
@@ -69,7 +69,7 @@ fun ClosetScreen(
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
     var itemSelected: NuFeedUIModel.Tile? by remember { mutableStateOf(null) }
     /**
-     * We'll see the value of feature flags per 10 seconds
+     * Feature flag values update every 10 seconds, and the ViewModel is cleared when the activity is killed.
      */
     val featureFlags by nuFeedVM.featureFlags.collectAsState()
     val isFeatureEnabled = featureFlags["videosInFeed"] ?: false

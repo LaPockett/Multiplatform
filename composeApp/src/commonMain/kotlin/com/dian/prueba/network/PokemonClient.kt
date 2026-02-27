@@ -1,8 +1,8 @@
 package com.dian.prueba.network
 
-import com.dian.prueba.data.model.PokemonListItem
-import com.dian.prueba.data.model.PokemonListResponse
-import com.dian.prueba.data.model.PokemonUiModel
+import com.dian.prueba.data.unused.PokemonListItem
+import com.dian.prueba.data.unused.PokemonListResponse
+import com.dian.prueba.data.unused.PokemonUiModel
 import io.ktor.client.HttpClient
 import io.ktor.client.call.*
 import io.ktor.client.plugins.contentnegotiation.*

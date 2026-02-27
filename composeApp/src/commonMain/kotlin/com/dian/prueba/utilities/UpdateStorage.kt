@@ -1,6 +1,6 @@
 package com.dian.prueba.utilities
 
-import com.dian.prueba.data.model.UpdateInfo
+import com.dian.prueba.data.unused.UpdateInfo
 import com.russhwolf.settings.Settings
 import com.russhwolf.settings.*
 

@@ -40,9 +40,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.dian.prueba.data.model.LocalColors
-import com.dian.prueba.data.model.LocalPadding
-import com.dian.prueba.data.modelNuFeed.NuFeedUIModel
+import com.dian.prueba.data.globalResources.LocalColors
+import com.dian.prueba.data.globalResources.LocalPadding
+import com.dian.prueba.data.nuFeed.mapper.NuFeedUIModel
 import com.dian.prueba.viewModel.FeedVM
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue

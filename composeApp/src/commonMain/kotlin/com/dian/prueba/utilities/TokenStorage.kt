@@ -1,6 +1,6 @@
 package com.dian.prueba.utilities
 
-import com.dian.prueba.data.model.Tokens
+import com.dian.prueba.data.unused.Tokens
 import com.russhwolf.settings.set
 import com.russhwolf.settings.Settings
 

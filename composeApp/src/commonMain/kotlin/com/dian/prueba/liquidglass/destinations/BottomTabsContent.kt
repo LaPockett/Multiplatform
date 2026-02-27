@@ -29,7 +29,7 @@ import com.dian.prueba.liquidglass.components.LiquidBottomTab
 import com.dian.prueba.liquidglass.components.LiquidBottomTabs
 import com.dian.prueba.liquidglass.BackdropDemoScaffold
 import com.dian.prueba.liquidglass.Block
-import com.dian.prueba.data.model.LocalPadding
+import com.dian.prueba.data.globalResources.LocalPadding
 import com.dian.prueba.liquidglass.components.navigation.ScreenBottom
 import com.dian.prueba.liquidglass.components.navigation.tabs
 import com.dian.prueba.ui.Theme.MultiplatformTheme

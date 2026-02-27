@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import coil3.compose.AsyncImage
 import com.dian.prueba.liquidglass.components.LiquidButton
-import com.dian.prueba.data.model.LocalPadding
+import com.dian.prueba.data.globalResources.LocalPadding
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.kyant.backdrop.backdrops.layerBackdrop
 import com.kyant.backdrop.backdrops.rememberLayerBackdrop

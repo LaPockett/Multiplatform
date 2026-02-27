@@ -12,8 +12,8 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.dian.prueba.data.model.LocalColors
-import com.dian.prueba.data.model.LocalPadding
+import com.dian.prueba.data.globalResources.LocalColors
+import com.dian.prueba.data.globalResources.LocalPadding
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.flower
 import multiplatform.composeapp.generated.resources.matcha

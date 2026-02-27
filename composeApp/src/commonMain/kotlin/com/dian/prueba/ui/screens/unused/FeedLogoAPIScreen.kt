@@ -23,10 +23,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.dian.prueba.data.model.AssetMediaType
-import com.dian.prueba.data.model.LocalColors
-import com.dian.prueba.data.model.LocalPadding
-import com.dian.prueba.data.model.ProductUIModel
+import com.dian.prueba.data.feed.enums.AssetMediaType
+import com.dian.prueba.data.globalResources.LocalColors
+import com.dian.prueba.data.globalResources.LocalPadding
+import com.dian.prueba.data.feed.mapper.ProductUIModel
 import com.dian.prueba.viewModel.FeedVM
 import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
 

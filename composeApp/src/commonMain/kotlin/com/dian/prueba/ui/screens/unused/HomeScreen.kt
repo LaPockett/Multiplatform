@@ -13,7 +13,7 @@ import androidx.compose.ui.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.*
-import com.dian.prueba.data.model.getAllAmazonCategories
+import com.dian.prueba.data.unused.getAllAmazonCategories
 import com.dian.prueba.ui.components.WebViewHome
 
 @OptIn(ExperimentalMaterial3Api::class)

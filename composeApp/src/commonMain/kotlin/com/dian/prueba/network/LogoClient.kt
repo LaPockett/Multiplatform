@@ -1,13 +1,13 @@
 package com.dian.prueba.network
 
 import androidx.compose.ui.text.intl.Locale
-import com.dian.prueba.data.model.AssetMediaType
-import com.dian.prueba.data.model.FeedResponse
-import com.dian.prueba.data.model.ProductUIModel
-import com.dian.prueba.data.modelFeatureFlag.FeatureFlagsResponse
-import com.dian.prueba.data.modelNuFeed.NuFeedResponse
-import com.dian.prueba.data.modelProduct.ProductDetail
-import com.dian.prueba.data.modelProduct.ProductDetailUIModel
+import com.dian.prueba.data.feed.enums.AssetMediaType
+import com.dian.prueba.data.feed.model.FeedResponse
+import com.dian.prueba.data.feed.mapper.ProductUIModel
+import com.dian.prueba.data.featureFlag.model.FeatureFlagsResponse
+import com.dian.prueba.data.nuFeed.model.NuFeedResponse
+import com.dian.prueba.data.product.model.ProductDetail
+import com.dian.prueba.data.product.mapper.ProductDetailUIModel
 import com.dian.prueba.utilities.Logger
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body

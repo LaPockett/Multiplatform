@@ -32,7 +32,7 @@ import com.arjunjadeja.texty.RevealingCover
 import com.arjunjadeja.texty.RevealingPattern
 import com.arjunjadeja.texty.RevealingType
 import com.arjunjadeja.texty.Texty
-import com.dian.prueba.data.model.LocalColors
+import com.dian.prueba.data.globalResources.LocalColors
 import kotlinx.coroutines.delay
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.animated_textfield1

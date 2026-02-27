@@ -34,8 +34,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.dian.prueba.data.model.LocalColors
-import com.dian.prueba.data.model.LocalPadding
+import com.dian.prueba.data.globalResources.LocalColors
+import com.dian.prueba.data.globalResources.LocalPadding
 import com.dian.prueba.network.LogoAPIClient
 import com.dian.prueba.repository.FeedRepositoryImpl
 import com.dian.prueba.ui.screens.navigation.ImageLogo

@@ -1,15 +1,15 @@
 package com.dian.prueba.viewModel
 
-import com.dian.prueba.data.model.AssetMediaType
-import com.dian.prueba.data.model.AssetResponse
-import com.dian.prueba.data.model.FeedItemUI
-import com.dian.prueba.data.model.Product
-import com.dian.prueba.data.model.ProductUIModel
-import com.dian.prueba.data.modelFeatureFlag.FeatureFlagsResponse
-import com.dian.prueba.data.modelNuFeed.AssetType
-import com.dian.prueba.data.modelNuFeed.Feed
-import com.dian.prueba.data.modelNuFeed.NuFeedResponse
-import com.dian.prueba.data.modelProduct.ProductDetailUIModel
+import com.dian.prueba.data.feed.enums.AssetMediaType
+import com.dian.prueba.data.feed.model.AssetResponse
+import com.dian.prueba.data.feed.mapper.FeedItemUI
+import com.dian.prueba.data.feed.model.Product
+import com.dian.prueba.data.feed.mapper.ProductUIModel
+import com.dian.prueba.data.featureFlag.model.FeatureFlagsResponse
+import com.dian.prueba.data.nuFeed.enums.AssetType
+import com.dian.prueba.data.nuFeed.model.Feed
+import com.dian.prueba.data.nuFeed.model.NuFeedResponse
+import com.dian.prueba.data.product.mapper.ProductDetailUIModel
 import com.dian.prueba.network.LogoAPIService
 import com.dian.prueba.repository.FeedRepository
 import com.dian.prueba.repository.FeedRepositoryImpl

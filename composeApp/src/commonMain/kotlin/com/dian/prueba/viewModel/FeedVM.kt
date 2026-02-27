@@ -2,8 +2,8 @@ package com.dian.prueba.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dian.prueba.data.model.ProductUIModel
-import com.dian.prueba.data.modelProduct.ProductDetailUIModel
+import com.dian.prueba.data.feed.mapper.ProductUIModel
+import com.dian.prueba.data.product.mapper.ProductDetailUIModel
 import com.dian.prueba.repository.FeedRepository
 import com.dian.prueba.utilities.Logger
 import kotlinx.coroutines.Dispatchers

@@ -24,8 +24,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.dian.prueba.liquidglass.destinations.BottomTabsLiquidGlass
 import com.dian.prueba.liquidglass.destinations.GlassClippyLogo
-import com.dian.prueba.data.model.LocalColors
-import com.dian.prueba.data.model.LocalDimension
+import com.dian.prueba.data.globalResources.LocalColors
+import com.dian.prueba.data.globalResources.LocalDimension
 import com.dian.prueba.liquidglass.components.navigation.ScreenBottom
 import com.dian.prueba.viewModel.FeedVM
 import com.dian.prueba.viewModel.NuFeedVM

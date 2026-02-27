@@ -1,6 +1,6 @@
 package com.dian.prueba.viewModel
 
-import com.dian.prueba.data.model.UpdateInfo
+import com.dian.prueba.data.unused.UpdateInfo
 import com.dian.prueba.utilities.Logger
 import com.dian.prueba.utilities.UpdateStorage
 import kotlinx.coroutines.test.runTest

@@ -26,7 +26,7 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.dian.prueba.data.model.LocalColors
+import com.dian.prueba.data.globalResources.LocalColors
 
 /**
  * Source: https://www.droidcon.com/2025/04/11/6-steps-to-make-a-slide-to-unlock-button-in-jetpack-compose/
