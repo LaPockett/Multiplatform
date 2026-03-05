@@ -26,7 +26,7 @@ import coil3.compose.AsyncImage
 import com.dian.prueba.data.feed.enums.AssetMediaType
 import com.dian.prueba.data.globalResources.LocalColors
 import com.dian.prueba.data.globalResources.LocalPadding
-import com.dian.prueba.data.feed.mapper.ProductUIModel
+import com.dian.prueba.data.feed.model.ProductUIModel
 import com.dian.prueba.viewModel.FeedVM
 import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
 

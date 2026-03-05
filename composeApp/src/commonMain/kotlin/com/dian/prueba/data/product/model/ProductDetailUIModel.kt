@@ -1,11 +1,7 @@
-package com.dian.prueba.data.product.mapper
+package com.dian.prueba.data.product.model
 
-import com.dian.prueba.data.product.model.Variant
-import kotlinx.serialization.Serializable
-
-@Serializable
 data class ProductDetailUIModel(
-    val _id: String,
+    val id: String,
     val brand: String,
     val manufacturingCountry: String,
     val productName: String,

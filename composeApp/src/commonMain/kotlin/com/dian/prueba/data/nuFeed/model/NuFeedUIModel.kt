@@ -1,15 +1,14 @@
-package com.dian.prueba.data.nuFeed.mapper
+package com.dian.prueba.data.nuFeed.model
 
 import androidx.compose.runtime.Immutable
 import com.dian.prueba.data.feed.enums.AssetMediaType
-import com.dian.prueba.data.nuFeed.model.Variant
 
 @Immutable
 sealed class NuFeedUIModel {
     @Immutable
     data class MessageOut(
         val text: String
-    ): NuFeedUIModel()
+    ) : NuFeedUIModel()
 
     @Immutable
     data class MessageIn(
@@ -27,12 +26,4 @@ sealed class NuFeedUIModel {
         val typeMedia: AssetMediaType,
         val posterVariants: List<Variant>? = null
     ) : NuFeedUIModel()
-
-    data class Asset(
-        val url: String? = null,
-        val type: AssetMediaType,
-        val variants: List<Variant> = emptyList(),
-        val posterVariants: List<Variant>? = emptyList()
-    )
 }
-

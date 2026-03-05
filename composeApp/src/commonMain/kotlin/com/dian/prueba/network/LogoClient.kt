@@ -3,11 +3,11 @@ package com.dian.prueba.network
 import androidx.compose.ui.text.intl.Locale
 import com.dian.prueba.data.feed.enums.AssetMediaType
 import com.dian.prueba.data.feed.model.FeedResponse
-import com.dian.prueba.data.feed.mapper.ProductUIModel
+import com.dian.prueba.data.feed.model.ProductUIModel
 import com.dian.prueba.data.featureFlag.model.FeatureFlagsResponse
 import com.dian.prueba.data.nuFeed.model.NuFeedResponse
 import com.dian.prueba.data.product.model.ProductDetail
-import com.dian.prueba.data.product.mapper.ProductDetailUIModel
+import com.dian.prueba.data.product.model.ProductDetailUIModel
 import com.dian.prueba.utilities.Logger
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -48,7 +48,7 @@ class LogoAPIClient : LogoAPIService {
                 .get("http://192.168.10.130:8160/product/$productId")
                 .body<ProductDetail>()
             return@withContext ProductDetailUIModel(
-                _id = response.data.product._id,
+                id = response.data.product._id,
                 brand = response.data.product.brand,
                 manufacturingCountry = response.data.product.manufacturingCountry,
                 productName = response.data.product.productName,

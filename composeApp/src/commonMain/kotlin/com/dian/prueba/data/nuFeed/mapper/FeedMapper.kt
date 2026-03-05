@@ -3,6 +3,7 @@ package com.dian.prueba.data.nuFeed.mapper
 import com.dian.prueba.data.feed.enums.AssetMediaType
 import com.dian.prueba.data.nuFeed.enums.AssetType
 import com.dian.prueba.data.nuFeed.model.Feed
+import com.dian.prueba.data.nuFeed.model.NuFeedUIModel
 
 /**
  * Como no mapeo los datos de la API en el servicio lo hago en otra función.

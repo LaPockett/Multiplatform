@@ -2,7 +2,6 @@ package com.dian.prueba.data.feed.model
 
 import androidx.compose.runtime.Immutable
 import com.dian.prueba.data.feed.enums.AssetMediaType
-import com.dian.prueba.data.feed.mapper.FeedItemUI
 import com.dian.prueba.data.nuFeed.model.Variant
 import kotlinx.serialization.Serializable
 

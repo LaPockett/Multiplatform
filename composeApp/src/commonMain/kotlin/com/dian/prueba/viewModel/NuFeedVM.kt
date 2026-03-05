@@ -2,7 +2,7 @@ package com.dian.prueba.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dian.prueba.data.nuFeed.mapper.NuFeedUIModel
+import com.dian.prueba.data.nuFeed.model.NuFeedUIModel
 import com.dian.prueba.data.nuFeed.mapper.toUIModel
 import com.dian.prueba.repository.FeedRepository
 import com.dian.prueba.utilities.Logger
@@ -61,9 +61,6 @@ class NuFeedVM(
                     current + newItems
                 }
                 val rawCount = response.feed.size
-                val mapped = response.feed.mapNotNull { it.toUIModel() }
-
-                logger.warn("Total items: $rawCount, UI items: ${mapped.size}")
                 logger.warn("New Items $newItems")
                 logger.warn("Next index: ${response.next_index}, hasMore: ${response.has_more}")
                 nextIndex = response.next_index
