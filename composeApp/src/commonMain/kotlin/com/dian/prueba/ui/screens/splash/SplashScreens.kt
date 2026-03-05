@@ -37,7 +37,10 @@ import androidx.compose.ui.unit.sp
 import com.dian.prueba.data.globalResources.LocalColors
 import com.dian.prueba.data.globalResources.LocalPadding
 import com.dian.prueba.network.LogoAPIClient
+import com.dian.prueba.repository.FeatureFlagRepositoryImpl
 import com.dian.prueba.repository.FeedRepositoryImpl
+import com.dian.prueba.repository.NuFeedRepositoryImpl
+import com.dian.prueba.repository.ProductRepositoryImpl
 import com.dian.prueba.ui.screens.navigation.ImageLogo
 import com.dian.prueba.ui.screens.navigation.LogoNavigationScreen
 import com.dian.prueba.viewModel.FeedVM
@@ -63,11 +66,26 @@ fun CentralSplashScreen(
     val repository = remember {
         FeedRepositoryImpl(LogoAPIClient())
     }
+    val nuRepository = remember {
+        NuFeedRepositoryImpl(LogoAPIClient())
+    }
+    val featureFlagsRepository = remember {
+        FeatureFlagRepositoryImpl(LogoAPIClient())
+    }
+    val productRepository = remember {
+        ProductRepositoryImpl(LogoAPIClient())
+    }
     val feedVM = remember {
-        FeedVM(repository)
+        FeedVM(
+            repository,
+            productRepository = productRepository
+        )
     }
     val nuFeedVM = remember {
-        NuFeedVM(repository)
+        NuFeedVM(
+            nuRepository,
+            featureFlagRepository = featureFlagsRepository
+        )
     }
     LaunchedEffect(Unit) {
         delay(1000)

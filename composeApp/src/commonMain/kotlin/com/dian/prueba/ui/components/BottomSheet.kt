@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.dian.prueba.data.globalResources.LocalColors
 import com.dian.prueba.data.globalResources.LocalPadding
-import com.dian.prueba.data.nuFeed.model.NuFeedUIModel
+import com.dian.prueba.domain.nuFeed.model.NuFeedUIModel
 import com.dian.prueba.viewModel.FeedVM
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue

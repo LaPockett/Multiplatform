@@ -1,10 +1,48 @@
 package com.dian.prueba.data.nuFeed.mapper
 
 import com.dian.prueba.data.feed.enums.AssetMediaType
+import com.dian.prueba.data.feed.model.FeedItemResponse
+import com.dian.prueba.domain.feed.model.FeedItemUI
+import com.dian.prueba.domain.feed.model.ProductUIModel
 import com.dian.prueba.data.nuFeed.enums.AssetType
 import com.dian.prueba.data.nuFeed.model.Feed
-import com.dian.prueba.data.nuFeed.model.NuFeedUIModel
+import com.dian.prueba.domain.nuFeed.model.NuFeedUIModel
 
+fun FeedItemResponse.toProductUIModel(): ProductUIModel? {
+    return when (asset.type) {
+        AssetMediaType.IMAGE -> {
+            val imageUrl = asset.variants?.firstOrNull()?.url ?: return null
+            ProductUIModel(
+                imageUrl = imageUrl,
+                assetType = AssetMediaType.IMAGE,
+                feedItem = toFeedItemUI(),
+                productId = product.product
+            )
+        }
+        AssetMediaType.VIDEO -> {
+            val posterUrl = asset.posterVariants?.firstOrNull()?.url ?: return null
+            ProductUIModel(
+                imageUrl = posterUrl,
+                urlVideo = asset.url,
+                assetType = AssetMediaType.VIDEO,
+                feedItem = toFeedItemUI(),
+                productId = product.product
+            )
+        }
+    }
+}
+
+private fun FeedItemResponse.toFeedItemUI(): FeedItemUI {
+    return FeedItemUI(
+        isPremium = isPremium,
+        isFavorite = isFavorite,
+        assetUrl = asset.variants?.firstOrNull()?.url
+            ?: asset.posterVariants?.firstOrNull()?.url
+            ?: "",
+        productId = product.product,
+        variantId = product.variant
+    )
+}
 /**
  * Como no mapeo los datos de la API en el servicio lo hago en otra función.
  * De esta forma dependiendo del tipo de asset que sea devuelve unos datos

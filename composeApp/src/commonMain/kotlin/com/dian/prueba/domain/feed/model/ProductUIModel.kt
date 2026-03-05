@@ -1,4 +1,4 @@
-package com.dian.prueba.data.feed.model
+package com.dian.prueba.domain.feed.model
 
 import androidx.compose.runtime.Stable
 import com.dian.prueba.data.feed.enums.AssetMediaType

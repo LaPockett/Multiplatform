@@ -1,7 +1,8 @@
-package com.dian.prueba.data.nuFeed.model
+package com.dian.prueba.domain.nuFeed.model
 
 import androidx.compose.runtime.Immutable
 import com.dian.prueba.data.feed.enums.AssetMediaType
+import com.dian.prueba.data.nuFeed.model.Variant
 
 @Immutable
 sealed class NuFeedUIModel {

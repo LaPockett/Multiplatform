@@ -1,4 +1,6 @@
-package com.dian.prueba.data.product.model
+package com.dian.prueba.domain.product.model
+
+import com.dian.prueba.data.product.model.Variant
 
 data class ProductDetailUIModel(
     val id: String,

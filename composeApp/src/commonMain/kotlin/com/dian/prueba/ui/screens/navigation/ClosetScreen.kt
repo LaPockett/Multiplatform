@@ -39,7 +39,7 @@ import coil3.compose.AsyncImage
 import com.dian.prueba.data.feed.enums.AssetMediaType
 import com.dian.prueba.data.globalResources.LocalColors
 import com.dian.prueba.data.globalResources.LocalPadding
-import com.dian.prueba.data.nuFeed.model.NuFeedUIModel
+import com.dian.prueba.domain.nuFeed.model.NuFeedUIModel
 import com.dian.prueba.ui.components.CustomSearchBar
 import com.dian.prueba.ui.components.HeaderFeedLogo
 import com.dian.prueba.ui.components.ModalBottomSheetBag
