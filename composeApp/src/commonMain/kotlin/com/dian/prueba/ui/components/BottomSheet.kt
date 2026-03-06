@@ -51,9 +51,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import com.dian.prueba.liquidglass.components.CarouselHorizontalSample
 import com.dian.prueba.ui.components.buttons.SlideToBookButton
+import com.dian.prueba.utilities.StopPostScrollNestedScrollConnection
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -77,11 +79,12 @@ fun ModalBottomSheetBag(
             containerColor = colorModifier.backgroundApp,
             dragHandle = {
                 BottomSheetDefaults.DragHandle()
-            },
-            sheetGesturesEnabled = false
+            }
         ) {
             Box(
-                modifier = Modifier.fillMaxSize().background(colorModifier.backgroundApp)
+                modifier = Modifier.fillMaxSize()
+                    .background(colorModifier.backgroundApp)
+                    .nestedScroll(StopPostScrollNestedScrollConnection)
             ) {
                 Column(
                     modifier = Modifier.fillMaxSize()
