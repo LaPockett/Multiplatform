@@ -68,9 +68,8 @@ fun ClosetScreen(
     )
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
     var itemSelected: NuFeedUIModel.Tile? by remember { mutableStateOf(null) }
-    /**
-     * Feature flag values update every 10 seconds, and the ViewModel is cleared when the activity is killed.
-     */
+
+    //* Feature flag values update every 10 seconds, and the ViewModel is cleared when the activity is killed.
     val featureFlags by nuFeedVM.featureFlags.collectAsState()
     val isFeatureEnabled = featureFlags["videosInFeed"] ?: false
     LaunchedEffect(listState) {
@@ -208,11 +207,10 @@ fun TileItem(
             )
         }
     }
-    /**
-     * Need to fix
-     * Issue: Video overlay another video
-     * Web: https://github.com/Chaintech-Network/ComposeMultiplatformMediaPlayer/issues/187
-     *//*val playerHost = remember {
+     //! Need to fix
+     //! Issue: Video overlay another video
+     //ref: https://github.com/Chaintech-Network/ComposeMultiplatformMediaPlayer/issues/187
+    /*val playerHost = remember {
                 MediaPlayerHost(
                     mediaUrl = item.urlVideo.toString(),
                     isMuted = true,

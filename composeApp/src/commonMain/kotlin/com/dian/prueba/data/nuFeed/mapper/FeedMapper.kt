@@ -43,11 +43,6 @@ private fun FeedItemResponse.toFeedItemUI(): FeedItemUI {
         variantId = product.variant
     )
 }
-/**
- * Como no mapeo los datos de la API en el servicio lo hago en otra función.
- * De esta forma dependiendo del tipo de asset que sea devuelve unos datos
- * u otros (en el caso de message solo texto y en el caso de tile más elementos)
- */
 
 fun Feed.toUIModel(): NuFeedUIModel? {
     return when (type) {

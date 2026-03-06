@@ -3,7 +3,7 @@ package com.dian.prueba.repository
 import com.dian.prueba.domain.feed.model.ProductUIModel
 import com.dian.prueba.network.service.FeedAPIService
 
-/**
+/* *
  * Repository pattern for clean separation
  */
 interface FeedRepository {

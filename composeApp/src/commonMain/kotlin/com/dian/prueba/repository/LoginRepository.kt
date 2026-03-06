@@ -2,7 +2,8 @@ package com.dian.prueba.repository
 
 import com.dian.prueba.network.ApiService
 import com.dian.prueba.utilities.Logger
-//https://medium.com/@appdevinsights/repository-design-pattern-in-kotlin-1d1aeff1ad40
+
+//ref: https://medium.com/@appdevinsights/repository-design-pattern-in-kotlin-1d1aeff1ad40
 
 interface LoginRepository{
     suspend fun login(id: Int): String?

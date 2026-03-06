@@ -30,7 +30,7 @@ class NuFeedVM(
     @Volatile
     private var isLoading: Boolean = false
 
-    //UserID (need to implement)
+    // TODO: UserID (need to implement)
     private val userId = "0"
 
     private val _featureFlags = MutableStateFlow<Map<String, Boolean>>(emptyMap())

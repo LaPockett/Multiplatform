@@ -1,6 +1,6 @@
 package com.dian.prueba.utilities
 
-/**
+/* *
  * Centralización de logging para no llenar de prints
  * en todas partes del código. EL código se ve más limpio,
  * incluso más legible y fácil de mantener porque no tenemos
