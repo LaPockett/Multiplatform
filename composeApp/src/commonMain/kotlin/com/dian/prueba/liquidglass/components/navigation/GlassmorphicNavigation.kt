@@ -67,10 +67,9 @@ import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
-/**
- * Source: https://www.sinasamaki.com/glassmorphic-bottom-navigation-in-jetpack-compose/
- * Author: Sinasamaki
- */
+ // ref: https://www.sinasamaki.com/glassmorphic-bottom-navigation-in-jetpack-compose/
+ //* Author: Sinasamaki
+
 @Preview
 @Composable
 fun MainNavigationPrueba() {
@@ -298,7 +297,7 @@ val tabs = listOf(
 )
 
 sealed class ScreenBottom(val route: String) {
-    data object Newspaper : Screen("newsletter")
-    data object Closet : Screen("closet")
-    data object Profile : Screen("profile")
+    data object Newspaper : ScreenBottom("newsletter")
+    data object Closet : ScreenBottom("closet")
+    data object Profile : ScreenBottom("profile")
 }
