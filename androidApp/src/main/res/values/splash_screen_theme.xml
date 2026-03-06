@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.App.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#000000</item>
+        <item name="windowSplashScreenAnimatedIcon">
+            @drawable/animated_logo
+        </item>
+        <item name="postSplashScreenTheme">
+            @android:style/Theme.Material.NoActionBar
+        </item>
+        <item name="windowSplashScreenAnimationDuration">
+            2500
+        </item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+</resources>

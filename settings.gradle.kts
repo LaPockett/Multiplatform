@@ -1,5 +1,7 @@
 import org.gradle.kotlin.dsl.maven
 
+include(":androidApp")
+
 rootProject.name = "Multiplatform"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 

@@ -5,18 +5,21 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.composeHotReload)
     alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     id("org.jetbrains.kotlin.plugin.serialization") version "2.3.10"
-    alias(libs.plugins.googleServices)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
 }
 
 kotlin {
-    androidTarget {
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+    android {
+        namespace = "com.lapockett.prueba.composeApp"
+        compileSdk = libs.versions.android.compileSdk.get().toInt()
+        //minSdk = libs.versions.android.minSdk.get().toInt()
+        
+        androidResources {
+
         }
     }
 
@@ -31,8 +34,7 @@ kotlin {
             isStatic = true
         }
     }
-    applyDefaultHierarchyTemplate()
-
+    
     jvm()
 
     applyDefaultHierarchyTemplate()
@@ -78,20 +80,20 @@ kotlin {
             implementation(libs.material.icons.core)
             implementation(compose.materialIconsExtended)
             api(libs.kmpnotifier)
-            implementation(libs.haze)
-            implementation(libs.haze.materials)
+            implementation("dev.chrisbanes.haze:haze:1.6.10")
+            implementation("dev.chrisbanes.haze:haze-materials:1.6.10")
             implementation(libs.compottie)
             implementation(libs.compottie.lite)
             implementation(libs.compottie.dot)
             implementation(libs.compottie.network)
             implementation(libs.compottie.resources)
-            implementation(libs.texty)
-            implementation(libs.coil.compose)
-            implementation(libs.coil.svg)
-            implementation(libs.coil3.coil.network.ktor3)
+            implementation("com.arjunjadeja:texty:1.0.0-alpha")
+            implementation("io.coil-kt.coil3:coil-compose:3.0.4")
+            implementation("io.coil-kt.coil3:coil-svg:3.0.4")
+            implementation("io.coil-kt.coil3:coil-network-ktor3:3.0.4")
             implementation("io.lapockett:cmpglass:1.1.0")
-            implementation(libs.ui.backhandler)
-            implementation(libs.composemediaplayer)
+            implementation("org.jetbrains.compose.ui:ui-backhandler:1.9.2")
+            implementation("io.github.kdroidfilter:composemediaplayer:0.8.7")
         }
         
         commonTest.dependencies {
@@ -124,74 +126,6 @@ kotlin {
 compose.resources {
     publicResClass = false
     packageOfResClass = "multiplatform.composeapp.generated.resources"
-}
-
-val secretsFile = rootProject.file("secrets.gradle.properties")
-if (secretsFile.exists()) {
-    val secretsProps = Properties().apply {
-        load(secretsFile.inputStream())
-    }
-    secretsProps.forEach { key, value ->
-        project.extensions.extraProperties[key.toString()] = value
-    }
-}
-
-val storePass = project.findProperty("storePassword") as? String ?: ""
-val keyAliasValue = project.findProperty("keyAlias") as? String ?: ""
-val keyPass = project.findProperty("keyPassword") as? String ?: ""
-
-android {
-    namespace = "com.dian.prueba"
-    compileSdk = libs.versions.android.compileSdk.get().toInt()
-
-    signingConfigs {
-        create("release") {
-            storeFile = file("multiplatform_keystore.jks")
-            storePassword = storePass
-            keyAlias = keyAliasValue
-            keyPassword = keyPass
-        }
-    }
-
-    defaultConfig {
-        applicationId = "com.dian.prueba"
-        minSdk = libs.versions.android.minSdk.get().toInt()
-        targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-    
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-    
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-            isDebuggable = false
-            signingConfig = signingConfigs.getByName("release")
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-        getByName("debug") {
-            isDebuggable = true
-        }
-    }
-    
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
-}
-
-dependencies {
-    debugImplementation(compose.uiTooling)
-    implementation(libs.kcef)
 }
 
 compose.desktop {
