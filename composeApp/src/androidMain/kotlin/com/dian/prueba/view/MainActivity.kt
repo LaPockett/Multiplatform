@@ -21,9 +21,11 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.core.animation.doOnEnd
 import androidx.core.view.WindowCompat
+import coil3.ImageLoader
 import com.dian.prueba.R
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.screens.splash.CentralSplashScreen
+import com.dian.prueba.utilities.AppImageLoader
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.mmk.kmpnotifier.notification.NotifierManager
@@ -32,10 +34,14 @@ import com.mmk.kmpnotifier.permission.permissionUtil
 
 // Define root module for Showkase
 class MainActivity : ComponentActivity() {
+    companion object {
+        lateinit var imageLoader: ImageLoader
+    }
     @RequiresApi(Build.VERSION_CODES.S)
     @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        imageLoader = AppImageLoader.create(this)
         //Ask for notification permission
         val permissionUtil by permissionUtil()
         permissionUtil.askNotificationPermission()

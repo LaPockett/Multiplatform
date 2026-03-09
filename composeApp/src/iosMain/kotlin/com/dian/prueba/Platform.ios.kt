@@ -1,5 +1,8 @@
 package com.dian.prueba
 
+import coil3.ImageLoader
+import coil3.PlatformContext
+import com.dian.prueba.utilities.AppImageLoader
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.darwin.Darwin
 import platform.UIKit.UIDevice
@@ -26,3 +29,5 @@ actual fun getPlatformType(): PlatformType = PlatformType.IOS
         }
     }
 }*/
+actual fun getImageLoader(): ImageLoader =
+        AppImageLoader.create(PlatformContext.INSTANCE)

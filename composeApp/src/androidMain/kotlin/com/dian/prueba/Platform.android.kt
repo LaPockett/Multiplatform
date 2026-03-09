@@ -1,11 +1,11 @@
 package com.dian.prueba
 
 import android.os.Build
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.okhttp.OkHttp
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
+import coil3.ImageLoader
+import coil3.imageLoader
+import com.dian.prueba.utilities.AppImageLoader
+import com.dian.prueba.view.MainActivity
+import okhttp3.internal.platform.PlatformRegistry.applicationContext
 
 class AndroidPlatform : Platform {
     override val name: String = "Android ${Build.VERSION.SDK_INT}"
@@ -21,3 +21,8 @@ actual fun getPlatformType(): PlatformType = PlatformType.ANDROID
         })
     }
 }*/
+
+//actual fun getImageLoader(): ImageLoader =
+// (applicationContext as MainActivity).imageLoader
+actual fun getImageLoader(): ImageLoader =
+    MainActivity.imageLoader

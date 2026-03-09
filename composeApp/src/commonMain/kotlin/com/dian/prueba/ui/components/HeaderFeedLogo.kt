@@ -15,9 +15,12 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil3.ImageLoader
 import coil3.compose.AsyncImage
 import com.dian.prueba.liquidglass.components.LiquidButton
 import com.dian.prueba.data.globalResources.LocalPadding
+import com.dian.prueba.getImageLoader
+import com.dian.prueba.getPlatformType
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.kyant.backdrop.backdrops.layerBackdrop
 import com.kyant.backdrop.backdrops.rememberLayerBackdrop
@@ -29,6 +32,7 @@ import org.jetbrains.compose.resources.stringResource
 @Composable
 fun HeaderFeedLogo() {
     val paddingModifier = LocalPadding.current
+
     MultiplatformTheme {
         val backdrop = rememberLayerBackdrop()
         Column(
@@ -62,6 +66,7 @@ fun HeaderFeedLogo() {
                                 }
                                 .fillMaxSize()
                                 .align(Alignment.TopCenter),
+                            // imageLoader = getImageLoader()
                         )
                     }
                 }
