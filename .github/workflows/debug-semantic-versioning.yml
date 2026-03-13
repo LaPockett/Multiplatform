@@ -31,8 +31,6 @@ jobs:
       - name: Install Dependencies
         run: |
           npm ci
-          npm audit
-          npm audit fix
 
       - name: Run Semantic Release
         run: npx semantic-release
