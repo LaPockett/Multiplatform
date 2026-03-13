@@ -4,8 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dian.prueba.domain.nuFeed.model.NuFeedUIModel
 import com.dian.prueba.data.nuFeed.mapper.toUIModel
-import com.dian.prueba.repository.FeatureFlagRepository
-import com.dian.prueba.repository.FeedRepository
+import com.dian.prueba.repository.UserRepository
 import com.dian.prueba.repository.NuFeedRepository
 import com.dian.prueba.utilities.Logger
 import kotlinx.coroutines.Dispatchers
@@ -19,7 +18,7 @@ import kotlin.concurrent.Volatile
 
 class NuFeedVM(
     private val nuFeedRepository: NuFeedRepository,
-    private val featureFlagRepository: FeatureFlagRepository
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     private val _feedItems = MutableStateFlow<List<NuFeedUIModel>>(emptyList())
@@ -36,6 +35,8 @@ class NuFeedVM(
     private val _featureFlags = MutableStateFlow<Map<String, Boolean>>(emptyMap())
     val featureFlags: StateFlow<Map<String, Boolean>> = _featureFlags
 
+    private val _currentRoute = MutableStateFlow<String?>(null)
+
     private val _requiredActions = MutableStateFlow<List<String>>(emptyList())
     val requiredActions: StateFlow<List<String>> = _requiredActions
     private val logger = Logger("NuFeedVM")
@@ -43,14 +44,38 @@ class NuFeedVM(
     init {
         loadNextPage()
         startFeatureFlagPolling(10000L)
+        startCurrentRoutePolling(5000L)
     }
 
     fun startFeatureFlagPolling(intervalMs : Long) {
         viewModelScope.launch(Dispatchers.IO){
             while (true) {
-                logger.warn("=== Starting polling ===")
+                logger.warn("=== Starting polling (featureFlags) ===")
                 loadFeatureFlags()
                 delay(intervalMs)
+            }
+        }
+    }
+    fun updateCurrentRoute(route: String?) {
+        _currentRoute.value = route
+    }
+
+    fun startCurrentRoutePolling(intervalMs: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            while (true) {
+                logger.warn("=== Starting polling (currentRoute) ===")
+                getCurrentRoute(_currentRoute.value)
+                delay(intervalMs)
+            }
+        }
+    }
+
+    fun getCurrentRoute(currentRoute: String?) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                userRepository.getCurrentRoute(currentRoute, userId)
+            } catch (e: Exception) {
+                logger.error(e)
             }
         }
     }
@@ -79,7 +104,7 @@ class NuFeedVM(
     fun loadFeatureFlags() {
         viewModelScope.launch(Dispatchers.IO){
             try {
-                val response = featureFlagRepository.getFeatureFlags(userId)
+                val response = userRepository.getFeatureFlags(userId)
                 _featureFlags.update { response.flags }
                 _requiredActions.update { response.requiredActions }
                 logger.warn("Feature flags loaded: ${response.flags}")

@@ -8,11 +8,11 @@ import com.dian.prueba.data.nuFeed.model.NuFeedResponse
 import com.dian.prueba.domain.feed.model.FeedItemUI
 import com.dian.prueba.domain.feed.model.ProductUIModel
 import com.dian.prueba.domain.product.model.ProductDetailUIModel
-import com.dian.prueba.network.service.FeatureFlagAPIService
+import com.dian.prueba.network.service.UserAPIService
 import com.dian.prueba.network.service.FeedAPIService
 import com.dian.prueba.network.service.NuFeedAPIService
 import com.dian.prueba.network.service.ProductAPIService
-import com.dian.prueba.repository.FeatureFlagRepositoryImpl
+import com.dian.prueba.repository.UserRepositoryImpl
 import com.dian.prueba.repository.NuFeedRepositoryImpl
 import com.dian.prueba.utilities.Logger
 import kotlinx.coroutines.test.runTest
@@ -85,7 +85,7 @@ class FakeProductAPIService : ProductAPIService {
 }
 
 //* === Fake de FeatureFlagAPIService ===
-class FakeFeatureFlagAPIService : FeatureFlagAPIService {
+class FakeUserAPIService : UserAPIService {
     override suspend fun getFeatureFlags(userId: String): FeatureFlagsResponse {
         if (userId.isNotEmpty()) {
             return FeatureFlagsResponse(
@@ -104,7 +104,7 @@ class NuFeedVMTest {
     private lateinit var fakeFeedService: FakeFeedAPIService
     private lateinit var fakeNuFeedService: FakeNuFeedAPIService
     private lateinit var fakeProductService: FakeProductAPIService
-    private lateinit var fakeFeatureFlagService: FakeFeatureFlagAPIService
+    private lateinit var fakeFeatureFlagService: FakeUserAPIService
     private lateinit var nuFeedVM: NuFeedVM
 
     @Before
@@ -113,10 +113,10 @@ class NuFeedVMTest {
         fakeFeedService = FakeFeedAPIService()
         fakeNuFeedService = FakeNuFeedAPIService()
         fakeProductService = FakeProductAPIService()
-        fakeFeatureFlagService = FakeFeatureFlagAPIService()
+        fakeFeatureFlagService = FakeUserAPIService()
         nuFeedVM = NuFeedVM(
             nuFeedRepository = NuFeedRepositoryImpl(fakeNuFeedService),
-            featureFlagRepository = FeatureFlagRepositoryImpl(fakeFeatureFlagService)
+            userRepository = UserRepositoryImpl(fakeFeatureFlagService)
         )
     }
 

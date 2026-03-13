@@ -7,6 +7,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,6 +23,7 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.dian.prueba.liquidglass.destinations.BottomTabsLiquidGlass
 import com.dian.prueba.liquidglass.destinations.GlassClippyLogo
@@ -57,6 +60,14 @@ fun LogoNavigationScreen(
     val navController = rememberNavController()
     val lightAlpha = 0.3f
     val darkAlpha = 0.1f
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = currentBackStackEntry?.destination?.route
+    /*println("Current route: $currentRoute")
+    nuFeedVM.getCurrentRoute(currentRoute)*/
+    LaunchedEffect(currentRoute){
+        nuFeedVM.updateCurrentRoute(currentRoute)
+        nuFeedVM.getCurrentRoute(currentRoute)
+    }
     val hazeStyle = HazeStyle(
         backgroundColor = Color.White,
         tints = listOf(

@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.sp
 import com.dian.prueba.data.globalResources.LocalColors
 import com.dian.prueba.data.globalResources.LocalPadding
 import com.dian.prueba.network.LogoAPIClient
-import com.dian.prueba.repository.FeatureFlagRepositoryImpl
+import com.dian.prueba.repository.UserRepositoryImpl
 import com.dian.prueba.repository.FeedRepositoryImpl
 import com.dian.prueba.repository.NuFeedRepositoryImpl
 import com.dian.prueba.repository.ProductRepositoryImpl
@@ -70,7 +70,7 @@ fun CentralSplashScreen(
         NuFeedRepositoryImpl(LogoAPIClient())
     }
     val featureFlagsRepository = remember {
-        FeatureFlagRepositoryImpl(LogoAPIClient())
+        UserRepositoryImpl(LogoAPIClient())
     }
     val productRepository = remember {
         ProductRepositoryImpl(LogoAPIClient())
@@ -84,7 +84,7 @@ fun CentralSplashScreen(
     val nuFeedVM = remember {
         NuFeedVM(
             nuRepository,
-            featureFlagRepository = featureFlagsRepository
+            userRepository = featureFlagsRepository
         )
     }
     LaunchedEffect(Unit) {

@@ -9,7 +9,7 @@ import com.dian.prueba.data.nuFeed.model.NuFeedResponse
 import com.dian.prueba.data.product.mapper.toDetailUIModel
 import com.dian.prueba.data.product.model.ProductDetail
 import com.dian.prueba.domain.product.model.ProductDetailUIModel
-import com.dian.prueba.network.service.FeatureFlagAPIService
+import com.dian.prueba.network.service.UserAPIService
 import com.dian.prueba.network.service.FeedAPIService
 import com.dian.prueba.network.service.NuFeedAPIService
 import com.dian.prueba.network.service.ProductAPIService
@@ -25,7 +25,7 @@ import kotlinx.coroutines.IO
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.json.Json
 
-class LogoAPIClient : FeedAPIService, NuFeedAPIService, ProductAPIService, FeatureFlagAPIService {
+class LogoAPIClient : FeedAPIService, NuFeedAPIService, ProductAPIService, UserAPIService {
 
     private val logger = Logger("LogoAPIClient")
     private val currentLanguage = Locale.current.language
@@ -92,6 +92,22 @@ class LogoAPIClient : FeedAPIService, NuFeedAPIService, ProductAPIService, Featu
                     .get("http://192.168.10.130:8160/ux/$userId")
                     .body()
             } catch (e: Exception) {
+                logger.error(e)
+                throw e
+            }
+        }
+
+    override suspend fun getCurrentRoute(currentRoute: String?, userId: String): String =
+        withContext(Dispatchers.IO) {
+            logger.warn("Enter to getCurrentRoute")
+            try {
+                logger.warn("Current route: $currentRoute")
+                client
+                    .get("http://192.168.10.130:8160/ux/$userId"){
+                        parameter("currentRoute", currentRoute)
+                    }
+                    .body()
+            } catch (e: Exception){
                 logger.error(e)
                 throw e
             }
