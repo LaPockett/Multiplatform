@@ -5,6 +5,7 @@
 node_modules
 .releaserc
 screenshot_error.png
+screenshot_error_logo.png
 .gradle
 **/build/
 xcuserdata

@@ -68,6 +68,6 @@ jobs:
             adb devices -l
             adb wait-for-device
             adb install /home/usuario/releases-apk-for-appium/composeApp-release.apk
-            npm run test-all
+            npm run test-all-logo
             echo "Closing connection with emulator-5554 Test"
             adb -s emulator-5554 emu kill || true

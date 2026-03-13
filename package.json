@@ -15,6 +15,7 @@
   "description": "appiumjs",
   "main": "index.js",
   "scripts": {
+    "test-all-logo": "node appium/logo/testAll.js",
     "test-all": "node appium/testAll.js",
     "prepare": "husky",
     "test-ios": "node appium/testLoginiOS"
