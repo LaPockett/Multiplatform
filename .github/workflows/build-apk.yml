@@ -20,7 +20,7 @@ jobs:
     if: inputs.all_tests_passed && github.ref == 'refs/heads/master'
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v4.2.2
+      - uses: actions/checkout@v6.0.2
 
       - name: Set current date as env variable
         run: echo "date_today=$(date +'%d-%m-%Y')" >> $GITHUB_ENV
@@ -65,13 +65,13 @@ jobs:
             exit 1
           fi
       - name: Upload APK release
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.repository_name }}  - APK Release generated
           path: ${{steps.find_apk.outputs.APK_PATH}}
 
       - name: Upload APK debug
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: ${{ env.date_today }} - ${{ env.PLAYSTORE_NAME }} - ${{ env.repository_name }}  - APK Debug generated
           path: ${{ env.MAIN_PROJECT_MODULE }}/build/outputs/apk/debug/
