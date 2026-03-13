@@ -38,8 +38,8 @@ fun ExpandedImageDialog(
     ) {
         BoxWithConstraints(
             modifier = Modifier
-                .fillMaxWidth().aspectRatio(400f / 600f)
-                //.fillMaxSize()
+                //.fillMaxWidth().aspectRatio(400f / 600f)
+                .fillMaxSize()
                 .background(Color(0xe5000000))
                 .pointerInput(Unit) {
                     detectTapGestures(
