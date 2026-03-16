@@ -96,6 +96,17 @@ class FakeUserAPIService : UserAPIService {
             throw Exception("User id is empty")
         }
     }
+
+    override suspend fun getCurrentRoute(
+        currentRoute: String?,
+        userId: String
+    ): String {
+        if (userId.isNotEmpty()) {
+            return "route"
+        } else {
+            throw Exception("User id is empty")
+        }
+    }
 }
 
 class NuFeedVMTest {
@@ -162,6 +173,20 @@ class NuFeedVMTest {
     fun `get featureFlags unsuccessfully`() = runTest {
         val exception = assertFailsWith<Exception> {
             fakeFeatureFlagService.getFeatureFlags("")
+        }
+        assertEquals("User id is empty", exception.message)
+    }
+
+    @Test
+    fun `get current route successfully`() = runTest {
+        val currentRoute = fakeFeatureFlagService.getCurrentRoute("route", "3")
+        assertEquals("route", currentRoute)
+    }
+
+    @Test
+    fun `get current route unsuccessfully`() = runTest {
+        val exception = assertFailsWith<Exception> {
+            fakeFeatureFlagService.getCurrentRoute("", "")
         }
         assertEquals("User id is empty", exception.message)
     }
