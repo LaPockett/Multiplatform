@@ -220,7 +220,7 @@ fun ModalBottomSheetBag(
                             outerBtnBackgroundColor = colorModifier.logoColorLight,
                             sliderBtnBackgroundColor = colorModifier.logoColor,
                             onBtnSwipe = {
-                                println("Slide to book button swiped!")
+                                // todo: navigate to confirmOrderDialog
                             },
                         )
                         Spacer(modifier = Modifier.padding(vertical = paddingModifier.tiny))
