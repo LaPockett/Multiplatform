@@ -92,6 +92,9 @@ kotlin {
             implementation("io.lapockett:cmpglass:1.1.0")
             implementation(libs.ui.backhandler)
             implementation(libs.composemediaplayer)
+            implementation("com.mikepenz:multiplatform-markdown-renderer:0.39.2")
+            implementation("com.mikepenz:multiplatform-markdown-renderer-m3:0.39.2")
+            implementation("com.mikepenz:multiplatform-markdown-renderer-coil3:0.39.2")
         }
         
         commonTest.dependencies {

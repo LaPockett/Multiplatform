@@ -1,52 +1,130 @@
 package com.dian.prueba.ui.screens.navigation
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextLinkStyles
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.sp
 import com.dian.prueba.data.globalResources.LocalColors
 import com.dian.prueba.data.globalResources.LocalPadding
+import com.mikepenz.markdown.compose.components.markdownComponents
+import com.mikepenz.markdown.compose.elements.MarkdownImage
+import com.mikepenz.markdown.compose.elements.MarkdownParagraph
+import com.mikepenz.markdown.coil3.Coil3ImageTransformerImpl
+import com.mikepenz.markdown.m3.Markdown
+import com.mikepenz.markdown.m3.markdownTypography
+import com.mikepenz.markdown.model.rememberMarkdownState
 import multiplatform.composeapp.generated.resources.Res
-import multiplatform.composeapp.generated.resources.flower
-import org.jetbrains.compose.resources.painterResource
 
-//todo: Renderizador de Markdown que se mostrará en esta screen
 @Composable
-fun NewsletterScreen(
-    paddingValues: PaddingValues
-) {
-    val paddingModifier = LocalPadding.current
+fun NewsletterScreen(paddingValues: PaddingValues) {
     val colorModifier = LocalColors.current
-    Box(
-        modifier = Modifier
-            .background(colorModifier.backgroundApp)
-            .padding(horizontal = paddingModifier.tiny)
-            .fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            contentPadding = paddingValues,
-            horizontalArrangement = Arrangement.spacedBy(paddingModifier.extraTiny),
-            verticalArrangement = Arrangement.spacedBy(paddingModifier.extraTiny),
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            items(22){
-                Image(
-                    painter = painterResource(Res.drawable.flower),
-                    contentDescription = "Newspaper",
-                    modifier = Modifier.fillMaxSize()
+    val paddingModifier = LocalPadding.current
+
+    val components = markdownComponents(
+        // !error: Image is animating to actual size on Android...
+        // ref: Image is animating to actual size on Android
+        image = {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    MarkdownImage(it.content, it.node)
+                }
+            }
+        },
+        paragraph = {
+            Column {
+                MarkdownParagraph(it.content, it.node)
+                Spacer(
+                    Modifier.padding(vertical = paddingModifier.extraTiny)
                 )
             }
+        },
+    )
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(colorModifier.backgroundApp)
+            .padding(horizontal = paddingModifier.tiny),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(state = rememberScrollState())
+                .padding(
+                    top = paddingValues.calculateTopPadding() + paddingModifier.tiny,
+                    bottom = paddingValues.calculateBottomPadding()
+                ),
+        ) {
+            Markdown(
+                markdownState = rememberMarkdownState {
+                    Res.readBytes("files/example.md").decodeToString()
+                },
+                components = components,
+                typography = markdownTypography(
+                    h1 = MaterialTheme.typography.titleLarge.copy(
+                        color = colorModifier.logoColor
+                    ),
+                    h2 = MaterialTheme.typography.titleMedium.copy(
+                        color = colorModifier.logoColor
+                    ),
+                    h3 = MaterialTheme.typography.titleSmall.copy(
+                        color = colorModifier.logoColor
+                    ),
+                    text = MaterialTheme.typography.bodyMedium.copy(
+                        color = colorModifier.blackLight
+                    ),
+                    quote = MaterialTheme.typography.bodySmall.copy(
+                        color = colorModifier.logoColor,
+                        fontStyle = FontStyle.Italic
+                    ),
+                    paragraph = MaterialTheme.typography.bodyMedium.copy(
+                        color = Color.Black,
+                        textAlign = TextAlign.Justify
+                    ),
+                    textLink = TextLinkStyles(
+                        style = MaterialTheme.typography.bodyLarge.copy(
+                            color = Color.Blue
+                        ).toSpanStyle()
+                    ),
+                    ordered = MaterialTheme.typography.titleSmall.copy(
+                        color = Color.Blue
+                    )
+                ),
+                imageTransformer = Coil3ImageTransformerImpl,
+            )
         }
+    }
+}
+
+@Composable
+private fun Header() {
+    val colorModifier = LocalColors.current
+    val paddingModifier = LocalPadding.current
+    Column {
+        Text(
+            "Luxury Newsletter",
+            style = MaterialTheme.typography.titleLarge,
+            color = colorModifier.logoColor,
+            letterSpacing = 0.4.sp,
+            modifier = Modifier.padding(bottom = paddingModifier.extraTiny)
+        )
+        Spacer(Modifier.height(paddingModifier.tiny))
     }
 }
