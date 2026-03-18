@@ -41,6 +41,7 @@ import com.dian.prueba.repository.UserRepositoryImpl
 import com.dian.prueba.repository.FeedRepositoryImpl
 import com.dian.prueba.repository.NuFeedRepositoryImpl
 import com.dian.prueba.repository.ProductRepositoryImpl
+import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.screens.navigation.ImageLogo
 import com.dian.prueba.ui.screens.navigation.LogoNavigationScreen
 import com.dian.prueba.viewModel.FeedVM
@@ -62,7 +63,7 @@ fun CentralSplashScreen(
     var showTitle by remember { mutableStateOf(false) }
     var showButton by rememberSaveable { mutableStateOf(false) }
     var showMsg by remember { mutableStateOf(false) }
-    var isAnimatedFinished by remember {mutableStateOf(false)}
+    var isAnimatedFinished by remember { mutableStateOf(false) }
     val repository = remember {
         FeedRepositoryImpl(LogoAPIClient())
     }
@@ -110,84 +111,87 @@ fun CentralSplashScreen(
     /**
      * Hacer que la pantalla principal esté de alguna forma debajo del launchScreen
      */
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ){
-        LogoNavigationScreen(feedVM, nuFeedVM, isAnimatedFinished)
-    }
-    Box(
-        modifier = Modifier.fillMaxSize()
-            .offset(y = offsetY)
-            .background(colorModifier.backgroundSplash),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 75.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+    MultiplatformTheme {
+        Box(
+            modifier = Modifier.fillMaxSize()
         ) {
-            SmoothAppear(visible = showMsg) {
-                Text(
-                    text = stringResource(Res.string.first_splash_screen),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleLarge,
-                    color = Color.White,
-                    fontWeight = FontWeight.Light,
-                    lineHeight = 34.sp
-                )
-            }
+            LogoNavigationScreen(feedVM, nuFeedVM, isAnimatedFinished)
         }
-        Column(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+        Box(
+            modifier = Modifier.fillMaxSize()
+                .offset(y = offsetY)
+                .background(colorModifier.backgroundSplash),
+            contentAlignment = Alignment.Center
         ) {
-            SmoothAppear(visible = showTitle) {
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 75.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                SmoothAppear(visible = showMsg) {
                     Text(
-                        "Welcome to",
-                        color = Color.White,
+                        text = stringResource(Res.string.first_splash_screen),
+                        textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.titleLarge,
-                        fontWeight = FontWeight.ExtraLight
-                    )
-                    Spacer(Modifier.padding(horizontal = paddingModifier.extraTiny))
-                    ImageLogo(
-                        tint = Color.White,
-                        painter = painterResource(Res.drawable.logotitle),
-                        modifier = Modifier.height(48.dp)
+                        color = Color.White,
+                        fontWeight = FontWeight.Light,
+                        lineHeight = 34.sp
                     )
                 }
             }
-            Spacer(modifier = Modifier.padding(vertical = paddingModifier.extraLarge))
-            SmoothAppear(visible = showButton) {
-                Button(
-                    onClick = {
-                        //onFinish()
-                        isAnimatedFinished = true
-                              },
-                    modifier = Modifier.height(56.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = colorModifier.containerColor,
-                        contentColor = Color.White
-                    )
-                ) {
-                    Text(
-                        text = stringResource(Res.string.button_splash_screen),
-                        color = Color.White,
-                        style = MaterialTheme.typography.titleSmall,
-                        fontWeight = FontWeight.ExtraLight
-                    )
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                SmoothAppear(visible = showTitle) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Text(
+                            "Welcome to",
+                            color = Color.White,
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.ExtraLight
+                        )
+                        Spacer(Modifier.padding(horizontal = paddingModifier.extraTiny))
+                        ImageLogo(
+                            tint = Color.White,
+                            painter = painterResource(Res.drawable.logotitle),
+                            modifier = Modifier.height(48.dp)
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.padding(vertical = paddingModifier.extraLarge))
+                SmoothAppear(visible = showButton) {
+                    Button(
+                        onClick = {
+                            //onFinish()
+                            isAnimatedFinished = true
+                        },
+                        modifier = Modifier.height(56.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = colorModifier.containerColor,
+                            contentColor = Color.White
+                        )
+                    ) {
+                        Text(
+                            text = stringResource(Res.string.button_splash_screen),
+                            color = Color.White,
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.ExtraLight
+                        )
+                    }
                 }
             }
         }
     }
+
 }
 
 @Composable
