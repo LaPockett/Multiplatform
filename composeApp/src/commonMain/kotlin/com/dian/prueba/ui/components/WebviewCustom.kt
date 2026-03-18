@@ -172,7 +172,7 @@ fun WebViewLogoNewsletter(
 }
 
 @Composable
-fun WebViewLogoProfile(
+fun WebViewZonaLogo(
     modifier: Modifier =  Modifier
 ) {
     val logger = Logger("WebViewLogoCloset")

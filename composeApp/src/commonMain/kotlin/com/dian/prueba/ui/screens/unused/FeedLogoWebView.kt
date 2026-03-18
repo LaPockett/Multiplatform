@@ -28,7 +28,7 @@ import com.dian.prueba.liquidglass.components.navigation.ScreenBottom
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.components.WebViewLogoCloset
 import com.dian.prueba.ui.components.WebViewLogoNewsletter
-import com.dian.prueba.ui.components.WebViewLogoProfile
+import com.dian.prueba.ui.components.WebViewZonaLogo
 import com.dian.prueba.ui.screens.navigation.ImageLogo
 import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.HazeTint
@@ -158,7 +158,7 @@ fun ProfileScreenWebView() {
             .background(Color.White)
             //.padding(horizontal = 12.dp)
     ) {
-        WebViewLogoProfile()
+        WebViewZonaLogo()
     }
 }
 
