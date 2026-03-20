@@ -1,5 +1,6 @@
 package com.dian.prueba.ui.screens.navigation
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -47,8 +48,140 @@ import com.dian.prueba.viewModel.FeedVM
 import com.dian.prueba.viewModel.NuFeedVM
 import io.github.kdroidfilter.composemediaplayer.VideoPlayerSurface
 import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
+import multiplatform.composeapp.generated.resources.Res
+import multiplatform.composeapp.generated.resources.flower
+import multiplatform.composeapp.generated.resources.matcha
+import org.jetbrains.compose.resources.painterResource
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
+//! try to fix: componentes de prueba para reproducir el error de la carga de video en ios
+//! need to test in iOS !!!
+//* Lazy de videos
+@Composable
+fun ClosetScreen(
+    paddingValues: PaddingValues,
+    isAnimatedFinished: Boolean,
+    feedVM: FeedVM,
+    nuFeedVM: NuFeedVM
+) {
+    val paddingModifier = LocalPadding.current
+    val colorModifier = LocalColors.current
+
+    val urls = remember {
+        //! si pongo muchos elementos falla > 8
+        List(4) { "https://videos.pexels.com/video-files/20570352/20570352-hd_720_1280_30fps.mp4" }
+    }
+
+    Box(
+        modifier = Modifier
+            .background(colorModifier.backgroundApp)
+            .padding(horizontal = paddingModifier.tiny)
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            horizontalArrangement = Arrangement.spacedBy(paddingModifier.extraTiny),
+            verticalArrangement = Arrangement.spacedBy(paddingModifier.extraTiny),
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = paddingValues
+        ) {
+            items(urls.size) { index ->
+                VideoGridItem(url = urls[index])
+            }
+        }
+    }
+}
+
+@Composable
+private fun VideoGridItem(url: String) {
+    val playerState = rememberVideoPlayerState()
+
+    //LaunchedEffect(url) {
+        playerState.openUri(url)
+        playerState.loop = true
+    //}
+
+    VideoPlayerSurface(
+        playerState = playerState,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(290.dp),
+        contentScale = ContentScale.Crop,
+        /*overlay = {
+            if (playerState.isLoading) {
+                Image(
+                    painter = painterResource(Res.drawable.flower),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            }
+        }*/
+    )
+}
+//* Componente de un solo video en grande
+/*@Composable
+fun ClosetScreen(
+    paddingValues: PaddingValues,
+    isAnimatedFinished: Boolean,
+    feedVM: FeedVM,
+    nuFeedVM: NuFeedVM
+) {
+    val paddingModifier = LocalPadding.current
+    val colorModifier = LocalColors.current
+    val playerState = rememberVideoPlayerState()
+    val url = "https://videos.pexels.com/video-files/20570352/20570352-hd_720_1280_30fps.mp4"
+    playerState.openUri(url)
+    playerState.loop = true
+    Box(
+        modifier = Modifier
+            .background(colorModifier.backgroundApp)
+            .padding(horizontal = paddingModifier.tiny)
+            .fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            //contentPadding = paddingValues,
+            horizontalArrangement = Arrangement.spacedBy(paddingModifier.extraTiny),
+            verticalArrangement = Arrangement.spacedBy(paddingModifier.extraTiny),
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            items(22){
+                VideoPlayerSurface(
+                    playerState = playerState,
+                    modifier = Modifier.fillMaxWidth().height(290.dp),
+                    contentScale = ContentScale.Crop,
+                    overlay = {
+                        if (playerState.isLoading) {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                /*AsyncImage(
+                                    model = item.imageUrl,
+                                    contentDescription = "Poster Video Preview",
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop
+                                )*/
+                                Image(
+                                    painter = painterResource(Res.drawable.matcha),
+                                    contentDescription = "Profile",
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop
+                                )
+                            }
+                        }
+                    }
+                )
+            }
+        }
+
+    }
+}*/
+
+/*@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun ClosetScreen(
     paddingValues: PaddingValues,
@@ -140,7 +273,7 @@ fun ClosetScreen(
             selected = itemSelected
         )
     }
-}
+}*/*/
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
