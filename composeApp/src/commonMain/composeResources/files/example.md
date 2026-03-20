@@ -11,7 +11,7 @@ At the beginning of the 2024, we begin acquiring more popular and versatile piec
 - **Unique and "conversation" models**, such as Jonathan Anderson's controversial Pigeon Clutch.
 - **Emerging trends** that our customers want to try before committing, like the Gucci Jackie Ancora.
 
-![image1](https://www.marie-claire.es/wp-content/uploads/sites/2/2023/02/05/63df6e7cce87a.jpeg)
+![image1](https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=800&q=80)
 
 This strategy not only captured the attention of our ideal members, but also significantly boosted their retention, creating what we could call a true ****"LOGO addiction."**** These members constantly come back with a recurring question: “What's new?” Furthermore, we have observed that price is no longer a concern for them; If they like something, they are willing to pay what is necessary to enjoy it.
 

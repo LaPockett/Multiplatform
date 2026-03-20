@@ -1,5 +1,6 @@
 package com.dian.prueba.ui.screens.navigation
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -24,6 +25,8 @@ import com.mikepenz.markdown.m3.Markdown
 import com.mikepenz.markdown.m3.markdownTypography
 import com.mikepenz.markdown.model.rememberMarkdownState
 import multiplatform.composeapp.generated.resources.Res
+import multiplatform.composeapp.generated.resources.flower
+import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun NewsletterScreen(paddingValues: PaddingValues) {
@@ -32,7 +35,7 @@ fun NewsletterScreen(paddingValues: PaddingValues) {
 
     val components = markdownComponents(
         // !error: Image is animating to actual size on Android...
-        // ref: Image is animating to actual size on Android
+        // ref: https://github.com/mikepenz/multiplatform-markdown-renderer/issues/430
         image = {
             Box(
                 modifier = Modifier.fillMaxSize(),
