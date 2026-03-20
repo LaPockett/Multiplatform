@@ -145,73 +145,67 @@ fun ClosetScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TileItem(
-    item: NuFeedUIModel.Tile, onItemClick: (item: NuFeedUIModel.Tile) -> Unit,
+    item: NuFeedUIModel.Tile,
+    onItemClick: (item: NuFeedUIModel.Tile) -> Unit,
     setVideosInFeed: Boolean = false
 ) {
-    val playerState = rememberVideoPlayerState()
-    val url = item.urlVideo.toString()
     Card(
         modifier = Modifier.fillMaxWidth().height(290.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant
-        ),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         shape = RoundedCornerShape(6.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
-        onClick = {
-            println("TileItem clicked: ${item.productId}")
-            onItemClick(item)
-        }) {
-        if (item.typeMedia != AssetMediaType.IMAGE && !setVideosInFeed) {
-            AsyncImage(
-                model = item.imageUrl,
-                contentDescription = item.typeMedia.toString(),
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-        } else if (item.typeMedia != AssetMediaType.IMAGE && setVideosInFeed) {
-            //println("URL VIDEO: $url de item: ${item.productId}")
-            LaunchedEffect(url){
-                playerState.openUri(url)
-                playerState.volume = 0f
-                playerState.loop = true
+        onClick = { onItemClick(item) }
+    ) {
+        when {
+            item.typeMedia == AssetMediaType.IMAGE -> {
+                AsyncImage(
+                    model = item.imageUrl,
+                    contentDescription = item.typeMedia.toString(),
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
             }
-            Box(
-                modifier = Modifier.fillMaxSize()
-            ) {
+
+            setVideosInFeed -> {
+                val playerState = rememberVideoPlayerState()
+                val url = item.urlVideo ?: return@Card
+
+                LaunchedEffect(url) {
+                    playerState.openUri(url)
+                    playerState.volume = 0f
+                    playerState.loop = true
+                }
                 VideoPlayerSurface(
                     playerState = playerState,
-                    modifier = Modifier.fillMaxWidth().height(290.dp),
+                    modifier = Modifier.fillMaxSize(),
                     contentScale = ContentScale.Crop,
                     overlay = {
                         if (playerState.isLoading) {
-                            Box(
+                            AsyncImage(
+                                model = item.imageUrl,
+                                contentDescription = "Poster Video Preview",
                                 modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                AsyncImage(
-                                    model = item.imageUrl,
-                                    contentDescription = "Poster Video Preview",
-                                    modifier = Modifier.fillMaxSize(),
-                                    contentScale = ContentScale.Crop
-                                )
-                            }
+                                contentScale = ContentScale.Crop
+                            )
                         }
                     }
                 )
             }
 
-        } else if (item.typeMedia == AssetMediaType.IMAGE) {
-            AsyncImage(
-                model = item.imageUrl,
-                contentDescription = item.typeMedia.toString(),
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
+            else -> {
+                AsyncImage(
+                    model = item.imageUrl,
+                    contentDescription = item.typeMedia.toString(),
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+            }
         }
     }
-     //! Need to fix
-     //! Issue: Video overlay another video
-     //ref: https://github.com/Chaintech-Network/ComposeMultiplatformMediaPlayer/issues/187
+
+    //! Need to fix
+    //! Issue: Video overlay another video
+    //ref: https://github.com/Chaintech-Network/ComposeMultiplatformMediaPlayer/issues/187
     /*val playerHost = remember {
                 MediaPlayerHost(
                     mediaUrl = item.urlVideo.toString(),
@@ -246,9 +240,7 @@ fun TileItem(
                     )
                 )
             }*/
-
 }
-
 //val currentLanguage = Locale.current.language
 
 @Composable
