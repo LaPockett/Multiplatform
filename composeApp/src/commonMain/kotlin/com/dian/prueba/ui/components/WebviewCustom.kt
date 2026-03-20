@@ -175,10 +175,10 @@ fun WebViewLogoNewsletter(
 fun WebViewZonaLogo(
     modifier: Modifier =  Modifier
 ) {
-    val logger = Logger("WebViewLogoCloset")
+    val logger = Logger("WebViewZonaLOGO")
     val headers = WebViewHeaderManager.getHeaders()
     logger.debug(headers.toString())
-    val url = "https://www.bottegaveneta.com/en-es/login"
+    val url = "http://192.168.10.130:8160/zonaLOGO"
 
     val webViewState = rememberWebViewState(
         url = url,

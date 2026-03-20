@@ -5,30 +5,36 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import com.dian.prueba.data.globalResources.LocalColors
+import com.dian.prueba.data.globalResources.LocalPadding
 import com.dian.prueba.ui.components.WebViewZonaLogo
-
-// todo: añadir zona logo (de momento login de bottega veneta)
 
 @Composable
 fun ProfileScreen(
     paddingValues: PaddingValues
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color.White)
-            .padding(paddingValues)
-    ) {
-        WebViewZonaLogo(
-            modifier = Modifier.fillMaxSize()
-        )
-    }
+    val paddingModifier = LocalPadding.current
+    val colorModifier = LocalColors.current
+        /* *
+         * Incluyo esto solo para poder utilizar el contentPadding con paddingValues y que el webview
+         * esté por debajo del bottom navigation, pero cuando llegue al final de la web no quede
+         * por debajo y así el usuario pueda ver todos los elementos correctamente.
+         */
+        LazyColumn(
+            contentPadding = paddingValues,
+            modifier = Modifier
+                .fillMaxSize()
+                .background(colorModifier.backgroundApp)
+                .padding(horizontal = paddingModifier.tiny)
+        ) {
+            item {
+                WebViewZonaLogo(modifier = Modifier.fillMaxSize())
+            }
+        }
 }
-
-
 
 /* *
  * Para ver su comportamiento junto con el bottom navigation
