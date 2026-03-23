@@ -65,7 +65,8 @@ fun ModalBottomSheetBag(
     state: SheetState,
     selected: NuFeedUIModel.Tile?,
     productId: String,
-    feedViewModel: FeedVM
+    feedViewModel: FeedVM,
+    onConfirmOrder: () -> Unit
 ) {
     val paddingModifier = LocalPadding.current
     val colorModifier = LocalColors.current
@@ -221,6 +222,7 @@ fun ModalBottomSheetBag(
                             sliderBtnBackgroundColor = colorModifier.logoColor,
                             onBtnSwipe = {
                                 // todo: navigate to confirmOrderDialog
+                                onConfirmOrder()
                             },
                         )
                         Spacer(modifier = Modifier.padding(vertical = paddingModifier.tiny))

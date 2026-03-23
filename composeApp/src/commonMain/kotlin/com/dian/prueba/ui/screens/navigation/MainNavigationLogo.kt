@@ -16,11 +16,11 @@ import androidx.compose.ui.draw.dropShadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.shadow.Shadow
 import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -30,13 +30,12 @@ import com.dian.prueba.liquidglass.destinations.GlassClippyLogo
 import com.dian.prueba.data.globalResources.LocalColors
 import com.dian.prueba.data.globalResources.LocalDimension
 import com.dian.prueba.liquidglass.components.navigation.ScreenBottom
+import com.dian.prueba.ui.components.dialogs.ConfirmOrderDialog
 import com.dian.prueba.viewModel.FeedVM
 import com.dian.prueba.viewModel.NuFeedVM
-import com.kyant.backdrop.backdrops.layerBackdrop
-import com.kyant.backdrop.backdrops.rememberLayerBackdrop
+import com.kyant.backdrop.backdrops.LayerBackdrop
 import dev.chrisbanes.haze.HazeState
 import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.HazeTint
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
@@ -53,32 +52,65 @@ fun LogoNavigationScreen(
     nuFeedVM: NuFeedVM,
     isAnimatedFinished: Boolean
 ) {
-    val uiDimensions = LocalDimension.current
-    val colorModifier = LocalColors.current
     val hazeState = rememberHazeState()
-    val backdrop = rememberLayerBackdrop()
     val navController = rememberNavController()
-    val lightAlpha = 0.3f
-    val darkAlpha = 0.1f
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = currentBackStackEntry?.destination?.route
     /*println("Current route: $currentRoute")
     nuFeedVM.getCurrentRoute(currentRoute)*/
-    LaunchedEffect(currentRoute){
+    LaunchedEffect(currentRoute) {
         nuFeedVM.updateCurrentRoute(currentRoute)
         nuFeedVM.getCurrentRoute(currentRoute)
     }
-    val hazeStyle = HazeStyle(
-        backgroundColor = Color.White,
-        tints = listOf(
-            HazeTint(
-                Color.White.copy(alpha = if (Color.White.luminance() >= 0.5) lightAlpha else darkAlpha),
+    NavHost(
+        navController = navController,
+        startDestination = ScreenBottom.Closet.route,
+        modifier = Modifier
+            .fillMaxSize()
+            .hazeSource(hazeState)
+        //.layerBackdrop(backdrop)
+    ) {
+        composable(ScreenBottom.Newspaper.route) {
+            NewsletterScreen(navController = navController)
+        }
+
+        composable(ScreenBottom.Closet.route) {
+            ClosetScreen(
+                navController = navController,
+                isAnimatedFinished = isAnimatedFinished,
+                feedVM = feedVM,
+                nuFeedVM = nuFeedVM,
+                navigateTo = { route ->
+                    navController.navigate(route)
+                }
             )
-        ),
-        blurRadius = 5.dp,
-        noiseFactor = -1f,
-        fallbackTint = HazeTint.Unspecified,
-    )
+        }
+
+        composable(ScreenBottom.Profile.route) {
+            ProfileScreen(
+                navController = navController
+            )
+        }
+
+        composable("closet/confirmOrder") {
+            ConfirmOrderDialog()
+        }
+    }
+}
+
+
+//* Quizás luego necesite esto
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun CentralScaffold(
+    content: @Composable () -> Unit,
+    backdrop: LayerBackdrop,
+    navController: NavHostController,
+    hazeState: HazeState,
+    hazeStyle: HazeStyle
+) {
+    val colorModifier = LocalColors.current
+    val uiDimensions = LocalDimension.current
     Scaffold(
         //modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -154,32 +186,10 @@ fun LogoNavigationScreen(
             ) {
                 BottomTabsLiquidGlass(backdrop, navController)
             }
-        }
-    ) { paddingValues ->
-        NavHost(
-            navController = navController,
-            startDestination = ScreenBottom.Closet.route,
-            modifier = Modifier
-                .fillMaxSize()
-                .hazeSource(hazeState)
-                .layerBackdrop(backdrop)
-        ) {
-            composable(ScreenBottom.Newspaper.route) {
-                NewsletterScreen(paddingValues)
-            }
-            composable(ScreenBottom.Closet.route) {
-                ClosetScreen(
-                    paddingValues = paddingValues,
-                    isAnimatedFinished = isAnimatedFinished,
-                    feedVM = feedVM,
-                    nuFeedVM = nuFeedVM
-                )
-            }
-            composable(ScreenBottom.Profile.route) {
-                ProfileScreen(paddingValues)
-            }
-        }
 
+        },
+    ) {
+        content()
     }
 }
 
