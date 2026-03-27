@@ -1,26 +1,26 @@
 package com.dian.prueba.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil3.ImageLoader
 import coil3.compose.AsyncImage
 import com.dian.prueba.liquidglass.components.LiquidButton
 import com.dian.prueba.data.globalResources.LocalPadding
-import com.dian.prueba.getImageLoader
-import com.dian.prueba.getPlatformType
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.kyant.backdrop.backdrops.layerBackdrop
 import com.kyant.backdrop.backdrops.rememberLayerBackdrop
@@ -49,7 +49,7 @@ fun HeaderFeedLogo() {
                 ) {
                     Box(
                         modifier = Modifier.fillMaxSize()
-                            .layerBackdrop(backdrop),
+                            .layerBackdrop(backdrop)
                     ) {
                         AsyncImage(
                             model = Res.getUri("files/border.svg"),
@@ -65,6 +65,19 @@ fun HeaderFeedLogo() {
                                     translationY = -8.dp.toPx()
                                 }
                                 .fillMaxSize()
+                                .background(
+                                    brush = Brush.verticalGradient(
+                                        colors = listOf(
+                                            Color.Transparent,
+                                            Color.White.copy(alpha = 0.1f),
+                                            Color.White.copy(alpha = 0.2f),
+                                            Color.White.copy(alpha = 0.3f),
+                                            Color.Black.copy(alpha = 0.1f),
+                                            Color.Black.copy(alpha = 0.2f)
+                                        )
+                                    ),
+                                    shape = RoundedCornerShape(bottomStart = 29.2.dp, bottomEnd = 29.2.dp)
+                                )
                                 .align(Alignment.TopCenter),
                             // imageLoader = getImageLoader()
                         )
