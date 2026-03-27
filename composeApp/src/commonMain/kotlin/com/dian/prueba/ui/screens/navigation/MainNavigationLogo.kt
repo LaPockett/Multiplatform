@@ -1,48 +1,26 @@
 package com.dian.prueba.ui.screens.navigation
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.dropShadow
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.shadow.Shadow
-import androidx.compose.ui.unit.DpOffset
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.dian.prueba.liquidglass.destinations.BottomTabsLiquidGlass
-import com.dian.prueba.liquidglass.destinations.GlassClippyLogo
-import com.dian.prueba.data.globalResources.LocalColors
-import com.dian.prueba.data.globalResources.LocalDimension
 import com.dian.prueba.liquidglass.components.navigation.ScreenBottom
 import com.dian.prueba.ui.components.dialogs.ConfirmOrderDialog
 import com.dian.prueba.viewModel.FeedVM
 import com.dian.prueba.viewModel.NuFeedVM
-import com.kyant.backdrop.backdrops.LayerBackdrop
-import dev.chrisbanes.haze.HazeState
-import dev.chrisbanes.haze.HazeStyle
-import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.rememberHazeState
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.logo
-import multiplatform.composeapp.generated.resources.logotitle
 import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
@@ -97,102 +75,6 @@ fun LogoNavigationScreen(
         }
     }
 }
-
-
-//* Quizás luego necesite esto
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun CentralScaffold(
-    content: @Composable () -> Unit,
-    backdrop: LayerBackdrop,
-    navController: NavHostController,
-    hazeState: HazeState,
-    hazeStyle: HazeStyle
-) {
-    val colorModifier = LocalColors.current
-    val uiDimensions = LocalDimension.current
-    Scaffold(
-        //modifier = Modifier.fillMaxSize(),
-        topBar = {
-            CenterAlignedTopAppBar(
-                modifier = Modifier
-                    .hazeEffect(state = hazeState, style = hazeStyle)
-                    .fillMaxWidth()
-                    .dropShadow(
-                        shape = RoundedCornerShape(20.dp),
-                        shadow = Shadow(
-                            radius = 8.dp,
-                            spread = 3.dp,
-                            color = Color(0xd7ffffff),
-                            offset = DpOffset(x = 4.dp, 4.dp)
-                        )
-                    )
-                    .height(95.dp)
-                    .background(
-                        brush = Brush.verticalGradient(
-                            colors = listOf(
-                                colorModifier.backgroundApp,
-                                colorModifier.backgroundApp.copy(alpha = 0.9f),
-                                colorModifier.backgroundApp.copy(alpha = 1f),
-                                colorModifier.backgroundApp.copy(alpha = 0.8f),
-                                colorModifier.backgroundApp.copy(alpha = 0.7f),
-                                colorModifier.backgroundApp.copy(alpha = 0.6f),
-                                colorModifier.backgroundApp.copy(alpha = 0.5f),
-                                colorModifier.backgroundApp.copy(alpha = 0.4f),
-                                colorModifier.backgroundApp.copy(alpha = 0.3f),
-                                colorModifier.backgroundApp.copy(alpha = 0.1f),
-                                colorModifier.backgroundApp.copy(alpha = 0f),
-                            ),
-                            startY = 245f,
-                            endY = 300f,
-                        )
-                    ),
-                windowInsets = WindowInsets.statusBars,
-                navigationIcon = {},//
-                actions = {},
-                title = {
-                    ImageLogo(
-                        tint = Color.Black,
-                        painter = painterResource(Res.drawable.logotitle),
-                        modifier = Modifier.height(48.dp)
-                    )
-                },
-                colors = TopAppBarDefaults.topAppBarColors(Color.Transparent),
-
-                )
-        },
-        contentWindowInsets = WindowInsets.safeDrawing,
-        floatingActionButton = {
-            GlassClippyLogo(
-                onClick = {},
-                backdrop = backdrop,
-                surfaceColor = Color.DarkGray.copy(0.2f),
-                sizeClippy = 50.dp
-            ) {
-                Icon(
-                    painter = painterResource(Res.drawable.logo),
-                    contentDescription = "Logo",
-                    tint = Color.White,
-                    modifier = Modifier.size(uiDimensions.iconNormal)
-                )
-            }
-        },
-        floatingActionButtonPosition = FabPosition.End,
-        containerColor = Color.Transparent,
-        bottomBar = {
-            //GlassmorphicBottomNavigation(hazeState, navController)
-            Box(
-                modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars)
-            ) {
-                BottomTabsLiquidGlass(backdrop, navController)
-            }
-
-        },
-    ) {
-        content()
-    }
-}
-
 @Composable
 fun ImageLogo(
     painter: Painter = painterResource(Res.drawable.logo),
@@ -205,32 +87,4 @@ fun ImageLogo(
         modifier = modifier,
         tint = tint
     )
-}
-
-/**
- * Clippy Logo with Haze
- */
-@Composable
-fun ClippyLogo(
-    hazeState: HazeState,
-    hazeStyle: HazeStyle
-) {
-    Box(
-        modifier = Modifier.graphicsLayer {
-            translationX = 4.4.dp.toPx()
-            translationY = 12.dp.toPx()
-        }
-    ) {
-        Box(
-            modifier = Modifier
-                .clip(CircleShape)
-                .size(45.dp)
-                .background(Color.Transparent)
-                .hazeEffect(state = hazeState, style = hazeStyle)
-                .clickable { /* POR IMPLEMENTAR */ },
-            contentAlignment = Alignment.Center
-        ) {
-            ImageLogo(tint = Color.White, modifier = Modifier.size(24.dp))
-        }
-    }
 }

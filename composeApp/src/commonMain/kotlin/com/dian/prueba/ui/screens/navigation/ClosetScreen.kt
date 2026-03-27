@@ -87,22 +87,6 @@ fun ClosetScreen(
     nuFeedVM: NuFeedVM,
     navigateTo: (route: String) -> Unit
 ) {
-    val uiDimensions = LocalDimension.current
-    val hazeState = rememberHazeState()
-    val lightAlpha = 0.3f
-    val darkAlpha = 0.1f
-    val hazeStyle = HazeStyle(
-        backgroundColor = Color.White,
-        tints = listOf(
-            HazeTint(
-                Color.White.copy(alpha = if (Color.White.luminance() >= 0.5) lightAlpha else darkAlpha),
-            )
-        ),
-        blurRadius = 5.dp,
-        noiseFactor = -1f,
-        fallbackTint = HazeTint.Unspecified,
-    )
-    val backdrop = rememberLayerBackdrop()
 
     val feedItems by nuFeedVM.feedItems.collectAsState()
     val listState = rememberLazyGridState()
@@ -132,84 +116,9 @@ fun ClosetScreen(
             }
         }
     }
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = {
-            CenterAlignedTopAppBar(
-                modifier = Modifier
-                    .hazeEffect(state = hazeState, style = hazeStyle)
-                    .fillMaxWidth()
-                    .dropShadow(
-                        shape = RoundedCornerShape(20.dp),
-                        shadow = Shadow(
-                            radius = 8.dp,
-                            spread = 3.dp,
-                            color = Color(0xd7ffffff),
-                            offset = DpOffset(x = 4.dp, 4.dp)
-                        )
-                    )
-                    .height(95.dp)
-                    .background(
-                        brush = Brush.verticalGradient(
-                            colors = listOf(
-                                colorModifier.backgroundApp,
-                                colorModifier.backgroundApp.copy(alpha = 0.9f),
-                                colorModifier.backgroundApp.copy(alpha = 1f),
-                                colorModifier.backgroundApp.copy(alpha = 0.8f),
-                                colorModifier.backgroundApp.copy(alpha = 0.7f),
-                                colorModifier.backgroundApp.copy(alpha = 0.6f),
-                                colorModifier.backgroundApp.copy(alpha = 0.5f),
-                                colorModifier.backgroundApp.copy(alpha = 0.4f),
-                                colorModifier.backgroundApp.copy(alpha = 0.3f),
-                                colorModifier.backgroundApp.copy(alpha = 0.1f),
-                                colorModifier.backgroundApp.copy(alpha = 0f),
-                            ),
-                            startY = 245f,
-                            endY = 300f,
-                        )
-                    ),
-                windowInsets = WindowInsets.statusBars,
-                navigationIcon = {},//
-                actions = {},
-                title = {
-                    ImageLogo(
-                        tint = Color.Black,
-                        painter = painterResource(Res.drawable.logotitle),
-                        modifier = Modifier.height(48.dp)
-                    )
-                },
-                colors = TopAppBarDefaults.topAppBarColors(Color.Transparent),
-
-                )
-        },
-        contentWindowInsets = WindowInsets.safeDrawing,
-        floatingActionButton = {
-            GlassClippyLogo(
-                onClick = {},
-                backdrop = backdrop,
-                surfaceColor = Color.DarkGray.copy(0.2f),
-                sizeClippy = 50.dp
-            ) {
-                Icon(
-                    painter = painterResource(Res.drawable.logo),
-                    contentDescription = "Logo",
-                    tint = Color.White,
-                    modifier = Modifier.size(uiDimensions.iconNormal)
-                )
-            }
-        },
-        floatingActionButtonPosition = FabPosition.End,
-        containerColor = Color.Transparent,
-        bottomBar = {
-            //GlassmorphicBottomNavigation(hazeState, navController)
-            Box(
-                modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars)
-            ) {
-                BottomTabsLiquidGlass(backdrop, navController)
-            }
-
-        },
-    ) { paddingValues ->
+    AppScaffold(
+        navController = navController,
+    ) { paddingValues, backdrop ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
