@@ -89,7 +89,6 @@ fun ModalBottomSheetBag(
                 modifier = Modifier.fillMaxSize()
                     .background(colorModifier.backgroundApp)
                     .nestedScroll(StopPostScrollNestedScrollConnection)
-                    .systemBarsPadding()
             ) {
                 Column(
                     modifier = Modifier.fillMaxSize()
