@@ -98,6 +98,13 @@ fun ClosetScreen(
             it != SheetValue.PartiallyExpanded
         }
     )
+    /*val sheetState = rememberFlexibleBottomSheetState(
+        flexibleSheetSize = FlexibleSheetSize(fullyExpanded = 0.9f),
+        isModal = true,
+        skipSlightlyExpanded = true,
+        skipIntermediatelyExpanded = true,
+
+        )*/
     var isSheetOpen by rememberSaveable { mutableStateOf(false) }
     var itemSelected: NuFeedUIModel.Tile? by remember { mutableStateOf(null) }
 
@@ -182,6 +189,20 @@ fun ClosetScreen(
                 navigateTo("closet/confirmOrder")
             }
         )
+        /*FlexibleBottomSheetSample(
+            isSheetOpen = isSheetOpen,
+            onDismissRequest = {
+                isSheetOpen = false
+            },
+            sheetState = sheetState,
+            productId = productId,
+            feedViewModel = feedVM,
+            selected = itemSelected,
+            onConfirmOrder = {
+                //isSheetOpen = false
+                navigateTo("closet/confirmOrder")
+            }
+        )*/
     }
 }
 

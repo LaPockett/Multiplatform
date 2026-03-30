@@ -1,5 +1,7 @@
 package com.dian.prueba.ui.components
 
+//noinspection UsingMaterialAndMaterial3Libraries
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -12,28 +14,37 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.FloatingActionButton
-//noinspection UsingMaterialAndMaterial3Libraries
-import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+//noinspection UsingMaterialAndMaterial3Libraries
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
 import androidx.compose.material3.Text
 import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -43,19 +54,10 @@ import coil3.compose.AsyncImage
 import com.dian.prueba.data.globalResources.LocalColors
 import com.dian.prueba.data.globalResources.LocalPadding
 import com.dian.prueba.domain.nuFeed.model.NuFeedUIModel
-import com.dian.prueba.viewModel.FeedVM
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.input.pointer.pointerInput
 import com.dian.prueba.liquidglass.components.CarouselHorizontalSample
 import com.dian.prueba.ui.components.buttons.SlideToBookButton
 import com.dian.prueba.utilities.StopPostScrollNestedScrollConnection
+import com.dian.prueba.viewModel.FeedVM
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -75,6 +77,7 @@ fun ModalBottomSheetBag(
     var expandedImageUrl by remember { mutableStateOf<String?>(null) }
     if (isSheetOpen) {
         ModalBottomSheet(
+            modifier = Modifier.fillMaxSize(),
             onDismissRequest = onDismissRequest,
             sheetState = state,
             containerColor = colorModifier.backgroundApp,
@@ -86,42 +89,32 @@ fun ModalBottomSheetBag(
                 modifier = Modifier.fillMaxSize()
                     .background(colorModifier.backgroundApp)
                     .nestedScroll(StopPostScrollNestedScrollConnection)
+                    .systemBarsPadding()
             ) {
                 Column(
                     modifier = Modifier.fillMaxSize()
                         .verticalScroll(rememberScrollState())
+                    //.imePadding()
                 ) {
                     //val pictures = product.value?.variants?.firstOrNull()?.pictures ?: emptyList()
                     val allImageVariants = product.value?.variants?.firstOrNull()?.pictures
                         ?.flatMap { picture -> picture.variants }
                         ?: emptyList()
+                    val pagerState = rememberPagerState(pageCount = { allImageVariants.size })
                     Box(
                         modifier = Modifier.fillMaxWidth().height(650.dp)
                     ) {
-                        LazyColumn(
+                        HorizontalPager(
+                            state = pagerState,
                             modifier = Modifier.fillMaxSize()
-                        ) {
-                            // Para cargar solo el primer elemento de los variant dentro de pictures
-                            /*items(pictures,
-                            ){ picture ->
-                                val imageUrl = picture.variants.firstOrNull()?.url
-                                AsyncImage(
-                                    model = imageUrl,
-                                    contentDescription = selected?.typeMedia.toString(),
-                                    modifier = Modifier.fillMaxSize(),
-                                    contentScale = ContentScale.Crop
-                                )
-                            }*/
-                            // Carga todos los elementos de los variant dentro de pictures
-                            items(allImageVariants) { variant ->
-                                ZoomableImage(
-                                    imageUrl = variant.url,
-                                    onExpand = {
-                                        expandedImageUrl = it
-                                    }
-                                )
-                            }
+                        ) { page ->
+                            val variant = allImageVariants[page]
+                            ZoomableImage(
+                                imageUrl = variant.url,
+                                onExpand = { expandedImageUrl = it }
+                            )
                         }
+                        //todo: page dot indicator (if needed)
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -221,7 +214,6 @@ fun ModalBottomSheetBag(
                             outerBtnBackgroundColor = colorModifier.logoColorLight,
                             sliderBtnBackgroundColor = colorModifier.logoColor,
                             onBtnSwipe = {
-                                // todo: navigate to confirmOrderDialog
                                 onConfirmOrder()
                             },
                         )
@@ -244,7 +236,7 @@ fun ModalBottomSheetBag(
                     },
                     modifier = Modifier.padding(paddingModifier.tiny)
                         .align(Alignment.BottomEnd),
-                    backgroundColor = colorModifier.logoColor,
+                    containerColor = colorModifier.logoColor,
                     contentColor = Color.White
                 ) {
                     Icon(
