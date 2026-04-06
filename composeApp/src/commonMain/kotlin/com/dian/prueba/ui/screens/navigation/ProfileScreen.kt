@@ -1,6 +1,7 @@
 package com.dian.prueba.ui.screens.navigation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,7 +17,8 @@ import com.kyant.backdrop.backdrops.layerBackdrop
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(
-    navController: NavHostController
+    //navController: NavHostController,
+    paddingValues: PaddingValues
 ) {
     val paddingModifier = LocalPadding.current
     val colorModifier = LocalColors.current
@@ -27,14 +29,11 @@ fun ProfileScreen(
     * por debajo y así el usuario pueda ver todos los elementos correctamente.
     */
 
-    AppScaffold(
-        navController = navController,
-    ) { paddingValues, backdrop ->
         LazyColumn(
             contentPadding = paddingValues,
             modifier = Modifier
                 .fillMaxSize()
-                .layerBackdrop(backdrop)
+                //.layerBackdrop(backdrop)
                 .background(colorModifier.backgroundApp)
                 .padding(horizontal = paddingModifier.tiny)
         ) {
@@ -42,7 +41,7 @@ fun ProfileScreen(
                 WebViewZonaLogo(modifier = Modifier.fillMaxSize())
             }
         }
-    }
+
 }
 
 /* *

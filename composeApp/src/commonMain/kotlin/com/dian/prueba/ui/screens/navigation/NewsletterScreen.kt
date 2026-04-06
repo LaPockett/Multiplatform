@@ -29,7 +29,7 @@ import multiplatform.composeapp.generated.resources.Res
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsletterScreen(
-    navController: NavHostController
+    paddingValues: PaddingValues
 ) {
     val colorModifier = LocalColors.current
     val paddingModifier = LocalPadding.current
@@ -59,13 +59,10 @@ fun NewsletterScreen(
             }
         },
     )
-    AppScaffold(
-        navController = navController,
-    ) { paddingValues, backdrop ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .layerBackdrop(backdrop)
+                //.layerBackdrop(backdrop)
                 .background(colorModifier.backgroundApp)
                 .padding(horizontal = paddingModifier.tiny),
             contentAlignment = Alignment.Center
@@ -118,5 +115,4 @@ fun NewsletterScreen(
                 )
             }
         }
-    }
 }

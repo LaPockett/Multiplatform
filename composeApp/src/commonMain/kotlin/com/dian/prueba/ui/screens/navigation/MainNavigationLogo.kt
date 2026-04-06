@@ -16,6 +16,7 @@ import com.dian.prueba.liquidglass.components.navigation.ScreenBottom
 import com.dian.prueba.ui.components.dialogs.ConfirmOrderDialog
 import com.dian.prueba.viewModel.FeedVM
 import com.dian.prueba.viewModel.NuFeedVM
+import com.kyant.backdrop.backdrops.layerBackdrop
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.materials.ExperimentalHazeMaterialsApi
 import dev.chrisbanes.haze.rememberHazeState
@@ -24,6 +25,73 @@ import multiplatform.composeapp.generated.resources.logo
 import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
+@Composable
+fun LogoNavigationScreen(
+    feedVM: FeedVM,
+    nuFeedVM: NuFeedVM,
+    isAnimatedFinished: Boolean
+) {
+    val navController = rememberNavController()
+    val currentBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = currentBackStackEntry?.destination?.route
+
+    // Rutas que muestran bottom navigation
+    val mainRoutes = setOf(
+        ScreenBottom.Newspaper.route,
+        ScreenBottom.Closet.route,
+        ScreenBottom.Profile.route,
+    )
+    val showBottomBar = currentRoute in mainRoutes
+    val showTopAppBar = currentRoute in mainRoutes
+    val showFabClippy = currentRoute in mainRoutes
+
+    LaunchedEffect(currentRoute) {
+        nuFeedVM.updateCurrentRoute(currentRoute)
+        nuFeedVM.getCurrentRoute(currentRoute)
+    }
+
+    AppScaffold(
+        navController = navController,
+        showBottomBar = showBottomBar,
+        showTopAppBar = showTopAppBar,
+        showFabClippy = showFabClippy,
+        content = { paddingValues, backdrop ->
+            NavHost(
+                navController = navController,
+                startDestination = ScreenBottom.Closet.route,
+                modifier = Modifier
+                    .fillMaxSize()
+                    //.hazeSource(hazeState)
+                    .layerBackdrop(backdrop)
+            ) {
+                composable(ScreenBottom.Newspaper.route) {
+                    NewsletterScreen(
+                        paddingValues = paddingValues,
+                    )
+                }
+                composable(ScreenBottom.Closet.route) {
+                    ClosetScreen(
+                        paddingValues = paddingValues,
+                        isAnimatedFinished = isAnimatedFinished,
+                        feedVM = feedVM,
+                        nuFeedVM = nuFeedVM,
+                        navigateTo = { navController.navigate(it) }
+                    )
+                }
+                composable(ScreenBottom.Profile.route) {
+                    ProfileScreen(
+                        paddingValues = paddingValues,
+                    )
+                }
+                composable("closet/confirmOrder") {
+                    ConfirmOrderDialog()
+                }
+            }
+        }
+    )
+}
+
+/*@OptIn(ExperimentalMaterial3Api::class, ExperimentalHazeMaterialsApi::class)
 @Composable
 fun LogoNavigationScreen(
     feedVM: FeedVM,
@@ -74,7 +142,7 @@ fun LogoNavigationScreen(
             ConfirmOrderDialog()
         }
     }
-}
+}*/
 @Composable
 fun ImageLogo(
     painter: Painter = painterResource(Res.drawable.logo),

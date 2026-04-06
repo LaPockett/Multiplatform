@@ -48,7 +48,10 @@ import org.jetbrains.compose.resources.painterResource
 @Composable
 fun AppScaffold(
     navController: NavHostController,
-    content: @Composable (PaddingValues, LayerBackdrop) -> Unit
+    content: @Composable (PaddingValues, LayerBackdrop) -> Unit,
+    showBottomBar: Boolean,
+    showTopAppBar: Boolean,
+    showFabClippy: Boolean
 ) {
     val colorModifier = LocalColors.current
     val uiDimensions = LocalDimension.current
@@ -70,73 +73,80 @@ fun AppScaffold(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
-            CenterAlignedTopAppBar(
-                modifier = Modifier
-                    .hazeEffect(state = hazeState, style = hazeStyle)
-                    .fillMaxWidth()
-                    .dropShadow(
-                        shape = RoundedCornerShape(20.dp),
-                        shadow = Shadow(
-                            radius = 8.dp,
-                            spread = 3.dp,
-                            color = Color(0xd7ffffff),
-                            offset = DpOffset(x = 4.dp, y = 4.dp)
+            if (showTopAppBar){
+                CenterAlignedTopAppBar(
+                    modifier = Modifier
+                        .hazeEffect(state = hazeState, style = hazeStyle)
+                        .fillMaxWidth()
+                        .dropShadow(
+                            shape = RoundedCornerShape(20.dp),
+                            shadow = Shadow(
+                                radius = 8.dp,
+                                spread = 3.dp,
+                                color = Color(0xd7ffffff),
+                                offset = DpOffset(x = 4.dp, y = 4.dp)
+                            )
                         )
-                    )
-                    .height(95.dp)
-                    .background(
-                        brush = Brush.verticalGradient(
-                            colors = listOf(
-                                colorModifier.backgroundApp,
-                                colorModifier.backgroundApp.copy(alpha = 0.9f),
-                                colorModifier.backgroundApp.copy(alpha = 1f),
-                                colorModifier.backgroundApp.copy(alpha = 0.8f),
-                                colorModifier.backgroundApp.copy(alpha = 0.7f),
-                                colorModifier.backgroundApp.copy(alpha = 0.6f),
-                                colorModifier.backgroundApp.copy(alpha = 0.5f),
-                                colorModifier.backgroundApp.copy(alpha = 0.4f),
-                                colorModifier.backgroundApp.copy(alpha = 0.3f),
-                                colorModifier.backgroundApp.copy(alpha = 0.1f),
-                                colorModifier.backgroundApp.copy(alpha = 0f),
-                            ),
-                            startY = 245f,
-                            endY = 300f,
+                        .height(95.dp)
+                        .background(
+                            brush = Brush.verticalGradient(
+                                colors = listOf(
+                                    colorModifier.backgroundApp,
+                                    colorModifier.backgroundApp.copy(alpha = 0.9f),
+                                    colorModifier.backgroundApp.copy(alpha = 1f),
+                                    colorModifier.backgroundApp.copy(alpha = 0.8f),
+                                    colorModifier.backgroundApp.copy(alpha = 0.7f),
+                                    colorModifier.backgroundApp.copy(alpha = 0.6f),
+                                    colorModifier.backgroundApp.copy(alpha = 0.5f),
+                                    colorModifier.backgroundApp.copy(alpha = 0.4f),
+                                    colorModifier.backgroundApp.copy(alpha = 0.3f),
+                                    colorModifier.backgroundApp.copy(alpha = 0.1f),
+                                    colorModifier.backgroundApp.copy(alpha = 0f),
+                                ),
+                                startY = 245f,
+                                endY = 300f,
+                            )
+                        ),
+                    windowInsets = WindowInsets.statusBars,
+                    navigationIcon = {},
+                    actions = {},
+                    title = {
+                        ImageLogo(
+                            tint = Color.Black,
+                            painter = painterResource(Res.drawable.logotitle),
+                            modifier = Modifier.height(48.dp)
                         )
-                    ),
-                windowInsets = WindowInsets.statusBars,
-                navigationIcon = {},
-                actions = {},
-                title = {
-                    ImageLogo(
-                        tint = Color.Black,
-                        painter = painterResource(Res.drawable.logotitle),
-                        modifier = Modifier.height(48.dp)
-                    )
-                },
-                colors = TopAppBarDefaults.topAppBarColors(Color.Transparent),
-            )
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(Color.Transparent),
+                )
+            }
+
         },
         contentWindowInsets = WindowInsets.statusBars,
         floatingActionButton = {
-            GlassClippyLogo(
-                onClick = {},
-                backdrop = backdrop,
-                surfaceColor = Color.DarkGray.copy(0.2f),
-                sizeClippy = 50.dp
-            ) {
-                Icon(
-                    painter = painterResource(Res.drawable.logo),
-                    contentDescription = "Logo",
-                    tint = Color.White,
-                    modifier = Modifier.size(uiDimensions.iconNormal)
-                )
+            if (showFabClippy) {
+                GlassClippyLogo(
+                    onClick = {},
+                    backdrop = backdrop,
+                    surfaceColor = Color.DarkGray.copy(0.2f),
+                    sizeClippy = 50.dp
+                ) {
+                    Icon(
+                        painter = painterResource(Res.drawable.logo),
+                        contentDescription = "Logo",
+                        tint = Color.White,
+                        modifier = Modifier.size(uiDimensions.iconNormal)
+                    )
+                }
             }
         },
         floatingActionButtonPosition = FabPosition.End,
         containerColor = Color.Transparent,
         bottomBar = {
-            Box(modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars)) {
-                BottomTabsLiquidGlass(backdrop, navController)
+            if (showBottomBar) {
+                Box(modifier = Modifier.windowInsetsPadding(WindowInsets.navigationBars)) {
+                    BottomTabsLiquidGlass(backdrop, navController)
+                }
             }
         },
     ) { paddingValues ->

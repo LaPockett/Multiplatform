@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -81,11 +82,12 @@ import org.jetbrains.compose.resources.painterResource
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
 fun ClosetScreen(
-    navController: NavHostController,
+    //navController: NavHostController,
     isAnimatedFinished: Boolean,
     feedVM: FeedVM,
     nuFeedVM: NuFeedVM,
-    navigateTo: (route: String) -> Unit
+    navigateTo: (route: String) -> Unit,
+    paddingValues: PaddingValues
 ) {
 
     val feedItems by nuFeedVM.feedItems.collectAsState()
@@ -123,13 +125,10 @@ fun ClosetScreen(
             }
         }
     }
-    AppScaffold(
-        navController = navController,
-    ) { paddingValues, backdrop ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .layerBackdrop(backdrop)
+                //.layerBackdrop(backdrop)
                 .background(colorModifier.backgroundApp)
                 //.windowInsetsPadding(WindowInsets.statusBars)
                 .padding(horizontal = paddingModifier.tiny),//.statusBarsPadding()
@@ -172,7 +171,7 @@ fun ClosetScreen(
                 }
             }
         }
-    }
+
     if (isSheetOpen && itemSelected != null) {
         val productId = itemSelected!!.productId
         ModalBottomSheetBag(
