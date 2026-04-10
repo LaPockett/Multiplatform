@@ -176,7 +176,7 @@ fun WebViewLogoNewsletter(
 fun WebViewZonaLogo(
     modifier: Modifier =  Modifier
 ) {
-    val url = "https://www.notion.so"
+    val url = "https://www.google.com"
 
     val webViewState = rememberWebViewState(
         url = url,

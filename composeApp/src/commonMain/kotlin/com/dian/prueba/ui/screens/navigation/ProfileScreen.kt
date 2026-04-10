@@ -1,6 +1,7 @@
 package com.dian.prueba.ui.screens.navigation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -23,25 +24,34 @@ fun ProfileScreen(
     val paddingModifier = LocalPadding.current
     val colorModifier = LocalColors.current
 
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            //.layerBackdrop(backdrop)
+            .background(colorModifier.backgroundApp)
+            .padding(horizontal = paddingModifier.tiny)
+    ){
+        WebViewZonaLogo(modifier = Modifier.fillMaxSize())
+    }
+
     /* *
     * Incluyo LazyColumn solo para poder utilizar el contentPadding con paddingValues y que el webview
     * esté por debajo del bottom navigation, pero cuando llegue al final de la web no quede
     * por debajo y así el usuario pueda ver todos los elementos correctamente.
     */
 
-        LazyColumn(
-            contentPadding = paddingValues,
-            modifier = Modifier
-                .fillMaxSize()
-                //.layerBackdrop(backdrop)
-                .background(colorModifier.backgroundApp)
-                .padding(horizontal = paddingModifier.tiny)
-        ) {
-            item {
-                WebViewZonaLogo(modifier = Modifier.fillMaxSize())
-            }
+    /*LazyColumn(
+        contentPadding = paddingValues,
+        modifier = Modifier
+            .fillMaxSize()
+            //.layerBackdrop(backdrop)
+            .background(colorModifier.backgroundApp)
+            .padding(horizontal = paddingModifier.tiny)
+    ) {
+        item {
+            WebViewZonaLogo(modifier = Modifier.fillMaxSize())
         }
-
+    }*/
 }
 
 /* *
