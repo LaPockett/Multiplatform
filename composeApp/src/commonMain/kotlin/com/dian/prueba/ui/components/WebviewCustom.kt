@@ -9,6 +9,7 @@ import com.dian.prueba.utilities.Logger
 import com.dian.prueba.HeaderManager.WebViewHeaderManager
 import com.multiplatform.webview.web.WebContent
 import com.multiplatform.webview.web.WebView
+import com.multiplatform.webview.web.rememberWebViewNavigator
 import com.multiplatform.webview.web.rememberWebViewState
 import dev.chrisbanes.haze.hazeSource
 import dev.chrisbanes.haze.rememberHazeState
@@ -175,14 +176,14 @@ fun WebViewLogoNewsletter(
 fun WebViewZonaLogo(
     modifier: Modifier =  Modifier
 ) {
-    val logger = Logger("WebViewZonaLOGO")
-    val headers = WebViewHeaderManager.getHeaders()
-    logger.debug(headers.toString())
-    val url = "http://192.168.10.130:8160/zonaLOGO"
+    val url = "https://www.notion.so"
 
     val webViewState = rememberWebViewState(
         url = url,
     )
+    LaunchedEffect(url){
+        webViewState.content = WebContent.Url(url)
+    }
     val hazeState = rememberHazeState()
     WebView(
         state = webViewState,
