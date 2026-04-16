@@ -233,11 +233,11 @@ fun TileItem(
                 val playerState = rememberVideoPlayerState()
                 val url = item.urlVideo ?: return@Card
 
-                LaunchedEffect(url) {
+                //LaunchedEffect(url) {
                     playerState.openUri(url)
                     playerState.volume = 0f
                     playerState.loop = true
-                }
+                //}
                 VideoPlayerSurface(
                     playerState = playerState,
                     modifier = Modifier.fillMaxSize(),
