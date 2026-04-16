@@ -72,6 +72,7 @@ import dev.chrisbanes.haze.HazeStyle
 import dev.chrisbanes.haze.HazeTint
 import dev.chrisbanes.haze.hazeEffect
 import dev.chrisbanes.haze.rememberHazeState
+import io.github.kdroidfilter.composemediaplayer.CacheConfig
 import io.github.kdroidfilter.composemediaplayer.VideoPlayerSurface
 import io.github.kdroidfilter.composemediaplayer.rememberVideoPlayerState
 import multiplatform.composeapp.generated.resources.Res
@@ -230,14 +231,24 @@ fun TileItem(
             }
 
             setVideosInFeed -> {
-                val playerState = rememberVideoPlayerState()
+                val playerState = rememberVideoPlayerState(
+                    cacheConfig = CacheConfig(
+                        enabled = true,
+                        maxCacheSizeBytes = 200L * 1024L * 1024L //* 200MB
+                    )
+                )
                 val url = item.urlVideo ?: return@Card
-
-                //LaunchedEffect(url) {
+                /* *
+                 * Muy importante ponerla dentro de LaunchedEffect porque si no en iOS
+                 * no funciona, aunque realmente en la docu no se indica nada sobre esto (revisar)
+                 * LaunchedEffect: composable function that launches a coroutine scoped to
+                 * composables's lifecycle.
+                 */
+                LaunchedEffect(url) {
                     playerState.openUri(url)
                     playerState.volume = 0f
                     playerState.loop = true
-                //}
+                }
                 VideoPlayerSurface(
                     playerState = playerState,
                     modifier = Modifier.fillMaxSize(),
