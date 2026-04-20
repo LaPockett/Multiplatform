@@ -126,7 +126,10 @@ fun AppScaffold(
         floatingActionButton = {
             if (showFabClippy) {
                 GlassClippyLogo(
-                    onClick = {},
+                    onClick = {
+                        //* Navigate to ChatClippyLogo
+                        navController.navigate("*/chatClippyLogo")
+                    },
                     backdrop = backdrop,
                     surfaceColor = Color.DarkGray.copy(0.2f),
                     sizeClippy = 50.dp

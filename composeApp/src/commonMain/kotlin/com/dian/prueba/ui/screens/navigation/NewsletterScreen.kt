@@ -59,60 +59,60 @@ fun NewsletterScreen(
             }
         },
     )
-        Box(
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            //.layerBackdrop(backdrop)
+            .background(colorModifier.backgroundApp)
+            .padding(horizontal = paddingModifier.tiny),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                //.layerBackdrop(backdrop)
-                .background(colorModifier.backgroundApp)
-                .padding(horizontal = paddingModifier.tiny),
-            contentAlignment = Alignment.Center
+                .verticalScroll(state = rememberScrollState())
+                .padding(
+                    top = paddingValues.calculateTopPadding() + paddingModifier.tiny,
+                    bottom = paddingValues.calculateBottomPadding()
+                ),
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(state = rememberScrollState())
-                    .padding(
-                        top = paddingValues.calculateTopPadding() + paddingModifier.tiny,
-                        bottom = paddingValues.calculateBottomPadding()
+            Markdown(
+                markdownState = rememberMarkdownState {
+                    Res.readBytes("files/example.md").decodeToString()
+                },
+                components = components,
+                typography = markdownTypography(
+                    h1 = MaterialTheme.typography.titleLarge.copy(
+                        color = colorModifier.logoColor
                     ),
-            ) {
-                Markdown(
-                    markdownState = rememberMarkdownState {
-                        Res.readBytes("files/example.md").decodeToString()
-                    },
-                    components = components,
-                    typography = markdownTypography(
-                        h1 = MaterialTheme.typography.titleLarge.copy(
-                            color = colorModifier.logoColor
-                        ),
-                        h2 = MaterialTheme.typography.titleMedium.copy(
-                            color = colorModifier.logoColor
-                        ),
-                        h3 = MaterialTheme.typography.titleSmall.copy(
-                            color = colorModifier.logoColor
-                        ),
-                        text = MaterialTheme.typography.bodyMedium.copy(
-                            color = colorModifier.blackLight
-                        ),
-                        quote = MaterialTheme.typography.bodySmall.copy(
-                            color = colorModifier.logoColor,
-                            fontStyle = FontStyle.Italic
-                        ),
-                        paragraph = MaterialTheme.typography.bodyMedium.copy(
-                            color = Color.Black,
-                            textAlign = TextAlign.Justify
-                        ),
-                        textLink = TextLinkStyles(
-                            style = MaterialTheme.typography.bodyLarge.copy(
-                                color = Color.Blue
-                            ).toSpanStyle()
-                        ),
-                        ordered = MaterialTheme.typography.titleSmall.copy(
+                    h2 = MaterialTheme.typography.titleMedium.copy(
+                        color = colorModifier.logoColor
+                    ),
+                    h3 = MaterialTheme.typography.titleSmall.copy(
+                        color = colorModifier.logoColor
+                    ),
+                    text = MaterialTheme.typography.bodyMedium.copy(
+                        color = colorModifier.blackLight
+                    ),
+                    quote = MaterialTheme.typography.bodySmall.copy(
+                        color = colorModifier.logoColor,
+                        fontStyle = FontStyle.Italic
+                    ),
+                    paragraph = MaterialTheme.typography.bodyMedium.copy(
+                        color = Color.Black,
+                        textAlign = TextAlign.Justify
+                    ),
+                    textLink = TextLinkStyles(
+                        style = MaterialTheme.typography.bodyLarge.copy(
                             color = Color.Blue
-                        )
+                        ).toSpanStyle()
                     ),
-                    imageTransformer = Coil3ImageTransformerImpl,
-                )
-            }
+                    ordered = MaterialTheme.typography.titleSmall.copy(
+                        color = Color.Blue
+                    )
+                ),
+                imageTransformer = Coil3ImageTransformerImpl,
+            )
         }
+    }
 }

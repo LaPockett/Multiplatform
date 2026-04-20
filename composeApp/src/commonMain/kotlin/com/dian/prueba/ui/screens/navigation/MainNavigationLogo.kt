@@ -13,6 +13,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.dian.prueba.liquidglass.components.navigation.ScreenBottom
+import com.dian.prueba.ui.components.dialogs.ChatClippyNormal
 import com.dian.prueba.ui.components.dialogs.ConfirmOrderDialog
 import com.dian.prueba.viewModel.FeedVM
 import com.dian.prueba.viewModel.NuFeedVM
@@ -85,6 +86,11 @@ fun LogoNavigationScreen(
                 }
                 composable("closet/confirmOrder") {
                     ConfirmOrderDialog()
+                }
+                composable("*/chatClippyLogo") {
+                    ChatClippyNormal(
+                        navController = navController
+                    )
                 }
             }
         }
