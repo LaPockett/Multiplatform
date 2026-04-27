@@ -70,8 +70,12 @@ fun BubbleMessage(
             )
         }
 
-        if (isFromMe) {
+        //todo: revisar el funcionamieno de esto y reflexionar su diseño
+        //! ¿Nos importa que si el mensaje es largo sobrepase el ancho del logo de clippy en el chat?
+        //! Si es así pondríamos un padding del tamaño del ancho del logo
+        //! De lo contrario, podemos eliminar las siguientes líneas.
+        /*if (isFromMe) {
             Spacer(modifier = Modifier.padding(horizontal = paddingModifier.tiny))
-        }
+        }*/
     }
 }
