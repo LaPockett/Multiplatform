@@ -14,8 +14,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -98,8 +98,8 @@ fun ChatClippyNormal(
     Box(
         modifier = Modifier.fillMaxSize()
             .background(colorModifier.backgroundApp)
+            .windowInsetsPadding(WindowInsets.systemBars)
             .padding(paddingModifier.small)
-            .windowInsetsPadding(WindowInsets.safeDrawing)
             .pointerInput(Unit) {
                 detectTapGestures(onTap = {
                     focusManager.clearFocus()
@@ -138,22 +138,7 @@ fun ChatClippyNormal(
                     )
                 }
             }
-
-            Spacer(modifier = Modifier.padding(paddingModifier.small))
-            //* Fecha y hora actual (formato: 20 April 2026, 10:40)
-            Column(
-                modifier = Modifier.fillMaxWidth()
-                    .padding(start = dimensionModifier.iconBig + paddingModifier.tiny + paddingModifier.small)
-                    .padding(bottom = paddingModifier.extraTiny),
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = now.toDisplayFormat(),
-                    style = MaterialTheme.typography.titleSmall,
-                    fontWeight = FontWeight.Normal
-                )
-            }
+            Spacer(modifier = Modifier.padding(paddingModifier.extraTiny))
 
             //* Lista de mensajes
             LazyColumn(
@@ -163,8 +148,17 @@ fun ChatClippyNormal(
             ) {
                 //* Mensaje inicial de Clippy de Logo :D
                 item {
+                    //* Fecha y hora actual (formato: 20 April 2026, 10:40)
+                    Text(
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(start = dimensionModifier.iconBig + paddingModifier.tiny + paddingModifier.small)
+                            .padding(bottom = paddingModifier.extraTiny),
+                        text = now.toDisplayFormat(),
+                        style = MaterialTheme.typography.titleSmall,
+                        fontWeight = FontWeight.Normal
+                    )
                     BubbleMessage(
-                        text = "Hola María, estoy aquí para ayudarte a resolver cualquier duda que tengas",
+                        text = "Hola María, estoy aquí para ayudarte a resolver cualquier duda que tengas. Dime, ¿con qué comenzamos?",
                         isFromMe = false,
                         colorModifier = colorModifier,
                         dimensionModifier = dimensionModifier,
@@ -207,6 +201,7 @@ fun ChatClippyNormal(
                     )
                 }
             }
+            Spacer(modifier = Modifier.padding(paddingModifier.extraTiny))
 
             Row(
                 modifier = Modifier.fillMaxWidth().height(IntrinsicSize.Min),
@@ -243,7 +238,8 @@ fun ChatClippyNormal(
                 if (thereIsText) {
                     Icon(
                         imageVector = Icons.Filled.Send,
-                        modifier = Modifier.size(dimensionModifier.iconNormal).align(Alignment.CenterVertically)
+                        modifier = Modifier.size(dimensionModifier.iconNormal)
+                            .align(Alignment.CenterVertically)
                             .clickable {
                                 if (msg.isNotBlank()) {
                                     messages.add(Message(msg, true))
@@ -256,18 +252,17 @@ fun ChatClippyNormal(
                         tint = colorModifier.logoColor
                     )
                 } else {
-                    IconButton(
-                        onClick = {
-                            //todo: cuando el usuario mantenga esto presionado la acción será de voice recorder
-                        },
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.KeyboardVoice,
-                            modifier = Modifier.size(dimensionModifier.iconNormal).align(Alignment.CenterVertically),
-                            contentDescription = "Voice Recorder",
-                            tint = colorModifier.logoColor
-                        )
-                    }
+                    Icon(
+                        imageVector = Icons.Default.KeyboardVoice,
+                        modifier = Modifier.size(dimensionModifier.iconNormal)
+                            .align(Alignment.CenterVertically)
+                            .clickable {
+                                //todo: cuando el usuario mantenga esto presionado la acción será de voice recorder
+                            },
+                        contentDescription = "Voice Recorder",
+                        tint = colorModifier.logoColor
+                    )
+
                 }
             }
         }
