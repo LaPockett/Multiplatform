@@ -21,6 +21,7 @@ import com.dian.prueba.viewModel.AuthController
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.HttpResponseValidator
+import io.ktor.client.plugins.api.createClientPlugin
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
 import io.ktor.client.request.*
@@ -39,6 +40,13 @@ class LogoAPIClient(
     private val logger = Logger("LogoAPIClient")
     private val currentLanguage = Locale.current.language
 
+    val authPlugin = createClientPlugin("AuthPlugin") {
+        onRequest { request, _ ->
+            val token = authController.getValidToken()
+            request.header("Authorization", "Bearer $token")
+        }
+    }
+
     private val client = HttpClient {
         install(ContentNegotiation) {
             json(Json { ignoreUnknownKeys = true })
@@ -46,6 +54,7 @@ class LogoAPIClient(
         defaultRequest {
             header("Accept-Language", currentLanguage)
         }
+        install(authPlugin)
         HttpResponseValidator {
             validateResponse { response ->
                 if (response.status == HttpStatusCode.Unauthorized) {
@@ -54,12 +63,6 @@ class LogoAPIClient(
             }
         }
 
-    }
-
-    private suspend fun HttpRequestBuilder.withAuth() {
-        val token = authController.getValidToken()
-        print("Bearer $token")
-        header("Authorization", "Bearer $token")
     }
 
     private suspend fun <T> retryWithAuth(block: suspend () -> T): T {
@@ -79,7 +82,6 @@ class LogoAPIClient(
                 try {
                     val response = client
                         .get("http://192.168.10.130:8160/feed") {
-                            withAuth()
                         }
                         .body<FeedResponse>()
 
@@ -99,7 +101,6 @@ class LogoAPIClient(
                 try {
                     client
                         .get("http://192.168.10.130:8160/nufeed") {
-                            withAuth()
                             parameter("paginationIndex", paginationIndex)
                         }
                         .body()
@@ -117,7 +118,7 @@ class LogoAPIClient(
                 logger.warn("Enter to getProductById")
                 try {
                     val response = client
-                        .get("http://192.168.10.130:8160/product/$productId"){withAuth()}
+                        .get("http://192.168.10.130:8160/product/$productId")
                         .body<ProductDetail>()
 
                     response.data.product.toDetailUIModel()
@@ -135,7 +136,7 @@ class LogoAPIClient(
                 logger.warn("Enter to getFeatureFlags")
                 try {
                     client
-                        .get("http://192.168.10.130:8160/ux/$userId"){withAuth()}
+                        .get("http://192.168.10.130:8160/ux/$userId")
                         .body()
                 } catch (e: Exception) {
                     logger.error(e)
@@ -153,7 +154,6 @@ class LogoAPIClient(
                     logger.warn("Current route: $currentRoute")
                     client
                         .get("http://192.168.10.130:8160/ux/$userId") {
-                            withAuth()
                             parameter("currentRoute", currentRoute)
                         }
                         .body()

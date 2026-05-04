@@ -1,6 +1,5 @@
 package com.dian.prueba.ui.screens.navigation
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -14,16 +13,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.dian.prueba.data.globalResources.LocalColors
 import com.dian.prueba.data.globalResources.LocalPadding
-import com.kyant.backdrop.backdrops.layerBackdrop
 import com.mikepenz.markdown.compose.components.markdownComponents
 import com.mikepenz.markdown.compose.elements.MarkdownImage
 import com.mikepenz.markdown.compose.elements.MarkdownParagraph
 import com.mikepenz.markdown.coil3.Coil3ImageTransformerImpl
-import com.mikepenz.markdown.compose.elements.MarkdownText
+import com.mikepenz.markdown.compose.elements.MarkdownInlineImage
 import com.mikepenz.markdown.m3.Markdown
 import com.mikepenz.markdown.m3.markdownTypography
 import com.mikepenz.markdown.model.markdownAnimations
@@ -46,22 +42,21 @@ fun NewsletterScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    MarkdownImage(it.content, it.node)
-                }
+                MarkdownImage(it.content, it.node)
             }
-            //MarkdownImage(it.content, it.node)
+        },
+        inlineImage = {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                MarkdownInlineImage(it.content, it.node)
+            }
         },
         paragraph = {
-            Column {
-                MarkdownParagraph(it.content, it.node)
-                Spacer(
-                    Modifier.padding(vertical = paddingModifier.extraTiny)
-                )
-            }
+            MarkdownParagraph(
+                it.content, it.node,
+            )
         },
     )
     Box(
