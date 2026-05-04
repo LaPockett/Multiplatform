@@ -87,7 +87,7 @@ fun App() {
 
     }
 }*/
-@Composable
+/*@Composable
 fun AppLogin() {
     /**
      * You are first checked to see if you are logged in, using tokens to redirect you
@@ -125,13 +125,13 @@ fun AppLogin() {
             })
         }
     }
-}
+}*/
 
 /**
  * APP AMAZON
  */
 
-@Composable
+/*@Composable
 fun AppNavigation(onLogout: () -> Unit) {
     val logger = Logger("AppNavigation")
 
@@ -186,7 +186,7 @@ fun AppNavigation(onLogout: () -> Unit) {
                     ProfileScreen(navController, onLogout = onLogout)
                 }
                 composable(route = Screen.Login.route) {
-                    LoginScreen(navController)
+                    //LoginScreen(navController)
                 }
             }
         NavHost(
@@ -198,7 +198,7 @@ fun AppNavigation(onLogout: () -> Unit) {
     if (updateVM.showUpdateDialog.collectAsState().value) {
         UpdateAlertDialog(viewModel = updateVM)
     }
-}
+}*/
 
 
 /*@Composable

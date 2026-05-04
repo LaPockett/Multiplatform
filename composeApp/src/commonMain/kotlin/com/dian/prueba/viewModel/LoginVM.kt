@@ -4,7 +4,7 @@ import com.dian.prueba.utilities.Logger
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.*
 import androidx.lifecycle.*
-import com.dian.prueba.data.unused.Tokens
+import com.dian.prueba.data.tokens.model.Tokens
 import com.dian.prueba.repository.LoginRepository
 import com.dian.prueba.utilities.TokenStorage
 
@@ -27,7 +27,7 @@ class LoginVM(
             .joinToString("")
 
     }
-    fun loginUser(id: Int) {
+    /*fun loginUser(id: Int) {
         viewModelScope.launch {
             val access = loginRepository.login(id)
             access?.let {
@@ -39,7 +39,7 @@ class LoginVM(
                 logger.debug(t.toString())
             }
         }
-    }
+    }*/
 
     fun loadSavedTokens() {
         _tokens.value = tokenStorage.loadTokens()

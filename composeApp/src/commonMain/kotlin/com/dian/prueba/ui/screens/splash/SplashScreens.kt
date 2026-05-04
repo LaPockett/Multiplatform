@@ -39,13 +39,17 @@ import com.dian.prueba.data.globalResources.LocalPadding
 import com.dian.prueba.network.LogoAPIClient
 import com.dian.prueba.repository.UserRepositoryImpl
 import com.dian.prueba.repository.FeedRepositoryImpl
+import com.dian.prueba.repository.LoginRepositoryImpl
 import com.dian.prueba.repository.NuFeedRepositoryImpl
 import com.dian.prueba.repository.ProductRepositoryImpl
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.screens.navigation.ImageLogo
 import com.dian.prueba.ui.screens.navigation.LogoNavigationScreen
+import com.dian.prueba.utilities.TokenStorageImpl
 import com.dian.prueba.viewModel.FeedVM
 import com.dian.prueba.viewModel.NuFeedVM
+import com.dian.prueba.viewModel.UserVM
+import com.russhwolf.settings.Settings
 import kotlinx.coroutines.delay
 import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.button_splash_screen
@@ -64,17 +68,24 @@ fun CentralSplashScreen(
     var showButton by rememberSaveable { mutableStateOf(false) }
     var showMsg by remember { mutableStateOf(false) }
     var isAnimatedFinished by remember { mutableStateOf(false) }
+
+    val settings = Settings()
+    val tokenStorage = TokenStorageImpl(settings)
+    val apiClient       = LogoAPIClient(tokenStorage)
+    val loginRepo       = LoginRepositoryImpl(apiClient, tokenStorage = tokenStorage)
+    val userVM          = UserVM(loginRepo, tokenStorage)
+
     val repository = remember {
-        FeedRepositoryImpl(LogoAPIClient())
+        FeedRepositoryImpl(apiClient)
     }
     val nuRepository = remember {
-        NuFeedRepositoryImpl(LogoAPIClient())
+        NuFeedRepositoryImpl(apiClient)
     }
     val featureFlagsRepository = remember {
-        UserRepositoryImpl(LogoAPIClient())
+        UserRepositoryImpl(apiClient)
     }
     val productRepository = remember {
-        ProductRepositoryImpl(LogoAPIClient())
+        ProductRepositoryImpl(apiClient)
     }
     val feedVM = remember {
         FeedVM(
@@ -108,6 +119,7 @@ fun CentralSplashScreen(
             }
         }
     )
+    userVM.loginUser("", "")
     /**
      * Hacer que la pantalla principal esté de alguna forma debajo del launchScreen
      */
@@ -115,7 +127,11 @@ fun CentralSplashScreen(
         Box(
             modifier = Modifier.fillMaxSize()
         ) {
-            LogoNavigationScreen(feedVM, nuFeedVM, isAnimatedFinished)
+            LogoNavigationScreen(
+                feedVM = feedVM,
+                nuFeedVM = nuFeedVM,
+                isAnimatedFinished = isAnimatedFinished
+            )
         }
         Box(
             modifier = Modifier.fillMaxSize()

@@ -44,7 +44,7 @@ import multiplatform.composeapp.generated.resources.Res
 import multiplatform.composeapp.generated.resources.amazon_logo
 import org.jetbrains.compose.resources.painterResource
 
-@Composable
+/*@Composable
 fun LoginScreen(navController: NavHostController){
     val focusManager = LocalFocusManager.current
     MultiplatformTheme{
@@ -186,5 +186,5 @@ fun LoginScreen(navController: NavHostController){
             }
         }
     }
-}
+}*/
 

@@ -20,7 +20,7 @@ import com.dian.prueba.utilities.UpdateStorageImpl
 import com.dian.prueba.viewModel.LoginVM
 import com.russhwolf.settings.Settings
 
-@Composable
+/*@Composable
 fun ProfileScreen(navController: NavController, onLogout: () -> Unit) {
     val loginViewModel = remember {
         LoginVM(
@@ -76,7 +76,7 @@ fun ProfileScreen(navController: NavController, onLogout: () -> Unit) {
         }
 
     }
-}
+}*/
 
 
 

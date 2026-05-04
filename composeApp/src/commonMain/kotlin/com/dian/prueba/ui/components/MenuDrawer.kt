@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.dian.prueba.ui.screens.unused.AppNavigation
 import com.dian.prueba.PlatformType
 import com.dian.prueba.getPlatformType
 import com.dian.prueba.ui.screens.unused.SettingsScreen
@@ -66,7 +65,7 @@ fun MenuDrawer(onLogout: () -> Unit) {
                     modifier = Modifier.fillMaxSize().padding(it)
                 ){
                     Box{
-                        AppNavigation(onLogout = onLogout)
+                        //AppNavigation(onLogout = onLogout)
                     }
                 }
 
