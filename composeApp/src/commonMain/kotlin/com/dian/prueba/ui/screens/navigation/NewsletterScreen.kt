@@ -1,5 +1,6 @@
 package com.dian.prueba.ui.screens.navigation
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -13,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextLinkStyles
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.dian.prueba.data.globalResources.LocalColors
 import com.dian.prueba.data.globalResources.LocalPadding
@@ -21,8 +23,10 @@ import com.mikepenz.markdown.compose.components.markdownComponents
 import com.mikepenz.markdown.compose.elements.MarkdownImage
 import com.mikepenz.markdown.compose.elements.MarkdownParagraph
 import com.mikepenz.markdown.coil3.Coil3ImageTransformerImpl
+import com.mikepenz.markdown.compose.elements.MarkdownText
 import com.mikepenz.markdown.m3.Markdown
 import com.mikepenz.markdown.m3.markdownTypography
+import com.mikepenz.markdown.model.markdownAnimations
 import com.mikepenz.markdown.model.rememberMarkdownState
 import multiplatform.composeapp.generated.resources.Res
 
@@ -49,6 +53,7 @@ fun NewsletterScreen(
                     MarkdownImage(it.content, it.node)
                 }
             }
+            //MarkdownImage(it.content, it.node)
         },
         paragraph = {
             Column {
@@ -80,6 +85,12 @@ fun NewsletterScreen(
                 markdownState = rememberMarkdownState {
                     Res.readBytes("files/example.md").decodeToString()
                 },
+                animations = markdownAnimations(
+                    animateTextSize = {
+                        this
+                        /* * No animation * */
+                    }
+                ),
                 components = components,
                 typography = markdownTypography(
                     h1 = MaterialTheme.typography.titleLarge.copy(
@@ -111,7 +122,7 @@ fun NewsletterScreen(
                         color = Color.Blue
                     )
                 ),
-                imageTransformer = Coil3ImageTransformerImpl,
+                imageTransformer = Coil3ImageTransformerImpl
             )
         }
     }
