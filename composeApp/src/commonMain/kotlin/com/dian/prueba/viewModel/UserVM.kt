@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.dian.prueba.data.tokens.model.Tokens
 import com.dian.prueba.repository.LoginRepository
 import com.dian.prueba.utilities.Logger
-import com.dian.prueba.utilities.TokenStorage
+import com.dian.prueba.data.tokens.model.TokenStorage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

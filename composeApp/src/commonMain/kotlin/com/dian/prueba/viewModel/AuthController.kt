@@ -2,7 +2,7 @@ package com.dian.prueba.viewModel
 
 import com.dian.prueba.data.tokens.model.Tokens
 import com.dian.prueba.utilities.Logger
-import com.dian.prueba.utilities.TokenStorage
+import com.dian.prueba.data.tokens.model.TokenStorage
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation

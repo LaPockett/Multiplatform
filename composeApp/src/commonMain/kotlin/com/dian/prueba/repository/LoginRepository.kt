@@ -3,7 +3,7 @@ package com.dian.prueba.repository
 import com.dian.prueba.data.tokens.model.Tokens
 import com.dian.prueba.network.service.UserAPIService
 import com.dian.prueba.utilities.Logger
-import com.dian.prueba.utilities.TokenStorage
+import com.dian.prueba.data.tokens.model.TokenStorage
 
 //ref: https://medium.com/@appdevinsights/repository-design-pattern-in-kotlin-1d1aeff1ad40
 

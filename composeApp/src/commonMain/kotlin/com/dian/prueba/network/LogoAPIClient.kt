@@ -15,7 +15,7 @@ import com.dian.prueba.network.service.FeedAPIService
 import com.dian.prueba.network.service.NuFeedAPIService
 import com.dian.prueba.network.service.ProductAPIService
 import com.dian.prueba.utilities.Logger
-import com.dian.prueba.utilities.TokenStorage
+import com.dian.prueba.data.tokens.model.TokenStorage
 import com.dian.prueba.utilities.UnauthorizedException
 import com.dian.prueba.viewModel.AuthController
 import io.ktor.client.HttpClient
@@ -39,6 +39,7 @@ class LogoAPIClient(
     private val authController = AuthController(tokenStorage)
     private val logger = Logger("LogoAPIClient")
     private val currentLanguage = Locale.current.language
+    private val basePath = "http://192.168.10.130:8160"
 
     val authPlugin = createClientPlugin("AuthPlugin") {
         onRequest { request, _ ->
@@ -81,7 +82,7 @@ class LogoAPIClient(
             retryWithAuth {
                 try {
                     val response = client
-                        .get("http://192.168.10.130:8160/feed") {
+                        .get("$basePath/feed") {
                         }
                         .body<FeedResponse>()
 
@@ -100,7 +101,7 @@ class LogoAPIClient(
                 logger.warn("Enter to getNuFeed")
                 try {
                     client
-                        .get("http://192.168.10.130:8160/nufeed") {
+                        .get("$basePath/nufeed") {
                             parameter("paginationIndex", paginationIndex)
                         }
                         .body()
@@ -118,7 +119,7 @@ class LogoAPIClient(
                 logger.warn("Enter to getProductById")
                 try {
                     val response = client
-                        .get("http://192.168.10.130:8160/product/$productId")
+                        .get("$basePath/product/$productId")
                         .body<ProductDetail>()
 
                     response.data.product.toDetailUIModel()
@@ -136,7 +137,7 @@ class LogoAPIClient(
                 logger.warn("Enter to getFeatureFlags")
                 try {
                     client
-                        .get("http://192.168.10.130:8160/ux/$userId")
+                        .get("$basePath/ux/$userId")
                         .body()
                 } catch (e: Exception) {
                     logger.error(e)
@@ -153,7 +154,7 @@ class LogoAPIClient(
                 try {
                     logger.warn("Current route: $currentRoute")
                     client
-                        .get("http://192.168.10.130:8160/ux/$userId") {
+                        .get("$basePath/ux/$userId") {
                             parameter("currentRoute", currentRoute)
                         }
                         .body()

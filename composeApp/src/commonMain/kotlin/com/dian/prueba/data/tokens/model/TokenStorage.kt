@@ -1,6 +1,5 @@
-package com.dian.prueba.utilities
+package com.dian.prueba.data.tokens.model
 
-import com.dian.prueba.data.tokens.model.Tokens
 import com.russhwolf.settings.set
 import com.russhwolf.settings.Settings
 

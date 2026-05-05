@@ -3,7 +3,7 @@ package com.dian.prueba.viewModel
 import com.dian.prueba.data.tokens.model.Tokens
 import com.dian.prueba.repository.LoginRepositoryImpl
 import com.dian.prueba.utilities.Logger
-import com.dian.prueba.utilities.TokenStorage
+import com.dian.prueba.data.tokens.model.TokenStorage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestDispatcher

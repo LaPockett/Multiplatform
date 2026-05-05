@@ -45,7 +45,7 @@ import com.dian.prueba.repository.ProductRepositoryImpl
 import com.dian.prueba.ui.Theme.MultiplatformTheme
 import com.dian.prueba.ui.screens.navigation.ImageLogo
 import com.dian.prueba.ui.screens.navigation.LogoNavigationScreen
-import com.dian.prueba.utilities.TokenStorageImpl
+import com.dian.prueba.data.tokens.model.TokenStorageImpl
 import com.dian.prueba.viewModel.FeedVM
 import com.dian.prueba.viewModel.NuFeedVM
 import com.dian.prueba.viewModel.UserVM
